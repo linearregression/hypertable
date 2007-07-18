@@ -1,0 +1,48 @@
+This page gives the Slice definition for the Hypertable API.
+
+{{{
+
+module Hypertable {
+
+  class Key {
+    void SetComponent(int index, sequence<byte> data);
+    void SetStringComponent(int index, string data);
+    void Clear();
+    void ClearComponent(int index);
+  }
+
+  class ModificationBuffer {
+    sequence<byte> mods;
+    Set(Key key, sequence<byte> value);
+    Delete(Key key);
+  }
+
+  class ScannerSpecification {
+    Key startKey;
+    Key endKey;
+    long startTime;
+    long endTime;
+
+  }
+
+  interface Scanner {
+
+    SetStartKey(
+
+
+  }
+
+  interface Table {
+
+    Scanner CreateScanner();
+
+    void CommitModifications(ModificationBuffer mods);
+
+    Mutator CreateMutator();
+
+  }
+
+}
+
+
+}}}
