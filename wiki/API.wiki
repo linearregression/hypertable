@@ -3,11 +3,12 @@ This document describes the Hypertable API.
 
 = Introduction =
 
-  # Slice definition
-  # Schema specification
-  # Use case: Crawler DB
-  # Use case: Thumbnail cache
-  # Use case: Table scan
+  # Slice Definition
+  # Key Encoding
+  # Schema Specification
+  # Use Case: Crawler DB Insert
+  # Use Case: Thumbnail Cache Lookup
+  # Use Case: Table Scan
 
 = Details =
 
