@@ -3,7 +3,7 @@ This document describes the Hypertable API.
 
 = Introduction =
 
-  # Slice Definition
+  # [SliceDefinition Slice Definition]
   # Key Encoding
   # Schema Specification
   # Use Case: Crawler DB Insert
