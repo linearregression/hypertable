@@ -1,13 +1,13 @@
 #labels Phase-Design
-This 
-
-
-Hypertable API
+This document describes the Hypertable API.
 
 = Introduction =
 
-Add your content here.
-
+  # Slice definition
+  # Schema specification
+  # Use case: Crawler DB
+  # Use case: Thumbnail cache
+  # Use case: Table scan
 
 = Details =
 
