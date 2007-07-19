@@ -30,7 +30,7 @@ namespace hypertable {
     public void Delete(String row, String columnFamily, String columnQualifier);
     public void Flush();
     public int FlushResult();
-    public TableScanner CreateScanner(ScannerSpecification scanSpec);
+    public Scanner CreateScanner(ScannerSpecification scanSpec);
   }
 
   /**
