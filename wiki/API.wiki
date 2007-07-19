@@ -76,6 +76,7 @@ namespace hypertable {
     Cell First();
     Cell Next();
   }
+
 }
 
 }}}
