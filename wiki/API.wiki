@@ -5,6 +5,37 @@ This document describes the Hypertable API.
 
 namespace hypertable {
 
+
+  /**
+   * This class is a singleton class that is used to do global
+   * management operations on a Hypertable cluster, including table
+   * creation and deletion.
+   */
+  public class Manager {
+    static public Manager Instance();
+    public Table OpenTable(String name);
+    public Table CreateTable(String name, String schema);
+    public void DeleteTable();
+    public String [] ListTables();
+  }
+
+
+  /**
+   *  This class represents an open table.
+   */
+  public class Table {
+    public void Set(Cell cell, byte [] value);
+    public void Delete(String row);
+    public void Delete(String row, String columnFamily);
+    public void Delete(String row, String columnFamily, String columnQualifier);
+    public void Flush();
+    public int FlushResult();
+    public TableScanner CreateScanner(ScannerSpecification scanSpec);
+  }
+
+  /**
+   *  This class represents a table cell.
+   */
   public class Cell {
     public String row;
     public String columnFamily;
@@ -12,6 +43,12 @@ namespace hypertable {
     public long timestamp;
   }
 
+
+  /**
+   *  This class represents a scanner specification.  It is used
+   *  to create a table scanner and controls what subset of the table
+   *  is to be scanned.
+   */
   public class ScannerSpecification {    
     public void SetStartRow(String row);
     public void SetEndRow(String row);
@@ -31,23 +68,10 @@ namespace hypertable {
     private int returnCount;
   }
 
-  public class Manager {
-    static public Table OpenTable(String name);
-    static public Table CreateTable(String name, String schema);
-    static public void DeleteTable();
-    static public String [] ListTables();
-  }
 
-  public class Table {
-    public void Set(Cell cell, byte [] value);
-    public void Delete(String row);
-    public void Delete(String row, String columnFamily);
-    public void Delete(String row, String columnFamily, String columnQualifier);
-    public void Flush();
-    public int FlushResult();
-    public TableScanner CreateScanner(ScannerSpecification scanSpec);
-  }
-
+  /**
+   *  This class represents a table scanner
+   */
   public class Scanner {
     Cell First();
     Cell Next();
