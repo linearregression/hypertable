@@ -2,6 +2,7 @@
 This document describes the Hypertable API.
 
 {{{
+
 /**
  * This class provides the abstraction for a (big)Table
  */
