@@ -1,40 +1,6 @@
-Schema specification
-
-== Introduction ==
-
-Add your content here.
+The following is an example schema specification.
 
 {{{
-<TableDefinition>
-  <RangeBoundaryDimension>1</RangeBoundaryDimension>
-  <GroupingDimension>2</GroupingDimension>
-  <Dimension number="1">
-    <Type>int</Type>
-  </Dimension>
-  <Dimension number="2">
-    <Type>string</Type>
-  </Dimension>
-  <Dimension number="3">
-    <Type>enum</Type>
-    <Values>apple,banana,carrot,orange</Values>
-  </Dimension>
-  <Subspace>
-
-  <AccessGroup name="default">
-    <Grouping>
-      <Filter>
-        <Dimension>2</Dimension>
-        <Value>anchor</Value>
-      </Filter>
-
-      <Filter dimension="2">anchor</Filter>
-      
-      <Dimension>2</Dimension>
-      <Value>anchor</Value>
-    </Filter>
-  </AccessGroup>
-</TableDefinition>
-
 <Schema>
   <AccessGroup name="default">
     <ColumnFamily>
