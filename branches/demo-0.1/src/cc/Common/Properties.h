@@ -1,0 +1,64 @@
+/**
+ * Copyright (C) 2007 Doug Judd (Zvents, Inc.)
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+#ifndef HYPERTABLE_PROPERTIES_H
+#define HYPERTABLE_PROPERTIES_H
+
+#include <ext/hash_map>
+
+#include "StringExt.h"
+
+namespace hypertable {
+
+  class Properties {
+
+  public:
+
+    Properties() { return; }
+
+    Properties(std::string fname) {
+      load(fname);
+    }
+
+    void load(const char *fname) throw(std::invalid_argument);
+
+    void load(std::string &fname) { load(fname.c_str());  }
+
+    const char *getProperty(const char *str);
+
+    const char *getProperty(const char *str, const char *defaultValue);
+
+    int getPropertyInt(const char *str, int defaultValue);
+
+    int64_t getPropertyInt64(const char *str, int64_t defaultValue);
+
+    bool containsKey(const char *str) {
+      PropertyMapT::iterator iter = mMap.find(str);
+      return (iter == mMap.end()) ? false : true;
+    }
+
+  private:
+
+    typedef __gnu_cxx::hash_map<std::string, const char *> PropertyMapT;
+
+    PropertyMapT  mMap;
+  };
+
+}
+
+#endif // HYPERTABLE_PROPERTIES_H
