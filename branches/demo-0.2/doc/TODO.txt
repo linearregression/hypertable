@@ -1,0 +1,78 @@
+
+TODO:
+- Implement 'InMemory' locality groups
+- Add support for auto-assigned timestamps
+- Fix AsyncComm/Protocol::StringFormatMessage (get rid of command)
+- Add new DELETE handling in RangeServer
+- Figure out why poll drops out of RangeServer/main.cc when gdb detaches from process
+- Writes to the commit log should be asynchronous (or concurrent)
+- In AccessGroup::RunCompaction, on major compaction check if the oldest
+  CellCache entry is newer than the supplied timestamp, if so return
+- Move as much stuff as makes sense from CellStoreV0 to CellStore
+- Add a way to destroy a ConnectionManager (including Comm::Disconnect)
+- Try to move some of the RangerServer::Global members to RangeServer class members
+- Fatten up HdfsBroker test
+- Change ResponseCallback::response to response_ok in C++ source
+- Rename RangeServer/Global::localityGroup member names
+- Add ReactorFactory::Shutdown
+- Add "Scan Cache"
+- Add Bloom filter
+- Add user supplied block size to LocalityGroup
+- Add user supplied compression type to LocalityGroup
+- Use Findbugs (http://findbugs.sourceforge.net/) to find bugs in Java code.
+- Add access control
+- Add better split key computation logic (exponential backoff sampler)
+
+
+DONE:
+- Create ScanContext class and push object of this type into CreateScanner APIs
+- Make sure single row range restriction works in CreateScanner
+- Get rid of accessGroup argument to COMPACTION command
+- Clean up java/org/hypertable/Hypertable/RangeServer/Command*
+- Overhaul CreateScanner scan spec
+- Add back CellStore::CreateScanner
+- Fix copyright header notice to be GPL
+- Replace KeyT type with ByteString32T
+- Get rid of smart pointers in CellCache key/value map
+- Add Hyperspace regression test
+- Remove command code from response message
+- Sweep through HyperspaceClient and get rid of references to Placer, also make
+  sure Hyperspace requests to the same file are serialized
+- Restructure Hyperspace to use ICE-like object model
+- Move HdfsClient to same level as Hypertable in C++ tree
+- Restructure HdfsBroker to use ICE-like object model
+- Get cellStoreTest working on Linux (add consistent random number generator)
+- Add support to threadGroup in AsyncComm
+- Figure out why Hyperspace periodically hangs
+- Add ~Comm (AsyncComm test is segfaulting at the end because of this)
+- The event object passed to the application by AsyncComm should be a smart pointer
+- Fix MessageBuilder stuff.
+
+
+DEFERRED:
+- Push try/catch blocks out of HdfsBroker methods and up into the RequestHandler
+  objects that call them.  NOTE: ICE actually prefers that method implementations
+  use the callback object to report errors.  Therefore, we should keep the try/catch
+  blocks and report errors via the callback object.
+
+
+Original estimate:
+
+- Finish Tablet Server (1 week)
+  - Split processing
+  - Add complete parameters to CREATE SCANNER
+  - Add FETCH SCANBLOCK command
+  - Implement 'InMemory' locality groups
+  - Add support for auto-assigned timestamps
+- Host METADATA using Tablet Server (1 week)
+- Finish Master (2 weeks)
+  - METADATA scan
+  - Garbage collection
+  - Split
+  - Tablet Server UDP Ping
+  - Add table modification command
+- Client library (2 weeks)
+  - Location lookup & cache
+  - Implement Scanner
+  - Implement Mutater
+- Write Hadoop InputFormat class for SSTables (1 week)
