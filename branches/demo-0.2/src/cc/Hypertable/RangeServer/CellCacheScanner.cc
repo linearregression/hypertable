@@ -1,0 +1,84 @@
+/**
+ * Copyright (C) 2007 Doug Judd (Zvents, Inc.)
+ * 
+ * This file is part of Hypertable.
+ * 
+ * Hypertable is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or any later version.
+ * 
+ * Hypertable is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+#include <cassert>
+
+#include "Common/Logger.h"
+
+#include "Key.h"
+#include "CellCacheScanner.h"
+
+
+/**
+ * 
+ */
+CellCacheScanner::CellCacheScanner(CellCachePtr &cellCachePtr, ScanContextPtr &scanContextPtr) : CellListScanner(scanContextPtr), mCellCachePtr(cellCachePtr), mCellCacheMutex(cellCachePtr->mMutex), mCurKey(0), mCurValue(0), mEos(false) {
+
+  /** set start iterator **/
+  if (scanContextPtr->spec == 0 || scanContextPtr->spec->startRow->len == 0)
+    mStartIter = mCellCachePtr->mCellMap.begin();
+  else
+    mStartIter = mCellCachePtr->mCellMap.lower_bound(scanContextPtr->spec->startRow);
+
+  /** set end iterator **/
+  if (scanContextPtr->spec == 0 || scanContextPtr->spec->endRow->len == 0)
+    mEndIter = mCellCachePtr->mCellMap.end();
+  else
+    mEndIter = mCellCachePtr->mCellMap.upper_bound(scanContextPtr->spec->endRow);
+
+  mCurIter = mStartIter;
+
+  if (mCurIter != mEndIter) {
+    mCurKey = (*mCurIter).first;
+    mCurValue = (*mCurIter).second;
+    mEos = false;
+  }
+  else
+    mEos = true;
+}
+
+
+bool CellCacheScanner::Get(ByteString32T **keyp, ByteString32T **valuep) {
+  if (!mEos) {
+    *keyp = (ByteString32T *)mCurKey;
+    *valuep = (ByteString32T *)mCurValue;
+    return true;
+  }
+  return false;
+}
+
+void CellCacheScanner::Forward() {
+  boost::mutex::scoped_lock lock(mCellCacheMutex);
+  Key keyComps;
+
+  mCurIter++;
+  while (mCurIter != mEndIter) {
+    if (!keyComps.load((*mCurIter).first)) {
+      LOG_ERROR("Problem parsing key!");
+    }
+    else if (mScanContextPtr->familyMask[keyComps.columnFamily]) {
+      mCurKey = (*mCurIter).first;
+      mCurValue = (*mCurIter).second;
+      return;
+    }
+    mCurIter++;
+  }
+  mEos = true;
+}
