@@ -3,8 +3,7 @@ API description of Hyperspace, a Chubby-like service
 = Introduction =
 
 To provide some level of high availability, Hypertable needs something
-akin to [http://research.google.com/archive/chubby-
-osdi06.pdf Chubby].  We've decided to call this service Hyperspace.
+akin to [http://research.google.com/archive/chubby-osdi06.pdf Chubby].  We've decided to call this service Hyperspace.
 Initially we plan to implement this service as a single server.  This
 single server implementation will later be replaced with a replicated
 version based on Paxos or the Spread toolkit.
@@ -136,9 +135,10 @@ class Hyperspace {
 
   * The Chubby paper suggests that a parent handle get passed into the above APIs that need to reference a node.  This seems cumbersome, so I've eliminated this requirement in favor of passing in an absolute path name.
   * Chubby supports the notion of whole-file reads and writes.  I've replaced this with extended attributes (e.g. !AttrSet/Get/Del).  This seems more congruous with traditional filesystems and will keep open the possibility of merging Chubby functionality with an underlying DFS someday.
-  * The Chubby paper describes !GetSequencer and SetSequencer methods.  It's not readily apparent to me why these are necessary, so I'm omitting them for now.
+  * The Chubby paper describes !GetSequencer and !SetSequencer methods.  It's not readily apparent to me why these are necessary, so I'm omitting them for now.
   * I've dropped ACL support for now since we don't have the bandwidth to support them.  ACLs can be added later when we do a "real" Chubby implementation.
   * The paper suggests that all of the APIs have asynchronous counterparts.  I don't see a pressing need right now for asynchronous Chubby interaction, so I'm omitting these.  Under the hood, all API operations will be asynchronous, so adding support later should not be difficult.
-  * I've dropped the GetContentAndStat() API for now since its not readily apparent to me why it is needed.
-  * Elimination of lock-delay.  This appears to be a hack to allow legacy applications to use Chubby without passing around LockSequencers.  Since there is no legacy, I've chosen to drop this concept and require all lock protected client/server interactions to use a !LockSequencer.
+  * I've dropped the !GetContentAndStat() API for now since its not readily apparent to me why it is needed.
+  * Elimination of lock-delay.  This appears to be a hack to allow legacy applications to use Chubby without passing around !LockSequencers.  Since there is no legacy, I've chosen to drop this concept and require all lock protected client/server interactions to use a !LockSequencer.
+ 
  
