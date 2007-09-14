@@ -3,8 +3,8 @@ API description of Hyperspace, a Chubby-like service
 = Introduction =
 
 To provide some level of high availability, Hypertable needs something
-akin to Chubby (http://research.google.com/archive/chubby-
-osdi06.pdf).  We've decided to call this service Hyperspace.
+akin to [http://research.google.com/archive/chubby-
+osdi06.pdf Chubby].  We've decided to call this service Hyperspace.
 Initially we plan to implement this service as a single server.  This
 single server implementation will later be replaced with a replicated
 version based on Paxos or the Spread toolkit.
@@ -63,13 +63,3 @@ typedef struct {
 
 
 }}}
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
-
- 
- 
