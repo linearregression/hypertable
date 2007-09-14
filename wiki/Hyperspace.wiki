@@ -1,0 +1,75 @@
+API description of Hyperspace, a Chubby-like service
+
+= Introduction =
+
+To provide some level of high availability, Hypertable needs something
+akin to Chubby (http://research.google.com/archive/chubby-
+osdi06.pdf).  We've decided to call this service Hyperspace.
+Initially we plan to implement this service as a single server.  This
+single server implementation will later be replaced with a replicated
+version based on Paxos or the Spread toolkit.
+
+The following API was distilled directly from the Chubby paper.  I've
+changed a few things which are described at the end of the post.
+Please take a look and respond with any feedback.  Thanks! 
+
+= Details =
+
+{{{
+/**                                                                                                                                                            
+ * The following flags (bit masks) are ORed together                                                                                                           
+ * and passed in as the flags argument to Open().                                                                                                              
+ */
+#define OPEN_FLAG_READ       0x00001  // open file for reading                                                                                                 
+#define OPEN_FLAG_WRITE      0x00002  // open file for writing (modifications)                                                                                 
+#define OPEN_FLAG_LOCK       0x00004  // open file for locking                                                                                                 
+#define OPEN_FLAG_CREATE     0x00008  // create file if it does not exist                                                                                      
+#define OPEN_FLAG_EPHEMERAL  0x00010  // used in conjunction with CREATE to create an ephemeral file                                                           
+
+/**                                                                                                                                                            
+ * The following event masks are ORed together and                                                                                                             
+ * passed in as the eventMask argument to Open()                                                                                                               
+ * to indicate which events should be reported to                                                                                                              
+ * the application for the opened handle.                                                                                                                      
+ */
+#define EVENT_MASK_ATTR_MODIFIED       0x0001
+#define EVENT_MASK_CHILD_NODE_CHANGE   0x0002
+#define EVENT_MASK_LOCK_ACQUIRED       0x0004
+#define EVENT_MASK_MASTER_FAILOVER     0x0008
+#define EVENT_MASK_HANDLE_INVALIDATED  0x0010
+#define EVENT_MASK_CONFLICTING_LOCK    0x0020
+#define EVENT_MASK_REQUEST_COMPLETE    0x0040
+#define EVENT_MASK_REQUEST_ERROR       0x0080
+
+/**                                                                                                                                                            
+ * Node metadata                                                                                                                                               
+ */
+typedef struct {
+  uint64_t generation;
+  uint64_t lockGeneration;
+  uint64_t mtime;
+} NodeMetadataT;
+
+/**                                                                                                                                                            
+ * Listing information for each node within a                                                                                                                  
+ * directory.  A vector of these objects gets                                                                                                                  
+ * passed back to the application via a call to                                                                                                                
+ * Readdir()                                                                                                                                                   
+ */
+typedef struct {
+  std::string   name;
+  NodeMetadataT metadata;
+} DirListingT;
+
+
+}}}
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
+
+ 
+ 
