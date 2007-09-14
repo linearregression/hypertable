@@ -21,11 +21,11 @@ namespace Hyperspace {
    * The following flags (bit masks) are ORed together                                                                                                         
    * and passed in as the flags argument to Open().                                                                                                            
    */
-#define OPEN_FLAG_READ       0x00001  // open file for reading                                                                                                 
-#define OPEN_FLAG_WRITE      0x00002  // open file for writing (modifications)                                                                                 
-#define OPEN_FLAG_LOCK       0x00004  // open file for locking                                                                                                 
-#define OPEN_FLAG_CREATE     0x00008  // create file if it does not exist                                                                                      
-#define OPEN_FLAG_EPHEMERAL  0x00010  // used in conjunction with CREATE to create an ephemeral file                                                           
+#define OPEN_FLAG_READ     0x00001  // open file for reading                                                                                                 
+#define OPEN_FLAG_WRITE    0x00002  // open file for writing (modifications)                                                                                 
+#define OPEN_FLAG_LOCK     0x00004  // open file for locking                                                                                                 
+#define OPEN_FLAG_CREATE   0x00008  // create file if it does not exist                                                                                      
+#define OPEN_FLAG_TEMP     0x00010  // used in conjunction with CREATE to create an ephemeral file                                                           
 
   /**                                                                                                                                                          
    * The following event masks are ORed together and                                                                                                           
@@ -147,6 +147,7 @@ namespace Hyperspace {
   * The paper suggests that all of the APIs have asynchronous counterparts.  I don't see a pressing need right now for asynchronous Chubby interaction, so I'm omitting these.  Under the hood, all API operations will be asynchronous, so adding support later should not be difficult.
   * I've dropped the !GetContentAndStat() API for now since its not readily apparent to me why it is needed.
   * Elimination of lock-delay.  This appears to be a hack to allow legacy applications to use Chubby without passing around !LockSequencers.  Since there is no legacy, I've chosen to drop this concept and require all lock protected client/server interactions to use a !LockSequencer.
+ 
  
  
  
