@@ -21,11 +21,13 @@ namespace Hyperspace {
    * The following flags (bit masks) are ORed together                                                                                                         
    * and passed in as the flags argument to Open().                                                                                                            
    */
-#define OPEN_FLAG_READ     0x00001  // open file for reading                                                                                                 
-#define OPEN_FLAG_WRITE    0x00002  // open file for writing (modifications)                                                                                 
-#define OPEN_FLAG_LOCK     0x00004  // open file for locking                                                                                                 
-#define OPEN_FLAG_CREATE   0x00008  // create file if it does not exist                                                                                      
-#define OPEN_FLAG_TEMP     0x00010  // used in conjunction with CREATE to create an ephemeral file                                                           
+  enum {
+    OPEN_FLAG_READ   = 0x00001, // open file for reading                                                                                                 
+    OPEN_FLAG_WRITE  = 0x00002, // open file for writing (modifications)                                                                                 
+    OPEN_FLAG_LOCK   = 0x00004, // open file for locking                                                                                                 
+    OPEN_FLAG_CREATE = 0x00008, // create file if it does not exist                                                                                      
+    OPEN_FLAG_TEMP   = 0x00010  // used in conjunction with CREATE to create an ephemeral file
+  }                                                           
 
   /**                                                                                                                                                          
    * The following event masks are ORed together and                                                                                                           
@@ -33,14 +35,16 @@ namespace Hyperspace {
    * to indicate which events should be reported to                                                                                                            
    * the application for the opened handle.                                                                                                                    
    */
-#define EVENT_MASK_ATTR_MODIFIED       0x0001
-#define EVENT_MASK_CHILD_NODE_CHANGE   0x0002
-#define EVENT_MASK_LOCK_ACQUIRED       0x0004
-#define EVENT_MASK_MASTER_FAILOVER     0x0008
-#define EVENT_MASK_HANDLE_INVALIDATED  0x0010
-#define EVENT_MASK_CONFLICTING_LOCK    0x0020
-#define EVENT_MASK_REQUEST_COMPLETE    0x0040
-#define EVENT_MASK_REQUEST_ERROR       0x0080
+  enum {
+    EVENT_MASK_ATTR_MODIFIED      = 0x0001,
+    EVENT_MASK_CHILD_NODE_CHANGE  = 0x0002,
+    EVENT_MASK_LOCK_ACQUIRED      = 0x0004,
+    EVENT_MASK_MASTER_FAILOVER    = 0x0008,
+    EVENT_MASK_HANDLE_INVALIDATED = 0x0010,
+    EVENT_MASK_CONFLICTING_LOCK   = 0x0020,
+    EVENT_MASK_REQUEST_COMPLETE   = 0x0040,
+    EVENT_MASK_REQUEST_ERROR      = 0x0080
+  }
 
   /**                                                                                                                                                          
    * Node metadata                                                                                                                                             
@@ -147,6 +151,7 @@ namespace Hyperspace {
   * The paper suggests that all of the APIs have asynchronous counterparts.  I don't see a pressing need right now for asynchronous Chubby interaction, so I'm omitting these.  Under the hood, all API operations will be asynchronous, so adding support later should not be difficult.
   * I've dropped the !GetContentAndStat() API for now since its not readily apparent to me why it is needed.
   * Elimination of lock-delay.  This appears to be a hack to allow legacy applications to use Chubby without passing around !LockSequencers.  Since there is no legacy, I've chosen to drop this concept and require all lock protected client/server interactions to use a !LockSequencer.
+ 
  
  
  
