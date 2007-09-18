@@ -118,6 +118,8 @@ namespace Hyperspace {
    */
   class Session {
 
+  public:
+
     Session(PropertiesPtr &propsPtr, SessionCallback *callback);
 
     int Open(std::string name, int flags, int eventMask, HandleCallback *callback, uint64_t *handlep);
@@ -152,6 +154,7 @@ namespace Hyperspace {
   * The paper suggests that all of the APIs have asynchronous counterparts.  I don't see a pressing need right now for asynchronous Chubby interaction, so I'm omitting these.  Under the hood, all API operations will be asynchronous, so adding support later should not be difficult.
   * I've dropped the !GetContentAndStat() API for now since its not readily apparent to me why it is needed.
   * Elimination of lock-delay.  This appears to be a hack to allow legacy applications to use Chubby without passing around !LockSequencers.  Since there is no legacy, I've chosen to drop this concept and require all lock protected client/server interactions to use a !LockSequencer.
+ 
  
  
  
