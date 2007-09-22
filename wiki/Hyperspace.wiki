@@ -26,7 +26,8 @@ namespace Hyperspace {
     OPEN_FLAG_WRITE  = 0x00002, // open file for writing (modifications)                                                                                 
     OPEN_FLAG_LOCK   = 0x00004, // open file for locking                                                                                                 
     OPEN_FLAG_CREATE = 0x00008, // create file if it does not exist                                                                                      
-    OPEN_FLAG_TEMP   = 0x00010  // used in conjunction with CREATE to create an ephemeral file
+    OPEN_FLAG_EXCL   = 0x00010, // error if create and file exists                                                                                            
+    OPEN_FLAG_TEMP   = 0x00020  // used in conjunction with CREATE to create an ephemeral file                                                                
   };                                                           
 
   /**                                                                                                                                                          
@@ -155,5 +156,6 @@ namespace Hyperspace {
   * I've dropped the !GetContentAndStat() API for now since its not readily apparent to me why it is needed.
   * Elimination of lock-delay.  This appears to be a hack to allow legacy applications to use Chubby without passing around !LockSequencers.  Since there is no legacy, I've chosen to drop this concept and require all lock protected client/server interactions to use a !LockSequencer.
   * Reliable event delivery.  To make the development of applications that use Hyperspace easier, I've decided to guarantee event delivery which obviates the need for "Master Failover" events.
+ 
  
  
