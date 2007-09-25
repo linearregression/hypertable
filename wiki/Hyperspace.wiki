@@ -37,9 +37,12 @@ namespace Hyperspace {
    * the application for the opened handle.                                                                                                                    
    */
   enum {
-    EVENT_MASK_ATTR_MODIFIED      = 0x0001,
-    EVENT_MASK_CHILD_NODE_CHANGE  = 0x0002,
-    EVENT_MASK_LOCK_ACQUIRED      = 0x0004
+    EVENT_MASK_ATTR_SET           = 0x0001,
+    EVENT_MASK_ATTR_DEL           = 0x0002,
+    EVENT_MASK_CHILD_NODE_ADDED   = 0x0004,
+    EVENT_MASK_CHILD_NODE_REMOVED = 0x0008,
+    EVENT_MASK_LOCK_ACQUIRED      = 0x0010,
+    EVENT_MASK_LOCK_RELEASED      = 0x0020
   };
 
   /**                                                                                                                                                          
@@ -152,6 +155,7 @@ namespace Hyperspace {
   * I've dropped the !GetContentAndStat() API for now since its not readily apparent to me why it is needed.
   * Elimination of lock-delay.  This appears to be a hack to allow legacy applications to use Chubby without passing around !LockSequencers.  Since there is no legacy, I've chosen to drop this concept and require all lock protected client/server interactions to use a !LockSequencer.
   * Reliable event delivery.  To make the development of applications that use Hyperspace easier, I've decided to guarantee event delivery which obviates the need for "Master Failover" events.
+ 
  
  
  
