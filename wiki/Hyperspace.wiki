@@ -48,26 +48,15 @@ namespace Hyperspace {
     EVENT_MASK_LOCK_RELEASED      = 0x0020
   };
 
-  /**                                                                                                                                                          
-   * Node metadata                                                                                                                                             
+  /**
+   * Listing information for each node within a directory.  A vector
+   * of these objects gets passed back to the application via a call to
+   * Readdir()
    */
-  struct NodeMetadataT {
-    uint64_t generation;
-    uint64_t lockGeneration;
-    uint64_t mtime;
+  struct DirEntryT {
+    std::string name;
+    bool isDirectory;
   };
-
-  /**                                                                                                                                                          
-   * Listing information for each node within a                                                                                                                
-   * directory.  A vector of these objects gets                                                                                                                
-   * passed back to the application via a call to                                                                                                              
-   * Readdir()                                                                                                                                                 
-   */
-  struct DirListingT {
-    std::string   name;
-    struct NodeMetadataT metadata;
-  };
-
 
   /**                                                                                                                                                          
    * Lock sequencer.  This object gets created with                                                                                                            
