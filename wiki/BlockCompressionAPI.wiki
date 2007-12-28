@@ -1,6 +1,6 @@
 API for block compression
 
-<pre>
+{{{
   /**                                                                                                                                                            
    * Base class for compressed block header.                                                                                                                     
    */
@@ -50,5 +50,4 @@ API for block compression
 
     virtual int inflate(DynamicBuffer &input, DynamicBuffer &output, BlockCompressionHeader *header) = 0;
   };
-
-</pre>
+}}}
