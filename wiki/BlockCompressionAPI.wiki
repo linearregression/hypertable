@@ -8,26 +8,26 @@ API for block compression
   public:
     virtual ~BlockCompressionHeader() { return; }
 
-    virtual void set_magic(const char magic[12]) { memcpy(m_magic, magic, 12); }
-    virtual void get_magic(char magic[12]) { memcpy(magic, m_magic, 12); }
+    void set_magic(const char magic[12]) { memcpy(m_magic, magic, 12); }
+    void get_magic(char magic[12]) { memcpy(magic, m_magic, 12); }
 
-    virtual void set_length(uint32_t length) { m_length = length; }
-    virtual uint32_t get_length() { return m_length; }
+    void     set_length(uint32_t length) { m_length = length; }
+    uint32_t get_length() { return m_length; }
 
-    virtual void set_zlength(uint32_t zlength) { m_zlength = zlength; }
-    virtual uint32_t get_zlength() { return m_zlength; }
+    void     set_zlength(uint32_t zlength) { m_zlength = zlength; }
+    uint32_t get_zlength() { return m_zlength; }
 
-    virtual void set_checksum(uint16_t checksum) { m_checksum = checksum; }
-    virtual uint16_t get_checksum() { return m_checksum; }
+    void     set_checksum(uint16_t checksum) { m_checksum = checksum; }
+    uint16_t get_checksum() { return m_checksum; }
 
-    virtual void set_flags(uint16_t flags) { m_flags = flags; }
-    virtual void set_flag(uint16_t flag) { m_flags |= flag; }
-    virtual void unset_flag(uint16_t flag) { m_flags &= ~flag; }
-    virtual uint16_t get_flags() { return m_flags; }
+    void     set_flags(uint16_t flags) { m_flags = flags; }
+    void     set_flag(uint16_t flag) { m_flags |= flag; }
+    void     unset_flag(uint16_t flag) { m_flags &= ~flag; }
+    uint16_t get_flags() { return m_flags; }
 
     virtual size_t encoded_length() = 0;
-    virtual void encode(uint8_t **buf_ptr) = 0;
-    virtual bool decode(uint8_t **buf_ptr, size_t *remaining_ptr) = 0;
+    virtual void   encode(uint8_t **buf_ptr) = 0;
+    virtual bool   decode(uint8_t **buf_ptr, size_t *remaining_ptr) = 0;
 
     enum Flags { FLAGS_UNCOMPRESSED=0x0001 };
 
@@ -38,6 +38,8 @@ API for block compression
     uint16_t m_checksum;
     uint16_t m_flags;
   };
+
+
 
   /**                                                                                                                                                            
    * Abstract base class for block compression codecs.                                                                                                           
