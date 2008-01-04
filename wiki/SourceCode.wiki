@@ -4,4 +4,4 @@ We're using the [http://git.or.cz/ git] version control system to manage the sou
 
 This git repository represents the most up-to-date version of the source code.  We push changes into this repository only if all of the regression tests pass.  To update your local git repository (created with the above command) with the latest changes, issue the following command:
 
-`git push ssh://72.51.43.91/pub/repos/hypertable.git`
+`git pull ssh://72.51.43.91/pub/repos/hypertable.git`
