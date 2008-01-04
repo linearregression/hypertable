@@ -1,0 +1,7 @@
+#Source Code
+
+We're using the [http://git.or.cz/ git] version control system to manage the source code for this project.  To obtain a copy of the source code, install the latest version of git and then issue the following command:
+
+{{{
+git clone git://72.51.43.91/pub/repos/hypertable.git
+}}}
