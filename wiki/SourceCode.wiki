@@ -1,7 +1,9 @@
-We're using the [http://git.or.cz/ git] version control system to manage the source code for this project.  To obtain a copy of the source code, install the latest version of git and then issue the following command:
+We're using the [http://git.or.cz/ git] version control system to manage the source code for this project.  To obtain a copy of the source code, install the latest version of git and then issue the following commands:
 
-`git clone git://72.51.43.91/pub/repos/hypertable.git`
+`cd ~/src`
+`git clone git://scm.hypertable.org/pub/repos/hypertable.git`
 
-This git repository represents the most up-to-date version of the source code.  We push changes into this repository only if all of the regression tests pass.  To update your local git repository (created with the above command) with the latest changes, issue the following command:
+This git repository represents the most up-to-date version of the source code.  We push changes into this repository only if all of the regression tests pass.  To update your local git repository (created with the above command) with the latest changes, issue the following commands:
 
-`git pull ssh://72.51.43.91/pub/repos/hypertable.git`
+`cd ~/src/hypertable`
+`git pull ssh://scm.hypertable.org/pub/repos/hypertable.git`
