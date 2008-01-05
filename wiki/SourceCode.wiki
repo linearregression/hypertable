@@ -1,11 +1,21 @@
-We're using the [http://git.or.cz/ git] version control system to manage the source code for this project.  To obtain a copy of the source code, install the latest version of git and then issue the following commands:
+We're using the [http://git.or.cz/ git] version control system to manage the source code for this project.  To obtain a copy of the source code, install the latest version of git (at least 1.5.3.7) and then issue the following commands:
+{{{
+git config --global user.name "<your name>"
+git config --global user.email "<your email>"
+}}}
 
-`cd ~/src`
+to configure your identity in the commits. To obtain the source:
 
-`git clone git://scm.hypertable.org/pub/repos/hypertable.git`
+{{{
+cd ~/src
+git clone git://scm.hypertable.org/pub/repos/hypertable.git
+}}}
+
 
 This git repository represents the most up-to-date version of the source code.  We push changes into this repository only if all of the regression tests pass.  To update your local git repository (created with the above command) with the latest changes, issue the following commands:
+{{{
+cd ~/src/hypertable
+git fetch && git rebase origin 
+# with git 1.5.4+ you can just use: git pull --rebase
 
-`cd ~/src/hypertable`
-
-`git pull ssh://scm.hypertable.org/pub/repos/hypertable.git`
+}}}
