@@ -1,10 +1,10 @@
-Necessary "to do" items for the first release
+=Necessary "to do" items for the first release=
 
 == Todo ==
 
-  * RangeServer: Add scanner reaper
-  * RangeServer: CommitLog garbage collection
-  * RangeServer: Add Phantom updates
+  * !RangeServer: Add scanner reaper
+  * !RangeServer: CommitLog garbage collection
+  * !RangeServer: Add Phantom updates
   * RangeServer: Implement InMemory access groups
   * RangeServer: Add logic to prevent root METADATA range from splitting
   * RangeServer: Add DropTable command
