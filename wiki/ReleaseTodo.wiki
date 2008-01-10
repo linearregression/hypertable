@@ -1,0 +1,37 @@
+Necessary "to do" items for the first release
+
+== Todo ==
+
+  * RangeServer: Add scanner reaper
+  * RangeServer: CommitLog garbage collection
+  * RangeServer: Add Phantom updates
+  * RangeServer: Implement InMemory access groups
+  * RangeServer: Add logic to prevent root METADATA range from splitting
+  * RangeServer: Add DropTable command
+  * RangeServer: Add destroy_scanner method
+  * RangeServer: Memory Throttling
+  * RangeServer: Fix timestamp issue.  In RangeServer::update the updateTimestamp is obtained from the commit log, but the splitStartTime is obtain from the updates and they are compared against one another (updateTimestamp > splitStartTime).  Also, clientTimestamp value does not appear to be used in RangeServer::update
+  * Serialization.  Make sure all integral types that get sent of the network or persisted n disk get serialized properly (little endian).  Make sure byte order swapping for timestamp happens properly on all architectures
+  * CommitLog cleanup.  CommitLog reader should sanity check each block header and CommitLogReader should be able to throw errors
+- Clean up generate_test_data (have it generate timestamps formatted propertly and modify LoadDataSource to consume it).
+  * BMZ Compression
+  * Master: Implement Garbage Collection
+  * Master: Range Server Recovery
+  * Master: Improved scheduler
+  * Master: Add DropTable command
+  * Heartbeat from RangeServer to Master
+  * Write startup scripts (init.d)
+  * Documentation
+  * Integration Testing
+
+== Done ==
+
+
+== Post-Release Todo ==
+  * RangeServer: Memory throttling
+  * Add global (timeout, workers, reactors, etc.) to config file 
+  * Make sure the crate table/modify schema cannot overflow a byte on column IDs.
+  * Re-write schema parser using Boost Spirit instead of expat (removes a dependency)
+  * Refactor so that schema can get updated on change (overhaul TableInfo)
+  * Add range merging
+  * Clean up generate_test_data (have it generate timestamps formatted propertly and modify LoadDataSource to consume it).
