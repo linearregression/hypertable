@@ -9,7 +9,6 @@
   * !RangeServer: Add logic to prevent root METADATA range from splitting
   * !RangeServer: Add drop_table command
   * !RangeServer: Add destroy_scanner method
-  * !RangeServer: Fix timestamp issue.  In !RangeServer::update the updateTimestamp is obtained from the commit log, but the splitStartTime is obtain from the updates and they are compared against one another (updateTimestamp > splitStartTime).  Also, clientTimestamp value does not appear to be used in !RangeServer::update
   * Serialization.  Make sure all integral types that get sent of the network or persisted n disk get serialized properly (little endian).  Make sure byte order swapping for timestamp happens properly on all architectures
   * !CommitLog cleanup.  !CommitLog reader should sanity check each block header and !CommitLogReader should be able to throw errors
   * BMZ Compression
@@ -23,6 +22,7 @@
   * Integration Testing
 
 == Done ==
+  * !RangeServer: Fix timestamp issue.  In !RangeServer::update the updateTimestamp is obtained from the commit log, but the splitStartTime is obtain from the updates and they are compared against one another (updateTimestamp > splitStartTime).  Also, clientTimestamp value does not appear to be used in !RangeServer::update
 
 
 == Post-Release Todo ==
