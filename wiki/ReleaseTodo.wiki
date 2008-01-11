@@ -16,6 +16,7 @@
   * Master: Range Server Recovery
   * Master: Improved scheduler
   * Master: Add drop_table command
+  * Master: Add basic monitoring/status
   * Heartbeat from !RangeServer to Master
   * Write startup scripts (init.d)
   * Documentation
