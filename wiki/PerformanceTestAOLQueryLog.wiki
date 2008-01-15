@@ -30,7 +30,7 @@ The query log was sorted by timestamp. Each line of the query log could generate
   * 4 7200 RPM SATA drives (mounted JBOD)
 
 ==Insert Test==
-Eight machines (motherlode001-motherlode008) were used to run both HDFS and Hypertable. The Hypertable master and Hyperspace (Chubby) were run on motherlode001. HDFS was configured to use only three of the 4 available drives on each machine and was configured with 3-way replication. The log was sorted by timestamp and split into 5 pieces (a.tsv, b.tsv, c.tsv, d.tsv, e.tsv. Two separate machines (motherlode000 and motherlode009) were used to run insert clients. The following HQL commands were started more-or-less simultaneously:
+Eight machines (motherlode001-motherlode008) were used to run both HDFS and Hypertable. The Hypertable master and Hyperspace (Chubby) were run on motherlode001. HDFS was configured to use only three of the four available drives on each machine and was configured with 3-way replication. The log was sorted by timestamp and split into 5 pieces (a.tsv, b.tsv, c.tsv, d.tsv, e.tsv. Two separate machines (motherlode000 and motherlode009) were used to run insert clients. The following HQL commands were started more-or-less simultaneously:
 {{{
 motherlode000:
 LOAD DATA INFILE ROW_KEY_COLUMN=AnonID TIMESTAMP_COLUMN=QueryTime 'a.tsv' INTO TABLE "query-log";
