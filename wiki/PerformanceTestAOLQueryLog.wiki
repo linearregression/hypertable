@@ -12,7 +12,7 @@ QueryTime     AnonID    Query   ItemRank        ClickURL
 [...]
 }}}
 
-The key used was the AnonID. QueryTime was used for the timestamp. The Query, ItemRank, and ClickURL, columns were inserted into a table that was created with the following HQL command:
+The key used was the !AnonID. !QueryTime was used for the timestamp. The Query, !ItemRank, and !ClickURL, columns were inserted into a table that was created with the following HQL command:
 {{{
 CREATE TABLE "query-log" (
 Query,
