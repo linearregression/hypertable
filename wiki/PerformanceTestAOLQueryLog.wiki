@@ -67,4 +67,4 @@ sys     0m11.891s
 
 ==Summary==
 
-The AOL query logs were inserted into an 8-node Hypertable cluster. The average size of values inserted was ~19 bytes. The insert rate (with 4 simultaneous insert processes) was approximately 686 inserts/s. The table was scanned at a rate of approximately 918K cells/s. 
+The AOL query logs were inserted into an 8-node Hypertable cluster. The average size of values inserted was ~19 bytes. The insert rate (with 4 simultaneous insert processes) was approximately 686K inserts/s. The table was scanned at a rate of approximately 918K cells/s. 
