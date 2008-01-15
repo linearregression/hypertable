@@ -51,11 +51,15 @@ Load complete (129.63s elapsed_time, 3519437.73 bytes/s, 168523.38 inserts/s)
 Aggregating the numbers yields 14,321,932.82 bytes/s and 686,210.84 inserts/s. NOTE: The file 'e.tsv' was inserted afterwards, separately.
 
 ==Query Test==
-The file file 'dump-query-log.hql' contained the following lines:
+The file 'dump-query-log.hql' contained the following lines:
 
-`select * from "query-log";`
+{{{
+select * from "query-log";
+quit;
+}}}
 
 And here is the result of the timed execution ...
+
 {{{
 $ time /data1/doug/hypertable/bin/hypertable --batch --timestamp-format=usecs < dump-query-log.hql > /dev/null
 
