@@ -52,10 +52,10 @@ Aggregating the numbers yields 14,321,932.82 bytes/s and 686,210.84 inserts/s. N
 ==Query Test==
 The file file 'dump-query-log.hql' contained the following lines:
 
-{{{
-select * from "query-log";
-quit
+`select * from "query-log";`
 
+And here is the result of the timed execution ...
+{{{
 $ time /data1/doug/hypertable/bin/hypertable --batch --timestamp-format=usecs < dump-query-log.hql > /dev/null
 
 real    1m11.769s
