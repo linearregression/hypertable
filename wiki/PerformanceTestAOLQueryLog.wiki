@@ -22,7 +22,8 @@ ClickURL
 }}}
 
 The query log was sorted by timestamp. Each line of the query log could generate from 1 to 3 inserts, depending on how many column values were present. After the entire log was inserted, the table contained 66,131,782 cells. On average, the size of each value inserted was 19 bytes.
-Machine Profile
+
+==Machine Profile==
 
   * 1 1.8GHz Dual-core Opteron Processor 2210
   * 4 GB RAM
