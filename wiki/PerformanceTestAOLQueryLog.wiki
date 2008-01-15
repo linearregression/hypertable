@@ -1,5 +1,5 @@
 ==The Data (AOL Query log)==
-
+Here's an example of what the AOL query log data looks like:
 {{{
 QueryTime     AnonID    Query   ItemRank        ClickURL
 2006-03-01 00:02:52     1636218 www.airtime500.com      2       http://www.airtime500.com
