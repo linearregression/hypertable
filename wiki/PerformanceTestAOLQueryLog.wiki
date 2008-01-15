@@ -1,0 +1,70 @@
+==The Data (AOL Query log)==
+
+{{{
+QueryTime     AnonID    Query   ItemRank        ClickURL
+2006-03-01 00:02:52     1636218 www.airtime500.com      2       http://www.airtime500.com
+2006-03-01 00:03:04     2272416 theunorthodoxjew.blogspot.com   1       http://theunorthodoxjew.blogspot.com
+2006-03-01 00:03:05     172627  www.yahoolagins.com
+2006-03-01 00:03:08     2569723 www.homesforsale
+2006-03-01 00:03:23     1196769 zip codes       1       http://www.usps.com
+2006-03-01 00:03:31     724416  propertytaxsales.com
+2006-03-01 00:03:32     30011   schwab learning 1       http://www.schwablearning.org
+[...]
+}}}
+
+The key used was the AnonID. QueryTime was used for the timestamp. The Query, ItemRank, and ClickURL, columns were inserted into a table that was created with the following HQL command:
+{{{
+CREATE TABLE "query-log" (
+Query,
+ItemRank,
+ClickURL
+);
+}}}
+
+The query log was sorted by timestamp. Each line of the query log could generate from 1 to 3 inserts, depending on how many column values were present. After the entire log was inserted, the table contained 66,131,782 cells. On average, the size of each value inserted was 19 bytes.
+Machine Profile
+
+  * 1 1.8GHz Dual-core Opteron Processor 2210
+  * 4 GB RAM
+  * 4 7200 RPM SATA drives (mounted JBOD)
+
+==Insert Test==
+Eight machines (motherlode001-motherlod008) were used to run both HDFS and Hypertable. The Hypertable master and Hyperspace (Chubby) were run on motherlode001. HDFS was configured to use only three of the 4 available drives on each machine. The log was sorted by timestamp and split into 5 pieces (a.tsv, b.tsv, c.tsv, d.tsv, e.tsv. Two separate machines (motherlode000 and motherlode009) were used to run insert clients. The following HQL commands were started more-or-less simultaneously:
+{{{
+motherlode000:
+LOAD DATA INFILE ROW_KEY_COLUMN=AnonID TIMESTAMP_COLUMN=QueryTime 'a.tsv' INTO TABLE "query-log";
+LOAD DATA INFILE ROW_KEY_COLUMN=AnonID TIMESTAMP_COLUMN=QueryTime 'b.tsv' INTO TABLE "query-log";
+
+motherlode009:
+LOAD DATA INFILE ROW_KEY_COLUMN=AnonID TIMESTAMP_COLUMN=QueryTime 'c.tsv' INTO TABLE "query-log";
+LOAD DATA INFILE ROW_KEY_COLUMN=AnonID TIMESTAMP_COLUMN=QueryTime 'd.tsv' INTO TABLE "query-log";
+}}}
+These four insert jobs completed with the following stats: 
+
+{{{
+Load complete (123.15s elapsed_time, 3648447.92 bytes/s, 174734.76 inserts/s)
+Load complete (122.53s elapsed_time, 3753462.68 bytes/s, 179500.59 inserts/s)
+Load complete (135.30s elapsed_time, 3400584.49 bytes/s, 163452.11 inserts/s)
+Load complete (129.63s elapsed_time, 3519437.73 bytes/s, 168523.38 inserts/s)
+}}}
+Aggregating the numbers yields 14,321,932.82 bytes/s and 686,210.84 inserts/s. NOTE: The file 'e.tsv' was inserted afterwards, separately.
+
+==Query Test==
+The file file 'dump-query-log.hql' contained the following lines:
+
+{{{
+select * from "query-log";
+quit
+
+$ time /data1/doug/hypertable/bin/hypertable --batch --timestamp-format=usecs < dump-query-log.hql > /dev/null
+
+real    1m11.769s
+user    0m52.033s
+sys     0m11.891s
+
+66,131,782 cells / 72 s == 918,497 cells/s
+}}}
+
+==Summary==
+
+The AOL query logs were inserted into an 8-node Hypertable cluster. The average size of values inserted was ~19 bytes. The insert rate (with 4 simultaneous insert processes) was approximately 686 inserts/s. The table was scanned at a rate of approximately 918K cells/s. 
