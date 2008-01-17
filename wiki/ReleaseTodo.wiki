@@ -3,6 +3,7 @@
 == Todo ==
   * !RangeServer: !CommitLog garbage collection
   * !RangeServer: Add Phantom updates
+  * !RangeServer: Fix block checksum
   * !RangeServer: Implement !InMemory access groups
   * !RangeServer: Add logic to prevent root METADATA range from splitting
   * !RangeServer: Add drop_table command
