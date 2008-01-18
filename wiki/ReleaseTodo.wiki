@@ -2,8 +2,7 @@
 
 == Todo ==
   * Add expiration seconds into Comm header
-  * Add file location map to DfsClient API
-  * !RangeServer: !CommitLog garbage collection
+  * Add file location map to !DfsClient API
   * !RangeServer: Add Phantom updates
   * !RangeServer: Fix block checksum
   * !RangeServer: Implement !InMemory access groups
@@ -23,6 +22,7 @@
   * Integration Testing
 
 == Done ==
+  * !RangeServer: !CommitLog garbage collection
   * !RangeServer: Add scanner reaper
   * !RangeServer: Add destroy_scanner method
   * !RangeServer: Fix timestamp issue.  In !RangeServer::update the updateTimestamp is obtained from the commit log, but the splitStartTime is obtain from the updates and they are compared against one another (updateTimestamp > splitStartTime).  Also, clientTimestamp value does not appear to be used in !RangeServer::update
