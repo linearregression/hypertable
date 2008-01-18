@@ -1,6 +1,8 @@
 =Necessary "to do" items for the first release=
 
 == Todo ==
+  * Add expiration seconds into Comm header
+  * Add file location map to DfsClient API
   * !RangeServer: !CommitLog garbage collection
   * !RangeServer: Add Phantom updates
   * !RangeServer: Fix block checksum
