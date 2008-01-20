@@ -31,7 +31,8 @@ The query log was sorted by timestamp. Each line of the query log could generate
 
 ==Insert Test==
 {{{
-NOTE: The Hypertable Range Servers were configured to write to a local commit log since HDFS currently does not support a sync (or flush) operation.  This will have an inflationary effect on the performance numbers.
+NOTE: The Hypertable Range Servers were configured to write to a local commit log since HDFS currently does not support a sync (or flush) operation.  
+      This will have an inflationary effect on the performance numbers.
 }}}
 Eight machines (motherlode001-motherlode008) were used to run both HDFS (version 0.14.4) and Hypertable. The Hypertable master and Hyperspace (Chubby) were run on motherlode001. HDFS was configured to use only three of the four available drives on each machine and was configured with 3-way replication. The log was sorted by timestamp and split into 5 pieces (a.tsv, b.tsv, c.tsv, d.tsv, e.tsv. Two separate machines (motherlode000 and motherlode009) were used to run insert clients. The following HQL commands were started more-or-less simultaneously:
 {{{
