@@ -1,6 +1,8 @@
 =Necessary "to do" items for the first release=
 
 == Todo ==
+  * Add collision warning and memory deallocation
+  * Change errors to warnings when searching for files. attributes of /hypertable/root
   * Add expiration seconds into Comm header
   * !RangeServer: Add Phantom updates
   * !RangeServer: Fix block checksum
