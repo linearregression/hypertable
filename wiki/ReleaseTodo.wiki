@@ -3,7 +3,6 @@
 == Todo ==
   * Don't assign timestamps to updates that are split off
   * Add expiration seconds into Comm header
-  * Add file location map to !DfsClient API
   * !RangeServer: Add Phantom updates
   * !RangeServer: Fix block checksum
   * !RangeServer: Implement !InMemory access groups
@@ -37,3 +36,4 @@
   * Refactor so that schema can get updated on change (overhaul !TableInfo)
   * Add range merging
   * Clean up generate_test_data (have it generate timestamps formatted propertly and modify !LoadDataSource to consume it).
+  * Add file location map to !DfsClient API
