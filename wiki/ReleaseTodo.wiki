@@ -1,7 +1,6 @@
 =Necessary "to do" items for the first release=
 
 == Todo ==
-  * Don't assign timestamps to updates that are split off
   * Add expiration seconds into Comm header
   * !RangeServer: Add Phantom updates
   * !RangeServer: Fix block checksum
