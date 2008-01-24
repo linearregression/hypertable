@@ -1,11 +1,11 @@
 =Necessary "to do" items for the first release=
 
 == Todo ==
+  * !RangeServer: Implement !InMemory access groups
+  * !RangeServer: Add logic to prevent root METADATA range from splitting
   * Add expiration seconds into Comm header
   * !RangeServer: Add Phantom updates
   * !RangeServer: Fix block checksum
-  * !RangeServer: Implement !InMemory access groups
-  * !RangeServer: Add logic to prevent root METADATA range from splitting
   * !RangeServer: Add drop_table command
   * Serialization.  Make sure all integral types that get sent of the network or persisted n disk get serialized properly (little endian).  Make sure byte order swapping for timestamp happens properly on all architectures
   * !CommitLog cleanup.  !CommitLog reader should sanity check each block header and !CommitLogReader should be able to throw errors
