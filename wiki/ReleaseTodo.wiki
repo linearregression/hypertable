@@ -1,8 +1,6 @@
 =Necessary "to do" items for the first release=
 
 == Todo ==
-  * !RangeServer: Implement !InMemory access groups
-  * !RangeServer: Add logic to prevent root METADATA range from splitting
   * Add expiration seconds into Comm header
   * !RangeServer: Add Phantom updates
   * !RangeServer: Fix block checksum
@@ -21,6 +19,8 @@
   * Integration Testing
 
 == Done ==
+  * !RangeServer: Implement !InMemory access groups
+  * !RangeServer: Add logic to prevent root METADATA range from splitting
   * Add collision warning and memory deallocation
   * Change errors to warnings when searching for files. attributes of /hypertable/root
   * !RangeServer: !CommitLog garbage collection
