@@ -1,4 +1,3 @@
-# a simple tutorial for Hypertable Query Language (HQL)
 
 ==CONTENTS==
 
