@@ -15,7 +15,6 @@ git clone git://scm.hypertable.org/pub/repos/hypertable.git
 This git repository represents the most up-to-date version of the source code.  We push changes into this repository only if all of the regression tests pass.  To update your local git repository (created with the above command) with the latest changes, issue the following commands:
 {{{
 cd ~/src/hypertable
-git fetch && git rebase origin 
-# with git 1.5.4+ you can just use: git pull --rebase
+git pull
 
 }}}
