@@ -1,4 +1,3 @@
-
 ==CONTENTS==
 
   * SETUP
@@ -293,8 +292,7 @@ After killing the servers via `kill-servers.sh` your tables and data are no long
 You can fire up an interactive session and use the `source` command:
 
 {{{
-hypertable> source examples/Pages-create.hql
-
+hypertable> source examples/Pages-create.hql 
 
 Loading  10,872,962 bytes of input data...
 
@@ -303,25 +301,24 @@ Loading  10,872,962 bytes of input data...
 ***************************************************
 Load complete.
 
-  Elapsed time:  4.52 s
+  Elapsed time:  5.71 s
 Avg value size:  18.51 bytes
   Avg key size:  48.70 bytes
-    Throughput:  2406022.40 bytes/s
+    Throughput:  1905283.61 bytes/s
  Total inserts:  200000
-    Throughput:  44256.98 inserts/s
+    Throughput:  35046.27 inserts/s
        Resends:  0
+
 }}}
 
 Alternatively, to avoid opening up an interactive session you can use the --batch command:
 
 {{{
-codeslinger:~/hypertable>  bin/hypertable --batch < examples/Pages-create.hql
+codeslinger:~/hypertable>  bin/hypertable --batch < examples/Pages-create.hql 
 CREATE TABLE Pages (
 "refer-url",
 "http-code",
-timestamp,
-rowkey,
-ACCESS GROUP default ( "refer-url", "http-code", timestamp, rowkey )
+ACCESS GROUP default ( "refer-url", "http-code" )
 );
 load data infile ROW_KEY_COLUMN=rowkey TIMESTAMP_COLUMN=timestamp "examples/access.tsv" into table Pages;
 
@@ -332,13 +329,14 @@ Loading  10,872,962 bytes of input data...
 ***************************************************
 Load complete.
 
-  Elapsed time:  4.54 s
+  Elapsed time:  5.42 s
 Avg value size:  18.51 bytes
   Avg key size:  48.70 bytes
-    Throughput:  2393201.81 bytes/s
+    Throughput:  2005246.89 bytes/s
  Total inserts:  200000
-    Throughput:  44021.16 inserts/s
+    Throughput:  36885.02 inserts/s
        Resends:  0
+
 }}}
 
 You can examine the file in `examples/Pages-create.hql` to verify that it's just a batch of HQL commands.
