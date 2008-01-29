@@ -79,10 +79,10 @@ The file is under `examples/access.tsv` and you'll need to unzip it first if it'
 First, we need to create a table to hold the data from our simplified access log -- we'll call it `Pages`:
 
 {{{
-hypertable> create table Pages (rowkey, timestamp, "refer-url", "http-code");
+hypertable> create table Pages ("refer-url", "http-code");
 }}}
 
-Notice that for column names that contain a dash (or any non-alphanumeric character) must be enclosed in quotes. Now, issue the `SHOW CREATE TABLE` command to make sure you got everything right.
+Column names that contain a dash or any non-alphanumeric character (e.g. "refer-url") must be enclosed in quotes. Now, issue the `SHOW CREATE TABLE` command to make sure you got everything right.
 
 {{{
 hypertable> show create table Pages;
@@ -90,9 +90,7 @@ hypertable> show create table Pages;
 CREATE TABLE Pages (
   'refer-url',
   'http-code',
-  timestamp,
-  rowkey,
-  ACCESS GROUP default ( 'refer-url', 'http-code', timestamp, rowkey )
+  ACCESS GROUP default ( 'refer-url', 'http-code' )
 )
 
 }}}
@@ -110,12 +108,6 @@ hypertable> describe table Pages;
     </ColumnFamily>
     <ColumnFamily id="2">
       <Name>http-code</Name>
-    </ColumnFamily>
-    <ColumnFamily id="3">
-      <Name>timestamp</Name>
-    </ColumnFamily>
-    <ColumnFamily id="4">
-      <Name>rowkey</Name>
     </ColumnFamily>
   </AccessGroup>
 </Schema>
