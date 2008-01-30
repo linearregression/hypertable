@@ -55,11 +55,30 @@ Avg value size:  15.25 bytes
  Total inserts:  14825279
     Throughput:  103039.68 inserts/s
 
-Load complete (123.15s elapsed_time, 3648447.92 bytes/s, 174734.76 inserts/s)
-Load complete (122.53s elapsed_time, 3753462.68 bytes/s, 179500.59 inserts/s)
-Load complete (135.30s elapsed_time, 3400584.49 bytes/s, 163452.11 inserts/s)
-Load complete (129.63s elapsed_time, 3519437.73 bytes/s, 168523.38 inserts/s)
+  Elapsed time:  144.80 s
+Avg value size:  15.26 bytes
+  Avg key size:  7.11 bytes
+    Throughput:  2163621.98 bytes/s
+ Total inserts:  15185349
+    Throughput:  104871.25 inserts/s
+
+  Elapsed time:  150.32 s
+Avg value size:  15.20 bytes
+  Avg key size:  7.03 bytes
+    Throughput:  2080001.83 bytes/s
+ Total inserts:  15208310
+    Throughput:  101173.45 inserts/s
+
+  Elapsed time:  148.21 s
+Avg value size:  15.22 bytes
+  Avg key size:  7.11 bytes
+    Throughput:  2095660.00 bytes/s
+ Total inserts:  15080926
+    Throughput:  101754.55 inserts/s
+       Resends:  170774
+
 }}}
+
 Aggregating the numbers yields 14,321,932.82 bytes/s and 686,210.84 inserts/s. NOTE: The file 'e.tsv' was inserted afterwards, separately.
 
 ==Query Test==
@@ -75,13 +94,13 @@ And here is the result of the timed execution ...
 {{{
 $ time /data1/doug/hypertable/bin/hypertable --batch --timestamp-format=usecs < dump-query-log.hql > /dev/null
 
-real    1m11.769s
-user    0m52.033s
-sys     0m11.891s
+real    1m52.149s
+user    1m30.203s
+sys     0m22.025s
 
-66,131,782 cells / 72 s == 918,497 cells/s
+75,274,825 / 112.149 s == 671,094 cells/s
 }}}
 
 ==Summary==
 
-The AOL query logs were inserted into an 8-node Hypertable cluster. The average size of values inserted was ~19 bytes. The insert rate (with 4 simultaneous insert processes) was approximately 686K inserts/s. The table was scanned at a rate of approximately 918K cells/s. 
+The AOL query logs were inserted into an 8-node Hypertable cluster. The average size of values inserted was ~19 bytes. The insert rate (with 4 simultaneous insert processes) was approximately 686K inserts/s. The table was scanned at a rate of approximately 918K cells/s.
