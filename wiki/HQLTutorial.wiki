@@ -72,7 +72,7 @@ the preceeding list.
 
 For this example we're working with a simplified access log that contains four columns: the url for a page access on one of our hosts, a `timestamp` field in the required format (e.g. _'YYYY-MM-DD hh:mm:ss'_), the referrer's url, and an http code. There are 100,000 records in the file.
 
-The file is under `examples/access.tsv` and you'll need to unzip it first if it's still compressed. _NOTE: `LOAD DATA INFILE` will a compressed file option soon._
+The file is under `examples/hql_tutorial/access.tsv` and you'll need to unzip it first if it's still compressed. _NOTE: `LOAD DATA INFILE` will a compressed file option soon._
 
 ==CREATE TABLE==
 
@@ -115,10 +115,10 @@ hypertable> describe table Pages;
 
 ===LOAD DATA INFILE===
 
-Now, let's load some data using the MySQL-like TAB delimited format (TSV). For that, we assume you have the example data in `examples/access.tsv`. This format includes a single header line that gives `column_family_names` (no `column_qualifiers` supported for this format yet). For the example, our data file has header:
+Now, let's load some data using the MySQL-like TAB delimited format (TSV). For that, we assume you have the example data in `examples/hql_tutorial/access.tsv`. This format includes a single header line that gives `column_family_names` (no `column_qualifiers` supported for this format yet). For the example, our data file has header:
 
 {{{
-codeslinger:~/hypertable>  head -2 examples/access.tsv
+codeslinger:~/hypertable>  head -2 examples/hql_tutorial/access.tsv
 
 # rowkey        timestamp       refer-url       http-code
 events.mercurynews.com/venues   2008-01-25 15:19:32     events.mercurynews.com/search   200
@@ -132,7 +132,7 @@ _Reminder: you'll need to unzip it first if it's still compressed._
 So, now we load it:
 
 {{{
-hypertable> load data infile ROW_KEY_COLUMN=rowkey TIMESTAMP_COLUMN=timestamp "examples/access.tsv" into table Pages;
+hypertable> load data infile ROW_KEY_COLUMN=rowkey TIMESTAMP_COLUMN=timestamp "examples/hql_tutorial/access.tsv" into table Pages;
 
 Loading  10,872,962 bytes of input data...
 
@@ -156,7 +156,7 @@ Notice, we used the options to specify our own _row key_ and _timestamp_. That w
 Also, make sure you don't skip over an important utility for converting these more standard formatted files into insert files used by hypertable client programs:
 
 {{{
-hypertable> load data infile ROW_KEY_COLUMN=rowkey TIMESTAMP_COLUMN=timestamp "examples/access.tsv" into file "test.tsv";
+hypertable> load data infile ROW_KEY_COLUMN=rowkey TIMESTAMP_COLUMN=timestamp "examples/hql_tutorial/access.tsv" into file "test.tsv";
 
 Loading  10,872,962 bytes of input data...
 
@@ -248,33 +248,44 @@ hypertable> select "http-code" from Pages where ROW >= "www.zvents.com/events/bu
 2008-01-25 11:26:02.000000000   www.zvents.com/events/buy_tickets/80283482      http-code       200
 }}}
 
-===INSERT AND DELETE===
+===INSERT & DELETE===
 
-Though it's unlikely to be needed in interactive mode let's do a quick demonstration of `INSERT`:
+Though it's unlikely to be needed in interactive mode let's do a quick demonstration of `INSERT`. The key to remember is that hypertable data is versioned by time stamp and that you can either set the time stamp on insert or accept the default based on your current system time. Delete operations also have a time stamp and the delete operates on all data occurring at the time stamp or *_before_*.
 
-{{{
-hypertable> insert into Pages values ('2010-01-01 23:59:59', "www.hypertable.org", "refer-url", "www.zvents.com");
-}}}
-
-Now, check to see if it's there with `SELECT`:
+For example, let's `INSERT` some data in the past and issue a select command to verify the data:
 
 {{{
+hypertable> insert into Pages values ('2006-01-01 23:59:59', "www.hypertable.org", "refer-url", "www.zvents.com");
 hypertable> select * from Pages where ROW = "www.hypertable.org";
-2010-01-01 23:59:59.000000000   www.hypertable.org      refer-url       www.zvents.com
+2006-01-01 23:59:59.000000000   www.hypertable.org      refer-url       www.zvents.com
 }}}
 
-And, clean up with `DELETE`:
+Now, let's do a `DELETE` with the default time stamp and verify that's it deleted using a `SELECT`:
 
 {{{
-hypertable> delete * from Pages where ROW = "www.hypertable.org" TIMESTAMP '2010-01-02 23:59:59';
-delete: row='www.hypertable.org' family=0 ts=1262505599000000001
-}}}
-
-Check to make sure the record is gone:
-
-{{{
+hypertable> delete * from Pages where ROW = "www.hypertable.org";
+delete: row='www.hypertable.org' family=0 ts=0
 hypertable> select * from Pages where ROW = "www.hypertable.org";
 }}}
+
+Now, we'll `INSERT` some data far into the future (as of this tutorial) and verify that it survives the `DELETE`:
+
+{{{
+hypertable> insert into Pages values ('2037-01-01 23:59:59', "www.hypertable.org", "refer-url", "www.zvents.com");
+hypertable> delete * from Pages where ROW = "www.hypertable.org";
+delete: row='www.hypertable.org' family=0 ts=0
+hypertable> select * from Pages where ROW = "www.hypertable.org";
+2037-01-01 23:59:59.000000000   www.hypertable.org      refer-url       www.zvents.com
+}}}
+
+Now, let's get rid of it with `DELETE` time stamped further into the future:
+
+{{{
+hypertable> delete * from Pages where ROW = "www.hypertable.org" TIMESTAMP '2038-01-01 23:59:59';
+delete: row='www.hypertable.org' family=0 ts=2146031999000000001
+hypertable> select * from Pages where ROW = "www.hypertable.org";
+}}}
+
 
 ===BATCH MODE AND SOURCE===
 
@@ -284,7 +295,7 @@ After killing the servers via `kill-servers.sh` your tables and data are no long
 You can fire up an interactive session and use the `source` command:
 
 {{{
-hypertable> source examples/Pages-create.hql 
+hypertable> source examples/hql_tutorial/Pages-create.hql 
 
 Loading  10,872,962 bytes of input data...
 
@@ -306,13 +317,13 @@ Avg value size:  18.51 bytes
 Alternatively, to avoid opening up an interactive session you can use the --batch command:
 
 {{{
-codeslinger:~/hypertable>  bin/hypertable --batch < examples/Pages-create.hql 
+codeslinger:~/hypertable>  bin/hypertable --batch < examples/hql_tutorial/Pages-create.hql 
 CREATE TABLE Pages (
 "refer-url",
 "http-code",
 ACCESS GROUP default ( "refer-url", "http-code" )
 );
-load data infile ROW_KEY_COLUMN=rowkey TIMESTAMP_COLUMN=timestamp "examples/access.tsv" into table Pages;
+load data infile ROW_KEY_COLUMN=rowkey TIMESTAMP_COLUMN=timestamp "examples/hql_tutorial/access.tsv" into table Pages;
 
 Loading  10,872,962 bytes of input data...
 
@@ -331,4 +342,4 @@ Avg value size:  18.51 bytes
 
 }}}
 
-You can examine the file in `examples/Pages-create.hql` to verify that it's just a batch of HQL commands.
+You can examine the file in `examples/hql_tutorial/Pages-create.hql` to verify that it's just a batch of HQL commands.
