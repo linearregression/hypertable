@@ -79,7 +79,7 @@ The file is under `examples/hql_tutorial/access.tsv` and you'll need to unzip it
 First, we need to create a table to hold the data from our simplified access log -- we'll call it `Pages`:
 
 {{{
-hypertable> create table Pages ("refer-url", "http-code");
+hypertable> create table Pages ( date, "refer-url", "http-code");
 }}}
 
 Column names that contain a dash or any non-alphanumeric character (e.g. "refer-url") must be enclosed in quotes. Now, issue the `SHOW CREATE TABLE` command to make sure you got everything right.
@@ -90,6 +90,7 @@ hypertable> show create table Pages;
 CREATE TABLE Pages (
   'refer-url',
   'http-code',
+  date,
   ACCESS GROUP default ( 'refer-url', 'http-code' )
 )
 
@@ -109,8 +110,12 @@ hypertable> describe table Pages;
     <ColumnFamily id="2">
       <Name>http-code</Name>
     </ColumnFamily>
+    <ColumnFamily id="3">
+      <Name>date</Name>
+    </ColumnFamily>
   </AccessGroup>
 </Schema>
+
 }}}
 
 ===LOAD DATA INFILE===
@@ -118,13 +123,12 @@ hypertable> describe table Pages;
 Now, let's load some data using the MySQL-like TAB delimited format (TSV). For that, we assume you have the example data in `examples/hql_tutorial/access.tsv`. This format includes a single header line that gives `column_family_names` (no `column_qualifiers` supported for this format yet). For the example, our data file has header:
 
 {{{
-codeslinger:~/hypertable>  head -2 examples/hql_tutorial/access.tsv
-
-# rowkey        timestamp       refer-url       http-code
+# rowkey        date    refer-url       http-code
 events.mercurynews.com/venues   2008-01-25 15:19:32     events.mercurynews.com/search   200
 www.zvents.com/events/auto_complete_for_artist_name     2008-01-25 15:19:32     www.zvents.com/indio-ca/events/show/81296496-coachella  200
 calendar.denverpost.com/search  2008-01-25 15:19:32     calendar.denverpost.com/search  200
 www.zvents.com/search   2008-01-25 15:19:32     www.zvents.com/search   200
+
 }}}
 
 _Reminder: you'll need to unzip it first if it's still compressed._
@@ -132,61 +136,60 @@ _Reminder: you'll need to unzip it first if it's still compressed._
 So, now we load it:
 
 {{{
-hypertable> load data infile ROW_KEY_COLUMN=rowkey TIMESTAMP_COLUMN=timestamp "examples/hql_tutorial/access.tsv" into table Pages;
+hypertable> load data infile ROW_KEY_COLUMN=rowkey "examples/hql_tutorial/access.tsv" into table Pages;
 
-Loading  10,872,962 bytes of input data...
+Loading  10,872,957 bytes of input data...
 
 0%   10   20   30   40   50   60   70   80   90   100%
 |----|----|----|----|----|----|----|----|----|----|
 ***************************************************
 Load complete.
 
-  Elapsed time:  4.53 s
-Avg value size:  18.51 bytes
+  Elapsed time:  6.00 s
+Avg value size:  18.68 bytes
   Avg key size:  48.70 bytes
-    Throughput:  2400183.75 bytes/s
- Total inserts:  200000
-    Throughput:  44149.58 inserts/s
+    Throughput:  1811875.04 bytes/s
+ Total inserts:  300000
+    Throughput:  49992.15 inserts/s
        Resends:  0
+
 }}}
 
-
-Notice, we used the options to specify our own _row key_ and _timestamp_. That will be useful for our `SELECT` and `DELETE` examples.
 
 Also, make sure you don't skip over an important utility for converting these more standard formatted files into insert files used by hypertable client programs:
 
 {{{
-hypertable> load data infile ROW_KEY_COLUMN=rowkey TIMESTAMP_COLUMN=timestamp "examples/hql_tutorial/access.tsv" into file "test.tsv";
+hypertable> load data infile ROW_KEY_COLUMN=rowkey "examples/hql_tutorial/access.tsv" into file "test.tsv";
 
-Loading  10,872,962 bytes of input data...
+Loading  10,872,957 bytes of input data...
 
 0%   10   20   30   40   50   60   70   80   90   100%
 |----|----|----|----|----|----|----|----|----|----|
 ***************************************************
 Load complete.
 
-  Elapsed time:  2.99 s
-Avg value size:  18.51 bytes
+  Elapsed time:  2.41 s
+Avg value size:  18.68 bytes
   Avg key size:  48.70 bytes
-    Throughput:  3630496.14 bytes/s
- Total inserts:  200000
-    Throughput:  66780.26 inserts/s
+    Throughput:  4513692.45 bytes/s
+ Total inserts:  300000
+    Throughput:  124539.05 inserts/s
 }}}
 
 And, now we have a new file, `test.tsv`, with the fully specified hypertable insert format which illustrates the fundamental key/value sparse representation of our data (which would be more clear if we were using `column_qualifiers`)
 
 {{{
-codeslinger:~/hypertable>  head -10 test.tsv
-timestamp       rowkey  columnkey       value
-1201274372000000000     events.mercurynews.com/venues   refer-url       events.mercurynews.com/search
-1201274372000000000     events.mercurynews.com/venues   http-code       200
-1201274372000000000     www.zvents.com/events/auto_complete_for_artist_name     refer-url       www.zvents.com/indio-ca/events/show/81296496-coachella
-1201274372000000000     www.zvents.com/events/auto_complete_for_artist_name     http-code       200
-1201274372000000000     calendar.denverpost.com/search  refer-url       calendar.denverpost.com/search
-1201274372000000000     calendar.denverpost.com/search  http-code       200
-1201274372000000000     www.zvents.com/search   refer-url       www.zvents.com/search
-1201274372000000000     www.zvents.com/search   http-code       200
-1201274374000000000     events.newsherald.com/events/show/81138187      refer-url       events.newsherald.com/venues
+codeslinger:~/hypertable>  head -10 test.tsv 
+rowkey  columnkey       value
+events.mercurynews.com/venues   date    2008-01-25 15:19:32
+events.mercurynews.com/venues   refer-url       events.mercurynews.com/search
+events.mercurynews.com/venues   http-code       200
+www.zvents.com/events/auto_complete_for_artist_name     date    2008-01-25 15:19:32
+www.zvents.com/events/auto_complete_for_artist_name     refer-url       www.zvents.com/indio-ca/events/show/81296496-coachella
+www.zvents.com/events/auto_complete_for_artist_name     http-code       200
+calendar.denverpost.com/search  date    2008-01-25 15:19:32
+calendar.denverpost.com/search  refer-url       calendar.denverpost.com/search
+calendar.denverpost.com/search  http-code       200
 }}}
 
 ===SELECT===
