@@ -3,18 +3,18 @@ _*NOTE: These performance numbers have been downward revised since Rich Skrenta 
 ==The Data (AOL Query log)==
 Here's an example of what the AOL query log data looks like:
 {{{
-QueryTime     AnonID    Query   ItemRank        ClickURL
-2006-03-01 00:02:52     1636218 www.airtime500.com      2       http://www.airtime500.com
-2006-03-01 00:03:04     2272416 theunorthodoxjew.blogspot.com   1       http://theunorthodoxjew.blogspot.com
-2006-03-01 00:03:05     172627  www.yahoolagins.com
-2006-03-01 00:03:08     2569723 www.homesforsale
-2006-03-01 00:03:23     1196769 zip codes       1       http://www.usps.com
-2006-03-01 00:03:31     724416  propertytaxsales.com
-2006-03-01 00:03:32     30011   schwab learning 1       http://www.schwablearning.org
+AnonID  Query   ItemRank        ClickURL
+1636218 www.airtime500.com      2       http://www.airtime500.com
+2272416 theunorthodoxjew.blogspot.com   1       http://theunorthodoxjew.blogspot.com
+172627  www.yahoolagins.com
+2569723 www.homesforsale
+1196769 zip codes       1       http://www.usps.com
+724416  propertytaxsales.com
+30011   schwab learning 1       http://www.schwablearning.org
 [...]
 }}}
 
-The key used was the AnonID. !QueryTime was used for the timestamp. The Query, !ItemRank, and ClickURL, columns were inserted into a table that was created with the following HQL command:
+The row key used was the AnonID. The Query, !ItemRank, and ClickURL, columns were inserted into a table that was created with the following HQL command:
 {{{
 CREATE TABLE "query-log" (
 Query,
@@ -23,7 +23,7 @@ ClickURL
 );
 }}}
 
-The query log was sorted by timestamp. Each line of the query log could generate from 1 to 3 inserts, depending on how many column values were present. After the entire log was inserted, the table contained 66,131,782 cells. On average, the size of each row key was about 7 bytes and the size of each value inserted was 15 bytes.
+The query log was sorted by timestamp. Each line of the query log could generate from 1 to 3 inserts, depending on how many column values were present. After the entire log was inserted, the table contained 75,274,825 cells. On average, the size of each row key was about 7 bytes and the size of each value inserted was 15 bytes.
 
 ==Machine Profile==
 
@@ -38,12 +38,12 @@ NOTE: The Hypertable Range Servers were configured to write to a local commit lo
 Eight machines (motherlode001-motherlode008) were used to run both HDFS (version 0.14.4) and Hypertable. The Hypertable master and Hyperspace (Chubby) were run on motherlode001. HDFS was configured to use only three of the four available drives on each machine and was configured with 3-way replication. The log was sorted by timestamp and split into 5 pieces (a.tsv, b.tsv, c.tsv, d.tsv, e.tsv. Two separate machines (motherlode000 and motherlode009) were used to run insert clients. The following HQL commands were started more-or-less simultaneously:
 {{{
 motherlode000:
-LOAD DATA INFILE ROW_KEY_COLUMN=AnonID TIMESTAMP_COLUMN=QueryTime 'a.tsv' INTO TABLE "query-log";
-LOAD DATA INFILE ROW_KEY_COLUMN=AnonID TIMESTAMP_COLUMN=QueryTime 'b.tsv' INTO TABLE "query-log";
+LOAD DATA INFILE ROW_KEY_COLUMN=AnonID 'a.tsv' INTO TABLE "query-log";
+LOAD DATA INFILE ROW_KEY_COLUMN=AnonID 'b.tsv' INTO TABLE "query-log";
 
 motherlode009:
-LOAD DATA INFILE ROW_KEY_COLUMN=AnonID TIMESTAMP_COLUMN=QueryTime 'c.tsv' INTO TABLE "query-log";
-LOAD DATA INFILE ROW_KEY_COLUMN=AnonID TIMESTAMP_COLUMN=QueryTime 'd.tsv' INTO TABLE "query-log";
+LOAD DATA INFILE ROW_KEY_COLUMN=AnonID 'c.tsv' INTO TABLE "query-log";
+LOAD DATA INFILE ROW_KEY_COLUMN=AnonID 'd.tsv' INTO TABLE "query-log";
 }}}
 These four insert jobs completed with the following stats: 
 
@@ -75,11 +75,9 @@ Avg value size:  15.22 bytes
     Throughput:  2095660.00 bytes/s
  Total inserts:  15080926
     Throughput:  101754.55 inserts/s
-       Resends:  170774
-
 }}}
 
-Aggregating the numbers yields 14,321,932.82 bytes/s and 686,210.84 inserts/s. NOTE: The file 'e.tsv' was inserted afterwards, separately.
+Aggregating the numbers yields 410,838.93 random inserts/s. NOTE: The file 'e.tsv' was inserted afterwards, separately.
 
 ==Query Test==
 The file 'dump-query-log.hql' contained the following lines:
@@ -103,4 +101,4 @@ sys     0m22.025s
 
 ==Summary==
 
-The AOL query logs were inserted into an 8-node Hypertable cluster. The average size of values inserted was ~19 bytes. The insert rate (with 4 simultaneous insert processes) was approximately 686K inserts/s. The table was scanned at a rate of approximately 918K cells/s.
+The AOL query logs were inserted into an 8-node Hypertable cluster. The average size of each row key was ~7 bytes and each value was ~15 bytes. The insert rate (with 4 simultaneous insert processes) was approximately 410K inserts/s. The table was scanned at a rate of approximately 671K cells/s.
