@@ -133,7 +133,9 @@ www.zvents.com/search   2008-01-25 15:19:32     www.zvents.com/search   200
 
 _Reminder: you'll need to unzip it first if it's still compressed._
 
-So, now we load it:
+====LOAD DATA INFILE (INTO TABLE)====
+
+So, now we load it into our Pages table:
 
 {{{
 hypertable> load data infile ROW_KEY_COLUMN=rowkey "examples/hql_tutorial/access.tsv" into table Pages;
@@ -155,6 +157,7 @@ Avg value size:  18.68 bytes
 
 }}}
 
+====LOAD DATA INFILE (INTO FILE)====
 
 Also, make sure you don't skip over an important utility for converting these more standard formatted files into insert files used by hypertable client programs:
 
