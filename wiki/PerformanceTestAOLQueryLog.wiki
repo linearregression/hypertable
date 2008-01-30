@@ -1,3 +1,5 @@
+_*NOTE: These performance numbers have been downward revised since Rich Skrenta reported them on January 15th, 2008*_
+
 ==The Data (AOL Query log)==
 Here's an example of what the AOL query log data looks like:
 {{{
