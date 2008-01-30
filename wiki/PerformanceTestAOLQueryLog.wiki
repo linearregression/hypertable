@@ -23,7 +23,7 @@ ClickURL
 );
 }}}
 
-The query log was sorted by timestamp. Each line of the query log could generate from 1 to 3 inserts, depending on how many column values were present. After the entire log was inserted, the table contained 66,131,782 cells. On average, the size of each value inserted was 19 bytes.
+The query log was sorted by timestamp. Each line of the query log could generate from 1 to 3 inserts, depending on how many column values were present. After the entire log was inserted, the table contained 66,131,782 cells. On average, the size of each row key was about 7 bytes and the size of each value inserted was 15 bytes.
 
 ==Machine Profile==
 
@@ -48,6 +48,13 @@ LOAD DATA INFILE ROW_KEY_COLUMN=AnonID TIMESTAMP_COLUMN=QueryTime 'd.tsv' INTO T
 These four insert jobs completed with the following stats: 
 
 {{{
+  Elapsed time:  143.88 s
+Avg value size:  15.25 bytes
+  Avg key size:  7.10 bytes
+    Throughput:  2125750.02 bytes/s
+ Total inserts:  14825279
+    Throughput:  103039.68 inserts/s
+
 Load complete (123.15s elapsed_time, 3648447.92 bytes/s, 174734.76 inserts/s)
 Load complete (122.53s elapsed_time, 3753462.68 bytes/s, 179500.59 inserts/s)
 Load complete (135.30s elapsed_time, 3400584.49 bytes/s, 163452.11 inserts/s)
