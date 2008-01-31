@@ -1,0 +1,12 @@
+
+== Reference Articles from Wikipedia ==
+
+[http://en.wikipedia.org/wiki/Google_File_System Google File System]
+
+[http://en.wikipedia.org/wiki/MapReduce Google's Map/Reduce Framework]
+
+[http://en.wikipedia.org/wiki/BigTable Bigtable]
+
+== Interesting Applications and Talks ==
+
+[http://www.youtube.com/watch?v=ZW5_eEKEC28 YouTube Scalability Talk by Cuong Do]
