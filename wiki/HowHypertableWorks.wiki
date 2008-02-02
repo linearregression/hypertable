@@ -26,7 +26,7 @@ Timestamped versions of the Zebra row might look something like this:
 
 || time || key || tag:striped || tag:fourlegs || tag:velvet || tag:male || tag:comfortable || review:joey || review:susan || price:US || price:EU
 || t=1 || Zebra || 803 || 212 || 0 || 6 || 9 || "I like my zebra" || "" || 25.00 || 20.00
-|| t=2 || Zebra || 804 ||  ||  ||  ||  || "I like my zebra" ||  ||  || 
+|| t=2 || Zebra || 804 ||  ||  ||  ||  ||  ||  ||  || 
 || t=3 || Zebra ||  || 216 || 1 ||  ||  || "I REALLY like my zebra" ||  ||  || 
 || t=4 || Zebra ||  ||  ||  ||  ||  ||  ||  || 24.99 || 19.99
 
