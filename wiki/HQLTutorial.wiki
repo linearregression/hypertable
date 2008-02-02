@@ -1,4 +1,4 @@
-#A brief introduction to Hypertable Query Language (HQL)
+#summary A brief introduction to Hypertable Query Language (HQL)
 
 ==CONTENTS==
 
