@@ -1,4 +1,4 @@
-#summary Articles and references for hypertable and related projects
+#summary Articles and references for Hypertable and related projects
 
 == Reference Articles from Wikipedia ==
 
