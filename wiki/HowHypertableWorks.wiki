@@ -31,7 +31,7 @@ Timestamped versions of the Zebra row might look something like this:
 || t=4 || Zebra ||  ||  ||  ||  ||  ||  ||  || 24.99 || 19.99 ||
 
 So at t=4, if the Zebra row would have the values
-|| t=4 || Zebra || 804 || 216 || 1 || 6 || 9 || "I REALLY like my zebra" || "" || 24.99 || 19.99 ||
+|| t=4 || Zebra || 804 || 216 || 1 || 6 || 9 || "I REALLY like my zebra" ||  || 24.99 || 19.99 ||
 
 
 Random updates are handled really efficiently in Hypertable through use of Cell Caches and Cell Stores.  A Range is actually made up of many Cell Stores.  All the rows within a cell store are sorted by the row identifier.  When a write occurs to Hypertable, the information is written to a commit log in the DFS and then stored in memory in a Cell Cache.  When the Cell Cache hits its size limit it is compacted and written out to disk as a cell store.  Cell stores end up being non-contiguous, so a Heap Merge scanner is responsible for aggregating the key/value pairs in the cell cache and cell stores and returning them in sorted order.  When the range hits a cell store limit, a heap merge runs and compacts many cell stores into a single one.  In the ideal case, each Range ends up holding only a single Cell Store.
