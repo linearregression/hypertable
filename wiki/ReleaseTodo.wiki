@@ -19,6 +19,7 @@
   * Integration Testing
 
 == Done ==
+  * !RangeServer: Add drop_table command
   * !RangeServer: Implement !InMemory access groups
   * !RangeServer: Add logic to prevent root METADATA range from splitting
   * Add collision warning and memory deallocation
