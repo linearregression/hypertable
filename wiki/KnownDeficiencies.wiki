@@ -2,7 +2,8 @@
 
 == Release 0.9.x beta ==
 || *Deficiency* || Status ||
-|| !RangeServer recovery not implemented || This is the *highest* priority issue and is actively being worked on now.  It will be available soon in an upcoming "dot release"  ||
+|| !RangeServer recovery not implemented || This is the *highest* priority issue
+ and is actively being worked on now.  It will be available soon in an upcoming "dot release"  ||
 
 
 
