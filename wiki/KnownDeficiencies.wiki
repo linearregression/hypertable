@@ -3,5 +3,7 @@
 This document describes the known deficiencies in each release
 
 = Release 0.9.x beta =
-  * RangeServer recovery is not implemented.  This is the *highest* priority issue and is actively being worked on now.  It will be available soon in an upcoming "dot release"
+  * !RangeServer recovery is not implemented.  This is the *highest* priority issue and is actively being worked on now.  It will be available soon in an upcoming "dot release"
   * System is not endian-neutral.  In other words, it won't work in a heterogeneous environment.
+  * Hyperspace is currently single server.  The plan is to make Hyperspace a multi-server service using a consensus protocol.
+  * 
