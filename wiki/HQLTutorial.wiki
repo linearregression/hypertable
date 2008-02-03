@@ -203,27 +203,28 @@ Now, let's use the `SELECT` command to examine our data a bit -- let's start by 
 
 {{{
 hypertable> select "refer-url" from Pages where ROW = "www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin";
-2008-01-25 11:26:13.000000000   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       refer-url       www.google.com/search
-2008-01-25 11:25:50.000000000   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       refer-url       www.google.com/search
-2008-01-25 10:02:43.000000000   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       refer-url       www.zvents.com/search
-2008-01-25 08:29:31.000000000   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       refer-url       www.google.com/search
-2008-01-25 08:20:04.000000000   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       refer-url       www.google.com/search
-2008-01-25 08:12:29.000000000   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       refer-url       www.google.com/search
+2008-02-02 15:53:02.573496124   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       refer-url       www.google.com/search
+2008-02-02 15:53:02.573496122   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       refer-url       www.google.com/search
+2008-02-02 15:53:01.673853169   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       refer-url       www.zvents.com/search
+2008-02-02 15:53:00.073333232   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       refer-url       www.google.com/search
+2008-02-02 15:53:00.073333229   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       refer-url       www.google.com/search
+2008-02-02 15:52:59.673141187   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       refer-url       www.google.com/search
 }}}
 
-or the http code we returned:
+Those referrals all came in from google search. Okay, let's check the http code we returned to those visitors:
 
 {{{
 hypertable> select "http-code" from Pages where ROW = "www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin";
-2008-01-25 11:26:13.000000000   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       http-code       200
-2008-01-25 11:25:50.000000000   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       http-code       200
-2008-01-25 10:02:43.000000000   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       http-code       200
-2008-01-25 08:29:31.000000000   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       http-code       200
-2008-01-25 08:20:04.000000000   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       http-code       200
-2008-01-25 08:12:29.000000000   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       http-code       200
+2008-02-02 15:53:02.573496123   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       http-code       200
+2008-02-02 15:53:02.573496120   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       http-code       200
+2008-02-02 15:53:01.673853170   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       http-code       200
+2008-02-02 15:53:00.073333231   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       http-code       200
+2008-02-02 15:53:00.073333230   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       http-code       200
+2008-02-02 15:52:59.673141186   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       http-code       200
+
 }}}
 
-Looks good! Okay, let's restrict the select using the system time stamp by adding to the `WHERE` clause:
+Looks good -- we made sure that Steve Martin fans got the content they needed. Okay, let's restrict the select using the system time stamp by adding to the `WHERE` clause:
 
 {{{
 hypertable> select "http-code" from Pages where ROW = "www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin" && TIMESTAMP >= '2008-02-02 00:00:00';
