@@ -1,3 +1,5 @@
+#summary Performance Test - AOL Query Logs
+
 _*NOTE: These performance numbers have been downward revised since Rich Skrenta reported them on January 15th, 2008*_
 
 ==The Data (AOL Query log)==
