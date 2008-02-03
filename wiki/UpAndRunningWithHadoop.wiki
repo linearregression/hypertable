@@ -1,0 +1,6 @@
+#summary Instructions on how to get Hypertable up and running with Hadoop
+
+
+==Step 1==
+
+Install Hadoop and make sure it is working.
