@@ -1,3 +1,5 @@
+#summary Things that should be done before release
+
 =Necessary "to do" items for the first release=
 
 == Todo ==
@@ -10,8 +12,6 @@
   * BMZ Compression
   * Master: Implement Garbage Collection
   * Master: Range Server Recovery
-  * Master: Improved scheduler
-  * Master: Add drop_table command
   * Master: Add basic monitoring/status
   * Heartbeat from !RangeServer to Master
   * Write startup scripts (init.d)
@@ -19,6 +19,8 @@
   * Integration Testing
 
 == Done ==
+  * Master: Improved scheduler
+  * Master: Add drop_table command
   * !RangeServer: Add drop_table command
   * !RangeServer: Implement !InMemory access groups
   * !RangeServer: Add logic to prevent root METADATA range from splitting
