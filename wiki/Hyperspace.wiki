@@ -1,4 +1,4 @@
-API description of Hyperspace, a Chubby-like service
+#summary API description of Hyperspace, a Chubby-like service
 
 = Introduction =
 
