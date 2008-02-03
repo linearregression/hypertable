@@ -248,7 +248,7 @@ P <= '2008-02-02 15:53:02';
 
 }}}
 
-Of course, we can choose a range of row keys as well to look at referrer's url:
+Of course, we can choose a range of row keys as well, say to look at the referrer's url:
 
 {{{
 select "refer-url" from Pages where ROW >= "www.zvents.com/events/buy_tickets/80283482" && ROW <= "www.zvents.com/events/buy_tickets/80310000";
@@ -258,7 +258,7 @@ select "refer-url" from Pages where ROW >= "www.zvents.com/events/buy_tickets/80
 2008-02-02 15:53:00.073330907   www.zvents.com/events/buy_tickets/80308810      refer-url       www.zvents.com/las-vegas-nv/events/show/80308810-the-platters-coasters-and-the-legendary-lead-singers-of-the-temptations
 }}}
 
-And, again looking for specific activity during a specific second of system time stamp:
+And, as before with a single row key, we can restrict the select to a specific range of system time:
 
 {{{
 hypertable> select "refer-url" from Pages where ROW >= "www.zvents.com/events/buy_tickets/80283482" && ROW <= "www.zvents.com/events/buy_tickets/80310000" && TIMESTAMP >=
