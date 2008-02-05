@@ -346,8 +346,16 @@ Pages
 
 ===BATCH MODE AND SOURCE===
 
-After killing the servers via `kill-servers.sh` your tables and data are no longer available (recovery is coming soon).  In order to recover your tables and other data you can run the system in batch mode or use `SOURCE` from an interactive console.
+After killing the servers via `kill-servers.sh` your tables and data are no longer available (recovery is coming soon).  In order to recover your tables and other data you can run the system in batch mode or use `SOURCE` from an interactive console. First, run `kill-servers.sh` and `start-all-servers.sh`:
 
+{{{
+codeslinger:~/hypertable> bin/kill-servers.sh 
+codeslinger:~/hypertable> bin/start-all-servers.sh local
+Successfully started DFSBroker (local)
+Successfully started Hyperspace
+Successfully started Hypertable.Master
+Successfully started Hypertable.RangeServer
+}}}
 
 You can fire up an interactive session and use the `source` command:
 
@@ -371,9 +379,16 @@ Avg value size:  18.51 bytes
 
 }}}
 
-Alternatively, to avoid opening up an interactive session you can use the --batch command:
+Alternatively, to avoid opening up an interactive session you can use the --batch command -- first, run `kill-servers.sh` and `start-all-servers.sh`:
 
 {{{
+codeslinger:~/hypertable> bin/kill-servers.sh 
+codeslinger:~/hypertable> bin/start-all-servers.sh local
+Successfully started DFSBroker (local)
+Successfully started Hyperspace
+Successfully started Hypertable.Master
+Successfully started Hypertable.RangeServer
+
 codeslinger:~/hypertable>  bin/hypertable --batch < examples/hql_tutorial/Pages-create.hql 
 CREATE TABLE Pages (
 "refer-url",
