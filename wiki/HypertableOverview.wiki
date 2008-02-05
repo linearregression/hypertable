@@ -1,7 +1,7 @@
 #summary A quick overview of what Hypertable is and a system summary
 
 =Quick Overview=
-Hypertable is a high performance, distributed, open-source, column-oriented database.  It's designed to store and process large stores of structured and unstructured data on clusters of commodity hardware. Hypertable's architecture is modeled after Google's Bigtable.  Basically it's blazing fast, holds a ton of information and can do it all on home PCs. 
+Hypertable is a high performance, distributed, open-source, column-oriented database.  It's designed to store and process large stores of structured and unstructured data on clusters of commodity hardware. Hypertable's architecture is modeled after Google's Bigtable.
 
 =System Summary=
 Initial releases of Hypertable provide a C++ API and an HQL (Hypertable Query Language, very similar to SQL) interpreter for client access to the data store.
