@@ -59,7 +59,7 @@ Now launch all of the servers:
 ./bin/slaves.sh ~/hypertable/bin/start-range-server.sh hadoop
 }}}
 
-Now you sould be able to run the ~/hypertable/bin/hypertable HQL command interpreter and start playing around.
+Now you sould be able to run the `~/hypertable/bin/hypertable` HQL command interpreter and start playing around.
 
 
 =Stopping the System=
