@@ -1,15 +1,17 @@
 #summary Articles and references for Hypertable and related projects
 
-== Reference Articles from Wikipedia ==
+== Related Talks And Presentations ==
+
+[http://www.linuxworld.com/podcasts/linux/2008/013008-linuxcast.html Doug Judd's Hypertable podcast on LinuxWorld]
+
+[http://www.youtube.com/watch?v=ZW5_eEKEC28 YouTube Scalability Talk by Cuong Do]
+
+== Articles ==
+
+=== Wikipedia Articles on Google's Technology ===
 
 [http://en.wikipedia.org/wiki/Google_File_System Google File System]
 
 [http://en.wikipedia.org/wiki/MapReduce Google's Map/Reduce Framework]
 
 [http://en.wikipedia.org/wiki/BigTable Bigtable]
-
-== Interesting Applications and Talks ==
-
-[http://www.linuxworld.com/podcasts/linux/2008/013008-linuxcast.html Doug Judd's Hypertable podcast on LinuxWorld]
-
-[http://www.youtube.com/watch?v=ZW5_eEKEC28 YouTube Scalability Talk by Cuong Do]
