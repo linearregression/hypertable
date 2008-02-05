@@ -1,5 +1,7 @@
 #summary Instructions on how to get Hypertable up and running with Hadoop
 
+=Starting the Servers=
+
 ==Step 1==
 
 Install and start Hadoop.
@@ -18,17 +20,52 @@ You can then remount the affected partitions as follows:
 
 ==Step 3==
 
-Edit the config file conf/hypertable.cfg  Change the following property to point to the Hadoop filesystem that got up and running in step 1:
+Edit the config file conf/hypertable.cfg  Change the following property to point to the Hadoop filesystem that got up and running in step 1 (assuming hdfs://motherlode000:9000):
 {{{
-HdfsBroker.fs.default.name=hdfs://localhost:9000
+HdfsBroker.fs.default.name=hdfs://motherlode001:9000
 }}}
-Change the following two properties to point to the location of the Hypertable Master and Hyperspace:
+Change the following two properties to point to the location of the Hypertable Master and Hyperspace (assuming motherlode001):
 {{{
-Hyperspace.Master.Host=motherlode000
-Hypertable.Master.Host=motherlode000
+Hyperspace.Master.Host=motherlode001
+Hypertable.Master.Host=motherlode001
 }}}
 
 
 ==Step 4==
 
 Start the Master and Hyperspace
+
+{{{
+ssh motherlode001 ~/hypertable/bin/start-master.sh hadoop
+}}}
+
+==Step 5==
+
+Start the Range Servers.  Add all of the names of the machines that will be running range servers to the file conf/slaves relative to the installation directory.  Here's what an example one looks like:
+{{{
+$ cat conf/slaves 
+motherlode001
+motherlode002
+motherlode003
+motherlode004
+motherlode005
+motherlode006
+motherlode007
+motherlode008
+}}}
+
+Now launch all of the servers:
+{{{
+./bin/slaves.sh ~/hypertable/bin/start-range-server.sh hadoop
+}}}
+
+Now you sould be able to run the ~/hypertable/bin/hypertable HQL command interpreter and start playing around.
+
+
+=Stopping the System=
+
+Execute the following commands to stop all of the servers:
+{{{
+ssh motherlode001 ~/hypertable/bin/kill-servers.sh
+./bin/slaves.sh ~/hypertable/bin/kill-servers.sh
+}}}
