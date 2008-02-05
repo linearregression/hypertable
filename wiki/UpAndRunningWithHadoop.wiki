@@ -18,9 +18,17 @@ You can then remount the affected partitions as follows:
 
 ==Step 3==
 
-Edit the config file conf/hypertable.cfg 
+Edit the config file conf/hypertable.cfg  Change the following property to point to the Hadoop filesystem that got up and running in step 1:
+{{{
+HdfsBroker.fs.default.name=hdfs://localhost:9000
+}}}
+Change the following two properties to point to the location of the Hypertable Master and Hyperspace:
+{{{
+Hyperspace.Master.Host=motherlode000
+Hypertable.Master.Host=motherlode000
+}}}
 
 
-==Step 3==
+==Step 4==
 
 Start the Master and Hyperspace
