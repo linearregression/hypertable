@@ -15,6 +15,13 @@ _This walk through was written using a pre-release version of hypertable -- you 
 
 ===SETUP===
 
+For this example you'll need to download the data from [http://hypertable.googlecode.com/files/access.tsv.g] and run:
+
+{{{
+tinweasel:~> gunzip ~/Downloads/access.tsv.gz
+tinweasel:~> mv ~/Downloads/access.tsv ~/hypertable/examples/hql_tutorial/
+}}}
+
 In this example we'll startup a local hypertable instance, create a table, load some access log data from a file, and do some basic operations using interactive Hypertext Query Language (HQL) commands. Afterwards, we'll demonstrate use of the --batch mode for HQL.
 
 Hypertable is designed to be "always on" but for the purposes of this example we'll assume you're running locally from a fresh install. Also, following the `README.txt` in the distribution we assume your hypertable directory is `~/hypertable`
