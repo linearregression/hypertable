@@ -212,10 +212,20 @@ calendar.denverpost.com/search  http-code       200
 
 ===SELECT===
 
+In the examples that follow I'm using the options spec DISPLAY_TIMESTAMPS at the end of each select but that's entirely optional and you can omit them from most of the examples (except where you want to see them in the output) -- here's a minimal SELECT:
+
+{{{
+hypertable> select 'http-code' from Pages where ROW='events.getoutaz.com/scottsdale-az/venues/show/455885-scorch-bar';
+events.getoutaz.com/scottsdale-az/venues/show/455885-scorch-bar	http-code	200
+events.getoutaz.com/scottsdale-az/venues/show/455885-scorch-bar	http-code	200
+events.getoutaz.com/scottsdale-az/venues/show/455885-scorch-bar	http-code	200
+events.getoutaz.com/scottsdale-az/venues/show/455885-scorch-bar	http-code	200
+}}}
+
 Now, let's use the `SELECT` command to examine our data a bit -- let's start by looking at all the accesses for a particular page (a Steve Martin event in san francisco) and check the referrer's url:
 
 {{{
-hypertable> select "refer-url" from Pages where ROW = "www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin";
+hypertable> select "refer-url" from Pages where ROW = "www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin" DISPLAY_TIMESTAMPS;
 2008-02-02 15:53:02.573496124   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       refer-url       www.google.com/search
 2008-02-02 15:53:02.573496122   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       refer-url       www.google.com/search
 2008-02-02 15:53:01.673853169   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       refer-url       www.zvents.com/search
@@ -227,7 +237,7 @@ hypertable> select "refer-url" from Pages where ROW = "www.zvents.com/san-franci
 Those referrals all came in from google search. Okay, let's check the http code we returned to those visitors:
 
 {{{
-hypertable> select "http-code" from Pages where ROW = "www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin";
+hypertable> select "http-code" from Pages where ROW = "www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin" DISPLAY_TIMESTAMPS;
 2008-02-02 15:53:02.573496123   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       http-code       200
 2008-02-02 15:53:02.573496120   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       http-code       200
 2008-02-02 15:53:01.673853170   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       http-code       200
@@ -240,7 +250,7 @@ hypertable> select "http-code" from Pages where ROW = "www.zvents.com/san-franci
 Looks good -- we made sure that Steve Martin fans got the content they needed. Okay, let's restrict the select using the system time stamp by adding to the `WHERE` clause:
 
 {{{
-hypertable> select "http-code" from Pages where ROW = "www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin" && TIMESTAMP >= '2008-02-02 00:00:00';
+hypertable> select "http-code" from Pages where ROW = "www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin" && TIMESTAMP >= '2008-02-02 00:00:00' DISPLAY_TIMESTAMPS;
 2008-02-02 15:53:02.573496123   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       http-code       200
 2008-02-02 15:53:02.573496120   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       http-code       200
 2008-02-02 15:53:01.673853170   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       http-code       200
@@ -254,7 +264,7 @@ Or, restrict to just a particular 2 second period:
 
 {{{
 hypertable> select "http-code" from Pages where ROW = "www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin" && TIMESTAMP > '2008-02-02 15:53:00' && TIMESTAM
-P <= '2008-02-02 15:53:02';
+P <= '2008-02-02 15:53:02' DISPLAY_TIMESTAMPS;
 2008-02-02 15:53:01.673853170   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       http-code       200
 2008-02-02 15:53:00.073333231   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       http-code       200
 2008-02-02 15:53:00.073333230   www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin       http-code       200
@@ -264,7 +274,7 @@ P <= '2008-02-02 15:53:02';
 Of course, we can choose a range of row keys as well, say to look at the referrer's url:
 
 {{{
-select "refer-url" from Pages where ROW >= "www.zvents.com/events/buy_tickets/80283482" && ROW <= "www.zvents.com/events/buy_tickets/80310000";
+select "refer-url" from Pages where ROW >= "www.zvents.com/events/buy_tickets/80283482" && ROW <= "www.zvents.com/events/buy_tickets/80310000" DISPLAY_TIMESTAMPS;
 2008-02-02 15:53:02.573493952   www.zvents.com/events/buy_tickets/80283482      refer-url       www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin
 2008-02-02 15:53:02.573493949   www.zvents.com/events/buy_tickets/80283482      refer-url       www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin
 2008-02-02 15:53:00.073330904   www.zvents.com/events/buy_tickets/80283482      refer-url       www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin
@@ -275,7 +285,7 @@ And, as before with a single row key, we can restrict the select to a specific r
 
 {{{
 hypertable> select "refer-url" from Pages where ROW >= "www.zvents.com/events/buy_tickets/80283482" && ROW <= "www.zvents.com/events/buy_tickets/80310000" && TIMESTAMP >=
- '2008-02-02 15:53:00' && TIMESTAMP <= '2008-02-02 15:53:01';
+ '2008-02-02 15:53:00' && TIMESTAMP <= '2008-02-02 15:53:01' DISPLAY_TIMESTAMPS;
 2008-02-02 15:53:00.073330904   www.zvents.com/events/buy_tickets/80283482      refer-url       www.zvents.com/san-francisco-ca/events/show/80283482-steve-martin
 2008-02-02 15:53:00.073330907   www.zvents.com/events/buy_tickets/80308810      refer-url       www.zvents.com/las-vegas-nv/events/show/80308810-the-platters-coasters-and-the-legendary-lead-singers-of-the-temptations
 
@@ -289,7 +299,7 @@ For example, let's `INSERT` some data in the past and issue a select command to 
 
 {{{
 hypertable> insert into Pages values ('2006-01-01 23:59:59', "www.hypertable.org", "refer-url", "www.zvents.com");
-hypertable> select * from Pages where ROW = "www.hypertable.org";
+hypertable> select * from Pages where ROW = "www.hypertable.org" DISPLAY_TIMESTAMPS;
 2006-01-01 23:59:59.000000000   www.hypertable.org      refer-url       www.zvents.com
 }}}
 
@@ -307,7 +317,7 @@ Now, we'll `INSERT` some data far into the future (as of this tutorial) and veri
 hypertable> insert into Pages values ('2037-01-01 23:59:59', "www.hypertable.org", "refer-url", "www.zvents.com");
 hypertable> delete * from Pages where ROW = "www.hypertable.org";
 delete: row='www.hypertable.org' family=0 ts=0
-hypertable> select * from Pages where ROW = "www.hypertable.org";
+hypertable> select * from Pages where ROW = "www.hypertable.org" DISPLAY_TIMESTAMPS;
 2037-01-01 23:59:59.000000000   www.hypertable.org      refer-url       www.zvents.com
 }}}
 
