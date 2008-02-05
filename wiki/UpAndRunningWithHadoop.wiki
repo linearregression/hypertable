@@ -1,6 +1,26 @@
 #summary Instructions on how to get Hypertable up and running with Hadoop
 
-
 ==Step 1==
 
-Install Hadoop and make sure it is working.
+Install and start Hadoop.
+
+==Step 2==
+
+Make sure you have extended attributes enabled on the partition that holds the root of the Hyperspace directory tree.  This will be the same disk volume that holds the installation (e.g. ~/hypertable), unless you configured Hyperspace explicitly to point to somewhere else. (e.g. ~/hypertable).  This is not necessary on the mac, but is in general on Linux systems.  To enable extended attributes on Linux, you need to add the user_xattr property to the relevant file systems in your /etc/fstab file. For example:
+{{{
+   /dev/hda3     /home     ext3     defaults,user_xattr     1 2
+}}}
+You can then remount the affected partitions as follows:
+{{{
+   $ mount -o remount /home
+}}}
+
+
+==Step 3==
+
+Edit the config file conf/hypertable.cfg 
+
+
+==Step 3==
+
+Start the Master and Hyperspace
