@@ -28,7 +28,7 @@ Hypertable is based very closely on the design of Bigtable, with a few modificat
 <Stuff from doug here>.  Hypertable is designed for speed and is written in C++, while Hbase is in Java.
 
 ==How fast is it?==
-See PerformanceTestAOLQueryLog for a performance test.  This was performed on a relatively slow cluster made up of 1.8GHz opteron and 7200 rpm SATA I drives.
+See [PerformanceTestAOLQueryLog] for a performance test.  This was performed on a relatively slow cluster made up of 1.8GHz opteron and 7200 rpm SATA I drives.
 From the summary:
 "The AOL query logs were inserted into an 8-node Hypertable cluster. The average size of values inserted was ~19 bytes. The insert rate (with 4 simultaneous insert processes) was approximately 686K inserts/s. The table was scanned at a rate of approximately 918K cells/s."
 
