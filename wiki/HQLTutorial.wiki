@@ -5,12 +5,12 @@ _This walk through was written using a pre-release version of hypertable -- you 
 ==CONTENTS==
 
   * SETUP
-  * INTERACTIVE HYPERTABLE AND HQL
+  * INTERACTIVE HYPERTABLE & HQL
   * CREATE TABLE
   * LOAD DATA INFILE
   * SELECT
   * INSERT & DELETE
-  * DROP TABLE
+  * SHOW TABLES & DROP TABLE
   * BATCH MODE AND SOURCE
 
 ===SETUP===
@@ -76,7 +76,7 @@ the preceeding list.
 
 }}}
 
-===INTERACTIVE HYPERTABLE AND HQL===
+===INTERACTIVE HYPERTABLE & HQL===
 
 For this example we're working with a simplified access log that contains four columns: the url for a page access on one of our hosts, a `timestamp` field in the required format (e.g. _'YYYY-MM-DD hh:mm:ss'_), the referrer's url, and an http code. There are 100,000 records in the file.
 
@@ -312,7 +312,7 @@ delete: row='www.hypertable.org' family=0 ts=2146031999000000001
 hypertable> select * from Pages where ROW = "www.hypertable.org";
 }}}
 
-===DROP TABLE===
+===SHOW TABLES & DROP TABLE===
 
 Now, we want to get rid of our table so we'll use DROP TABLE to do that -- first verify the tables we have, then drop, then verify that they are gone after the command:
 
