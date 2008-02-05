@@ -1,17 +1,25 @@
 #summary Articles and references for Hypertable and related projects
 
-== Related Talks And Presentations ==
+== Talks And Presentations ==
 
-[http://www.linuxworld.com/podcasts/linux/2008/013008-linuxcast.html Doug Judd's Hypertable podcast on LinuxWorld]
+[http://www.linuxworld.com/podcasts/linux/2008/013008-linuxcast.html Doug Judd's hypertable podcast on LinuxWorld]
 
-[http://www.youtube.com/watch?v=ZW5_eEKEC28 YouTube Scalability Talk by Cuong Do]
+[http://www.youtube.com/watch?v=ZW5_eEKEC28 YouTube scalability talk by former Inktomi engineer, Cuong Do]
 
-== Articles ==
 
 === Wikipedia Articles on Google's Technology ===
 
 [http://en.wikipedia.org/wiki/Google_File_System Google File System]
 
-[http://en.wikipedia.org/wiki/MapReduce Google's Map/Reduce Framework]
+[http://en.wikipedia.org/wiki/MapReduce Google's Map/Reduce framework]
 
 [http://en.wikipedia.org/wiki/BigTable Bigtable]
+
+
+=== Licensing Discussions ===
+
+[http://www.dwheeler.com/essays/gpl-compatible.html David Wheeler's GPL article]
+
+[http://www.linuxworld.com/community/?q=node/2506 Bad meme, bad, bad! LinuxWorld blog post on GPL]
+
+[http://linux.slashdot.org/linux/08/01/08/1431238.shtml Slashdot article on Linus Torvalds and GPL 2] 
