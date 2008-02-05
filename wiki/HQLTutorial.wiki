@@ -10,6 +10,7 @@ _This walk through was written using a pre-release version of hypertable -- you 
   * LOAD DATA INFILE
   * SELECT
   * INSERT & DELETE
+  * DROP TABLE
   * BATCH MODE AND SOURCE
 
 ===SETUP===
@@ -309,6 +310,20 @@ Now, let's get rid of it with `DELETE` time stamped further into the future:
 hypertable> delete * from Pages where ROW = "www.hypertable.org" TIMESTAMP '2038-01-01 23:59:59';
 delete: row='www.hypertable.org' family=0 ts=2146031999000000001
 hypertable> select * from Pages where ROW = "www.hypertable.org";
+}}}
+
+===DROP TABLE===
+
+Now, we want to get rid of our table so we'll use DROP TABLE to do that -- first verify the tables we have, then drop, then verify that they are gone after the command:
+
+{{{
+hypertable> show tables;
+METADATA
+Pages
+hypertable> drop table Pages;
+hypertable> show tables;
+METADATA
+Pages
 }}}
 
 
