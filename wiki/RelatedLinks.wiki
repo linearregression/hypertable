@@ -10,4 +10,5 @@
 
 == Interesting Applications and Talks ==
 
+[http://www.linuxworld.com/podcasts/linux/2008/013008-linuxcast.html Doug Judd's Hypertable podcast on LinuxWorld]
 [http://www.youtube.com/watch?v=ZW5_eEKEC28 YouTube Scalability Talk by Cuong Do]
