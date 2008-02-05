@@ -1,16 +1,16 @@
 #summary Copy of most recent README.txt install notes
 
-================
+
 === CONTENTS ===
-================
+
 
   * HOW TO BUILD
   * HOW TO RUN REGRESSION TESTS
   * HOW TO BUILD SOURCE CODE DOCUMENTATION TREE (Doxygen)
 
-====================
+
 === HOW TO BUILD ===
-====================
+
 
   1. Install CMake (http://www.cmake.org/)
 
@@ -49,9 +49,9 @@
     make
     make install DESTDIR=<your_install_dir>
 
-===================================
+
 === HOW TO RUN REGRESSION TESTS ===
-===================================
+
 
 1. Make sure software is built and installed according to 'HOW TO BUILD'
 
@@ -82,9 +82,8 @@
   cd ~/build/hypertable
   make test
 
-=============================================================
+
 === HOW TO BUILD SOURCE CODE DOCUMENTATION TREE (Doxygen) ===
-=============================================================
 
 1. Install the following libraries:
   - doxygen (http://www.stack.nl/~dimitri/doxygen/)
