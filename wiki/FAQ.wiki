@@ -30,7 +30,7 @@ Hypertable is based very closely on the design of Bigtable, with a few modificat
 ==How fast is it?==
 See [PerformanceTestAOLQueryLog] for a performance test.  This was performed on a relatively slow cluster made up of 1.8GHz opteron and 7200 rpm SATA I drives.
 From the summary:
-"The AOL query logs were inserted into an 8-node Hypertable cluster. The average size of values inserted was ~19 bytes. The insert rate (with 4 simultaneous insert processes) was approximately 686K inserts/s. The table was scanned at a rate of approximately 918K cells/s."
+"The AOL query logs were inserted into an 8-node Hypertable cluster. The average size of each row key was ~7 bytes and each value was ~15 bytes. The insert rate (with 4 simultaneous insert processes) was approximately 410K inserts/s. The table was scanned at a rate of approximately 671K cells/s."
 
 ==What Distributed File System does Hypertable use?==
 Hypertable is designed to be filesystem agnostic, so it can be layered on the data storage system of your choice.  "Brokers" (basically file system command translators) exist for Kosmix's KFS, Hadoop's HDFS and for local systems. The local-broker allows hypertable to operate on top of a NAS device or any distributed filesystem that mounts locally (i.e. via FUSE). Because Hypertable is open source, developers are encouraged to write their own Brokers for other distributed file systems.
