@@ -60,16 +60,19 @@ system     (\!) Execute a system shell command.
 HQL Statements
 --------------
 CREATE TABLE ....... Creates a table
-DELETE ............. Delete all or part of a row from a table
+DELETE ............. Deletes all or part of a row from a table
 DESCRIBE TABLE ..... Displays a table's schema
+DROP TABLE ......... Removes a table
 INSERT ............. Inserts data into a table
 LOAD DATA INFILE ... Loads data from a tab delimited input file into a table
-SELECT ............. Select (and display) cells from a table
+SELECT ............. Selects (and display) cells from a table
 SHOW CREATE TABLE .. Displays CREATE TABLE command used to create table
+SHOW TABLES ........ Displays the list of tables
 
 Statements must be terminated with ';' to execute.  For more information on
 a specific statement, type 'help <statement>', where <statement> is one from
 the preceeding list.
+
 }}}
 
 ===INTERACTIVE HYPERTABLE AND HQL===
