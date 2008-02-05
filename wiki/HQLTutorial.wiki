@@ -15,7 +15,7 @@ _This walk through was written using a pre-release version of hypertable -- you 
 
 ===SETUP===
 
-For this example you'll need to download the data from [http://hypertable.googlecode.com/files/access.tsv.g] and run:
+For this example you'll need to download the data from [http://hypertable.googlecode.com/files/access.tsv.gz] and run:
 
 {{{
 tinweasel:~> gunzip ~/Downloads/access.tsv.gz
