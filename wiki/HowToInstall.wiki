@@ -26,29 +26,29 @@
           very malloc intensive and tcmalloc provides a huge performance improvement.
 
   3. Checkout the source code.
-
+{{{
     mkdir ~/src
     cd ~/src
     git clone git://scm.hypertable.org/pub/repos/hypertable.git
-
+}}}
   4. Create an install directory
-
+{{{
     mkdir ~/hypertable
-
+}}}
   5. Create a build directory
-
+{{{
     mkdir -p ~/build/hypertable
-
+}}}
   6. Configure the build. 
-
+{{{
     cd ~/build/hypertable
     cmake -DCMAKE_INSTALL_PREFIX= -DCMAKE_BUILD_TYPE="Debug" ~/src/hypertable
-
+}}}
   7. Build the software.
-
+{{{
     make
     make install DESTDIR=<your_install_dir>
-
+}}}
 
 === HOW TO RUN REGRESSION TESTS ===
 
@@ -72,16 +72,16 @@
    **********************************************************************
    *** WARNING: THIS STEP MUST BE PERFORMED PRIOR TO RUNNING THE TEST ***
    **********************************************************************
-
+{{{
   cd ~/hypertable
   bin/kill-servers.sh
   bin/start-all-servers.sh local
-
+}}}
 4. Run the regression tests
-
+{{{
   cd ~/build/hypertable
   make test
-
+}}}
 
 === HOW TO BUILD SOURCE CODE DOCUMENTATION TREE (Doxygen) ===
 
@@ -92,10 +92,10 @@
 2. If you have doxygen installed on your system, then CMake should detect this and
    add a 'doc' target to the make file.  Building the source code documentation
    tree is just a matter of running the following commands:
-
+{{{
    cd ~/build/hypertable
    make doc
-
+}}}
 The documentation tree will get generated under ~/build/hypertable/doc.  To view
 the HTML docs, load the following file into a web browser:
 
