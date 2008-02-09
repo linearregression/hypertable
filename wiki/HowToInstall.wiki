@@ -86,8 +86,8 @@
 === HOW TO BUILD SOURCE CODE DOCUMENTATION TREE (Doxygen) ===
 
 1. Install the following libraries:
-  - doxygen (http://www.stack.nl/~dimitri/doxygen/)
-  - graphviz (http://www.graphviz.org/)
+  * doxygen (http://www.stack.nl/~dimitri/doxygen/)
+  * graphviz (http://www.graphviz.org/)
 
 2. If you have doxygen installed on your system, then CMake should detect this and
    add a 'doc' target to the make file.  Building the source code documentation
