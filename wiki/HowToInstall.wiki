@@ -15,9 +15,9 @@
   1. Install CMake (http://www.cmake.org/)
 
   2. Install the following libraries:
-    - Boost version 1.34.1 (http://www.boost.org/)
-    - log4cpp (http://log4cpp.sourceforge.net/)
-    - expat (http://sourceforge.net/projects/expat)
+    * Boost version 1.34.1 (http://www.boost.org/)
+    * log4cpp (http://log4cpp.sourceforge.net/)
+    * expat (http://sourceforge.net/projects/expat)
 
     HIGHLY RECOMMENDED (but not required):
     - tcmalloc (http://code.google.com/p/google-perftools/)
