@@ -12,9 +12,9 @@
 === HOW TO BUILD ===
 
 
-  1. Install CMake (http://www.cmake.org/)
+1. Install CMake (http://www.cmake.org/)
 
-  2. Install the following libraries:
+2. Install the following libraries:
     * Boost version 1.34.1 (http://www.boost.org/)
     * log4cpp (http://log4cpp.sourceforge.net/)
     * expat (http://sourceforge.net/projects/expat)
@@ -25,26 +25,26 @@
     NOTE: If tcmalloc is available on your system, install it.  Hypertable is
           very malloc intensive and tcmalloc provides a huge performance improvement.
 
-  3. Checkout the source code.
+3. Checkout the source code.
 {{{
     mkdir ~/src
     cd ~/src
     git clone git://scm.hypertable.org/pub/repos/hypertable.git
 }}}
-  4. Create an install directory
+4. Create an install directory
 {{{
     mkdir ~/hypertable
 }}}
-  5. Create a build directory
+5. Create a build directory
 {{{
     mkdir -p ~/build/hypertable
 }}}
-  6. Configure the build. 
+6. Configure the build. 
 {{{
     cd ~/build/hypertable
     cmake -DCMAKE_INSTALL_PREFIX= -DCMAKE_BUILD_TYPE="Debug" ~/src/hypertable
 }}}
-  7. Build the software.
+7. Build the software.
 {{{
     make
     make install DESTDIR=<your_install_dir>
@@ -64,14 +64,14 @@
    /dev/hda3     /home     ext3     defaults,user_xattr     1 2
 
    You can then remount the affected partitions as follows:
-
-   $ mount -o remount /home
-
+{{{
+   mount -o remount /home
+}}}
 3. Restart servers and re-create test tables
+   ============================================================
+   ==== _WARNING: THIS STEP MUST BE PERFORMED PRIOR TO RUNNING THE TEST_ ====
+   ============================================================
 
-   **********************************************************************
-   *** WARNING: THIS STEP MUST BE PERFORMED PRIOR TO RUNNING THE TEST ***
-   **********************************************************************
 {{{
   cd ~/hypertable
   bin/kill-servers.sh
@@ -89,14 +89,11 @@
   * doxygen (http://www.stack.nl/~dimitri/doxygen/)
   * graphviz (http://www.graphviz.org/)
 
-2. If you have doxygen installed on your system, then CMake should detect this and
-   add a 'doc' target to the make file.  Building the source code documentation
-   tree is just a matter of running the following commands:
+2. If you have doxygen installed on your system, then CMake should detect this and add a 'doc' target to the make file.  Building the source code documentation tree is just a matter of running the following commands:
 {{{
    cd ~/build/hypertable
    make doc
 }}}
-The documentation tree will get generated under ~/build/hypertable/doc.  To view
-the HTML docs, load the following file into a web browser:
+The documentation tree will get generated under ~/build/hypertable/doc.  To view the HTML docs, load the following file into a web browser:
 
   ~/build/hypertable/doc/html/index.html
