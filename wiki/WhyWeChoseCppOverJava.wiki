@@ -1,0 +1,20 @@
+#summary Why We Chose C++ Over Java
+
+This document is to clarify our position regarding C++ vs. Java for choice of implementation language.  There are two fundamental reasons why C++ is superior to Java for this particular application.
+
+  # _Hypertable is memory (malloc) intensive._  Hypertable caches all updates in an in-memory data structure (e.g. stl map).  Periodically, these in-memory data structures get spilled to disk.  These spilled disk files get merged together to form larger files when their number reaches a certain threshold.  The performance of the system is, in large part, dictated by how much memory it has available to it.  Less memory means more spilling and merging which increases load on the network and underlying DFS.  It also increases the CPU work required of the system, in the form of extra heap-merge operations.  Java is a poor choice for memory hungry applications.  In particular, in managing a large in-memory map of key/value pairs, Java's memory performance is poor in comparison with C++.  It's on the order of two to three times worse (if you don't believe me, try it).
+  # _Hypertable is CPU intensive._  There are several places where Hypertable is CPU intensive.  The first place is the in-memory maps of key/value pairs.  Traversing and managing those maps can consume a lot of CPU.  Plus, given Java's inefficient use of memory with regard to these maps, the processor caches become much less effective.  A recent run of the tool Calibrator (http://monetdb.cwi.nl/Calibrator/) on one of our 2GHz Opterons yields the following statistics:
+{{{
+caches:
+level  size    linesize   miss-latency        replace-time
+  1     64 KB   64 bytes    6.06 ns =  12 cy    5.60 ns =  11 cy
+  2    768 KB  128 bytes   74.26 ns = 149 cy   75.90 ns = 152 cy
+}}}
+  You can pack a fair amount of work into 150 clock cycles.  Another place where Hypertable is CPU intensive is compression.  All of the data that is inserted into a Hypertable gets compressed at least twice, and on average three times.  Once when writing data to the commit log, once during minor compaction and then once for every merging or major compaction.  And the amount of decompression that happens can be considerably more depending on the amount of query workload the table sees.  It's arguable that the native Java implementation of zlib is comparable to the C implementation, but as soon as you start experimenting with different compression techniques (e.g. Bentley-McIlroy long common strings), you need to either implement them in Java which yields unacceptable performance (if you don't believe me, try it), or implement them in C/C++ and use JNI.  With this second option, all of the benefits of Java get thrown out the window and there is significant overhead in invoking a method via JNI.
+
+_What about Hadoop DFS and Map-reduce framework?_
+
+Given that 
+
+
+
