@@ -336,7 +336,7 @@ Now, we want to get rid of our table so we'll use DROP TABLE to do that -- first
 {{{
 hypertable> show tables;
 METADATA
-Pages
+PAGES
 hypertable> drop table Pages;
 hypertable> show tables;
 METADATA
@@ -348,32 +348,38 @@ METADATA
 After killing the servers via `kill-servers.sh` your tables and data are no longer available (recovery is coming soon).  In order to recover your tables and other data you can run the system in batch mode or use `SOURCE` from an interactive console. First, run `kill-servers.sh` and `start-all-servers.sh`:
 
 {{{
-codeslinger:~/hypertable> bin/kill-servers.sh 
-codeslinger:~/hypertable> bin/start-all-servers.sh local
+gordon@tinweasel:~/hypertable>  bin/kill-servers.sh 
+gordon@tinweasel:~/hypertable>  bin/start-all-servers.sh local
 Successfully started DFSBroker (local)
 Successfully started Hyperspace
 Successfully started Hypertable.Master
 Successfully started Hypertable.RangeServer
+
 }}}
 
 You can fire up an interactive session and use the `source` command:
 
 {{{
-hypertable> source examples/hql_tutorial/Pages-create.hql 
+gordon@tinweasel:~/hypertable>  bin/hypertable 
+Welcome to the HQL command interpreter.
 
-Loading  10,872,962 bytes of input data...
+Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
+
+hypertable> source ./examples/hql_tutorial/Pages-create.hql;
+
+Loading  10,872,957 bytes of input data...
 
 0%   10   20   30   40   50   60   70   80   90   100%
 |----|----|----|----|----|----|----|----|----|----|
 ***************************************************
 Load complete.
 
-  Elapsed time:  5.71 s
-Avg value size:  18.51 bytes
+  Elapsed time:  2.68 s
+Avg value size:  18.68 bytes
   Avg key size:  48.70 bytes
-    Throughput:  1905283.61 bytes/s
- Total inserts:  200000
-    Throughput:  35046.27 inserts/s
+    Throughput:  4060564.38 bytes/s
+ Total inserts:  300000
+    Throughput:  112036.62 inserts/s
        Resends:  0
 
 }}}
