@@ -340,7 +340,6 @@ Pages
 hypertable> drop table Pages;
 hypertable> show tables;
 METADATA
-Pages
 }}}
 
 
