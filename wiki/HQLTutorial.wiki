@@ -85,7 +85,7 @@ the preceeding list.
 
 ===INTERACTIVE HYPERTABLE & HQL===
 
-For this example we're working with a simplified access log that contains four columns: the url for a page access on one of our hosts, a `timestamp` field in the required format (e.g. _'YYYY-MM-DD hh:mm:ss'_), the referrer's url, and an http code. There are 100,000 records in the file.
+For this example we're working with a simplified access log that contains four columns: a `date` field, the referrer's url, an http code, and a field we'll call 'rowkey' -- actually a url from one of the hosts we serve. There are 100,000 records in the file. 
 
 The file is under `examples/hql_tutorial/access.tsv` and you'll need to unzip it first if it's still compressed. _NOTE: `LOAD DATA INFILE` will a compressed file option soon._
 
@@ -97,7 +97,7 @@ First, we need to create a table to hold the data from our simplified access log
 hypertable> create table Pages ( date, "refer-url", "http-code");
 }}}
 
-Column names that contain a dash or any non-alphanumeric character (e.g. "refer-url") must be enclosed in quotes. Now, issue the `SHOW CREATE TABLE` command to make sure you got everything right.
+Column names that contain a dash or any non-alphanumeric character (e.g. "refer-url") must be enclosed in quotes. Now, issue the `SHOW CREATE TABLE` command to make sure you got everything right. We didn't have to include the field called 'rowkey' because we'll use that in our LOAD DATA INFILE command later:
 
 {{{
 hypertable> show create table Pages;
