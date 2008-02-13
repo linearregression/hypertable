@@ -381,35 +381,36 @@ Avg value size:  18.51 bytes
 Alternatively, to avoid opening up an interactive session you can use the --batch command -- first, run `kill-servers.sh` and `start-all-servers.sh`:
 
 {{{
-codeslinger:~/hypertable> bin/kill-servers.sh 
-codeslinger:~/hypertable> bin/start-all-servers.sh local
+gordon@tinweasel:~/hypertable>  bin/start-all-servers.sh local
 Successfully started DFSBroker (local)
 Successfully started Hyperspace
 Successfully started Hypertable.Master
 Successfully started Hypertable.RangeServer
 
-codeslinger:~/hypertable>  bin/hypertable --batch < examples/hql_tutorial/Pages-create.hql 
+gordon@tinweasel:~/hypertable>  bin/hypertable --batch < examples/hql_tutorial/Pages-create.hql 
 CREATE TABLE Pages (
+date,
 "refer-url",
 "http-code",
-ACCESS GROUP default ( "refer-url", "http-code" )
+ACCESS GROUP default ( date, "refer-url", "http-code" )
 );
-load data infile ROW_KEY_COLUMN=rowkey TIMESTAMP_COLUMN=timestamp "examples/hql_tutorial/access.tsv" into table Pages;
+load data infile ROW_KEY_COLUMN=rowkey "examples/hql_tutorial/access.tsv" into table Pages;
 
-Loading  10,872,962 bytes of input data...
+Loading  10,872,957 bytes of input data...
 
 0%   10   20   30   40   50   60   70   80   90   100%
 |----|----|----|----|----|----|----|----|----|----|
 ***************************************************
 Load complete.
 
-  Elapsed time:  5.42 s
-Avg value size:  18.51 bytes
+  Elapsed time:  2.71 s
+Avg value size:  18.68 bytes
   Avg key size:  48.70 bytes
-    Throughput:  2005246.89 bytes/s
- Total inserts:  200000
-    Throughput:  36885.02 inserts/s
+    Throughput:  4019384.28 bytes/s
+ Total inserts:  300000
+    Throughput:  110900.40 inserts/s
        Resends:  0
+
 
 }}}
 
