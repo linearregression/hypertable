@@ -85,7 +85,7 @@ the preceeding list.
 
 ===INTERACTIVE HYPERTABLE & HQL===
 
-For this example we're working with a simplified access log that contains four columns: a `date` field, the referrer's url, an http code, and a field we'll call 'rowkey' -- actually a url from one of the hosts we serve. There are 100,000 records in the file. 
+For this example we're working with a simplified access log that contains four columns: a `date` field, the referrer's url 'refer-url', an http code 'http-code', and a field we'll call 'rowkey' -- actually a url from one of the hosts we serve. There are 100,000 records in the file. 
 
 The file is under `examples/hql_tutorial/access.tsv` and you'll need to unzip it first if it's still compressed. _NOTE: `LOAD DATA INFILE` will a compressed file option soon._
 
@@ -150,7 +150,7 @@ _Reminder: you'll need to unzip it first if it's still compressed._
 
 ====LOAD DATA INFILE (INTO TABLE)====
 
-So, now we load it into our Pages table:
+So, now we load it into our Pages table -- notice that we are specifying a column present in the data file ('rowkey') that's not in our schema. We can specify any field name present in the data for the ROW_KEY_COLUMN option.
 
 {{{
 hypertable> load data infile ROW_KEY_COLUMN=rowkey "examples/hql_tutorial/access.tsv" into table Pages;
@@ -342,14 +342,15 @@ hypertable> show tables;
 METADATA
 }}}
 
+The name of the table is case insensitive. 
 
 ===BATCH MODE AND SOURCE===
 
 After killing the servers via `kill-servers.sh` your tables and data are no longer available (recovery is coming soon).  In order to recover your tables and other data you can run the system in batch mode or use `SOURCE` from an interactive console. First, run `kill-servers.sh` and `start-all-servers.sh`:
 
 {{{
-gordon@tinweasel:~/hypertable>  bin/kill-servers.sh 
-gordon@tinweasel:~/hypertable>  bin/start-all-servers.sh local
+tinweasel:~/hypertable>  bin/kill-servers.sh 
+tinweasel:~/hypertable>  bin/start-all-servers.sh local
 Successfully started DFSBroker (local)
 Successfully started Hyperspace
 Successfully started Hypertable.Master
@@ -360,7 +361,7 @@ Successfully started Hypertable.RangeServer
 You can fire up an interactive session and use the `source` command:
 
 {{{
-gordon@tinweasel:~/hypertable>  bin/hypertable 
+tinweasel:~/hypertable>  bin/hypertable 
 Welcome to the HQL command interpreter.
 
 Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
@@ -387,13 +388,13 @@ Avg value size:  18.68 bytes
 Alternatively, to avoid opening up an interactive session you can use the --batch command -- first, run `kill-servers.sh` and `start-all-servers.sh`:
 
 {{{
-gordon@tinweasel:~/hypertable>  bin/start-all-servers.sh local
+tinweasel:~/hypertable>  bin/start-all-servers.sh local
 Successfully started DFSBroker (local)
 Successfully started Hyperspace
 Successfully started Hypertable.Master
 Successfully started Hypertable.RangeServer
 
-gordon@tinweasel:~/hypertable>  bin/hypertable --batch < examples/hql_tutorial/Pages-create.hql 
+tinweasel:~/hypertable>  bin/hypertable --batch < examples/hql_tutorial/Pages-create.hql 
 CREATE TABLE Pages (
 date,
 "refer-url",
@@ -421,3 +422,16 @@ Avg value size:  18.68 bytes
 }}}
 
 You can examine the file in `examples/hql_tutorial/Pages-create.hql` to verify that it's just a batch of HQL commands.
+
+{{{
+
+tinweasel:~/hypertable>  cat examples/hql_tutorial/Pages-create.hql 
+CREATE TABLE Pages (
+       date,
+       "refer-url",
+       "http-code",
+ACCESS GROUP default ( date, "refer-url", "http-code" )
+);
+load data infile ROW_KEY_COLUMN=rowkey "examples/hql_tutorial/access.tsv" into table Pages;
+
+}}}
