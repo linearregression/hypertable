@@ -1,0 +1,13 @@
+#summary Set of tests to run prior to giving the OK on any release
+
+The following list of tests ...
+
+  * Run functional tests on CentOS 5 x86_64, mac OSX, and FC6 i386
+  * Run AOL query performance test with single client
+  * Run AOL query performance test with 4 simultaneous clients
+  * Run the Tests/rsclient test 20 times with the following config properties
+  {{{
+  Hypertable.RangeServer.AccessGroup.MaxFiles=2
+  Hypertable.RangeServer.AccessGroup.MergeFiles=2
+  Hypertable.RangeServer.AccessGroup.MaxMemory=2M
+  }}}
