@@ -25,18 +25,18 @@
 || Hyperspace.Lease.Interval || Hyperspace Lease interval (see Chubby paper) ||
 || Hyperspace.!GracePeriod || Hyperspace Grace period (see Chubby paper) ||
 || Hypertable.Master.Host || Host on which Hyperspace Master is running ||
-|| Hypertable.Master.Port || Port number on which Hypertable master is or should be listening ||
+|| Hypertable.Master.Port || Port number on which Hypertable Master is or should be listening ||
 || Hypertable.Master.Workers || Number of Hypertable Master worker threads created ||
 || Hypertable.Master.Reactors || Number of Hypertable Master communication reactor threads created ||
-|| Hypertable.!RangeServer.Port || Port number on which Hypertable range server is or should be listening ||
+|| Hypertable.!RangeServer.Port || Port number on which Hypertable Range Servers are or should be listening ||
 || Hypertable.!RangeServer.!AccessGroup.!MaxFiles || Maximum number of cell store files to create before merging ||
 || Hypertable.!RangeServer.!AccessGroup.!MaxMemory || Maximum amount of memory consumed by an Access Group ||
 || Hypertable.!RangeServer.!AccessGroup.!MergeFiles || How many files to merge during a merging compaction ||
 || Hypertable.!RangeServer.!BlockCache.!MaxMemory || Amount of memory to dedicate to the block cache ||
 || Hypertable.!RangeServer.Range.!MaxBytes || Maximum number of bytes per range before splitting ||
 || Hypertable.!RangeServer.Range.!MetadataMaxBytes || Maximum number of bytes per METADATA range before splitting (for testing) ||
-|| Hypertable.!RangeServer.!CommitLog.!DfsBroker.Host || Host of Dfs Broker to use for Commit Log ||
-|| Hypertable.!RangeServer.!CommitLog.!DfsBroker.Port || Port of Dfs Broker to use for Commit Log ||
+|| Hypertable.!RangeServer.!CommitLog.!DfsBroker.Host || Host of DFS Broker to use for Commit Log ||
+|| Hypertable.!RangeServer.!CommitLog.!DfsBroker.Port || Port of DFS Broker to use for Commit Log ||
 || Hypertable.!RangeServer.Scanner.Ttl || Number of seconds of inactivity before destroying scanners ||
 || Hypertable.!RangeServer.Timer.Interval || Timer interval in seconds (reaping scanners, purging commit logs, etc.) ||
 || Hypertable.!RangeServer.!CommitLog.!RollLimit || Roll commit log after this many bytes ||
