@@ -1,8 +1,8 @@
 #summary Configuration properties reference
 
 || *Property* || *Description* ||
-|| Hypertable.Request.Timeout || Length of time, in seconds, before timing out requests ||
-|| Hypertable.Verbose || Enable verbose output ||
+|| Hypertable.Request.Timeout || Length of time, in seconds, before timing out requests (system wide)||
+|| Hypertable.Verbose || Enable verbose output (system wide) ||
 || !HdfsBroker.Port || Port number on which to listen (read by !HdfsBroker only) ||
 || !HdfsBroker.fs.default.name || Hadoop Filesystem default name, same as fs.default.name property in Hadoop config (e.g. hdfs://localhost:9000) ||
 || !HdfsBroker.Workers || Number of HDFS broker worker threads created ||
