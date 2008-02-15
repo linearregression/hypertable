@@ -1,10 +1,9 @@
 #summary Set of tests to run prior to giving the OK on any release
 
-The following list of tests ...
+The following tests must run and pass
 
   * Run functional tests on CentOS 5 x86_64, mac OSX, and FC6 i386
-  * Run AOL query performance test with single client
-  * Run AOL query performance test with 4 simultaneous clients
+  * Run AOL query performance test with A) single client and B) four simultaneous clients.  Both tests should run to completion and the number of lines outputted with 'select *' should match the number that were inserted.
   * Run the Tests/rsclient test 20 times with the following config properties
   {{{
   Hypertable.RangeServer.AccessGroup.MaxFiles=2
