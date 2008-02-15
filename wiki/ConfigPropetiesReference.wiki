@@ -28,6 +28,7 @@
 || Hypertable.Master.Port || Port number on which Hypertable Master is or should be listening ||
 || Hypertable.Master.Workers || Number of Hypertable Master worker threads created ||
 || Hypertable.Master.Reactors || Number of Hypertable Master communication reactor threads created ||
+|| Hypertable.Master.Gc.Interval || Garbage collection interval in seconds by Master (Hypertable.!TableFileGc.Interval before 0.9.0.3) ||
 || Hypertable.!RangeServer.Port || Port number on which Hypertable Range Servers are or should be listening ||
 || Hypertable.!RangeServer.!AccessGroup.!MaxFiles || Maximum number of cell store files to create before merging ||
 || Hypertable.!RangeServer.!AccessGroup.!MaxMemory || Maximum amount of memory consumed by an Access Group ||
