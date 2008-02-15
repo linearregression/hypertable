@@ -15,7 +15,7 @@
 || !DfsBroker.Local.Reactors || Number of local broker communication reactor threads created ||
 || !DfsBroker.Host || Host on which the DFS broker is running (read by clients only) ||
 || !DfsBroker.Port || Port number on which DFS broker is listening (read by clients only) ||
-|| !DfsBroker.Timeout || Length of time, in seconds, to wait before timing out Dfs Broker requests.  This takes precedence over Hypertable.Connection.Timeout ||
+|| !DfsBroker.Timeout || Length of time, in seconds, to wait before timing out DFS Broker requests.  This takes precedence over Hypertable.Connection.Timeout ||
 || Hyperspace.Master.Host || Host on which Hyperspace master is or should be running ||
 || Hyperspace.Master.Port || Port number on which Hyperspace master is or should be listening ||
 || Hyperspace.Master.Workers || Number of Hyperspace Master worker threads created ||
