@@ -1,0 +1,45 @@
+#summary Configuration properties reference
+
+|| *Property* || *Description* ||
+|| Hypertable.Request.Timeout || Length of time, in seconds, before timing out requests ||
+|| Hypertable.Verbose || Enable verbose output ||
+|| !HdfsBroker.Port || Port number on which to listen (read by !HdfsBroker only) ||
+|| !HdfsBroker.fs.default.name || Hadoop Filesystem default name, same as fs.default.name property in Hadoop config (e.g. hdfs://localhost:9000) ||
+|| !HdfsBroker.Workers || Number of HDFS broker worker threads created ||
+|| !HdfsBroker.Reactors || Number of HDFS broker communication reactor threads created ||
+|| Kfs.!MetaServer.Name || Hostname of Kosmos meta server ||
+|| Kfs.!MetaServer.Port || Port number for Kosmos meta server ||
+|| !DfsBroker.Local.Port || Port number on which to listen (read by !LocalBroker only) ||
+|| !DfsBroker.Local.Root || Root of file and directory hierarchy (if relative path, then is relative to the installation directory) ||
+|| !DfsBroker.Local.Workers || Number of local broker worker threads created ||
+|| !DfsBroker.Local.Reactors || Number of local broker communication reactor threads created ||
+|| !DfsBroker.Host || Host on which the local broker is running (read by clients only) ||
+|| !DfsBroker.Port || Port number on which broker is listening (read by clients only) ||
+|| !DfsBroker.Timeout || Length of time, in seconds, to wait before timing out Dfs Broker requests.  This takes precedence over Hypertable.Connection.Timeout ||
+|| Hyperspace.Master.Host || Host on which Hyperspace master is or should be running ||
+|| Hyperspace.Master.Port || Port number on which Hyperspace master is or should be listening ||
+|| Hyperspace.Master.Workers || Number of Hyperspace Master worker threads created ||
+|| Hyperspace.Master.Reactors || Number of Hyperspace Master communication reactor threads created ||
+|| Hyperspace.Master.Dir || Root of hyperspace file and directory heirarchy in local filesystem (if relative path, then is relative to the installation directory) ||
+|| Hyperspace.!KeepAlive.Interval || Hyperspace Keepalive interval (see Chubby paper) ||
+|| Hyperspace.Lease.Interval || Hyperspace Lease interval (see Chubby paper) ||
+|| Hyperspace.!GracePeriod || Hyperspace Grace period (see Chubby paper) ||
+|| Hypertable.Master.Host || Host on which Hyperspace Master is running ||
+|| Hypertable.Master.Port || Port number on which Hypertable master is or should be listening ||
+|| Hypertable.Master.Workers || Number of Hypertable Master worker threads created ||
+|| Hypertable.Master.Reactors || Number of Hypertable Master communication reactor threads created ||
+|| Hypertable.!RangeServer.Port || Port number on which Hypertable range server is or should be listening ||
+|| Hypertable.!RangeServer.!AccessGroup.!MaxFiles || Maximum number of cell store files to create before merging ||
+|| Hypertable.!RangeServer.!AccessGroup.!MaxMemory || Maximum amount of memory consumed by an Access Group ||
+|| Hypertable.!RangeServer.!AccessGroup.!MergeFiles || How many files to merge during a merging compaction ||
+|| Hypertable.!RangeServer.!BlockCache.!MaxMemory || Amount of memory to dedicate to the block cache ||
+|| Hypertable.!RangeServer.Range.!MaxBytes || Maximum number of bytes per range before splitting ||
+|| Hypertable.!RangeServer.Range.!MetadataMaxBytes || Maximum number of bytes per METADATA range before splitting (for testing) ||
+|| Hypertable.!RangeServer.!CommitLog.!DfsBroker.Host || Host of Dfs Broker to use for Commit Log ||
+|| Hypertable.!RangeServer.!CommitLog.!DfsBroker.Port || Port of Dfs Broker to use for Commit Log ||
+|| Hypertable.!RangeServer.Scanner.Ttl || Number of seconds of inactivity before destroying scanners ||
+|| Hypertable.!RangeServer.Timer.Interval || Timer interval in seconds (reaping scanners, purging commit logs, etc.) ||
+|| Hypertable.!RangeServer.!CommitLog.!RollLimit || Roll commit log after this many bytes ||
+|| Hypertable.!RangeServer.!CommitLog.Compressor || Commit log compressor to use (zlib, lzo, quicklz, bmz, none) ||
+|| Hypertable.!RangeServer.Workers || Number of Range Server worker threads created ||
+|| Hypertable.!RangeServer.Reactors || Number of Range Server communication reactor threads created ||
