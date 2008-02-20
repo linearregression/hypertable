@@ -9,16 +9,15 @@ When a Range Server goes down, all of the ranges that it manages need to get re-
   _What happens if this notification is lost due to Master failover happening simultaneously?_
   * Master writes a STARTING_RANGE_SERVER_RECOVERY entry into its log
   
-  * Master re-assigns all of the tablets previously owned
-  
-  * For each tablet server that is receiving a recovered range:
-    * Master issues load_range() with the recovery or "phantom" flag set to true
-  
-  * Master replays the commit log as by reading each log entry and reading the commit timestamp for the entry and sending that timestamp along with the updates to each range server involved in the replay.
-  _Maybe tee commits into local commit logs, one for each range, for ease of recovery should one of the !RangServers die in the middle of recovery._
-  * This happens for all of the log entries
-  
-  * After log has been completely replayed, the Master issues a go_live() request to each of the range servers that received a recovered log.
+  * Master re-assigns all of the Ranges owned by the failed !RangeServer to new !RangeServers.  It does this by invoking the `RangeServer::load_range()` method with the PHANTOM bit set in the flags argument, for each Range being recovered.
+    
+  * Master replays the commit log by doing the following for each log entry:
+    * Reads the _timestamp_ and _table name_ from the header of the log entry
+    * If the table is not open, then it is opened and a !TableMutator is created in "replay mode".  This "replay mode" tells the !TableMutator to consult the !PhantomLocation column of the METADATA table when looking for ranges.
+    * The updates are replayed by invoking a the `TableMutator::replay` method with the block of updates and the timestamp retrieved from the header.  This method will write these replayed commits into a scatter buffer and periodically flush these commits to the !RangeServers with a call `to phantom_update()`.
+    _Maybe tee commits into local commit logs, one for each range, for ease of recovery should one of the !RangServers die in the middle of recovery._
+
+  * After log has been completely replayed, the Master issues a `go_live()` request to each of the range servers that received a recovered log.
   
   * Master writes a FINISHED_RANGE_SERVER_RECOVERY entry into its log
 
