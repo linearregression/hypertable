@@ -5,15 +5,14 @@
 When a Range Server goes down, all of the ranges that it manages need to get re-assigned to other range servers.  This is performed by the Master.  This document describes the process.
 
 == Master Recovery Procedure ==
-  * Master gets notified of RangeServer failure via Hyperspace
-  [What happens if this notification is lost due to Master failover happening simultaneously?]
+  * Master gets notified of !RangeServer failure via Hyperspace
+  [ What happens if this notification is lost due to Master failover happening simultaneously? ]
   * Master writes a STARTING_RANGE_SERVER_RECOVERY entry into its log
   * Master re-assigns all of the tablets previously owned
   * For each tablet server that is receiving a recovered range:
     * Master issues load_range() with the recovery or "phantom" flag set to true
   * Master replays the commit log as by reading each log entry and reading the commit timestamp for the entry and sending that timestamp along with the updates to each range server involved in the replay.
-  [ Maybe tee commits into local commit logs, one for each range, for ease of recovery
-    should one of the RangServers die in the middle of recovery. ]
+  [ Maybe tee commits into local commit logs, one for each range, for ease of recovery should one of the RangServers die in the middle of recovery. ]
   * This happens for all of the log entries
   * After log has been completely replayed, the Master issues a go_live() request to each of the range servers that received a recovered log.
   * Master writes a FINISHED_RANGE_SERVER_RECOVERY entry into its log
