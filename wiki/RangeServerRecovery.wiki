@@ -32,9 +32,6 @@ When a Range Server goes down, all of the ranges that it manages need to get re-
 
   * When the Master replays the commit log from the failed !RangeServer, it will read the real timestamp of the commit log entry and send it, along with the updates, to each !RangeServer receiving a recovered Range.  It does this by invoking the `RangeServer::phantom_update()` method
 
-  * For each call to `phantom_update()`, the !RangeServer will call a special version of Range::add() that will ignore any updates to an Access Group that have a timestamp that is less than the _last_compaction_time_ for the Access Group.
+  * For each call to `phantom_update()`, the !RangeServer will commit the updates to the "phantom" commit log and then call a special version of `Range::add()` that will ignore any updates to an Access Group that have a timestamp that is less than the _last_compaction_time_ for the Access Group.
 
-  * After the Master has replayed the entire commit log, it will issue a go_live() request to all of the !RangeServers.  Each !RangeServer will atomically move all of its "phantom" ranges into the the main Range map and will link the "phantom" commit log into the main commit log.
-
-
-
+  * After the Master has replayed the entire commit log, it will invoke the `RangeServer::go_live()` method of all the Range Servers involved in the recovery.  Each !RangeServer will atomically move all of its "phantom" ranges into the the main Range map and will link the "phantom" commit log into the main commit log.
