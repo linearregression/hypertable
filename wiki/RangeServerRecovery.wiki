@@ -24,6 +24,19 @@ When a Range Server goes down, all of the ranges that it manages need to get re-
 
 == Range Server Recovery Procedure ==
 
-  * When updates are received by a range server, they get persisted into a commit log.  This group of updates gets written as a single entry that begins with a fixed header.  The header includes the real timestamp (i.e. real time sampled by the server prior to the commit) of the commit.
+  * When normal updates are received by a range server, they get persisted into a commit log.  This group of updates gets written as a single entry that begins with a fixed header.  The header includes the real timestamp (i.e. real time sampled by the server prior to the commit) of the commit.
 
-  * When an access group is compacted, the real time of the compaction is written into the CellStore trailer.
+  * When an Access Group is compacted, the real time of the compaction is written into the !CellStore trailer.  The most recent timestamp from all of the !CellStore trailers is taken to be the _last_compaction_time_ for the Access Group.
+
+  * When recovering a range, the Master will issue a load_range() request to the range server with the PHANTOM bit set in the flags argument.  When this happens, the !RangeServer will create the Range object which will "load" all of the !CellStores and compute the _last_compaction_time_ for each Access Group.  The !RangeServer will then put the Range object into a special "phantom" map and will also create a single "phantom" commit log for all of the ranges that get loaded with the PHANTOM bit set.
+
+  * When the Master replays the commit log from the failed !RangeServer, it will read the real timestamp of the commit log entry and send it, along with the updates, to 
+
+  * For each phantom_update(), the !RangeServer will call a special version of Range::add() that will ignore any updates to an Access Group that have a timestamp that is less than the _last_compaction_time_ for the Access Group.
+
+  * After the Master has replayed the entire commit log, it will issue a go_live() request to all of the !RangeServers.  Each !RangeServer will atomically move all of its "phantom" ranges into the the main Range map and will link the "phantom" commit log into the main commit log.
+
+
+
+
+
