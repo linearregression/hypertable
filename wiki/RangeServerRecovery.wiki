@@ -6,7 +6,8 @@ When a Range Server goes down, all of the ranges that it manages need to get re-
 
 == Master Recovery Procedure ==
   * Master gets notified of !RangeServer failure via Hyperspace
-  _What happens if this notification is lost due to Master failover happening simultaneously?_
+    * _What happens if this notification is lost due to Master failover happening simultaneously?_
+    * _In Bigtable paper, master asks for lock status from tablet servers. We can also let range server stop sending heartbeats if it loses its lock in hyperspace. So in case of the lost notification, the lack of heartbeat and/or reacquiring the range server lock by master can still detect range server failure, albeit at later time._
   * Master writes a STARTING_RANGE_SERVER_RECOVERY entry into its log
   
   * Master re-assigns all of the Ranges owned by the failed !RangeServer to new !RangeServers.  It does this by invoking the `RangeServer::load_range()` method with the REPLAY bit set in the flags argument, for each Range being recovered.
@@ -17,10 +18,11 @@ When a Range Server goes down, all of the ranges that it manages need to get re-
     * Reads the _timestamp_ and _table name_ from the header of the log entry
     * Replays the commit log entry by invoking the `ReplayScatterBuffer::replay()` method with the commit timestamp, the table information, and the block of updates.
     * The !ReplayScatterBuffer will periodically flush these replayed commits to their respective !RangeServers via a call to `RangeServer::update_replay()`.
+      * _Maybe tee commits into local commit logs, one for each range, for ease of recovery should one of the !RangServers die in the middle of recovery._
+      * _Another alternative is to keep a simple and small index (table id, last offset to commit log) in memory (periodically persisted to disk) to help recovering from failure in recovery._
 
-    _Maybe tee commits into local commit logs, one for each range, for ease of recovery should one of the !RangServers die in the middle of recovery._
-
-  * After log has been completely replayed, the Master invokes the `RangeServer::go_live()` method of each !RangeServer involved in the recovery.  This could be implemented as a `ReplayScatterBuffer::go_live()` method.
+  * After log has been completely replayed, the Master invokes the `RangeServer::go_live()` method of each !RangeServer involved in the recovery.  This could be implemented as a `ReplayScatterBuffer::go_live()` method. 
+    * _Master probably should delete the obsolete commit log at this point._
   
   * Master writes a FINISHED_RANGE_SERVER_RECOVERY entry into its log
 
