@@ -9,6 +9,9 @@ When a Range Server goes down, all of the ranges that it manages need to get re-
     * _What happens if this notification is lost due to Master failover happening simultaneously?_
     * _In Bigtable paper, master asks for lock status from tablet servers. We can also let range server stop sending heartbeats if it loses its lock in hyperspace. So in case of the lost notification, the lack of heartbeat and/or reacquiring the range server lock by master can still detect range server failure, albeit at later time._
   * Master writes a STARTING_RANGE_SERVER_RECOVERY entry into its log
+
+  * Master writes special Location (essentially a callback id for !RangeLocator) for the recovering range in metadata table
+    * _In case root range failure, the root location in hyperspace is updated with a callback id._
   
   * Master re-assigns all of the Ranges owned by the failed !RangeServer to new !RangeServers.  It does this by invoking the `RangeServer::load_range()` method with the REPLAY bit set in the flags argument, for each Range being recovered.
 
@@ -22,7 +25,7 @@ When a Range Server goes down, all of the ranges that it manages need to get re-
       * _Another alternative is to keep a simple and small index (table id, last offset to commit log) in memory (periodically persisted to disk) to help recovering from failure in recovery._
 
   * After log has been completely replayed, the Master invokes the `RangeServer::go_live()` method of each !RangeServer involved in the recovery.  This could be implemented as a `ReplayScatterBuffer::go_live()` method. 
-    * _Master probably should delete the obsolete commit log at this point._
+    * _Master probably should delete the obsolete commit log (including its linked entries from previous recovery) at this point._
   
   * Master writes a FINISHED_RANGE_SERVER_RECOVERY entry into its log
 
@@ -37,5 +40,13 @@ When a Range Server goes down, all of the ranges that it manages need to get re-
   * When the Master replays the commit log from the failed !RangeServer, it will read the real timestamp of the commit log entry and send it, along with the updates, to each !RangeServer receiving a recovered Range.  It does this by invoking the `RangeServer::update_replay()` method
 
   * For each call to `update_replay()`, the !RangeServer will commit the updates to the "replay" commit log and then call a special version of `Range::add()` that will ignore any updates to an Access Group that have a timestamp that is less than the _last_compaction_time_ for the Access Group.
+    * _It probably also needs to ignore (instead of errors) updates with older timestamps than what's already in the replay map as the replay of the commit log could be restarted by a new master._
 
   * After the Master has replayed the entire commit log, it will invoke the `RangeServer::go_live()` method of all the Range Servers involved in the recovery.  Each !RangeServer will atomically move all of its "replay" ranges into the the main Range map and will link the "replay" commit log into the main commit log.
+    * _At this point, each range server will write a new entry for each recovered range._
+  
+== Hypertable Client Recovery Procedure ==
+
+  * If an i/o error occurs that's due to a missing range server, the !RangeLocator of Client would get the callback id from location of the range in the metadata or hyperspace (if the recovering range is root).
+  * User of the API would have options to either wait for the "recovery done" callback or do something else.
+    
