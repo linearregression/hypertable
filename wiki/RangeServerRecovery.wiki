@@ -26,7 +26,7 @@ When a Range Server goes down, all of the ranges that it manages need to get re-
 
   * After log has been completely replayed, the Master invokes the `RangeServer::go_live()` method of each !RangeServer involved in the recovery.  This could be implemented as a `ReplayScatterBuffer::go_live()` method. 
 
-  * Master probably should delete the obsolete commit log (all the files and directories in DFS, as well as those of its linked entries).
+  * Master deletes the obsolete commit log (all the files and directories in DFS, as well as those of its linked entries).
   
   * Master writes a FINISHED_RANGE_SERVER_RECOVERY entry into its log
 
