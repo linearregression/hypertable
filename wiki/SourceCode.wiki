@@ -20,3 +20,6 @@ cd ~/src/hypertable
 git pull
 
 }}}
+
+== Browse history of wiki pages ==
+http://code.google.com/p/hypertable/source/browse/wiki
