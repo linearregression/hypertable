@@ -21,8 +21,8 @@ When a Range Server goes down, all of the ranges that it manages need to get re-
     * Reads the _timestamp_ and _table name_ from the header of the log entry
     * Replays the commit log entry by invoking the `ReplayScatterBuffer::replay()` method with the commit timestamp, the table information, and the block of updates.
     * The !ReplayScatterBuffer will periodically flush these replayed commits to their respective !RangeServers via a call to `RangeServer::update_replay()`.
-      * _Maybe tee commits into local commit logs, one for each range, for ease of recovery should one of the !RangServers die in the middle of recovery._
-      * _An alternative is to keep a simple and small index (table id, log id, last offset to commit log) in memory (periodically persisted to disk, perhaps mmaped) to help recovering from failures in recovery._
+      * _For the first pass, we'll let the (potentially new) master rescan the commit log in case of any failures (master of range server) during the recovery._
+      * _The paper, talks about using distributed sort to speed up the recovery, which can be implemented when we have more dev resources._
 
   * After log has been completely replayed, the Master invokes the `RangeServer::go_live()` method of each !RangeServer involved in the recovery.  This could be implemented as a `ReplayScatterBuffer::go_live()` method. 
 
