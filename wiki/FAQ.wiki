@@ -34,3 +34,6 @@ From the summary:
 
 ==What Distributed File System does Hypertable use?==
 Hypertable is designed to be filesystem agnostic, so it can be layered on the data storage system of your choice.  "Brokers" (basically file system command translators) exist for Kosmix's KFS, Hadoop's HDFS and for local systems. The local-broker allows hypertable to operate on top of a NAS device or any distributed filesystem that mounts locally (i.e. via FUSE). Because Hypertable is open source, developers are encouraged to write their own Brokers for other distributed file systems.
+
+== Why did you go with GPL for Hypertable's license?==
+There are many, many, good reasons to adopt GPL (see [RelatedLinks] for details). For us, the main reason is practicality. First, most free-software packages are GPL'ed; second, we want to be able to freely use, adapt, and include, features from these packages in our distribution; third, we want to make it easy for end users to install and maintain the distribution within a single package. Note, Hypertable client libraries and supporting code for client API is released with [http://www.mysql.com/company/legal/licensing/foss-exception.html FLOSS license exception (the same as MySQL client libraries)] to work with other open-source software seamlessly.
