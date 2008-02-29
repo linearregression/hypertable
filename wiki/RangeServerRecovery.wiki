@@ -11,7 +11,7 @@ When a Range Server goes down, all of the ranges that it manages need to get re-
   * Master will create a TEMP file in Hyperspace with the name /hypertable/recovery/_recovery-id_
     * The _recovery-id_ is obtained from the 'last_recovery_id' attribute of the /hypertable/master Hyperspace file which is atomically incremented by the master each time a recovery starts
     * For each range being recovered, the master will write a special value into the 'Location' column of the METADATA entry for the range that indicates the _recovery-id_
-    * If the root range is being recovered, then the 'Location' attribute of the /metadata/root file in Hyperspace is updated to contain the special value that idicates the _recovery-id_
+    * If the root range is being recovered, then the 'Location' attribute of the /metadata/root file in Hyperspace is updated to contain the special value that indicates the _recovery-id_
   
   * Master creates a !ReplayScatterBuffer and loads it with the range information for all of the ranges being recovered, including their new location.
 
@@ -24,7 +24,8 @@ When a Range Server goes down, all of the ranges that it manages need to get re-
     * Replays the commit log entry by invoking the `ReplayScatterBuffer::replay()` method with the commit timestamp, the table information, and the block of updates.
     * The !ReplayScatterBuffer will periodically flush these replayed commits to their respective !RangeServers via a call to `RangeServer::update_replay()`.
       * _For the initial implementation, we'll let the (potentially new) master rescan the commit log in case of any failures (master of range server) during the recovery._
-      * _The paper, talks about using distributed sort to speed up the recovery, which can be implemented when we have more dev resources._
+      * _The paper, talks about using distributed sort to speed up the recovery._
+      * _An even better way seems to be a distributed replay scheduled on log replicas._
 
   * After log has been completely replayed, the Master invokes the `ReplayScatterBuffer::commit_replay()` method which has the effect of invoking the `RangeServer::commit_replay()` method of all !RangeServers participating in the recovery.
 
@@ -63,6 +64,6 @@ When a Range Server goes down, all of the ranges that it manages need to get re-
   
 == Hypertable Client Recovery Procedure ==
 
-  * If an i/o error occurs that's due to a missing range server, the !RangeLocator of Client would get the callback id from location of the range in the metadata or hyperspace (if the recovering range is root).
-  * User of the API would have options to either wait for the "recovery done" callback or do something else.
+  * If an i/o error occurs that's due to a missing range server, the !RangeLocator of Client would get the _recovery id_ from location of the range in the metadata or hyperspace (if the recovering range is root). The _recovery id_ can then be used to register a callback in the hyperspace.
+  * User of the API would have options to either wait (block) for the recovery to be finished, when no callback object is supplied, or a callback method is invoked with a reference of the current transaction object as an argument. User can then decide whether to retry, abort or rollback (probably not supported in 1.0) the transaction.
     
