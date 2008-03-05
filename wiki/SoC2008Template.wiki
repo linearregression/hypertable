@@ -1,5 +1,5 @@
 #labels GSoC-2008
-# Summer of Code Application Template
+#Summer of Code 2008 Application Template
 
 == Project Goals ==
 
