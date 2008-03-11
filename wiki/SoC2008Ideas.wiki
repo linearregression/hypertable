@@ -40,4 +40,4 @@ its questions as part of your application.
 
 Here is a [http://code.google.com/p/hypertable/issues/list?q=gsoc-2008 list of issues tagged with GSoC-2008]
 
-Students are encouraged to come up with their own ideas. Feel free to discuss ideas on the [http://groups.google.com/group/hypertable-dev Hypertable development mailing list/discussion group]
+Students are encouraged to come up with their own ideas. Feel free to discuss ideas and ask any questions on the [http://groups.google.com/group/hypertable-dev Hypertable development mailing list/discussion group]
