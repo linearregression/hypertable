@@ -19,7 +19,7 @@ When a Range Server goes down, all of the ranges that it manages need to get re-
     
   * Master re-assigns all of the Ranges owned by the failed !RangeServer to new !RangeServers.  It does this by invoking the `RangeServer::load_range()` method with the REPLAY bit set in the flags argument, for each Range being recovered.
 
-  * Master replays the commit log by doing the following for each log entry:
+  * Master replays the commit logs (first the primary, then the split log if it exists) by doing the following for each log entry:
     * Reads the _timestamp_ and _table name_ from the header of the log entry
     * Replays the commit log entry by invoking the `ReplayScatterBuffer::replay()` method with the commit timestamp, the table information, and the block of updates.
     * The !ReplayScatterBuffer will periodically flush these replayed commits to their respective !RangeServers via a call to `RangeServer::update_replay()`.
