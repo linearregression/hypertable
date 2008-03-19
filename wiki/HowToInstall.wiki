@@ -19,6 +19,11 @@
     * log4cpp (http://log4cpp.sourceforge.net/)
     * expat (http://sourceforge.net/projects/expat)
 
+    On some GNU/Linux systems, the following packages need to be installed:
+    * libattr-devel (attr-dev on Debian/Ubuntu, sys-apps/attr on Gentoo)
+    * readline-devel (libreadline-dev on Debian/Ubuntu)
+    * ncurses-devel (ncurses-dev on Debian/Ubuntu)
+
     HIGHLY RECOMMENDED (but not required):
     - tcmalloc (http://code.google.com/p/google-perftools/)
 
@@ -42,12 +47,16 @@
 6. Configure the build. 
 {{{
     cd ~/build/hypertable
-    cmake -DCMAKE_INSTALL_PREFIX= -DCMAKE_BUILD_TYPE="Debug" ~/src/hypertable
+    cmake -DCMAKE_INSTALL_PREFIX=<your_install_dir> -DCMAKE_BUILD_TYPE="Debug" ~/src/hypertable
+}}}
+  Change "Debug" to "Release" if you want to do performance tests. Alternatively, one can use ccmake to edit the build options interactively:
+{{{
+    ccmake ~/src/hypertable
 }}}
 7. Build the software.
 {{{
     make
-    make install DESTDIR=<your_install_dir>
+    make install
 }}}
 
 === HOW TO RUN REGRESSION TESTS ===
