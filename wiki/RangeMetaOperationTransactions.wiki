@@ -44,7 +44,7 @@ These logs are where all Range meta operations get recorded for the !RangeServer
   # Selects a !RangeServer for the newly split off range
   # Writes LOAD_START (with location of receiving !RangeServer) entry to MML
   # Update METADATA 'Location' column for range
-  # Calls load_range() on receiving !RangeServer
+  # Calls load_range(<split-log>) on receiving !RangeServer
   # Upon receipt of Error::OK, write LOAD_FINISH entry to MML
 
 === Receiving !RangeServer ===
@@ -99,10 +99,12 @@ where the ip-address and port correspond to the RangeServer that died.  If it is
   # Reads the RSML of the deceased !RangeServer to reconstruct the state of all the Ranges it had loaded
   # Finds new locations (!RangeServers) for all the ranges
   # Writes a RECOVERY_START entry in the MML that contains the list of ranges and their state at the time of !RangeServer death (also include location of new !RangeServer)
-  # For ranges that were in the RANGE_LOADED state, issues a load_range
-  # For ranges that were in the SPLIT_START state ...
-  # For ranges that were in the SPLIT_SHRUNK state ...
-
+  # For ranges that were in the RANGE_LOADED state, issues a load_range() on the new !RangeServer
+  # For ranges that were in the SPLIT_START state, issues a load_range(), but sets a flag indicating a split was in progress and pass along the location of the split log.
+  # For ranges that were in the SPLIT_SHRUNK state, finish the split as follows
+    # For the original range that was shrunk, select a RangeServer and issue a load_range() for the range
+    # For the newly split-off range, got to step #2 of Range Split -> Master above.
+  # As each load_range() completes successfully, wrote a RECOVERY_COMPLETE entry into the MML including the Range identifier
 
 -----
 
