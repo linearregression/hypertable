@@ -88,13 +88,13 @@ If the RSML does not exist, the !RangeServer will just come up and wait for the 
 
 -----
 
-== !RangeServer Master Recovery ==
+== !RangeServer Recovery - Master ==
 
 When the Master discovers that a !RangeServer has died (via Hyperspace notification), it waits for some grace period and then attempts to acquire a lock on a well-known file in Hyperspace with the following name format:
 
 `/hypertable/servers/<ip-address>_<port>`
 
-where the ip-address and port correspond to the RangeServer that died.  If it is unable to acquire the lock, then it assumes that a !RangeServer has been restarted on the same IP address and port and is handling recovery.  If it is able to acquire the lock, then it carries out the following sequence of steps:
+where the ip-address and port correspond to the !RangeServer that died.  If it is unable to acquire the lock, then it assumes that a !RangeServer has been restarted on the same IP address and port and is handling recovery.  If it is able to acquire the lock, then it carries out the following sequence of steps:
 
   # Reads the RSML of the deceased !RangeServer to reconstruct the state of all the Ranges it had loaded
   # Finds new locations (!RangeServers) for all the ranges
@@ -102,7 +102,7 @@ where the ip-address and port correspond to the RangeServer that died.  If it is
   # For ranges that were in the RANGE_LOADED state, issues a load_range() on the new !RangeServer
   # For ranges that were in the SPLIT_START state, issues a load_range(), but sets a flag indicating a split was in progress and pass along the location of the split log.
   # For ranges that were in the SPLIT_SHRUNK state, finish the split as follows
-    # For the original range that was shrunk, select a RangeServer and issue a load_range() for the range
+    # For the original range that was shrunk, select a !RangeServer and issue a load_range() for the range
     # For the newly split-off range, got to step #2 of Range Split -> Master above.
   # As each load_range() completes successfully, wrote a RECOVERY_COMPLETE entry into the MML including the Range identifier
 
@@ -110,9 +110,14 @@ where the ip-address and port correspond to the RangeServer that died.  If it is
 
 == Master Startup ==
 
+  # Read MML and reconstruct state
+  # For all ranges that were in LOAD_START or RECOVERY_START mode, by writing the 'Location' field of METADATA and then calling load_range()
+
 -----
 
 == Range Move ==
+
+TBD
 
 -----
 
@@ -126,3 +131,4 @@ where the ip-address and port correspond to the RangeServer that died.  If it is
   * Implement "Fast Recovery" in !RangeServer.  This involves obtaining the lock on the !RangeServer's lock in Hyperpspace, reading the RSML and re-building the Range objects in  their various states.
   * Change !RangeServer split logic as described above in Range Split -> Originating !RangeServer above
   * Allow load_range() on already loaded ranges.  If the Master dies in the middle of recovery, when the next Master takes over it may ask a !RangeServer to load a range that it already successfully loaded.  I should return an error like RANGE_ALREADY_LOADED.
+  * ...
