@@ -24,19 +24,19 @@ These logs are where all Range meta operations get recorded for the !RangeServer
 
 === Originating !RangeServer ===
 
-  * Decide to split range
-  * Create a split log and append SPLIT_START entry to RSML (include split log location)
-  * Atomically obtain split timestamp and install split log
-  * Do major compaction
-  * Quiesce updates
-  * Close split log
-  * Update METADATA for old range 
-  * Append SPLIT_SHRUNK to RSML (with identifier of split-off Range)
-  * Shrink cell cache
-  * Shrink view onto cell stores
-  * Un-quiesce updates
-  * Notify Master of split
-  * Upon receiving Error::OK response from Master write SPLIT_DONE entry in RSML
+  # Decide to split range
+  # Create a split log and append SPLIT_START entry to RSML (include split log location)
+  # Atomically obtain split timestamp and install split log
+  # Do major compaction
+  # Quiesce updates
+  # Close split log
+  # Update METADATA for old range 
+  # Append SPLIT_SHRUNK to RSML (with identifier of split-off Range)
+  # Shrink cell cache
+  # Shrink view onto cell stores
+  # Un-quiesce updates
+  # Notify Master of split
+  # Upon receiving Error::OK response from Master write SPLIT_DONE entry in RSML
 
 === Master ===
 
@@ -58,11 +58,13 @@ These logs are where all Range meta operations get recorded for the !RangeServer
 
 -----
 
-== Range Move ==
-
------
-
 == Create Table ==
+
+  * Selects a !RangeServer for the initial range
+  * Writes LOAD_START (with location of receiving !RangeServer) to MML
+  * Update METADATA 'Location' column for range
+  * Calls load_range() on receiving !RangeServer
+  * Upon receipt of Error::OK, write LOAD_FINISH
 
 -----
 
@@ -88,9 +90,26 @@ If the RSML does not exist, the !RangeServer will just come up and wait for the 
 
 == !RangeServer Master Recovery ==
 
+When the Master discovers that a !RangeServer has died (via Hyperspace notification), it waits for some grace period and then attempts to acquire a lock on a well-known file in Hyperspace with the following name format:
+
+`/hypertable/servers/<ip-address>_<port>`
+
+where the ip-address and port correspond to the RangeServer that died.  If it is unable to acquire the lock, then it assumes that a !RangeServer has been restarted on the same IP address and port and is handling recovery.  If it is able to acquire the lock, then it carries out the following sequence of steps:
+
+  * Reads the RSML of the deceased !RangeServer to reconstruct the state of all the Ranges it had loaded
+  * Writes a RECOVERY_START entry in the MML that contains the list of ranges and their state at the time of !RangeServer death
+  * For ranges that were in the RANGE_LOADED state 
+  * For ranges that were in the SPLIT_START state ...
+  * For ranges that were in the SPLIT_SHRUNK state ...
+
+
 -----
 
 == Master Startup ==
+
+-----
+
+== Range Move ==
 
 -----
 
