@@ -70,15 +70,18 @@ These logs are where all Range meta operations get recorded for the !RangeServer
 
 When a !RangeServer comes up, it will acquire a lock on a well-known file in Hyperspace with the following name format:
 
-/hypertable/servers/<ip-address>_<port>
+`/hypertable/servers/<ip-address>_<port>`
 
 It holds on to this lock the entire time it is up.  If it is unable to acquire the lock it will go into a retry loop.  Once it successfully acquires the lock, it will then check to see if there is an RSML for this machine/port combo in the DFS.  This log will be found in the following well-known location:
 
-/hypertable/servers/<ip-address>_<port>/commit/meta
+`/hypertable/servers/<ip-address>_<port>/commit/meta`
 
 If the RSML does not exist, the !RangeServer will just come up and wait for the Master to assign it ranges.  Otherwise, if the RSML does exist, it will carry out the following recovery procedure:
 
-  * Scan the RSML to figure out what
+  * Scan the RSML to figure out the state of all of the Ranges that the prior !RangeServer had loaded
+  * Load all of the Ranges
+  * Replay the primary commit log
+
 
 -----
 
