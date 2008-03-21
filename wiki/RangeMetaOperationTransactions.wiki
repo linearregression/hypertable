@@ -17,9 +17,17 @@ These logs are where all meta operations related to Ranges get recorded for the 
 === Originating !RangeServer ===
 
   * Decide to split range
-  * Create
-  * Obtain split timestamp
-  * P
+  * Create a split log and append SPLIT_START entry to RSML (include split log location)
+  * Atomically obtain split timestamp and install split log
+  * Do major compaction
+  * Quiesce updates
+  * Close split log
+  * Update METADATA for old range 
+  * Append SPLIT_SHRUNK to RSML
+  * Shrink cell cache
+  * Shrink view onto cell stores
+  * Notify Master of split
+  * Upon receiving Error::OK response from Master write SPLIT_DONE entry in RSML
 
 === Master ===
 
