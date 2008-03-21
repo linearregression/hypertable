@@ -3,9 +3,15 @@
 
 == Introduction ==
 
-Ranges are assigned to RangeServers via CREATE TABLE, Range splits and Range moves.  To ensure that Ranges get assigned to a RangeServer and that a Range doesn't accidentally get double assigned, we've decided to implement range meta-operation transactions.  This document describes the design of this mechanism.
+Ranges are assigned to !RangeServers via CREATE TABLE, Range splits and Range moves.  To ensure that Ranges get assigned to a !RangeServer and that a Range doesn't accidentally get double assigned, we've decided to implement range meta-operation transactions.  This document describes the design of this mechanism.
 
 == Range Split ==
+
+=== Originating !RangeServer ===
+
+=== Master ===
+
+=== Receiving !RangeServer ===
 
 == Range Move ==
 
