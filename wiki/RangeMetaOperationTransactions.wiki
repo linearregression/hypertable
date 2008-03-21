@@ -49,10 +49,18 @@ These logs are where all meta operations related to Ranges get recorded for the 
   * Add Range object to main map
   * Respond OK to Master
 
+-----
+
 == Range Move ==
+
+-----
 
 == Create Table ==
 
+-----
+
 == !RangeServer Restart (Fast Recovery) ==
+
+-----
 
 == !RangeServer Master Recovery ==
