@@ -68,6 +68,14 @@ These logs are where all Range meta operations get recorded for the !RangeServer
 
 == !RangeServer Restart (Fast Recovery) ==
 
+When a !RangeServer comes up, it will acquire a lock on a well-known file in Hyperspace with the following name format:
+
+/hypertable/servers/<ip-address>_<port>
+
+It holds on to this lock the entire time it is up.  If it is unable to acquire the lock it will go into a retry loop.  Once it successfully acquires the lock, it will then check to see if there is an RSML for this machine/port combo in the DFS.  This log will be in the well-known path:
+
+/hypertable/servers/<ip-address>_<port>/commit/meta
+
 -----
 
 == !RangeServer Master Recovery ==
