@@ -31,8 +31,26 @@ These logs are where all meta operations related to Ranges get recorded for the 
 
 === Master ===
 
+  * Master gets report_split() call from RangeServer
+  * Selects a !RangeServer for the newly split off range
+  * Writes LOAD_START (with location of receiving !RangeServer) to MML
+  * Calls load_range() on receiving !RangeServer
+  * Upon receipt of Error::OK, write LOAD_FINISH
+
 === Receiving !RangeServer ===
+
+  * Update METADATA 'Location' column for range
+  * Create Range directory in DFS
+  * Link split log into primary log
+  * Append RANGE_LOADED in RSML
+  * Replay split log
+  * Add Range object to main map
+  * Respond OK to Master
 
 == Range Move ==
 
 == Create Table ==
+
+== !RangeServer Restart (Fast Recovery) ==
+
+== !RangeServer Master Recovery ==
