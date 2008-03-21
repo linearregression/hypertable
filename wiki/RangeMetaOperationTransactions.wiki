@@ -31,7 +31,7 @@ These logs are where all Range meta operations get recorded for the !RangeServer
   * Quiesce updates
   * Close split log
   * Update METADATA for old range 
-  * Append SPLIT_SHRUNK to RSML
+  * Append SPLIT_SHRUNK to RSML (with identifier of split-off Range)
   * Shrink cell cache
   * Shrink view onto cell stores
   * Un-quiesce updates
@@ -81,8 +81,11 @@ If the RSML does not exist, the !RangeServer will just come up and wait for the 
   * Scan the RSML to figure out the state of all of the Ranges that the prior !RangeServer had loaded
   * Load all of the Ranges
   * Replay the primary commit log
-
+  * For Ranges in the SPLIT_START state, replay the split log and initiate a split, appending to the existing split log.
+  * For Ranges in the SPLIT_SHRUNK state, initiate a report_split_to_master() task
 
 -----
 
 == !RangeServer Master Recovery ==
+
+== Implementation Tasks ==
