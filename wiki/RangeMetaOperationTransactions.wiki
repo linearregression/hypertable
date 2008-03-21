@@ -25,33 +25,33 @@ These logs are where all Range meta operations get recorded for the !RangeServer
 === Originating !RangeServer ===
 
   # Decide to split range
-  # Create a split log and append SPLIT_START entry to RSML (include split log location)
+  # Create a split log and append RS_SPLIT_START entry to RSML (include split log location)
   # Atomically obtain split timestamp and install split log
   # Do major compaction
   # Quiesce updates
   # Close split log
   # Update METADATA for old range 
-  # Append SPLIT_SHRUNK to RSML (with identifier of split-off Range)
+  # Append RS_SPLIT_SHRUNK to RSML (with identifier of split-off Range)
   # Shrink cell cache
   # Shrink view onto cell stores
   # Un-quiesce updates
   # Notify Master of split
-  # Upon receiving Error::OK response from Master write SPLIT_DONE entry in RSML
+  # Upon receiving Error::OK response from Master write RS_SPLIT_DONE entry in RSML
 
 === Master ===
 
   # Master::report_split() called by originating !RangeServer
   # Selects a !RangeServer for the newly split off range
-  # Writes LOAD_START (with location of receiving !RangeServer) entry to MML
+  # Writes M_LOAD_RANGE_START (with location of receiving !RangeServer) entry to MML
   # Update METADATA 'Location' column for range
   # Calls load_range(<split-log>) on receiving !RangeServer
-  # Upon receipt of Error::OK, write LOAD_FINISH entry to MML
+  # Upon receipt of Error::OK, write M_LOAD_RANGE_FINISH entry to MML
 
 === Receiving !RangeServer ===
 
   # Create Range directory in DFS
   # Link split log into primary log
-  # Append RANGE_LOADED in RSML
+  # Append RS_RANGE_LOADED in RSML
   # Replay split log
   # Add Range object to main map
   # Respond OK to Master
@@ -61,10 +61,10 @@ These logs are where all Range meta operations get recorded for the !RangeServer
 == Create Table ==
 
   # Selects a !RangeServer for the initial range
-  # Writes LOAD_START (with location of receiving !RangeServer) to MML
+  # Writes M_LOAD_RANGE_START (with location of receiving !RangeServer) to MML
   # Update METADATA 'Location' column for range
   # Calls load_range() on receiving !RangeServer
-  # Upon receipt of Error::OK, write LOAD_FINISH entry to MML
+  # Upon receipt of Error::OK, write M_LOAD_RANGE_FINISH entry to MML
 
 -----
 
@@ -83,8 +83,8 @@ If the RSML does not exist, the !RangeServer will just come up and wait for the 
   # Scan the RSML to figure out the state of all of the Ranges that the prior !RangeServer had loaded
   # Load all of the Ranges
   # Replay the primary commit log
-  # For Ranges in the SPLIT_START state, replay the split log and initiate a split, appending to the existing split log.
-  # For Ranges in the SPLIT_SHRUNK state, initiate a report_split_to_master() task
+  # For Ranges in the RS_SPLIT_START state, replay the split log and initiate a split, appending to the existing split log.
+  # For Ranges in the RS_SPLIT_SHRUNK state, initiate a report_split_to_master() task
 
 -----
 
@@ -98,20 +98,20 @@ where the ip-address and port correspond to the !RangeServer that died.  If it i
 
   # Reads the RSML of the deceased !RangeServer to reconstruct the state of all the Ranges it had loaded
   # Finds new locations (!RangeServers) for all the ranges
-  # Writes a RECOVERY_START entry in the MML that contains the list of ranges and their state at the time of !RangeServer death (also include location of new !RangeServer)
-  # For ranges that were in the RANGE_LOADED state, issues a load_range() on the new !RangeServer
-  # For ranges that were in the SPLIT_START state, issues a load_range(), but sets a flag indicating a split was in progress and pass along the location of the split log.
-  # For ranges that were in the SPLIT_SHRUNK state, finish the split as follows
+  # Writes a M_RECOVERY_START entry in the MML that contains the list of ranges and their state at the time of !RangeServer death (also include location of new !RangeServer)
+  # For ranges that were in the RS_RANGE_LOADED state, issues a load_range() on the new !RangeServer
+  # For ranges that were in the RS_SPLIT_START state, issues a load_range(), but sets a flag indicating a split was in progress and pass along the location of the split log.
+  # For ranges that were in the RS_SPLIT_SHRUNK state, finish the split as follows
     # For the original range that was shrunk, select a !RangeServer and issue a load_range() for the range
     # For the newly split-off range, got to step #2 of Range Split -> Master above.
-  # As each load_range() completes successfully, wrote a RECOVERY_COMPLETE entry into the MML including the Range identifier
+  # As each load_range() completes successfully, wrote a M_RECOVERY_COMPLETE entry into the MML including the Range identifier
 
 -----
 
 == Master Startup ==
 
   # Read MML and reconstruct state
-  # For all ranges that were in LOAD_START or RECOVERY_START mode, by writing the 'Location' field of METADATA and then calling load_range()
+  # For all ranges that were in M_LOAD_RANGE_START or M_RECOVERY_START mode, by writing the 'Location' field of METADATA and then calling load_range()
 
 -----
 
@@ -125,8 +125,8 @@ TBD
 
   * Sweep through code and change location from `<ip-address>_<port>_<timestamp>` to just `<ip-address>_<port>`
   * Implement !MetaLog
-  * Change code so that Ranges can be created in the SPLIT_START state which involves installing a !SplitLog and initiating a split
-  * Change code so that Ranges can be created in the SPLIT_SHRUNK state, which involves scheduling a "notify master" task.
+  * Change code so that Ranges can be created in the RS_SPLIT_START state which involves installing a !SplitLog and initiating a split
+  * Change code so that Ranges can be created in the RS_SPLIT_SHRUNK state, which involves scheduling a "notify master" task.
   * Modify !MaintainenceQueue to allow for certain failed tasks to get rescheduled (e.g. "notify master")
   * Implement "Fast Recovery" in !RangeServer.  This involves obtaining the lock on the !RangeServer's lock in Hyperpspace, reading the RSML and re-building the Range objects in  their various states.
   * Change !RangeServer split logic as described above in Range Split -> Originating !RangeServer above
