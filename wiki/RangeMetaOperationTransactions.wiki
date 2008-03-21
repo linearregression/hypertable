@@ -5,9 +5,21 @@
 
 Ranges are assigned to !RangeServers via CREATE TABLE, Range splits and Range moves.  To ensure that Ranges get assigned to a !RangeServer and that a Range doesn't accidentally get double assigned, we've decided to implement range meta-operation transactions.  This document describes the design of this mechanism.
 
+To support support range meta-operation transactions, we've introduced two commit logs:
+
+  # RSML - !RangeServer Meta Log
+  # MML - Master Meta Log
+
+These logs are where all meta operations related to Ranges get recorded for the !RangeServers and Master, respectively.
+
 == Range Split ==
 
 === Originating !RangeServer ===
+
+  * Decide to split range
+  * Create
+  * Obtain split timestamp
+  * P
 
 === Master ===
 
