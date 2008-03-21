@@ -122,5 +122,5 @@ where the ip-address and port correspond to the RangeServer that died.  If it is
   * Implement !MetaLog
   * Modify load_range to allow the loading of Ranges that were in the SPLIT_START and SPLIT_SHRUNK state.  This involves setting installing the !SplitLog in the Range and initiate a split for SPLIT_START or scheduling a !NotifyMaster task for SPLIT_SHRUNK.
   * Modify !MaintainenceQueue to allow for certain failed tasks to get rescheduled
-  * Implement "Fast Recovery" in !RangeServer
+  * Implement "Fast Recovery" in !RangeServer.  This involves obtaining the lock on the !RangeServer's lock in Hyperpspace, reading the RSML and re-building the Range objects by loading the CellStores.  Then it should replay the primary log and then initiate any splits for the SPLIT_START ranges and schedule master notifications for the SPLIT_SHRUNK ranges.
   * Change !RangeServer split logic as described above in Range Split -> Originating !RangeServer above
