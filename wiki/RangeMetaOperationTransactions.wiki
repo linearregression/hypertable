@@ -12,6 +12,8 @@ To support support range meta-operation transactions, we've introduced two commi
 
 These logs are where all meta operations related to Ranges get recorded for the !RangeServers and Master, respectively.
 
+-----
+
 == Range Split ==
 
 === Originating !RangeServer ===
