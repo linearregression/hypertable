@@ -125,3 +125,4 @@ where the ip-address and port correspond to the RangeServer that died.  If it is
   * Modify !MaintainenceQueue to allow for certain failed tasks to get rescheduled (e.g. "notify master")
   * Implement "Fast Recovery" in !RangeServer.  This involves obtaining the lock on the !RangeServer's lock in Hyperpspace, reading the RSML and re-building the Range objects in  their various states.
   * Change !RangeServer split logic as described above in Range Split -> Originating !RangeServer above
+  * Allow load_range() on already loaded ranges.  If the Master dies in the middle of recovery, when the next Master takes over it may ask a !RangeServer to load a range that it already successfully loaded.  I should return an error like RANGE_ALREADY_LOADED.
