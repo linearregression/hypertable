@@ -62,7 +62,7 @@ MetaLogEntry *new_m_load_range_finish(const Range &);
 MetaLogEntry *new_m_recovery_start();
 MetaLogEntry *new_m_recovery_finish();
 
-MetaLogEntry *new_from_payload(Type, const void *buf, size_t len);
+MetaLogEntry *new_from_payload(MetaLogEntry::Type, const void *buf, size_t len);
 
 }
 }}}
