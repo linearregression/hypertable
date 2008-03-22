@@ -39,13 +39,14 @@ These logs are where all Range meta operations get recorded for the !RangeServer
   # Upon receiving Error::OK response from Master write RS_SPLIT_DONE entry in RSML
 
 === Master ===
-
+  
   # Master::report_split() called by originating !RangeServer
   # Selects a !RangeServer for the newly split off range
   # Writes M_LOAD_RANGE_START (with location of receiving !RangeServer) entry to MML
-  # Update METADATA 'Location' column for range
   # Calls load_range(<split-log>) on receiving !RangeServer
-  # Upon receipt of Error::OK, write M_LOAD_RANGE_FINISH entry to MML
+  # Update METADATA 'Location' column for the new range
+  # Issue drop_range() for the new range to the originating !RangeServer
+  # Write M_LOAD_RANGE_FINISH entry to MML
 
 === Receiving !RangeServer ===
 
@@ -95,30 +96,50 @@ When the Master discovers that a !RangeServer has died (via Hyperspace notificat
 `/hypertable/servers/<ip-address>_<port>`
 
 where the ip-address and port correspond to the !RangeServer that died.  If it is unable to acquire the lock, then it assumes that a !RangeServer has been restarted on the same IP address and port and is handling recovery.  If it is able to acquire the lock, then it carries out the following sequence of steps:
-
-  # Reads the RSML of the deceased !RangeServer to reconstruct the state of all the Ranges it had loaded
-  # Finds new locations (!RangeServers) for all the ranges
-  # Writes a M_RECOVERY_START entry in the MML that contains the list of ranges and their state at the time of !RangeServer death (also include location of new !RangeServer)
-  # For ranges that were in the RS_RANGE_LOADED state, issues a load_range() on the new !RangeServer
-  # For ranges that were in the RS_SPLIT_START state, issues a load_range(), but sets a flag indicating a split was in progress and pass along the location of the split log.
+  # Rename the dead range server commit log directory in DFS to '.../commit-recover'
+  # Write a M_RECOVERY_START entry in the MML that contains the dead !RangeServer)
+  # Read the RSML of the deceased !RangeServer to reconstruct the state of all the Ranges it had loaded
+  # Find new locations (!RangeServers) for all the ranges.
+  # Write new locations in the METADATA.
+  # For ranges that were in the RS_RANGE_LOADED state, write M_LOAD_RANGE_START for the range and its target range server in MML and issue a corresponding load_range()
+  # For ranges that were in the RS_SPLIT_START state, write M_LOAD_RANGE_START for the range and its target range server in MML and issues a load_range(), but set a flag indicating a split was in progress and pass along the location of the split log.
   # For ranges that were in the RS_SPLIT_SHRUNK state, finish the split as follows
-    # For the original range that was shrunk, select a !RangeServer and issue a load_range() for the range
-    # For the newly split-off range, got to step #2 of Range Split -> Master above.
-  # As each load_range() completes successfully, wrote a M_RECOVERY_COMPLETE entry into the MML including the Range identifier
+    # For the original range that was shrunk, select a !RangeServer and write M_LOAD_RANGE_START for the range and its new range server in MML and issue a load_range()
+    # For the newly split-off range, got to step #2 of Range Split -> Master above
+  # For each successful load_range(), write M_LOAD_RANGE_FINISH for the range in MML
+  # When all load_range() succeeded, delete the commit-recovery directory for the dead range server and write M_RECOVERY_COMPLETE for the dead range server in MML
 
 -----
 
 == Master Startup ==
 
   # Read MML and reconstruct state
-  # For all ranges that were in M_LOAD_RANGE_START or M_RECOVERY_START mode, by writing the 'Location' field of METADATA and then calling load_range()
+  # For all ranges that were in M_LOAD_RANGE_START or M_RECOVERY_START but not M_LOAD_RANGE_FINISH mode, follow the above 'Range server recovery - Master' from step 4.
+  # For all ranges that were in M_MOVE_RANGE_START mode, follow the below 'Range Move - Master' from step 3.
 
 -----
 
 == Range Move ==
 
-TBD
+=== Master ===
+  * Select source range and destination range server
+  * Write M_MOVE_RANGE_START with the range and its source and destination servers in MML
+  * Issue prepare_range_move() on the source range server
+  * Write M_LOAD_RANGE_START with the range and its destination in MML and issue a corresponding load_range() with move log location
+  * Update METADATA 'Location' for the range
+  * Write M_LOAD_RANGE_FINISH with the range in MML
+  * Issue drop_range() on the source range server
+  * Write M_MOVE_RANGE_FINISH with the range in MML
 
+=== Range Server ===
+  * prepare_range_move() called by Master
+  * Create a move log and append RS_MOVE_START with the log location in RSML
+  * Atomically obtain move timestamp and install move log
+  * Do major compaction for the range
+  * Quiesce updates to the range
+  * Close move log
+  * Append RS_MOVE_PREPARED for the range to RSML
+  
 -----
 
 == Implementation TODO Tasks ==
