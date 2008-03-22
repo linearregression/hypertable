@@ -7,7 +7,8 @@ To support [RangeMetaOperationTransactions transactions of range metadata operat
 The basic format for the log is:
 {{{
 log ::= <log_entry> | <log> <log_entry>
-log_entry ::= <log_type> <payload_size> <payload>
+log_entry ::= <checksum> <log_type> <payload_size> <payload>
+checksum :: = <fletcher32 of <log_type> <payload_size> <payload>>
 log_type ::= <8-bit unsigned integer with value of MetaLogEntry::Type below>
 payload_size ::= <an unsigned 32 bit integer>
 payload ::= <blob serialized depending on <log_type>>
@@ -82,19 +83,21 @@ class MetaLogReader {
 public:
   struct ScanEntry {
     MetaLogEntry::Type type;
+    uint32_t checksum;
     size_t payload_size;
     const void *payload;
   };
+
 public:
   virtual ~MetaLogReader() = 0;
   
-  // quick scan without deserialize entries
-  virtual void first(ScanEntry *) = 0;
+  // quick scan without deserialize entries, throws if invalid
   virtual void next(ScanEntry *) = 0;
+  virtual void last(ScanEntry *) = 0;
 
-  // read and get ready for the next record
-  virtual MetaLogEntryPtr read() = 0; 
-  virtual MetaLogEntryPtr read_last() = 0; // throws if not valid
+  // read and get ready for the next record, throws if invalid
+  virtual MetaLogEntryPtr read() = 0;
+  virtual MetaLogEntryPtr read_last() = 0;
 };
 }}}
 
