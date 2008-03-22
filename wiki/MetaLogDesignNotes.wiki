@@ -42,7 +42,7 @@ public:
   template <class LogEntryT>
   LogEntryT *cast() { 
     if (LogEntryT::type == get_type())
-      return (LogEntryT)this;
+      return (LogEntryT *)this;
     else 
       return NULL;
   }
