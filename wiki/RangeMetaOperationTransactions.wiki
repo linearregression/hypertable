@@ -96,8 +96,8 @@ When the Master discovers that a !RangeServer has died (via Hyperspace notificat
 `/hypertable/servers/<ip-address>_<port>`
 
 where the ip-address and port correspond to the !RangeServer that died.  If it is unable to acquire the lock, then it assumes that a !RangeServer has been restarted on the same IP address and port and is handling recovery.  If it is able to acquire the lock, then it carries out the following sequence of steps:
-  # Rename the dead range server commit log directory in DFS to '.../commit-recover'
   # Write a M_RECOVERY_START entry in the MML that contains the dead !RangeServer)
+  # Rename the dead range server commit log directory in DFS to '.../commit-recover'
   # Read the RSML of the deceased !RangeServer to reconstruct the state of all the Ranges it had loaded
   # Find new locations (!RangeServers) for all the ranges.
   # Write new locations in the METADATA.
