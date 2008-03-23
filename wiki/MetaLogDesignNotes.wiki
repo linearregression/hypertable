@@ -92,8 +92,8 @@ public:
   virtual ~MetaLogReader() = 0;
   
   // quick scan without deserialize entries, throws if invalid
-  virtual void next(ScanEntry *) = 0;
-  virtual void last(ScanEntry *) = 0;
+  virtual ScanEntry *next(ScanEntry *) = 0;
+  virtual ScanEntry *last(ScanEntry *) = 0;
 
   // read and get ready for the next record, throws if invalid
   virtual MetaLogEntryPtr read() = 0;
