@@ -28,9 +28,7 @@ public:
 typedef boost::instrusive_ptr<MetaLogEntry> MetaLogEntryPtr;
 }}}
 {{{
-namespace MetaLogEntryFactory {
-  
-enum Type {
+enum MetaLogEntryType {
   UNKNOWN = -1,
   RS_SPLIT_START,
   RS_SPLIT_SHRUNK,
@@ -46,8 +44,10 @@ enum Type {
   M_RECOVERY_START,
   M_RECOVERY_COMPLETE
 };
-
-
+}}}
+{{{
+namespace MetaLogEntryFactory {
+  
 MetaLogEntry *new_rs_split_start(const Range &old, const std::string &split_log);
 MetaLogEntry *new_rs_split_shrunk(const Range &old, const Range &new);
 MetaLogEntry *new_rs_split_done(const Range &old);
@@ -62,9 +62,9 @@ MetaLogEntry *new_m_move_range_finish(const Range &);
 MetaLogEntry *new_m_recovery_start();
 MetaLogEntry *new_m_recovery_finish();
 
-MetaLogEntry *new_from_payload(Type, const void *buf, size_t len);
+MetaLogEntry *new_from_payload(MetaLogEntryType, const void *buf, size_t len);
 
-}
+} // namespace MetaLogEntryFactory
 }}}
 {{{
 class MetaLog {
@@ -82,7 +82,7 @@ public:
 class MetaLogReader {
 public:
   struct ScanEntry {
-    MetaLogEntry::Type type;
+    MetaLogEntryType type;
     uint32_t checksum;
     size_t payload_size;
     const void *payload;
@@ -96,8 +96,8 @@ public:
   virtual ScanEntry *last(ScanEntry *) = 0;
 
   // read and get ready for the next record, throws if invalid
-  virtual MetaLogEntryPtr read() = 0;
-  virtual MetaLogEntryPtr read_last() = 0;
+  virtual MetaLogEntry *read() = 0;
+  virtual MetaLogEntry *read_last() = 0;
 };
 }}}
 
