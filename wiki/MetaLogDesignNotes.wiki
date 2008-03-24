@@ -17,7 +17,6 @@ payload ::= <blob serialized depending on <log_type>>
 {{{
 class MetaLogEntry : public ReferenceCount {
 public:
-
   virtual ~MetaLogEntry() {}
 
   virtual void write(DynamicBuffer &) = 0;
