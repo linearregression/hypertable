@@ -15,7 +15,7 @@ payload ::= <blob serialized depending on <log_type>>
 }}}
 = API =
 {{{
-class MetaLogEntry : public ReferenceCount {
+class MetaLogEntry {
 public:
   virtual ~MetaLogEntry() {}
 
@@ -25,7 +25,6 @@ public:
 
   virtual int get_type() = 0; 
 };
-typedef boost::instrusive_ptr<MetaLogEntry> MetaLogEntryPtr;
 }}}
 {{{
 enum MetaLogEntryType {
