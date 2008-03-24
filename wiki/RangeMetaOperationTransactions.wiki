@@ -26,7 +26,6 @@ These logs are where all Range meta operations get recorded for the !RangeServer
 
   # Decide to split range
   # Create a split log and append RS_SPLIT_START entry to RSML (include split log location)
-  # Atomically obtain split timestamp and install split log
   # Do major compaction
   # Quiesce updates
   # Close split log
@@ -46,7 +45,7 @@ These logs are where all Range meta operations get recorded for the !RangeServer
   # Calls load_range(<split-log>) on receiving !RangeServer
   # Update METADATA 'Location' column for the new range
   # Issue drop_range() for the new range to the originating !RangeServer
-  # Write M_LOAD_RANGE_FINISH entry to MML
+  # Write M_LOAD_RANGE_DONE entry to MML
 
 === Receiving !RangeServer ===
 
@@ -65,7 +64,7 @@ These logs are where all Range meta operations get recorded for the !RangeServer
   # Writes M_LOAD_RANGE_START (with location of receiving !RangeServer) to MML
   # Update METADATA 'Location' column for range
   # Calls load_range() on receiving !RangeServer
-  # Upon receipt of Error::OK, write M_LOAD_RANGE_FINISH entry to MML
+  # Upon receipt of Error::OK, write M_LOAD_RANGE_DONE entry to MML
 
 -----
 
@@ -106,15 +105,15 @@ where the ip-address and port correspond to the !RangeServer that died.  If it i
   # For ranges that were in the RS_SPLIT_SHRUNK state, finish the split as follows
     # For the original range that was shrunk, select a !RangeServer and write M_LOAD_RANGE_START for the range and its new range server in MML and issue a load_range()
     # For the newly split-off range, got to step #2 of Range Split -> Master above
-  # For each successful load_range(), write M_LOAD_RANGE_FINISH for the range in MML
-  # When all load_range() succeeded, delete the commit-recovery directory for the dead range server and write M_RECOVERY_COMPLETE for the dead range server in MML
+  # For each successful load_range(), write M_LOAD_RANGE_DONE for the range in MML
+  # When all load_range() succeeded, delete the commit-recovery directory for the dead range server and write M_RECOVERY_DONE for the dead range server in MML
 
 -----
 
 == Master Startup ==
 
   # Read MML and reconstruct state
-  # For all ranges that were in M_LOAD_RANGE_START or M_RECOVERY_START but not M_LOAD_RANGE_FINISH mode, follow the above 'Range server recovery - Master' from step 4.
+  # For all ranges that were in M_LOAD_RANGE_START or M_RECOVERY_START but not M_LOAD_RANGE_DONE mode, follow the above 'Range server recovery - Master' from step 4.
   # For all ranges that were in M_MOVE_RANGE_START mode, follow the below 'Range Move - Master' from step 3.
 
 -----
@@ -127,9 +126,9 @@ where the ip-address and port correspond to the !RangeServer that died.  If it i
   # Issue prepare_range_move() on the source range server
   # Write M_LOAD_RANGE_START with the range and its destination in MML and issue a corresponding load_range() with move log location
   # Update METADATA 'Location' for the range
-  # Write M_LOAD_RANGE_FINISH with the range in MML
+  # Write M_LOAD_RANGE_DONE with the range in MML
   # Issue drop_range() on the source range server
-  # Write M_MOVE_RANGE_FINISH with the range in MML
+  # Write M_MOVE_RANGE_DONE with the range in MML
 
 === Range Server ===
   # prepare_range_move() called by Master
