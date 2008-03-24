@@ -47,7 +47,7 @@ enum MetaLogEntryType {
 {{{
 namespace MetaLogEntryFactory {
   
-MetaLogEntry *new_rs_split_start(const Range &old, const Range &new, const String &transfer_log);
+MetaLogEntry *new_rs_split_start(const Range &old, const Range &split_off, const String &transfer_log);
 MetaLogEntry *new_rs_split_shrunk(const Range &old);
 MetaLogEntry *new_rs_split_done(const Range &old);
 MetaLogEntry *new_rs_range_loaded(const Range &);
