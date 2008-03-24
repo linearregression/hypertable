@@ -122,23 +122,23 @@ where the ip-address and port correspond to the !RangeServer that died.  If it i
 == Range Move ==
 
 === Master ===
-  * Select source range and destination range server
-  * Write M_MOVE_RANGE_START with the range and its source and destination servers in MML
-  * Issue prepare_range_move() on the source range server
-  * Write M_LOAD_RANGE_START with the range and its destination in MML and issue a corresponding load_range() with move log location
-  * Update METADATA 'Location' for the range
-  * Write M_LOAD_RANGE_FINISH with the range in MML
-  * Issue drop_range() on the source range server
-  * Write M_MOVE_RANGE_FINISH with the range in MML
+  # Select source range and destination range server
+  # Write M_MOVE_RANGE_START with the range and its source and destination servers in MML
+  # Issue prepare_range_move() on the source range server
+  # Write M_LOAD_RANGE_START with the range and its destination in MML and issue a corresponding load_range() with move log location
+  # Update METADATA 'Location' for the range
+  # Write M_LOAD_RANGE_FINISH with the range in MML
+  # Issue drop_range() on the source range server
+  # Write M_MOVE_RANGE_FINISH with the range in MML
 
 === Range Server ===
-  * prepare_range_move() called by Master
-  * Create a move log and append RS_MOVE_START with the log location in RSML
-  * Atomically obtain move timestamp and install move log
-  * Do major compaction for the range
-  * Quiesce updates to the range
-  * Close move log
-  * Append RS_MOVE_PREPARED for the range to RSML
+  # prepare_range_move() called by Master
+  # Create a move log and append RS_MOVE_START with the log location in RSML
+  # Atomically obtain move timestamp and install move log
+  # Do major compaction for the range
+  # Quiesce updates to the range
+  # Close move log
+  # Append RS_MOVE_PREPARED for the range to RSML
   
 -----
 
