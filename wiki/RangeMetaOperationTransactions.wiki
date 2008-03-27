@@ -31,8 +31,7 @@ These logs are where all Range meta operations get recorded for the !RangeServer
   # Close transfer log
   # Update METADATA for old range 
   # Append RS_SPLIT_SHRUNK to RSML (with identifier of split-off Range)
-  # Shrink cell cache
-  # Shrink view onto cell stores
+  # Shrink access groups
   # Un-quiesce updates
   # Notify Master of split
   # Upon receiving Error::OK response from Master write RS_SPLIT_DONE entry in RSML
