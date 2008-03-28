@@ -27,11 +27,11 @@ These logs are where all Range meta operations get recorded for the !RangeServer
   # Decide to split range
   # Create a transfer log and append RS_SPLIT_START entry to RSML (include transfer log location)
   # Do major compaction
-  # Quiesce updates
-  # Close transfer log
+  # Append RS_SPLIT_SHRUNK to RSML (with identifier of split-off Range)
   # Update METADATA for old range 
   # Create METADATA entry for new range with '!StartRow' and 'Files' columns 
-  # Append RS_SPLIT_SHRUNK to RSML (with identifier of split-off Range)
+  # Quiesce updates
+  # Close transfer log
   # Shrink access groups
   # Un-quiesce updates
   # Notify Master of split
