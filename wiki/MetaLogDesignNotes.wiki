@@ -6,12 +6,13 @@ To support [RangeMetaOperationTransactions transactions of range metadata operat
 
 The basic format for the log is:
 {{{
-log ::= <log_entry> | <log> <log_entry>
-log_entry ::= <checksum> <log_type> <payload_size> <payload>
-checksum :: = <fletcher32 of <log_type> <payload_size> <payload>>
-log_type ::= <8-bit unsigned integer with value of MetaLogEntry::Type below>
+log ::= <header> (<log_entry>)*
+header ::= ("HMML"|"HRSML") <16-bit version number> 
+log_entry ::= <checksum> <log_entry_type> <payload_size> <payload>
+checksum :: = <fletcher32 of <log_entry_type> <payload_size> <payload>>
+log_entry_type ::= <8-bit unsigned integer with value of MetaLogEntryType below>
 payload_size ::= <an unsigned 32 bit integer>
-payload ::= <blob serialized depending on <log_type>>
+payload ::= <blob serialized depending on <log_entry_type>>
 }}}
 = API =
 {{{
