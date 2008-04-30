@@ -1,0 +1,7 @@
+#summary Design Overview for BloomFilters.
+
+= Introduction =
+
+BloomFilters can be used to avoid going to disk for read queries relating to specified row/column pairs. This document describes a design for the same in Hypertable.
+
+= Details =
