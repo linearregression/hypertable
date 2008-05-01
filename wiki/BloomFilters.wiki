@@ -12,7 +12,7 @@ BloomFilters can be used to avoid going to disk for read queries relating to spe
 
 Read operations on hypertable have to read from all the !CellStores as well as the !CellCache to compute the pertinent cells, and answer the query. The !CellCache accesses are all in-memory, but the !CellStore accesses can result in many disk seeks, if the blocks containing the relevant keys are not in memory. When the keys being queried for are known apriori, maintaining a bloom filter in the !CellStore can reduce the number of disk accesses significantly. We use the !BloomFilter to reduce disk lookups for rows and columns that have no values in the !CellStore.
 
-The !BloomFilter in a !CellStore will have bits set for every key and key:column_family:column_name that have values in the !CellStore. At query time, a !CellStore is ignored if `!CellStore::may_contain(key)` or `!CellStore::may_contain(key,column)` returns false, thus saving a disk access to figure out non-existence.
+The !BloomFilter in a !CellStore will have bits set for every key and key:column_family:column_name that have values in the !CellStore. At query time, a !CellStore is ignored if `CellStore::may_contain(key)` or `CellStore::may_contain(key,column)` returns false, thus saving a disk access to figure out non-existence.
 
 = Implementation =
 
