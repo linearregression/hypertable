@@ -20,16 +20,16 @@ The !BloomFilter in a !CellStore will have bits set for every key and key:column
     * `may_contain(const char *key)`
     * `may_contain(const char *key, uint8_t column_family_code, const char *column_qualifier)`
 
-2. Add a BloomFilter instance to CellStore
-    - serialization for CellStore puts the serialized BloomFilter after the fixed index and variable index are written
-    - CellStoreTrailer contains filter_offset, which enables us to locate the BloomFilter data
-    - add(key, value, timestamp) updates the bloomfilter by inserting in
-      - the row key extracted from "key"
-      - row_key '\0' column_family_code column_qualifier '\0'
-    - may_contain(const char *rowkey)
-      - looks up key in the BloomFilter and returns true / false
-    - may_contain(rowkey, column_family, column_qualifier) 
-      - constructs the byte sequence to look up, looks up bloom filter, and returns true / false
+2. Add a `BloomFilter` instance to `CellStore`
+    * serialization for `CellStore` puts the serialized `BloomFilter` after the fixed index and variable index are written
+    * `CellStoreTrailer` contains filter_offset, which enables us to locate the `BloomFilter` data
+    * `CellStore::add(key, value, timestamp)` updates the bloomfilter by inserting
+      * the row key extracted from "key"
+      * row_key '\0' column_family_code column_qualifier '\0'
+    * `may_contain(const char *rowkey)`
+      * looks up key in the !BloomFilter and returns true / false
+    * `may_contain(rowkey, column_family, column_qualifier)`
+      * constructs the byte sequence to look up, looks up bloom filter, and returns true / false
 
 3. AccessGroup::CreateScanner (scan_context)
     - check to see from scan_context if query is for a set of specified keys
