@@ -16,9 +16,9 @@ The !BloomFilter in a !CellStore will have bits set for every key and key:column
 
 = Implementation =
 
-1. Augment the Hypertable::CellStore interface by adding the virtual functions:
-    - may_contain(const char *key)
-    - may_contain(const char *key, uint8_t column_family_code, const char *column_qualifier)
+1. Augment the `Hypertable::CellStore` interface by adding the virtual functions:
+    * `may_contain(const char *key)`
+    * `may_contain(const char *key, uint8_t column_family_code, const char *column_qualifier)`
 
 2. Add a BloomFilter instance to CellStore
     - serialization for CellStore puts the serialized BloomFilter after the fixed index and variable index are written
