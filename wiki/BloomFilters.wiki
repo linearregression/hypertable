@@ -6,7 +6,7 @@ BloomFilters can be used to avoid going to disk for read queries relating to spe
 
 = Intro to Bloom Filters =
 
-!BloomFilter is a space efficient probabilistic data structure used to test whether an element is a member of a set. False positives are possible, but false negatives are not. For more, please see http://en.wikipedia.org/wiki/Bloom_filter.
+!BloomFilter is a space efficient probabilistic data structure used to test whether an element is a member of a set. False positives are possible, but false negatives are not. For more, please see http://en.wikipedia.org/wiki/Bloom_filter and http://youtube.com/watch?v=947gWqwkhu0
 
 = Use in Hypertable =
 
