@@ -15,3 +15,25 @@ Read operations on hypertable have to read from all the CellStores as well as th
 The BloomFilter in a CellStore will have bits set for every key and key:column_family:column_name that have values in the CellStore. At query time, a CellStore is ignored if CellStore::may_contain(key) or CellStore::may_contain(key,column) returns false, thus saving a disk access to figure out non-existence.
 
 = Implementation =
+
+1. Augment the Hypertable::CellStore interface by adding the virtual functions:
+    - may_contain(const char *key)
+    - may_contain(const char *key, uint8_t column_family_code, const char *column_qualifier)
+
+2. Add a BloomFilter instance to CellStore
+    - serialization for CellStore puts the serialized BloomFilter after the fixed index and variable index are written
+    - CellStoreTrailer contains filter_offset, which enables us to locate the BloomFilter data
+    - add(key, value, timestamp) updates the bloomfilter by inserting in
+      - the row key extracted from "key"
+      - row_key '\0' column_family_code column_qualifier '\0'
+    - may_contain(const char *rowkey)
+      - looks up key in the BloomFilter and returns true / false
+    - may_contain(rowkey, column_family, column_qualifier) 
+      - constructs the byte sequence to look up, looks up bloom filter, and returns true / false
+
+3. AccessGroup::CreateScanner (scan_context)
+    - check to see from scan_context if query is for a set of specified keys
+    - if false, do what is currently being done
+    - else, before creating and adding a scanner for a cell store, check the cell store to see if may_contain(key) and may_contain(key,column_family, column_qualifier) return true for atleast one of the keys. only add if satisfied.
+
+4. 
