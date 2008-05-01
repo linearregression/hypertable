@@ -22,7 +22,7 @@ The !BloomFilter in a !CellStore will have bits set for every key and key:column
 
 2. Add a `BloomFilter` instance to `CellStore`
     * serialization for `CellStore` puts the serialized `BloomFilter` after the fixed index and variable index are written
-    * `CellStoreTrailer` contains filter_offset, which enables us to locate the `BloomFilter` data
+    * `CellStoreTrailer` contains `filter_offset`, which enables us to locate the `BloomFilter` data
     * `CellStore::add(key, value, timestamp)` updates the bloomfilter by inserting
       * the row key extracted from "key"
       * row_key '\0' column_family_code column_qualifier '\0'
@@ -31,9 +31,7 @@ The !BloomFilter in a !CellStore will have bits set for every key and key:column
     * `may_contain(rowkey, column_family, column_qualifier)`
       * constructs the byte sequence to look up, looks up bloom filter, and returns true / false
 
-3. AccessGroup::CreateScanner (scan_context)
-    - check to see from scan_context if query is for a set of specified keys
-    - if false, do what is currently being done
-    - else, before creating and adding a scanner for a cell store, check the cell store to see if may_contain(key) and may_contain(key,column_family, column_qualifier) return true for atleast one of the keys. only add if satisfied.
-
-4. 
+3. `AccessGroup::CreateScanner (scan_context)`
+    * check to see from `scan_context` if query is for a set of specified keys
+    * if false, do what is currently being done
+    * else, before creating and adding a scanner for a cell store, check the cell store to see if `may_contain(key)` and `may_contain(key,column_family, column_qualifier)` return true for atleast one of the keys. only add if satisfied.
