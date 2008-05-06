@@ -82,7 +82,7 @@
    ============================================================
 
 {{{
-  cd ~/hypertable
+  cd <your_install_dir>
   bin/kill-servers.sh
   bin/start-all-servers.sh local
 }}}
