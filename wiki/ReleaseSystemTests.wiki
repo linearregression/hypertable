@@ -3,8 +3,15 @@
 The following tests must run and pass
 
   * Run functional tests on CentOS 5 x86_64, mac OSX, FC6 i386, Ubuntu, Gentoo
-  * Run AOL query performance test with A) single client and B) four simultaneous clients.  Both tests should run to completion and the number of lines outputted with `select *` should match the number that were inserted.
-  * Run the Tests/rsclient test 20 times with the following config properties
+  * Run AOL test with single client 
+  * Run AOL test with four simultaneous clients.
+  * Run AOL test with the following two lines added to the config file:
+  {{{
+  Hypertable.Master.Gc.Interval=15
+  Hypertable.RangeServer.Range.MetadataMaxBytes=8000
+  }}}
+  These tests should run to completion and the number of lines outputted with `select *` should match the number that were inserted.
+  * Run the Tests/rsclient test 10 times with the following config properties
   {{{
   Hypertable.RangeServer.AccessGroup.MaxFiles=2
   Hypertable.RangeServer.AccessGroup.MergeFiles=2
