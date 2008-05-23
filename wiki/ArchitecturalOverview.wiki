@@ -81,7 +81,11 @@ http://www.hypertable.org/images/DataModelFlattened.jpg
 
 All table data is stored in the underlying distributed filesystem.  The one that we use primarily is the Hadoop DFS, but it can be run on top of literally any filesystem.  The system abstracts the interface to the Distributed Filesytem, so writing a connector to any filesystem is trivial.
 
-The key/value pair data is stored in files called !CellStores.  At the most abstract level, the !CellStore contains a sorted list of key/value pairs.
+The key/value pair data is stored in files called !CellStores.  At the most abstract level, the !CellStore contains a sorted list of key/value pairs.  Physically, the key/value pairs are stored as a sequence of compressed blocks (approximately 65K each).  At the end of the block sequence is an index which is a list of "last key" and block offsets.  For each block in the file, there will be an index entry that contains the last key in the block along with the offset of the block.  This index gets loaded into memory when the !CellStore file is loaded by the system.  The following diagram illustrates the format of the !CellStore.
+
+http://www.hypertable.org/images/CellStore.jpg
+
+
 
 
 
