@@ -6,7 +6,6 @@
   * Data Model
   * Physical Data Layout
   * System Components
-  * Client Library
   * Source Code Overview
 
 == Introduction ==
@@ -105,17 +104,15 @@ http://www.hypertable.org/images/MergeScan.jpg
 
 *DFS Broker* - 
 
-== Client Library ==
-
 == Source Code ==
 
 || *Directory* || *Description* ||
-|| src/cc/AsyncComm || Communication subsystem. ||
+|| src/cc/!AsyncComm || Communication subsystem. ||
 || src/cc/Common || Common utility classes ||
-|| src/cc/DfsBroker || tbd ||
-|| src/cc/DfsBroker/Lib || tbd ||
-|| src/cc/DfsBroker/kosmos || tbd ||
-|| src/cc/DfsBroker/local || tbd ||
+|| src/cc/!DfsBroker || tbd ||
+|| src/cc/!DfsBroker/Lib || tbd ||
+|| src/cc/!DfsBroker/kosmos || tbd ||
+|| src/cc/!DfsBroker/local || tbd ||
 || src/cc/Hyperspace || tbd ||
 || src/cc/Hypertable/Lib || tbd ||
 || src/cc/Hypertable/Master || tbd ||
@@ -128,6 +125,6 @@ http://www.hypertable.org/images/MergeScan.jpg
 || src/cc/Tools/rsclient || tbd ||
 || src/cc/Tools/rsdump || tbd ||
 || src/cc/Tools/serverup || tbd ||
-|| src/java/org/hypertable/AsyncComm || tbd ||
+|| src/java/org/hypertable/!AsyncComm || tbd ||
 || src/java/org/hypertable/Common || tbd ||
-|| src/java/org/hypertable/DfsBroker/hadoop || tbd ||
+|| src/java/org/hypertable/!DfsBroker/hadoop || tbd ||
