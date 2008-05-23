@@ -85,13 +85,9 @@ http://www.hypertable.org/images/SystemOverview.jpg
 
 *Range Server* - Tables are broken into a set of contiguous row ranges, each of which is managed by a range server.  Initially each table consists of a single range that spans the entire row key space.  As the table fills with data, the range will eventually exceed a size threshold (default is 200MB) and will split into two ranges using the middle row key as a split point.  One of the ranges will stay on the same range server that held the original range and the other will get reassigned to another range server by the Master.  This splitting process continues for all of the ranges as they continue to grow.
 
-Each range server handles all of the reading and writing of table data for the ranges that it is responsible for.  Range servers cache updates in memory (after writing them to a Commit Log) in what's called a CellCache.  Periodically the CellCache will get flushed to disk (e.g. the DFS) in a specially formatted file called a CellStore.  To scan over the data in a range, the range server must
+Each range server handles all of the reading and writing of table data for the ranges that it is responsible for.  Range servers cache updates in memory (after writing them to a Commit Log) in what's called a !CellCache.  Periodically the !CellCache will get flushed to disk (e.g. the DFS) in a specially formatted file called a !CellStore.  To scan over the data in a range, the range server must do a heap merge of the !CellCache and all of the !CellStores for the range.  The following diagram illustrates this process.
 
-
-
-Subsequent requests to scan over the data
-
-
+http://www.hypertable.org/images/MergeScan.jpg
 
 *Master* - 
 
