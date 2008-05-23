@@ -37,7 +37,7 @@ git remote add github <your_push_url>
 {{{
 git push github topic/name
 }}}
-  # Tell everybody about your repo at http://github.com/<your_user_name>/hypertable/tree
+  # Tell us about your repo: http://github.com/<your_user_name>/hypertable/tree
 
 == Browse the wiki (documentation) source and history ==
 http://code.google.com/p/hypertable/source/browse/wiki
