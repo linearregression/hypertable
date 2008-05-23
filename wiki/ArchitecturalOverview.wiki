@@ -10,7 +10,7 @@
 
 == Introduction ==
 
-This document gives an architectural overview of Hypertable.  The best way to get started hands-on using hypertable is to first download the source code, build it, and get the regression tests to pass.  Once the regression tests are all passing, you can create tables, load data, and issue queries with the Hypertable command interpreter bin/hypertable.
+This document gives an architectural overview of Hypertable.  The best way to get started hands-on using hypertable is to first [http://code.google.com/p/hypertable/wiki/SourceCode?tm=4 download the source code], build it, and get the regression tests to pass.  Once the regression tests are all passing, you can create tables, load data, and issue queries with the Hypertable command interpreter bin/hypertable.
 
 
 == Data Model ==
