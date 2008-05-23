@@ -93,7 +93,7 @@ The following diagram illustrates all of the processes in the system and how the
 
 http://www.hypertable.org/images/SystemOverview.jpg
 
-*Hyperspace* - This is our system's equivalent of [http://labs.google.com/papers/chubby.html Chubby].  Hyperspace (or Chubby) is a service that provides a filesystem for storing small amounts of metadata.  It also acts as a lock manager in that either exclusive or shared lock and be acquired on any of the files or directories.  Currently it is implemented as just a single server, but will be made distributed and highly available at some point in the near future.  Google refers to Chubby as, "the root of all distributed data structures" which is a good way to think of this system.
+*Hyperspace* - This is our system's equivalent of [http://labs.google.com/papers/chubby.html Chubby].  Hyperspace (or Chubby) is a service that provides a filesystem for storing small amounts of metadata.  It also acts as a lock manager in that either exclusive or shared lock and be acquired on any of the files or directories.  Currently it is implemented as just a single server, but will be made distributed and highly available at some point in the near future.  Google refers to Chubby as, "the root of all distributed data structures" which is a good way to think of this system.  ([http://www.hypertable.org/doxygen/class_hyperspace_1_1_session.html Hyperspace C++ API])
 
 *Range Server* - Tables are broken into a set of contiguous row ranges, each of which is managed by a range server.  Initially each table consists of a single range that spans the entire row key space.  As the table fills with data, the range will eventually exceed a size threshold (default is 200MB) and will split into two ranges using the middle row key as a split point.  One of the ranges will stay on the same range server that held the original range and the other will get reassigned to another range server by the Master.  This splitting process continues for all of the ranges as they continue to grow.
 
@@ -119,9 +119,9 @@ The following two source files
 == Source Code ==
 
 || *Directory* || *Description* ||
-|| src/cc/!AsyncComm || Communication subsystem. ||
+|| src/cc/!AsyncComm || Communication subsystem ||
 || src/cc/Common || Common utility classes ||
-|| src/cc/!DfsBroker/Lib || DFS Broker framework. ||
+|| src/cc/!DfsBroker/Lib || DFS Broker framework ||
 || src/cc/!DfsBroker/kosmos || KFS (kosmos) broker ||
 || src/cc/!DfsBroker/local || local broker ||
 || src/cc/Hyperspace || Hyperspace ||
