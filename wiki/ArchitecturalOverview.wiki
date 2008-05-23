@@ -102,7 +102,8 @@ http://www.hypertable.org/images/MergeScan.jpg
 
 *Master* - The master handles all meta operations such as creating and deleting tables.  Client data does *not* move through the Master, so the Master can be down for short periods of time without clients being aware.  The master is also responsible for detecting range server failures and re-assigning ranges if necessary.  The master is also responsible for range server load balancing.  Currently there is only a single Master process, but the system is designed in such a way as to allow hot standby masters.
 
-*DFS Broker* - 
+*DFS Broker* - Hypertable is designed to run on top of any filesystem.  To achieve this, the system has abstracted the interface to the filesystem through something called the DFS broker.  The DFS broker is a process that translates standardized filesystem protocol messages into the system calls that are unique to the specific filesystem.  DFS brokers have been developed for HDFS (hadoop), KFS, and local (for running on top of a local fileystem).
+
 
 == Source Code ==
 
