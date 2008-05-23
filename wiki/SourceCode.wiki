@@ -1,6 +1,8 @@
 #summary How to obtain latest source code
 
-We're using the [http://git.or.cz/ git] version control system to manage the source code for this project.  To obtain a copy of the source code, install the latest version of git (at least 1.5.3.7) and then issue the following commands:
+== Get the Hypertable source code ==
+
+We're using the [http://git.or.cz/ git] version control system to manage the source code for this project.  To obtain a local copy of the repository, install the latest version of git (at least 1.5.3.7) and then issue the following commands:
 {{{
 git config --global user.name "<your name>"
 git config --global user.email "<your email>"
@@ -21,5 +23,21 @@ git pull
 
 }}}
 
-== Browse history of wiki pages ==
+== Become a contributor ==
+
+There are a few options to contribute to the project. Email patches always work (see the documentation by git send-email --help). Regular contributor might find a public repository helpful. Both repo.or.cz and github.com works, the following instruction is for github.com:
+
+  # Create an account on github.com (just follow the easy instructions :)
+  # Goto http://github.com/vicaya/hypertable/tree and click the fork button besides the project name.
+  # Change directory to your local repository (assuming you've done "Get the Hypertable source code"), issue the following command:
+{{{
+git remote add github <your_push_url>
+}}}
+  # You can then push your changes (assuming it's in the topic/name branch) to this public repository:
+{{{
+git push github topic/name
+}}}
+  # Tell everybody about your repo at http://github.com/<your_user_name>/hypertable/tree
+
+== Browse the wiki (documentation) source and history ==
 http://code.google.com/p/hypertable/source/browse/wiki
