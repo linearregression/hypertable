@@ -122,7 +122,7 @@ The following two source files provide a good example of how you use the Hyperta
 == Source Code ==
 
 || *Directory* || *Description* ||
-|| src/cc/!AsyncComm || Communication subsystem ||
+|| [http://www.hypertable.org/doxygen/dir_e65477d41cbea77146d554d167dc9746.html src/cc/!AsyncComm] || Communication subsystem ||
 || src/cc/Common || Common utility classes ||
 || src/cc/!DfsBroker/Lib || DFS Broker framework ||
 || src/cc/!DfsBroker/kosmos || KFS (kosmos) broker ||
