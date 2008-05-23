@@ -4,13 +4,16 @@
 
   * Introduction
   * Data Model
+  * Physical Data Layout
   * System Components
   * Client Library
   * Source Code
 
 == Introduction ==
 
-This document gives an architectural overview of Hypertable.  The best way to get started hands-on using hypertable is to first [http://code.google.com/p/hypertable/wiki/SourceCode?tm=4 download the source code], build it, and get the regression tests to pass.  Once the regression tests are all passing, you can then start the servers runing on top of the local filesystem with the following command (assuming the installation directory is ~/hypertable/0.9.0.5):
+This document gives an architectural overview of Hypertable.  Hypertable is designed to run on top of a "third party" distributed filesystem, such as Hadoop DFS.  However, the system can also be run on top of a normal local filesystem.  We recommend that you start with the local filesystem to get up and running and to play around with the system.  
+
+The best way to get started hands-on using hypertable is to first [http://code.google.com/p/hypertable/wiki/SourceCode?tm=4 download the source code], build it, and get the regression tests to pass.  Once the regression tests are all passing, you can then start the servers runing on top of the local filesystem with the following command (assuming the installation directory is ~/hypertable/0.9.0.5):
 
 {{{
 $ ~/hypertable/0.9.0.5/bin/start-all-servers.sh local
@@ -74,6 +77,9 @@ So the above crawldb table would have a flattened representation that looks some
 
 http://www.hypertable.org/images/DataModelFlattened.jpg
 
+== Physical Data Layout ==
+
+All table data is stored in the underlying distributed filesystem.
 
 == System Components ==
 
