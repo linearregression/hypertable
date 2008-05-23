@@ -114,7 +114,10 @@ Application programs can access Hypertable through a client API that is provided
   * [http://www.hypertable.org/doxygen/class_hypertable_1_1_table_mutator.html TableMutator] - An object of this class is used to mutate (add or delete cells) a table
   * [http://www.hypertable.org/doxygen/class_hypertable_1_1_table_scanner.html TableScanner] - An object of this class is used to scan over the cells of a table.
 
-The following two source files 
+The following two source files provide a good example of how you use the Hypertable Client API.  Together they illustrate how to load data into a table and query it.
+
+  * [http://www.hypertable.org/doxygen/apache__log__load_8cc-source.html apache_log_load.cc] - Loads one or more Apache log files into Hypertable
+  * [http://www.hypertable.org/doxygen/apache__log__query_8cc-source.html apache_log_query.cc] - Dumps a portion of the log table whose rows match a supplied prefix
 
 == Source Code ==
 
