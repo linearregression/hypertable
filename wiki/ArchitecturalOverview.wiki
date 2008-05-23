@@ -77,6 +77,14 @@ http://www.hypertable.org/images/DataModelFlattened.jpg
 
 == System Components ==
 
+The following diagram illustrates all of the processes in the system and how they relate to one another.
+
+http://www.hypertable.org/images/SystemOverview.jpg
+
+
+
+
+
 == Client Library ==
 
 == Source Code ==
