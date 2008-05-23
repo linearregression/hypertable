@@ -18,7 +18,7 @@ $ ~/hypertable/0.9.0.5/bin/hypertable
 Welcome to the hypertable command interpreter.
 For information about Hypertable, visit http://www.hypertable.org/
 
-Type 'help' for a list of commands, or 'help shell' for a
+Type \'help\' for a list of commands, or 'help shell' for a
 list of shell meta commands.
 
 hypertable> help
