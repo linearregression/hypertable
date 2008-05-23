@@ -18,6 +18,12 @@ The following diagram graphically depicts a crawl database table called crawldb.
 
 http://www.hypertable.org/images/DataModel.jpg
 
+Under the hood, this multi-dimensional table of information is represented as a flat sorted list of key/value pairs.  The key is essentially the concatenation of the four dimension keys (row, column family, column qualifier, and timestamp).  The following diagram depicts the flattened key.  One thing to note is that the timestamp is stored ones compliment big-endian so that the most recent cell sorts ahead of older versions of a cell.
+
+http://www.hypertable.org/images/HypertableKeyDiagram.jpg
+
+
+
 == System Components ==
 
 == Client Library ==
