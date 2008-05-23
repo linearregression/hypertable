@@ -81,13 +81,17 @@ The following diagram illustrates all of the processes in the system and how the
 
 http://www.hypertable.org/images/SystemOverview.jpg
 
-*Hyperspace* - This is our system's equivalent of [http://labs.google.com/papers/chubby.html Chubby].  Hyperspace is a service that provides a filesystem for storing small amounts of metadata.  It also acts as a lock manager in that either exclusive or shared lock and be acquired on any of the files or directories.  Currently it is implemented as just a single server, but will be made distributed and highly available at some point in the near future.
+*Hyperspace* - This is our system's equivalent of [http://labs.google.com/papers/chubby.html Chubby].  Hyperspace (or Chubby) is a service that provides a filesystem for storing small amounts of metadata.  It also acts as a lock manager in that either exclusive or shared lock and be acquired on any of the files or directories.  Currently it is implemented as just a single server, but will be made distributed and highly available at some point in the near future.  Google refers to Chubby as, "the root of all distributed data structures" which is a good way to think of this system.
 
-=== Range Server ===
+*Range Server* - These processes are responsible for managing ranges of table data that get assigned to them by the Master.  They handle all of the reading and writing of table data for the ranges that they are responsible for.  Range servers cache updates in memory (after writing them to a Commit Log) in what's called a CellCache.  Periodically the CellCache will get flushed to disk (e.g. the DFS) in a specially formatted file called a CellStore.  To scan over the data in a range, the Range Server must
 
-=== Master ===
+Subsequent requests to scan over the data
 
-=== DFS Broker ===
+
+
+*Master* - 
+
+*DFS Broker* - 
 
 == Client Library ==
 
