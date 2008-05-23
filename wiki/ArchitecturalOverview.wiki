@@ -1,6 +1,6 @@
 #summary Overview of Hypertable Architecture
 
-= Contents = 
+== Contents ==
 
   * Introduction
   * Data Model
@@ -8,14 +8,12 @@
   * Client Library
   * Source Code
 
-= Introduction =
+== Introduction ==
 
-Add your content here.
+== Data Model ==
 
+== System Components ==
 
-= Details =
+== Client Library ==
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+== Source Code ==
