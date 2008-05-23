@@ -14,6 +14,11 @@ This document gives an architectural overview of Hypertable.  The best way to ge
 
 {{{
 $ ~/hypertable/0.9.0.5/bin/start-all-servers.sh local
+Successfully started DFSBroker (local)
+Successfully started Hyperspace
+Successfully started Hypertable.Master
+Successfully started Hypertable.RangeServer
+$
 }}}
 
 You can create tables, load data, and issue queries with the Hypertable command interpreter "hypertable":
