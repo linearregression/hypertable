@@ -81,9 +81,13 @@ The following diagram illustrates all of the processes in the system and how the
 
 http://www.hypertable.org/images/SystemOverview.jpg
 
+=== Hyperspace ===
 
+=== Range Server ===
 
+=== Master ===
 
+=== DFS Broker ===
 
 == Client Library ==
 
