@@ -10,6 +10,9 @@
 
 == Introduction ==
 
+This document gives an architectural overview of Hypertable.  The best way to get started hands-on using hypertable is to first download the source code, build it, and get the regression tests to pass.  Once the regression tests are all passing, you can create tables, load data, and issue queries with the Hypertable command interpreter bin/hypertable.
+
+
 == Data Model ==
 
 The Hypertable data model consists of a multi-dimensional table of information that can be queried using a single primary key.  The first dimension of the table is the row key.  The row key is the primary key and defines the order in which the table data is physically stored.  The second dimension is the column family.  This dimension is somewhat analogous to a traditional database column.  The third dimension is the column qualifier.  Within each column family, there can be a theoretically infinite number of qualified instances.  For example if we were building a URL tagging service, we might define column families content, url, and tag.  Within the "tag" column family there could be an infinite number of qualified instances, such as `tag:science`, `tag:theater`, `tag:good`, etc.  The fourth and final dimension is the time dimension.  This dimension consists of a timestamp that is usually auto assigned by the system and represents the insertion time of the cell in nanoseconds since the epoch.  Conceptually, a table in Hypertable can be thought of as a three dimensional Excel spreadsheet with timestamped versions of each cell.
@@ -21,6 +24,8 @@ http://www.hypertable.org/images/DataModel.jpg
 Under the hood, this multi-dimensional table of information is represented as a flat sorted list of key/value pairs.  The key is essentially the concatenation of the four dimension keys (row, column family, column qualifier, and timestamp).  The following diagram depicts the flattened key.  One thing to note is that the timestamp is stored ones compliment big-endian so that the most recent cell sorts ahead of older versions of a cell.
 
 http://www.hypertable.org/images/HypertableKeyDiagram.jpg
+
+So the above crawldb 
 
 
 
