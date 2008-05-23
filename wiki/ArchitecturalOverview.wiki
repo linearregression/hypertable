@@ -79,7 +79,11 @@ http://www.hypertable.org/images/DataModelFlattened.jpg
 
 == Physical Data Layout ==
 
-All table data is stored in the underlying distributed filesystem.
+All table data is stored in the underlying distributed filesystem.  The one that we use primarily is the Hadoop DFS, but it can be run on top of literally any filesystem.  The system abstracts the interface to the Distributed Filesytem, so writing a connector to any filesystem is trivial.
+
+The key/value pair data is stored in files called !CellStores.  At the most abstract level, the !CellStore contains a sorted list of key/value pairs.
+
+
 
 == System Components ==
 
