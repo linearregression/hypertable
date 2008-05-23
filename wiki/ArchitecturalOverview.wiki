@@ -109,9 +109,9 @@ http://www.hypertable.org/images/MergeScan.jpg
 
 == Source Code ==
 
-*src/cc/AsyncComm* - Communication subsystem.
-
-*src/cc/Common* - Common utility classes.
+| *Directory* | *Description* |
+| src/cc/AsyncComm | Communication subsystem. |
+| src/cc/Common | Common utility classes |
 
 src/cc/DfsBroker:
 src/cc/DfsBroker/Lib:
