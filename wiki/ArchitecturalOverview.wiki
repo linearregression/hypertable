@@ -12,6 +12,34 @@
 
 This document gives an architectural overview of Hypertable.  The best way to get started hands-on using hypertable is to first [http://code.google.com/p/hypertable/wiki/SourceCode?tm=4 download the source code], build it, and get the regression tests to pass.  Once the regression tests are all passing, you can create tables, load data, and issue queries with the Hypertable command interpreter bin/hypertable.
 
+{{{
+$ ~/hypertable/0.9.0.5/bin/hypertable 
+
+Welcome to the hypertable command interpreter.
+For information about Hypertable, visit http://www.hypertable.org/
+
+Type 'help' for a list of commands, or 'help shell' for a
+list of shell meta commands.
+
+hypertable> help
+
+CREATE TABLE ....... Creates a table
+DELETE ............. Deletes all or part of a row from a table
+DESCRIBE TABLE ..... Displays a table's schema
+DROP TABLE ......... Removes a table
+INSERT ............. Inserts data into a table
+LOAD DATA INFILE ... Loads data from a tab delimited input file into a table
+SELECT ............. Selects (and display) cells from a table
+SHOW CREATE TABLE .. Displays CREATE TABLE command used to create table
+SHOW TABLES ........ Displays the list of tables
+
+Statements must be terminated with ';' to execute.  For more information on
+a specific statement, type 'help <statement>', where <statement> is one from
+the preceeding list.
+
+hypertable> 
+}}}
+
 
 == Data Model ==
 
