@@ -6,6 +6,7 @@
   * Data Model
   * Physical Data Layout
   * System Components
+  * C++ Client API
   * Source Code Overview
 
 == Introduction ==
@@ -104,6 +105,16 @@ http://www.hypertable.org/images/MergeScan.jpg
 
 *DFS Broker* - Hypertable is designed to run on top of any filesystem.  To achieve this, the system has abstracted the interface to the filesystem through something called the DFS broker.  The DFS broker is a process that translates standardized filesystem protocol messages into the system calls that are unique to the specific filesystem.  DFS brokers have been developed for HDFS (hadoop), KFS, and local (for running on top of a local fileystem).
 
+== C++ Client API ==
+
+Application programs can access Hypertable through a client API that is provided as part of libHypertable.  The client API consists of the following four main classes.
+
+  * [http://www.hypertable.org/doxygen/class_hypertable_1_1_client.html Client] - Singleton class used attach to Hypertable.  Contains methods for doing operations such as creating, dropping, and listing tables. 
+  * [http://www.hypertable.org/doxygen/class_hypertable_1_1_table.html Table] - Objects of this class represent open tables.  Contains methods for creating scanners and mutators on the table.
+  * [http://www.hypertable.org/doxygen/class_hypertable_1_1_table_mutator.html TableMutator] - An object of this class is used to mutate (add or delete cells) a table
+  * [http://www.hypertable.org/doxygen/class_hypertable_1_1_table_scanner.html TableScanner] - An object of this class is used to scan over the cells of a table.
+
+The following two source files 
 
 == Source Code ==
 
