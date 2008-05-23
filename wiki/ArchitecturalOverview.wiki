@@ -10,7 +10,13 @@
 
 == Introduction ==
 
-This document gives an architectural overview of Hypertable.  The best way to get started hands-on using hypertable is to first [http://code.google.com/p/hypertable/wiki/SourceCode?tm=4 download the source code], build it, and get the regression tests to pass.  Once the regression tests are all passing, you can create tables, load data, and issue queries with the Hypertable command interpreter bin/hypertable.
+This document gives an architectural overview of Hypertable.  The best way to get started hands-on using hypertable is to first [http://code.google.com/p/hypertable/wiki/SourceCode?tm=4 download the source code], build it, and get the regression tests to pass.  Once the regression tests are all passing, you can then start the servers runing on top of the local filesystem with the following command (assuming the installation directory is ~/hypertable/0.9.0.5):
+
+{{{
+$ ~/hypertable/0.9.0.5/bin/start-all-servers.sh local
+}}}
+
+You can create tables, load data, and issue queries with the Hypertable command interpreter "hypertable":
 
 {{{
 $ ~/hypertable/0.9.0.5/bin/hypertable 
@@ -21,6 +27,12 @@ For information about Hypertable, visit http://www.hypertable.org/
 Type 'help' for a list of commands, or 'help shell' for a
 list of shell meta commands.
 
+hypertable>
+}}}
+
+To get a list of all the commands available, type 'help':
+
+{{{
 hypertable> help
 
 CREATE TABLE ....... Creates a table
