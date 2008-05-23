@@ -85,9 +85,7 @@ The key/value pair data is stored in files called !CellStores.  At the most abst
 
 http://www.hypertable.org/images/CellStore.jpg
 
-
-
-
+*Access Groups* - Traditional databases are considered to be either _row oriented_ or _column oriented_ depending on how data is physically stored.  With a row oriented database, all the data for a given row is stored contiguously on disk.  With a column oriented database, all data for a given column is stored contiguously on disk.  Access groups in Hypertable provide a way to group columns together physically.  All of the columns in an access group will have their data stored physically together in the same !CellStore.  This is essentially a hybrid approach.  A row oriented datastore can be simulated by putting all of the columns into a single access group.  A column oriented datastore can be simulated by putting each column into its own access group.
 
 == System Components ==
 
