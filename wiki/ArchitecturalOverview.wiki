@@ -107,24 +107,23 @@ http://www.hypertable.org/images/MergeScan.jpg
 == Source Code ==
 
 || *Directory* || *Description* ||
-|| `src/cc/!AsyncComm` || Communication subsystem. ||
-|| `src/cc/Common` || Common utility classes ||
-|| `src/cc/!DfsBroker` || tbd ||
-|| src/cc/!DfsBroker/Lib || tbd ||
-|| src/cc/!DfsBroker/kosmos || tbd ||
-|| src/cc/!DfsBroker/local || tbd ||
-|| src/cc/Hyperspace || tbd ||
-|| src/cc/Hypertable/Lib || tbd ||
-|| src/cc/Hypertable/Master || tbd ||
-|| src/cc/Hypertable/RangeServer || tbd ||
-|| src/cc/Tools/dfsclient || tbd ||
-|| src/cc/Tools/dumplog || tbd ||
-|| src/cc/Tools/hyperspace || tbd ||
-|| src/cc/Tools/hypertable || tbd ||
-|| src/cc/Tools/merge_diff || tbd ||
-|| src/cc/Tools/rsclient || tbd ||
-|| src/cc/Tools/rsdump || tbd ||
-|| src/cc/Tools/serverup || tbd ||
+|| src/cc/!AsyncComm || Communication subsystem. ||
+|| src/cc/Common || Common utility classes ||
+|| src/cc/!DfsBroker/Lib || DFS Broker framework. ||
+|| src/cc/!DfsBroker/kosmos || DFS Broker implmentation for KFS ||
+|| src/cc/!DfsBroker/local || DFS Broker implementation for the local filesystem ||
+|| src/cc/Hyperspace || Hyperspace ||
+|| src/cc/Hypertable/Lib || Common utility classes specific to Hypertable.  Includes the Client library ||
+|| src/cc/Hypertable/Master || Hypertable Master ||
+|| src/cc/Hypertable/!RangeServer || Range Server ||
+|| src/cc/Tools/dfsclient || Tool for attching to the DFS broker and issuing commands. ||
+|| src/cc/Tools/dumplog || Tool for dumping a text representation of a commit log to stdout ||
+|| src/cc/Tools/hyperspace || CLI for Hyperspace ||
+|| src/cc/Tools/hypertable || CLI for the Hypertable system ||
+|| src/cc/Tools/merge_diff || Test tool for diff'ing extremely large files ||
+|| src/cc/Tools/rsclient || CLI for Range Server ||
+|| src/cc/Tools/rsdump || Tool for dumping range server statistics ||
+|| src/cc/Tools/serverup || Tool for testing to see if one of the servers is up. ||
 || src/java/org/hypertable/!AsyncComm || tbd ||
 || src/java/org/hypertable/Common || tbd ||
 || src/java/org/hypertable/!DfsBroker/hadoop || tbd ||
