@@ -72,7 +72,7 @@ http://www.hypertable.org/images/HypertableKeyDiagram.jpg
 
 So the above crawldb table would have a flattened representation that looks something like the following:
 
-
+http://www.hypertable.org/images/DataModelFlattened.jpg
 
 
 == System Components ==
