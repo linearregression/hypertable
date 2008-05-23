@@ -122,23 +122,23 @@ The following two source files provide a good example of how you use the Hyperta
 == Source Code ==
 
 || *Directory* || *Description* ||
-|| [http://www.hypertable.org/doxygen/dir_e65477d41cbea77146d554d167dc9746.html src/cc/!AsyncComm] || Communication subsystem ||
-|| src/cc/Common || Common utility classes ||
-|| src/cc/!DfsBroker/Lib || DFS Broker framework ||
-|| src/cc/!DfsBroker/kosmos || KFS (kosmos) broker ||
-|| src/cc/!DfsBroker/local || local broker ||
-|| src/cc/Hyperspace || Hyperspace ||
-|| src/cc/Hypertable/Lib || Common utility classes specific to Hypertable.  Includes the Client library ||
-|| src/cc/Hypertable/Master || Hypertable Master ||
-|| src/cc/Hypertable/!RangeServer || Range Server ||
-|| src/cc/Tools/dfsclient || CLI for DFS broker ||
-|| src/cc/Tools/dumplog || Tool for dumping a text representation of a commit log to stdout ||
-|| src/cc/Tools/hyperspace || CLI for Hyperspace ||
-|| src/cc/Tools/hypertable || CLI for Hypertable ||
-|| src/cc/Tools/merge_diff || Test tool for diff'ing extremely large files ||
-|| src/cc/Tools/rsclient || CLI for Range Server ||
-|| src/cc/Tools/rsdump || Tool for dumping range server statistics ||
-|| src/cc/Tools/serverup || Tool for testing to see if one of the servers is up. ||
-|| src/java/org/hypertable/!AsyncComm || Java implementation of communication subsystem ||
-|| src/java/org/hypertable/Common || Common utility classes for Java ||
-|| src/java/org/hypertable/!DfsBroker/hadoop || HDFS broker ||
+|| [http://www.hypertable.org/doxygen/dir_e65477d41cbea77146d554d167dc9746.html src/cc/AsyncComm] || Communication subsystem ||
+|| [http://www.hypertable.org/doxygen/dir_c15830aad3a99e858e4f63b1b1579632.html src/cc/Common] || Common utility classes ||
+|| [http://www.hypertable.org/doxygen/dir_df8487a01cb755e77d7c6a87e00c90c2.html src/cc/DfsBroker/Lib] || DFS Broker framework ||
+|| [http://www.hypertable.org/doxygen/dir_2c4611066fc7af3cdea27803f4b2b339.html src/cc/DfsBroker/kosmos] || KFS (kosmos) broker ||
+|| [http://www.hypertable.org/doxygen/dir_f65818d9fa246b5bb92a2bedb7cb867d.html src/cc/DfsBroker/local] || local broker ||
+|| [http://www.hypertable.org/doxygen/dir_baadc7c4b53cf4594df7618997f6c732.html src/cc/Hyperspace] || Hyperspace ||
+|| [http://www.hypertable.org/doxygen/dir_ad5135801673f2e4c4e1be66fcd2e528.html src/cc/Hypertable/Lib] || Common utility classes specific to Hypertable.  Includes the Client library ||
+|| [http://www.hypertable.org/doxygen/dir_e618129a8e69f36ca5b12077e594f26b.html src/cc/Hypertable/Master] || Hypertable Master ||
+|| [http://www.hypertable.org/doxygen/dir_b6724abc6b41a2670a831834f82498af.html src/cc/Hypertable/RangeServer] || Range Server ||
+|| [src/cc/Tools/dfsclient] || CLI for DFS broker ||
+|| [src/cc/Tools/dumplog] || Tool for dumping a text representation of a commit log to stdout ||
+|| [src/cc/Tools/hyperspace] || CLI for Hyperspace ||
+|| [src/cc/Tools/hypertable] || CLI for Hypertable ||
+|| [src/cc/Tools/merge_diff] || Test tool for diff'ing extremely large files ||
+|| [src/cc/Tools/rsclient] || CLI for Range Server ||
+|| [src/cc/Tools/rsdump] || Tool for dumping range server statistics ||
+|| [src/cc/Tools/serverup] || Tool for testing to see if one of the servers is up. ||
+|| [src/java/org/hypertable/AsyncComm] || Java implementation of communication subsystem ||
+|| [src/java/org/hypertable/Common] || Common utility classes for Java ||
+|| [src/java/org/hypertable/DfsBroker/hadoop] || HDFS broker ||
