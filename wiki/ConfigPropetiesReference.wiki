@@ -30,16 +30,16 @@
 || Hypertable.Master.Reactors || Number of Hypertable Master communication reactor threads created ||
 || Hypertable.Master.Gc.Interval || Garbage collection interval in seconds by Master (Hypertable.!TableFileGc.Interval before 0.9.0.3) || 300 ||
 || Hypertable.!RangeServer.Port || Port number on which Hypertable Range Servers are or should be listening ||
-|| Hypertable.!RangeServer.!AccessGroup.!MaxFiles || Maximum number of cell store files to create before merging ||
-|| Hypertable.!RangeServer.!AccessGroup.!MaxMemory || Maximum amount of memory consumed by an Access Group ||
-|| Hypertable.!RangeServer.!AccessGroup.!MergeFiles || How many files to merge during a merging compaction ||
-|| Hypertable.!RangeServer.!BlockCache.!MaxMemory || Amount of memory to dedicate to the block cache ||
+|| Hypertable.!RangeServer.!AccessGroup.!MaxFiles || Maximum number of cell store files to create before merging || 10 ||
+|| Hypertable.!RangeServer.!AccessGroup.!MaxMemory || Maximum amount of memory consumed by an Access Group || 50M ||
+|| Hypertable.!RangeServer.!AccessGroup.!MergeFiles || How many files to merge during a merging compaction || 4 ||
+|| Hypertable.!RangeServer.!BlockCache.!MaxMemory || Amount of memory to dedicate to the block cache || 200M ||
 || Hypertable.!RangeServer.Range.!MaxBytes || Maximum number of bytes per range before splitting || 200K ||
 || Hypertable.!RangeServer.Range.!MetadataMaxBytes || Maximum number of bytes per METADATA range before splitting (for testing) ||
 || Hypertable.!RangeServer.!CommitLog.!DfsBroker.Host || Host of DFS Broker to use for Commit Log ||
 || Hypertable.!RangeServer.!CommitLog.!DfsBroker.Port || Port of DFS Broker to use for Commit Log ||
-|| Hypertable.!RangeServer.Scanner.Ttl || Number of seconds of inactivity before destroying scanners ||
-|| Hypertable.!RangeServer.Timer.Interval || Timer interval in seconds (reaping scanners, purging commit logs, etc.) ||
+|| Hypertable.!RangeServer.Scanner.Ttl || Number of seconds of inactivity before destroying scanners || 120 ||
+|| Hypertable.!RangeServer.Timer.Interval || Timer interval in seconds (reaping scanners, purging commit logs, etc.) || 60 ||
 || Hypertable.!RangeServer.!CommitLog.!RollLimit || Roll commit log after this many bytes ||
 || Hypertable.!RangeServer.!CommitLog.Compressor || Commit log compressor to use (zlib, lzo, quicklz, bmz, none) ||
 || Hypertable.!RangeServer.Workers || Number of Range Server worker threads created ||
