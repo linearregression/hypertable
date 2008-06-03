@@ -40,7 +40,7 @@
 || Hypertable.!RangeServer.!CommitLog.!DfsBroker.Host || Host of DFS Broker to use for Commit Log ||
 || Hypertable.!RangeServer.!CommitLog.!DfsBroker.Port || Port of DFS Broker to use for Commit Log ||
 || Hypertable.!RangeServer.!CommitLog.!PruneThreshold.Min || Lower threshold for amount of outstanding commit log before pruning || 2 X !CommitLog.!RollLimit ||
-|| Hypertable.!RangeServer.!CommitLog.!PruneThreshold.Max || Upper threshold for amount of outstanding commit log before pruning || 10 X !CommitLog.!PruneThreshold.Min ||
+|| Hypertable.!RangeServer.!CommitLog.!PruneThreshold.Max || Upper threshold for amount of outstanding commit log before pruning || 10 X !PruneThreshold.Min ||
 || Hypertable.!RangeServer.Scanner.Ttl || Number of seconds of inactivity before destroying scanners || 120 ||
 || Hypertable.!RangeServer.Timer.Interval || Timer interval in seconds (reaping scanners, purging commit logs, etc.) || 60 ||
 || Hypertable.!RangeServer.!CommitLog.!RollLimit || Roll commit log after this many bytes ||
