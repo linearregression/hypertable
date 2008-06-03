@@ -17,6 +17,7 @@ git tag v0.9.0.1
 }}}
   # Push the changes to official repository:
 {{{
+git push # optionally with an origin name
 git push --tags # optionally with an origin name
 }}}
   # Create release tarball:
