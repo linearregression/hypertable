@@ -30,7 +30,6 @@ Hypertable is designed to be "always on" but for the purposes of this example we
 codeslinger:~> cd ~/hypertable
 codeslinger:~/hypertable> bin/start-all-servers.sh local
 
-codeslinger:~/hypertable>  bin/start-all-servers.sh local
 Successfully started DFSBroker (local)
 Successfully started Hyperspace
 Successfully started Hypertable.Master
