@@ -1,0 +1,105 @@
+#summary Coding conventions for the project
+
+= Introduction =
+
+Most successful software projects have consistent coding guidelines. We're not an exception. The following are rules of thumb that meant to give the project a consistent look and feel and to improve readability and ultimately maintainability.  
+
+
+= Namespace =
+
+  # All project symbols should reside in Hypertable or Hyperspace name space.
+  # Macros should be prefixed with `HT_`.
+  # Avoid "using namespace blah" in the global namespace of a header file. e.g., instead of
+{{{
+using namespace boost::spirit;
+
+namespace Hypertable {
+  namespace HqlParser {
+    ...
+  }
+}
+}}}
+  use a more restrictive style to avoid name space pollution:
+{{{
+namespace Hypertable {
+  namespace HqlParser {
+    using namespace boost::spirit; // or use explicit qualifiers
+    ...
+  }
+}
+}}}
+
+= Style =
+
+  # Name space, class and type identifiers: use `CamelCase`, e.g.: `Hypertable::TableIdentifier`. Use `CamelCaseT` for template arguments. e.g.: `template <typename TypeT>`
+  # Function/method, variable identifiers: use `lower_case`. private member variable is prefixed with `m_`. e.g.: `m_table`
+  # Constants, enums, macros: use `UPPER_CASE`
+  # Indentation: Two spaces per level. [http://www.jwz.org/doc/tabs-vs-spaces.html No tabs allowed].
+  # Curly brace placement: examples:
+{{{
+Type function_or_method(Argument arg) {
+  //...
+  try {
+    //...
+    do {
+      if (condition) {
+        // ...
+      }
+      else {
+        // ...
+      }
+      else 
+        break;
+    } while (condition);
+    //...
+  }
+  catch (Exception &e) {
+    //...
+  }
+  //...
+}
+}}}
+{{{
+FairlyLongTypeName
+function_or_method_name(Argument arg) {
+}
+}}}
+{{{
+ConstructorWithInitializer(Foo foo, Bar bar)
+    : m_foo(foo), m_bar(bar) {
+  // ...
+}
+}}}
+  Note: it's basically [http://en.wikipedia.org/wiki/Indent_style#K.26R_style K&R], except for the placement of `else`, and the open `{` for functions, which is more consistent :)
+
+= Logging =
+  * Use the `HT_<event_type>` etc. logging macros in Common/Logger.h
+  * Tip: Both printf style and stream style are supported. Examples:
+{{{
+HT_ERRORF("bad range: [%s, %s]", start_row, end_row);
+}}}
+{{{
+HT_ERROR_OUT <<"bad range: ["<< start_row <<", "<< end_row <<"]" << HT_ERROR_END;
+}}}
+
+= Error Handling =
+
+  * Use exceptions where appropriate (see: http://www.parashift.com/c++-faq-lite/exceptions.html)
+  * Use Hypertable::Exception only. Try to use HT_THROW macros (in Common/Error.h) instead of throw Exception ... to help maintain an exception back-trace, which can be displayed with output_stream << e; Note: this mechanism is more flexible, reliable and portable than using back_trace function in glibc or libunwind as functions can be aggressively inlined in C++. 
+  * Tip: use HT_TRY to conveniently create an exception trace record, i.e. you can use:
+{{{
+HT_TRY("doing something",
+  do_a();
+  do_b();
+);
+}}}
+  instead of a more verbose:
+{{{
+  try {
+    do_a();
+    do_b();
+  }
+  catch (Exception &e) {
+    throw Exception(e.code(), "doing something", e, __LINE__, __func__, __FILE__);
+  }
+}}}
