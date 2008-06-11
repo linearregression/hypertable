@@ -29,7 +29,7 @@ in several steps:
 
 The `TableInputFormat` class implements `InputFormat` interface for describing the data source.
 It does that by keeping table name.tablet ranges and their network locations. This information
-is used to construct TableSplit objects describing particular tablets which get passed along
+is used to construct `TableSplit` objects describing particular tablets which get passed along
 with the task context information to the map() function.
 
 === Passing task context to the C++ Pipes ===
@@ -43,7 +43,7 @@ The current choice is to use Pipes API as it allows to quickly prototype the cod
 and test the ideas quickly and by no means is a final solution (for more information
 please reference *Future Work* section).
 
-The Pipes API receives the task context and an associated TableSplit
+The Pipes API receives the task context and an associated `TableSplit`
 and starts running. It can accept input from a _pipe_ (hence the name),
 which works conceptually the same way as the unix "|" (pipe) operator,
 or by utilizing custom `RecordReader`s. The current choice is to utilize
