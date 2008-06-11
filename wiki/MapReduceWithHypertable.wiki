@@ -1,0 +1,70 @@
+#summary Design,rationale and usage information for the MapReduce support for Hypertable
+
+= Introduction =
+
+== A word about MapReduce ==
+The reader is assumed to have a prior knowledge about the MapReduce algorithm.
+The details are located at http://labs.google.com/papers/mapreduce-osdi04.pdf
+
+== MapReduce and Hypertable ==
+
+The MapReduce (MR) is currently supported only by the Hadoop DFS hence it is
+the only underlying filesystem supporting it. In order of all the other filesystems
+supporting MR separate implementations are required.
+
+
+= Design =
+
+== Outline ==
+
+The MapReduce _connector_ consist of 2 separate parts:
+  * Java classes implementing required interfaces (the requirements stem from Hadoop's MR architecture)
+  * C++ Pipes interface
+
+MapReduce can currently operate on single tables only. It achieves that
+in several steps:
+  # Creating TableInputFormat class
+  # Passing task context to the C++ Pipes
+
+=== Creating TableInputFormat class ===
+
+The TableInputFormat class implements InputFormat interface for describing the data source.
+It does that by keeping table name.tablet ranges and their network locations. This information
+is used to construct TableSplit objects describing particular tablets which get passed along
+with the task context information to the map() function.
+
+=== Passing task context to the C++ Pipes ===
+
+Hadoop's MapReduce can operate in 3 different ways:
+  # utilizing native Java code
+  # using streaming plugin supporting text only data
+  # using Pipes API
+
+The current choice is to use Pipes API as it allows to quickly prototype the code
+and test the ideas quickly and by no means is a final solution (for more information
+please reference *Future Work* section).
+
+The Pipes API receives the task context and an associated TableSplit
+and starts running. It can accept input from a _pipe_ (hence the name),
+which works conceptually the same way as the unix "|" (pipe) operator,
+or by utilizing custom RecordReaders. The current choice is to utilize
+custom C++ RecordReader so that the information contained inside the
+tables can be retrieved. Both ways require approach specific configuration.
+
+The _map_ function receives single consecutive cells so it is up to the
+person implementing _map_ function to account for that and
+handle row boundary mapping. There is no way of configuring
+which columns should be passed to the _map_ and such
+this is not the most effective approach.
+
+= Future Work =
+
+These are things that need to be done in order
+to have a fully-featured Hypertable support
+  # create TableOutputFormat class in Java
+  # create C++ RecordWriter
+  # add configuration options for selecting particular columns from the table
+
+= Usage =
+
+TODO
