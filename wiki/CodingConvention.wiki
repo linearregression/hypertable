@@ -7,7 +7,7 @@ Most successful software projects have consistent coding guidelines. We're not a
 
 = Namespace =
 
-  # All project symbols should reside in Hypertable or Hyperspace name space.
+  # All project symbols should reside in Hypertable or Hyperspace namespace.
   # Macros should be prefixed with `HT_`.
   # Avoid "using namespace blah" in the global namespace of a header file. e.g., instead of
 {{{
@@ -31,7 +31,7 @@ namespace Hypertable {
 
 = Style =
 
-  # Name space, class and type identifiers: use `CamelCase`, e.g.: `Hypertable::TableIdentifier`. Use `CamelCaseT` for template arguments. e.g.: `template <typename TypeT>`
+  # Namespace, class and type identifiers: use `CamelCase`, e.g.: `Hypertable::TableIdentifier`. Use `CamelCaseT` for template arguments. e.g.: `template <typename TypeT>`
   # Function/method, variable identifiers: use `lower_case`. private member variable is prefixed with `m_`. e.g.: `m_table`
   # Constants, enums, macros: use `UPPER_CASE`
   # Indentation: Two spaces per level. [http://www.jwz.org/doc/tabs-vs-spaces.html No tabs allowed].
