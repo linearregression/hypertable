@@ -2,22 +2,21 @@
 
 = Introduction =
 
-== A word about MapReduce ==
+== A word about mapreduce ==
 The reader is assumed to have a prior knowledge about the MapReduce algorithm.
 The details are located at http://labs.google.com/papers/mapreduce-osdi04.pdf
 
-== MapReduce and Hypertable ==
+== mapreduce and hypertable ==
 
-The MapReduce (MR) is currently supported only by the Hadoop DFS hence it is
+The mapreduce (MR) is currently supported only by the Hadoop DFS hence it is
 the only underlying filesystem supporting it. In order of all the other filesystems
 supporting MR separate implementations are required.
-
 
 = Design =
 
 == Outline ==
 
-The MapReduce _connector_ consist of 2 separate parts:
+The mapreduce _connector_ consist of 2 separate parts:
   * Java classes implementing required interfaces (the requirements stem from Hadoop's MR architecture)
   * C++ Pipes interface
 
