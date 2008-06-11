@@ -3,7 +3,7 @@
 = Introduction =
 
 == A word about mapreduce ==
-The reader is assumed to have a prior knowledge about the MapReduce algorithm.
+The reader is assumed to have a prior knowledge about the mapreduce algorithm.
 The details are located at http://labs.google.com/papers/mapreduce-osdi04.pdf
 
 == mapreduce and hypertable ==
@@ -22,19 +22,19 @@ The mapreduce _connector_ consist of 2 separate parts:
 
 MapReduce can currently operate on single tables only. It achieves that
 in several steps:
-  # Creating TableInputFormat class
+  # Creating `TableInputFormat` class
   # Passing task context to the C++ Pipes
 
 === Creating TableInputFormat class ===
 
-The TableInputFormat class implements InputFormat interface for describing the data source.
+The `TableInputFormat` class implements `InputFormat` interface for describing the data source.
 It does that by keeping table name.tablet ranges and their network locations. This information
 is used to construct TableSplit objects describing particular tablets which get passed along
 with the task context information to the map() function.
 
 === Passing task context to the C++ Pipes ===
 
-Hadoop's MapReduce can operate in 3 different ways:
+Hadoop's mapreduce can operate in 3 different ways:
   # utilizing native Java code
   # using streaming plugin supporting text only data
   # using Pipes API
