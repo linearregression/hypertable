@@ -103,3 +103,8 @@ HT_TRY("doing something",
     throw Exception(e.code(), "doing something", e, __LINE__, __func__, __FILE__);
   }
 }}}
+
+= Compatibility =
+
+We tried to be as portable as possible. But we currently only regularly test on Mac OS X (10.4.x and 10.5.x) and CentOS 5.x (we occasionally test on Ubuntu and Fedora to debug user installation problems)
+  * To facilitate portability efforts, always include "Common/Compat.h" before any other include files in the source (.cc files) if the code uses any Hypertable libraries (certain test code 
