@@ -85,7 +85,15 @@ HT_ERROR_OUT <<"bad range: ["<< start_row <<", "<< end_row <<"]" << HT_ERROR_END
 = Error Handling =
 
   * Use exceptions where appropriate (see: http://www.parashift.com/c++-faq-lite/exceptions.html)
-  * Use Hypertable::Exception only. Try to use HT_THROW macros (in Common/Error.h) instead of throw Exception ... to help maintain an exception back-trace, which can be displayed with output_stream << e; Note: this mechanism is more flexible, reliable and portable than using back_trace function in glibc or libunwind as functions can be aggressively inlined in C++. 
+  * Use Hypertable::Exception only. Try to use HT_THROW macros (in Common/Error.h) instead of throw Exception ... to help maintain an exception back-trace, which can be displayed with output_stream << e; Note: this mechanism is more flexible, reliable and portable than using back_trace function in glibc or libunwind as functions can be aggressively inlined in C++. For example, the following is an output of HT_INFO_OUT << e << HT_INFO_END;
+{{{
+1213267024 INFO exception_test : (Source/hypertable/src/cc/Common/tests/exception_test.cc:42) Hypertable::Exception: testing ex1 - HYPERTABLE protocol error
+        at void ExceptionTest::test_ex0(uint8_t) (Source/hypertable/src/cc/Common/tests/exception_test.cc:29)
+        at void ExceptionTest::test_ex1(uint16_t) (Source/hypertable/src/cc/Common/tests/exception_test.cc:23): testing ex2 - External error
+        at void ExceptionTest::test_ex2(uint32_t) (Source/hypertable/src/cc/Common/tests/exception_test.cc:19): testing ex3
+        at void ExceptionTest::test_ex3(uint64_t) (Source/hypertable/src/cc/Common/tests/exception_test.cc:15): testing ex4
+        at void ExceptionTest::test_ex4(double) (Source/hypertable/src/cc/Common/tests/exception_test.cc:11): throw an external error
+}}}
   * Tip: use HT_TRY to conveniently create an exception trace record, i.e. you can use:
 {{{
 HT_TRY("doing something",
@@ -100,11 +108,11 @@ HT_TRY("doing something",
     do_b();
   }
   catch (Exception &e) {
-    throw Exception(e.code(), "doing something", e, __LINE__, __func__, __FILE__);
+    HT_THROW2(e.code(), "doing something", e);
   }
 }}}
 
 = Compatibility =
 
 We tried to be as portable as possible. But we currently only regularly test on Mac OS X (10.4.x and 10.5.x) and CentOS 5.x (we occasionally test on Ubuntu and Fedora to debug user installation problems)
-  * To facilitate portability efforts, always include "Common/Compat.h" before any other include files in the source (.cc files) if the code uses any Hypertable libraries (certain test code 
+  * To facilitate portability efforts, always include "Common/Compat.h" before any other include files in the source (.cc files) if the code uses any Hypertable libraries.
