@@ -2,7 +2,7 @@
 
 = Introduction =
 
-Most successful software projects have consistent coding guidelines. We're not an exception. The following are rules of thumb that meant to give the project a consistent look and feel and to improve readability and ultimately maintainability.  
+Most successful software projects have consistent coding convention/guidelines. We're not an exception. The following are rules of thumb that meant to give the project a consistent look and feel and to improve code readability and ultimately maintainability.  
 
 
 = Namespace =
@@ -19,7 +19,7 @@ namespace Hypertable {
   }
 }
 }}}
-  use a more restrictive style to avoid name space pollution:
+  use a more restrictive style to avoid namespace pollution:
 {{{
 namespace Hypertable {
   namespace HqlParser {
@@ -31,10 +31,11 @@ namespace Hypertable {
 
 = Style =
 
-  # Namespace, class and type identifiers: use `CamelCase`, e.g.: `Hypertable::TableIdentifier`. Use `CamelCaseT` for template arguments. e.g.: `template <typename TypeT>`
-  # Function/method, variable identifiers: use `lower_case`. private member variable is prefixed with `m_`. e.g.: `m_table`
+  # Namespace, class and type identifiers: use `CamelCase`, e.g.: `Hypertable::TableIdentifier`. Use `CamelCaseT` for template arguments. e.g.: `template <typename TypeFamilyT>`
+  # Function/method, variable identifiers: use `lower_case`. private member variable is prefixed with `m_`. e.g.: `m_table`. Variable naming should focus on semantics and try to avoid type annotations (like somethingp, something_ptr etc.) except for special cases like pointer arithmetic code (e.g., `void *buf` and `uint8_t **bufp` in serialization code). Let language syntax and compiler take care of types.
   # Constants, enums, macros: use `UPPER_CASE`
-  # Indentation: Two spaces per level. [http://www.jwz.org/doc/tabs-vs-spaces.html No tabs allowed].
+  # Indentation: 2 spaces per level. 4 spaces for line continuation. [http://www.jwz.org/doc/tabs-vs-spaces.html No tabs allowed].
+  # Line length: try to stay within 80 characters for better readability and compatibility with existing tools. It would also help some of us who prefer having two or more coding/debugging windows side by side.
   # Curly brace placement: examples:
 {{{
 Type function_or_method(Argument arg) {
