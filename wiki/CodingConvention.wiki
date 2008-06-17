@@ -100,8 +100,7 @@ HT_ERROR_OUT <<"bad range: ["<< start_row <<", "<< end_row <<"]" << HT_ERROR_END
 {{{
 HT_TRY("doing something",
   do_a();
-  do_b();
-);
+  do_b());
 }}}
   instead of a more verbose:
 {{{
