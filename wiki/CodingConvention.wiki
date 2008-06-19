@@ -81,13 +81,13 @@ ConstructorWithInitializer(Foo foo, Bar bar)
 HT_ERRORF("bad range: [%s, %s]", start_row, end_row);
 }}}
 {{{
-HT_ERROR_OUT <<"bad range: ["<< start_row <<", "<< end_row <<"]" << HT_ERROR_END;
+HT_ERROR_OUT <<"bad range: ["<< start_row <<", "<< end_row <<"]" << HT_END;
 }}}
 
 = Error Handling =
 
   * Use exceptions where appropriate (see: http://www.parashift.com/c++-faq-lite/exceptions.html)
-  * Use Hypertable::Exception only. Try to use HT_THROW macros (in Common/Error.h) instead of throw Exception ... to help maintain an exception back-trace, which can be displayed with output_stream << e; Note: this mechanism is more flexible, reliable and portable than using back_trace function in glibc or libunwind as functions can be aggressively inlined in C++. For example, the following is an output of HT_INFO_OUT << e << HT_INFO_END;
+  * Use Hypertable::Exception only. Try to use HT_THROW macros (in Common/Error.h) instead of throw Exception ... to help maintain an exception back-trace, which can be displayed with output_stream << e; Note: this mechanism is more flexible, reliable and portable than using back_trace function in glibc or libunwind as functions can be aggressively inlined in C++. For example, the following is an output of HT_INFO_OUT << e << HT_END;
 {{{
 1213267024 INFO exception_test : (Source/hypertable/src/cc/Common/tests/exception_test.cc:42) Hypertable::Exception: testing ex1 - HYPERTABLE protocol error
         at void ExceptionTest::test_ex0(uint8_t) (Source/hypertable/src/cc/Common/tests/exception_test.cc:29)
