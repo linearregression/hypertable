@@ -128,3 +128,13 @@ HT_TRY("doing something",
 
 We tried to be as portable as possible. But we currently only regularly test on Mac OS X (10.4.x and 10.5.x) and CentOS 5.x (we occasionally test on Ubuntu and Fedora to debug user installation problems)
   * To facilitate portability efforts, always include "Common/Compat.h" before any other include files in the source (.cc files; use Common/compat-c.h for .c files) if the code uses any Hypertable libraries.
+  * Tip: the Common/Compat.h not only comes with all the types (uint64_t etc.) and limits, it has a sweet syntatic sugar added, you now do this (assuming you have a `vector<Schema::ColumnFamily *> columns;`):
+{{{
+foreach(Schema::ColumnFamily *cf, columns)
+  do_something_to(cf);
+}}}
+  instead of:
+{{{
+for (vector<Schema::ColumnFamily *>::iterator it = columns.begin(); it != columns.end(); ++it)
+  do_something_to(*it);
+}}}
