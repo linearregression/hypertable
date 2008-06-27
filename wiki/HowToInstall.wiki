@@ -4,7 +4,7 @@
 
 1. Install CMake (http://www.cmake.org/)
 
-2. Install the following libraries (you may already have them installed. See README for details):
+2. Install the following libraries (you may already have them installed. See [http://github.com/vicaya/hypertable/tree/master/README README] for details):
     * [http://www.oracle.com/technology/software/products/berkeley-db/index.html BerkeleyDB 4.6+]
     * [http://www.boost.org/ Boost version 1.34.1+]
     * [http://log4cpp.sourceforge.net/ log4cpp 1.0+]
