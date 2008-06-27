@@ -1,88 +1,60 @@
-#summary Copy of most recent README.txt install notes
-
-
-=== CONTENTS ===
-
-
-  * HOW TO BUILD
-  * HOW TO RUN REGRESSION TESTS
-  * HOW TO BUILD SOURCE CODE DOCUMENTATION TREE (Doxygen)
-
+#summary See the README in the distribution for details
 
 === HOW TO BUILD ===
 
-
 1. Install CMake (http://www.cmake.org/)
 
-2. Install the following libraries:
-    * Boost version 1.34.1 (http://www.boost.org/)
-    * log4cpp (http://log4cpp.sourceforge.net/)
-    * expat (http://sourceforge.net/projects/expat)
+2. Install the following libraries (you may already have them installed. See README for details):
+    * [http://www.oracle.com/technology/software/products/berkeley-db/index.html BerkeleyDB 4.6+]
+    * [http://www.boost.org/ Boost version 1.34.1+]
+    * [http://log4cpp.sourceforge.net/ log4cpp 1.0+]
+    * [http://sourceforge.net/projects/expat expat 1.x] (apt-get: libexpat1-dev; yum: expat-devel)
+    * readline dev lib (apt-get: libreadline5-dev; yum: readline-devel)
+    * ncurses dev lib (auto installed by installing the above)
 
-    On some GNU/Linux systems, the following packages need to be installed:
-    * libattr-devel (attr-dev on Debian/Ubuntu, sys-apps/attr on Gentoo)
-    * readline-devel (libreadline-dev on Debian/Ubuntu)
-    * ncurses-devel (ncurses-dev on Debian/Ubuntu)
-
-    HIGHLY RECOMMENDED (but not required):
-    - tcmalloc (http://code.google.com/p/google-perftools/)
-
-    NOTE: If tcmalloc is available on your system, install it.  Hypertable is
-          very malloc intensive and tcmalloc provides a huge performance improvement.
+    RECOMMENDED (but not required):
+    * [http://code.google.com/p/google-perftools/ tcmalloc]
 
 3. Checkout the source code.
 {{{
-    mkdir ~/src
-    cd ~/src
+    mkdir -p <your_source_dir>
+    cd <your_source_dir>
     git clone git://scm.hypertable.org/pub/repos/hypertable.git
 }}}
 4. Create an install directory
 {{{
-    mkdir ~/hypertable
+    mkdir -p <your_install_dir>
 }}}
 5. Create a build directory
 {{{
-    mkdir -p ~/build/hypertable
+    mkdir -p <your_build_dir>
 }}}
 6. Configure the build. 
 {{{
-    cd ~/build/hypertable
-    cmake -DCMAKE_INSTALL_PREFIX=<your_install_dir> -DCMAKE_BUILD_TYPE="Debug" ~/src/hypertable
+    cd <your_build_dir>
+    cmake <your_source_dir>
 }}}
-  Change "Debug" to "Release" if you want to do performance tests. Alternatively, one can use ccmake to edit the build options interactively:
+  To edit the build options interactively:
 {{{
-    ccmake ~/src/hypertable
+    ccmake <your_source_dir>
 }}}
 7. Build the software.
 {{{
-    make
+    make (or make -j<number_of_cpu_or_cores_plus_1> for faster compile)
     make install
 }}}
 
 === HOW TO RUN REGRESSION TESTS ===
 
-
 1. Make sure software is built and installed according to 'HOW TO BUILD'
 
-2. Make sure you have extended attributes enabled on the partition that holds the
-   installation (e.g. ~/hypertable).  This is not necessary on the mac, but is
-   in general on Linux systems.  To enable extended attributes on Linux, you need
-   to add the user_xattr property to the relevant file systems in your /etc/fstab
-   file. For example:
-
-   /dev/hda3     /home     ext3     defaults,user_xattr     1 2
-
-   You can then remount the affected partitions as follows:
-{{{
-   mount -o remount /home
-}}}
-3. Restart servers and re-create test tables
+2. Restart servers and re-create test tables
    ============================================================
    ==== _WARNING: THIS STEP MUST BE PERFORMED PRIOR TO RUNNING THE TEST_ ====
    ============================================================
 
 {{{
-  cd <your_install_dir>
+  cd <your_install_dir>/<version>
   bin/kill-servers.sh
   bin/start-all-servers.sh local
 }}}
@@ -95,8 +67,8 @@
 === HOW TO BUILD SOURCE CODE DOCUMENTATION TREE (Doxygen) ===
 
 1. Install the following libraries:
-  * doxygen (http://www.stack.nl/~dimitri/doxygen/)
-  * graphviz (http://www.graphviz.org/)
+  * [http://www.stack.nl/~dimitri/doxygen/ Doxygen]
+  * [http://www.graphviz.org/ Graphviz]
 
 2. If you have doxygen installed on your system, then CMake should detect this and add a 'doc' target to the make file.  Building the source code documentation tree is just a matter of running the following commands:
 {{{
