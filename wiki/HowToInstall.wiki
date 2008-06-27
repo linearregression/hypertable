@@ -8,7 +8,7 @@
     * [http://www.oracle.com/technology/software/products/berkeley-db/index.html BerkeleyDB 4.6+]
     * [http://www.boost.org/ Boost version 1.34.1+]
     * [http://log4cpp.sourceforge.net/ log4cpp 1.0+]
-    * [http://sourceforge.net/projects/expat expat 1.x] (apt-get: libexpat1-dev; yum: expat-devel)
+    * [http://sourceforge.net/projects/expat expat 1+] (apt-get: libexpat1-dev; yum: expat-devel)
     * readline dev lib (apt-get: libreadline5-dev; yum: readline-devel)
     * ncurses dev lib (auto installed by installing the above)
 
