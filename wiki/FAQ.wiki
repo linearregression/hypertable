@@ -37,3 +37,12 @@ Hypertable is designed to be filesystem agnostic, so it can be layered on the da
 
 == Why did you go with GPL for Hypertable's license?==
 There are many, many, good reasons to adopt GPL (see [RelatedLinks] for details). For us, the main reason is practicality. First, most free-software packages are GPL'ed; second, we want to be able to freely use, adapt, and include, features from these packages in our distribution; third, we want to make it easy for end users to install and maintain the distribution within a single package. Note, Hypertable client libraries and supporting code for client API is released with [http://www.mysql.com/company/legal/licensing/foss-exception.html FLOSS license exception (the same as MySQL client libraries)] to work with other open-source software seamlessly.
+
+== Why do I get Timestamp out-of-order errors? ==
+TBD
+
+== How come when I do a scan over a time interval, some of my inserts are missing? ==
+TBD
+
+== Why an I getting Hypersace session expiration? ==
+TBD
