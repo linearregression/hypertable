@@ -40,6 +40,8 @@ When a Range Server goes down, all of the ranges that it manages need to get re-
 
 == Range Server Recovery Procedure ==
 
+  * Master must recover the RangeServer that held the METADATA
+
   * When normal updates are received by a range server, they get persisted into a commit log.  This group of updates gets written as a single entry that begins with a fixed header.  The header includes the real timestamp (i.e. real time sampled by the server prior to the commit) of the commit.
 
   * When an Access Group is compacted, the real time of the compaction is written into the !CellStore trailer.  The most recent timestamp from all of the !CellStore trailers is taken to be the _last_compaction_time_ for the Access Group.
