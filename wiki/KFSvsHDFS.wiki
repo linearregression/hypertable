@@ -1,6 +1,16 @@
 #summary Performance Benchmark of Hypertable on KFS vs. HDFS
 
-==The Data (AOL Query log)==
+This document
+
+==Machine Profile==
+
+  * 1 1.8GHz Dual-core Opteron Processor 2210
+  * 4 GB RAM
+  * 4 7200 RPM SATA drives (mounted JBOD)
+
+==Small Insert Test==
+
+===The Data (AOL Query log)===
 Here's an example of what the AOL query log data looks like:
 {{{
 AnonID  Query   ItemRank        ClickURL
@@ -24,12 +34,6 @@ ClickURL
 }}}
 
 The query log was sorted by timestamp. Each line of the query log could generate from 1 to 3 inserts, depending on how many column values were present. After the entire log was inserted, the table contained 75,274,825 cells. On average, the size of each row key was about 7 bytes and the size of each value inserted was 15 bytes.
-
-==Machine Profile==
-
-  * 1 1.8GHz Dual-core Opteron Processor 2210
-  * 4 GB RAM
-  * 4 7200 RPM SATA drives (mounted JBOD)
 
 ==Insert Test==
 *_
