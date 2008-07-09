@@ -35,7 +35,7 @@ The query log was sorted by timestamp. Each line of the query log could generate
 *_
 NOTE: The Hypertable Range Servers write their commit log into HDFS, however HDFS currently does not support a sync (or flush) operation.  The insert rate may drop some  once sync is implemented and called after each commit log write._*
 
-Eight machines (motherlode001-motherlode008) were used to run both HDFS (version 0.16.4) and Hypertable. The Hypertable master and Hyperspace (Chubby) were run on motherlode001. HDFS was configured to use only three of the four available drives on each machine and was configured with 3-way replication. The log was sorted by timestamp and split into 5 pieces (a.tsv, b.tsv, c.tsv, d.tsv, e.tsv. Two separate machines (motherlode000 and motherlode009) were used to run insert clients. The following HQL commands were started more-or-less simultaneously:
+Eight machines (motherlode001-motherlode008) were used to run both HDFS (version 0.16.4) and Hypertable. The Hypertable master and Hyperspace (Chubby) were run on motherlode001. HDFS was configured to use only three of the four available drives on each machine and was configured with 3-way replication. The log was sorted by timestamp and split into 5 pieces (a-no-timestamps.tsv, b-no-timestamps.tsv, c-no-timestamps.tsv, d-no-timestamps.tsv, e-no-timestamps.tsv. Two separate machines (motherlode000 and motherlode009) were used to run insert clients. The following HQL commands were started more-or-less simultaneously:
 
 {{{
 motherlode000:
@@ -46,3 +46,69 @@ motherlode009:
 LOAD DATA INFILE ROW_KEY_COLUMN=AnonID 'c-no-timestamps.tsv' INTO TABLE "query-log";
 LOAD DATA INFILE ROW_KEY_COLUMN=AnonID 'd-no-timestamps.tsv' INTO TABLE "query-log";
 }}}
+
+_HDFS_
+{{{
+ Elapsed time:  170.66 s
+Avg value size:  15.25 bytes
+ Avg key size:  7.10 bytes
+   Throughput:  1792158.60 bytes/s
+ Total inserts:  14825279
+   Throughput:  86869.79 inserts/s
+
+ Elapsed time:  167.44 s
+Avg value size:  15.26 bytes
+ Avg key size:  7.11 bytes
+   Throughput:  1871062.70 bytes/s
+ Total inserts:  15185349
+   Throughput:  90690.84 inserts/s
+
+ Elapsed time:  179.91 s
+Avg value size:  15.20 bytes
+ Avg key size:  7.03 bytes
+   Throughput:  1737888.10 bytes/s
+ Total inserts:  15208310
+   Throughput:  84532.68 inserts/s
+
+ Elapsed time:  169.57 s
+Avg value size:  15.22 bytes
+ Avg key size:  7.11 bytes
+   Throughput:  1831688.52 bytes/s
+ Total inserts:  15080926
+   Throughput:  88937.45 inserts/s
+}}}
+
+_KFS_
+
+{{{
+ Elapsed time:  125.51 s
+Avg value size:  15.25 bytes
+ Avg key size:  7.10 bytes
+   Throughput:  2436864.83 bytes/s
+ Total inserts:  14825279
+   Throughput:  118120.09 inserts/s
+
+ Elapsed time:  126.25 s
+Avg value size:  15.26 bytes
+ Avg key size:  7.11 bytes
+   Throughput:  2481447.59 bytes/s
+ Total inserts:  15185349
+   Throughput:  120276.33 inserts/s
+
+ Elapsed time:  135.51 s
+Avg value size:  15.20 bytes
+ Avg key size:  7.03 bytes
+   Throughput:  2307335.26 bytes/s
+ Total inserts:  15208310
+   Throughput:  112231.19 inserts/s
+
+ Elapsed time:  127.66 s
+Avg value size:  15.22 bytes
+ Avg key size:  7.11 bytes
+   Throughput:  2433069.68 bytes/s
+ Total inserts:  15080926
+   Throughput:  118137.45 inserts/s
+
+}}}
+
+With flush enabled, the KFS insert rate dropped to approximately 85K inserts/s.
