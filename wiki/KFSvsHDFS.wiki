@@ -1,14 +1,14 @@
 #summary Performance Benchmark of Hypertable on KFS vs. HDFS
 
-This document
+This document contains an ongoing benchmark of Hypertable, comparing the performance of the system run on top of KFS and HDFS.
 
-==Machine Profile==
+==Small Insert Test==
+
+===Machine Profile===
 
   * 1 1.8GHz Dual-core Opteron Processor 2210
   * 4 GB RAM
   * 4 7200 RPM SATA drives (mounted JBOD)
-
-==Small Insert Test==
 
 ===The Data (AOL Query log)===
 Here's an example of what the AOL query log data looks like:
@@ -35,9 +35,9 @@ ClickURL
 
 The query log was sorted by timestamp. Each line of the query log could generate from 1 to 3 inserts, depending on how many column values were present. After the entire log was inserted, the table contained 75,274,825 cells. On average, the size of each row key was about 7 bytes and the size of each value inserted was 15 bytes.
 
-==Insert Test==
-*_
-NOTE: The Hypertable Range Servers write their commit log into HDFS, however HDFS currently does not support a sync (or flush) operation.  The insert rate may drop some  once sync is implemented and called after each commit log write._*
+==Results==
+
+NOTE: HDFS currently does not support an flush (fsync) operation, so to be fair we *disabled the flush call* for the KFS run.
 
 Eight machines (motherlode001-motherlode008) were used to run both HDFS (version 0.16.4) and Hypertable. The Hypertable master and Hyperspace (Chubby) were run on motherlode001. HDFS was configured to use only three of the four available drives on each machine and was configured with 3-way replication. The log was sorted by timestamp and split into 5 pieces (a-no-timestamps.tsv, b-no-timestamps.tsv, c-no-timestamps.tsv, d-no-timestamps.tsv, e-no-timestamps.tsv. Two separate machines (motherlode000 and motherlode009) were used to run insert clients. The following HQL commands were started more-or-less simultaneously:
 
@@ -51,7 +51,7 @@ LOAD DATA INFILE ROW_KEY_COLUMN=AnonID 'c-no-timestamps.tsv' INTO TABLE "query-l
 LOAD DATA INFILE ROW_KEY_COLUMN=AnonID 'd-no-timestamps.tsv' INTO TABLE "query-log";
 }}}
 
-_HDFS_
+*HDFS (no flush)*
 {{{
  Elapsed time:  170.66 s
 Avg value size:  15.25 bytes
@@ -82,7 +82,7 @@ Avg value size:  15.22 bytes
    Throughput:  88937.45 inserts/s
 }}}
 
-_KFS_
+*KFS (no flush)*
 
 {{{
  Elapsed time:  125.51 s
