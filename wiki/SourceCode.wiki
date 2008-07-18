@@ -33,6 +33,8 @@ There are a few options to contribute to the project. Email patches always work 
 {{{
 git remote add github <your_push_url>
 }}}
+  # Work on awesome features
+  # Before sending out merge/pull requests, merge against the official master branch
   # You can then push your changes (assuming it's in the topic/name branch) to this public repository:
 {{{
 git push github topic/name
