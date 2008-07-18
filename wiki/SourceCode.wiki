@@ -34,7 +34,7 @@ There are a few options to contribute to the project. Email patches always work 
 git remote add github <your_push_url>
 }}}
   # Work on awesome features
-  # Before sending out merge/pull requests, merge (rebase is recommended if the working branch is behind master for more than 10 commits, which makes it hard to visualize the branch) against the official master branch
+  # Before sending out merge/pull requests, merge (rebase is recommended if the working branch is behind master for more than 10 commits or so, which makes it hard to visualize the branch) against the official master branch
   # You can then push your changes (assuming it's in the topic/name branch) to this public repository:
 {{{
 git push github topic/name
