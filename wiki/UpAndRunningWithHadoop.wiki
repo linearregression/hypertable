@@ -8,18 +8,6 @@ Install and start Hadoop.
 
 ===Step 2===
 
-Make sure you have extended attributes enabled on the partition that holds the root of the Hyperspace directory tree.  This will be the same disk volume that holds the installation (e.g. ~/hypertable), unless you configured Hyperspace explicitly to point to somewhere else.  This is not necessary on the mac, but is in general on Linux systems.  To enable extended attributes on Linux, you need to add the user_xattr property to the relevant file systems in your /etc/fstab file. For example:
-{{{
-   /dev/hda3     /home     ext3     defaults,user_xattr     1 2
-}}}
-You can then remount the affected partitions as follows:
-{{{
-   $ mount -o remount /home
-}}}
-
-
-==Step 3==
-
 Create the directory `/hypertable` in HDFS and make it writeable by all.
 
 {{{
@@ -27,7 +15,7 @@ $ hadoop fs -mkdir /hypertable
 $ hadoop fs -chmod 777 /hypertable
 }}}
 
-==Step 4==
+===Step 3===
 
 Edit the config file conf/hypertable.cfg  Change the following property to point to the Hadoop filesystem that got up and running in step 1 (assuming hdfs://motherlode000:9000):
 {{{
@@ -40,7 +28,7 @@ Hypertable.Master.Host=motherlode001
 }}}
 
 
-==Step 5==
+===Step 4===
 
 Start the Master and Hyperspace
 
@@ -48,7 +36,7 @@ Start the Master and Hyperspace
 ssh motherlode001 ~/hypertable/bin/start-master.sh hadoop
 }}}
 
-==Step 6==
+===Step 5===
 
 Start the Range Servers.  Add all of the names of the machines that will be running range servers to the file conf/slaves relative to the installation directory.  Here's what an example one looks like:
 {{{
@@ -71,7 +59,7 @@ This slaves file, along with the entire installation should be pushed out to all
 Now you sould be able to run the `~/hypertable/bin/hypertable` HQL command interpreter and start playing around.
 
 
-=Stopping the System=
+==Stopping the System==
 
 Execute the following commands to stop all of the servers:
 {{{
