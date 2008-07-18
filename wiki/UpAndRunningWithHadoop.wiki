@@ -4,18 +4,14 @@
 
 *Step 1.* Install and start Hadoop.
 
-===Step 2===
-
-Create the directory `/hypertable` in HDFS and make it writeable by all.
+*Step 2.* Create the directory `/hypertable` in HDFS and make it writeable by all.
 
 {{{
 $ hadoop fs -mkdir /hypertable
 $ hadoop fs -chmod 777 /hypertable
 }}}
 
-===Step 3===
-
-Edit the config file conf/hypertable.cfg  Change the following property to point to the Hadoop filesystem that got up and running in step 1 (assuming hdfs://motherlode000:9000):
+*Step 3.* Edit the config file conf/hypertable.cfg  Change the following property to point to the Hadoop filesystem that got up and running in step 1 (assuming hdfs://motherlode000:9000):
 {{{
 HdfsBroker.fs.default.name=hdfs://motherlode001:9000
 }}}
@@ -26,17 +22,13 @@ Hypertable.Master.Host=motherlode001
 }}}
 
 
-===Step 4===
-
-Start the Master and Hyperspace
+*Step 4.* Start the Master and Hyperspace
 
 {{{
 ssh motherlode001 ~/hypertable/bin/start-master.sh hadoop
 }}}
 
-===Step 5===
-
-Start the Range Servers.  Add all of the names of the machines that will be running range servers to the file conf/slaves relative to the installation directory.  Here's what an example one looks like:
+*Step 5.* Start the Range Servers.  Add all of the names of the machines that will be running range servers to the file conf/slaves relative to the installation directory.  Here's what an example one looks like:
 {{{
 $ cat conf/slaves 
 motherlode001
