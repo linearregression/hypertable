@@ -35,9 +35,7 @@ cd ~/src/kosmosfs/scripts
 python kfslaunch.py -f machines.cfg -s
 }}}
 
-*Step 6.* 
-
-Start the Range Servers.  Add all of the names of the machines that will be running range servers to the file conf/slaves relative to the installation directory.  Here's what an example one looks like:
+*Step 6.* Start the Range Servers.  Add all of the names of the machines that will be running range servers to the file conf/slaves relative to the installation directory.  Here's what an example one looks like:
 {{{
 $ cat conf/slaves 
 motherlode001
@@ -61,6 +59,8 @@ Now you sould be able to run the `~/hypertable/bin/hypertable` HQL command inter
 ==Stopping the System==
 
 Execute the following commands to stop all of the servers:
+
+*NOTE: For pre-beta releases, this will cause all table data to be lost*
 {{{
 ssh motherlode001 ~/hypertable/bin/kill-servers.sh
 ./bin/slaves.sh ~/hypertable/bin/kill-servers.sh
