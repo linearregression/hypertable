@@ -52,6 +52,9 @@ Now you sould be able to run the `~/hypertable/bin/hypertable` HQL command inter
 ==Stopping the System==
 
 Execute the following commands to stop all of the servers:
+
+*NOTE: With pre-beta releases, this will remove all table data*
+
 {{{
 ssh motherlode001 ~/hypertable/bin/kill-servers.sh
 ./bin/slaves.sh ~/hypertable/bin/kill-servers.sh
