@@ -1,0 +1,67 @@
+#summary Instructions on how to get Hypertable up and running with KFS
+
+==Starting the Servers==
+
+*Step 1.* Pull the latest KFS source code and build it
+{{{
+cd ~/src/
+svn co https://kosmosfs.svn.sourceforge.net/svnroot/kosmosfs/trunk kosmosfs 
+cd kosmosfs/
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ~/src/kosmosfs
+make
+make install
+}}}
+
+*Step 2.* Edit ~/src/kosmosfs/scripts/machines.cfg
+
+*Step 3.* Kill the servers
+{{{
+cd ~/src/kosmosfs/scripts
+python kfslaunch.py -f machines.cfg -S
+}}}
+
+*Step 4.* Upgrade the binaries
+
+{{{
+cd ~/src/kosmosfs/scripts
+python kfssetup.py -f machines.cfg -b ../build/bin -u
+}}}
+
+*Step 5.* Launch the KFS servers
+{{{
+cd ~/src/kosmosfs/scripts
+python kfslaunch.py -f machines.cfg -s
+}}}
+
+*Step 6.* 
+
+Start the Range Servers.  Add all of the names of the machines that will be running range servers to the file conf/slaves relative to the installation directory.  Here's what an example one looks like:
+{{{
+$ cat conf/slaves 
+motherlode001
+motherlode002
+motherlode003
+motherlode004
+motherlode005
+motherlode006
+motherlode007
+motherlode008
+}}}
+
+This slaves file, along with the entire installation should be pushed out to all of the machines using something like rsync.  Once you've done this, you can launch all of the range servers with the following command (assuming installation dir is ~/hypertable on all of the machines):
+{{{
+./bin/slaves.sh ~/hypertable/bin/start-range-server.sh hadoop
+}}}
+
+Now you sould be able to run the `~/hypertable/bin/hypertable` HQL command interpreter and start playing around.
+
+
+==Stopping the System==
+
+Execute the following commands to stop all of the servers:
+{{{
+ssh motherlode001 ~/hypertable/bin/kill-servers.sh
+./bin/slaves.sh ~/hypertable/bin/kill-servers.sh
+}}}
