@@ -50,7 +50,7 @@ motherlode008
 
 This slaves file, along with the entire installation should be pushed out to all of the machines using something like rsync.  Once you've done this, you can launch all of the range servers with the following command (assuming installation dir is ~/hypertable on all of the machines):
 {{{
-./bin/slaves.sh ~/hypertable/bin/start-range-server.sh hadoop
+./bin/slaves.sh ~/hypertable/bin/start-range-server.sh kosmos
 }}}
 
 Now you sould be able to run the `~/hypertable/bin/hypertable` HQL command interpreter and start playing around.
