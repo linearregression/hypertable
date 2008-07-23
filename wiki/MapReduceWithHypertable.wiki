@@ -18,6 +18,8 @@
 
  3.3 [#Building_Hypertable Building MapReduce support]
 
+4. [#Running_MapReduce Running example MapReduce task]
+
 = Introduction =
 
 == A word about mapreduce ==
@@ -157,8 +159,13 @@ Let's proceed by
 $ cd HYPERTABLE_SRC_DIR
 $ cmake -DBUILD_SHARED_LIBS=ON -DHADOOP_INCLUDE_PATH=$HADOOP_SRC_DIR/src/c++/install/include/hadoop/ -DHADOOP_LIB_PATH=$HADOOP_SRC_DIR/src/c++/install/lib/ .
 $ make && sudo make install
-
 }}}
+
+Once the compilation finishes you are ready to advance to the next section.
+
+= Running !MapReduce =
+
+
 = Future Work =
 
 These are things that need to be done in order
