@@ -193,7 +193,7 @@ the following column families
 
 ==Configure !MapReduce job==
 
-Put the HYPERTABLE_SRC_DIR/contrib/cc/MapReduce/test/mapredjob file to the HDFS by typing
+Put the HYPERTABLE_SRC_DIR/contrib/cc/!MapReduce/test/mapredjob file to the HDFS by typing
 {{{
 hadoop -dfs mkdir /mapreduce/
 hadoop -dfs mkdir /mapreduce/applications
