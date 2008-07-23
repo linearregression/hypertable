@@ -1,6 +1,6 @@
 #summary Design,rationale and usage information for the MapReduce support for Hypertable
 
-1. [http://code.google.com/p/hypertable/wiki/MapReduceWithHypertable#Introduction Introduction]
+1. [#Introduction Introduction]
 
 = Introduction =
 
@@ -64,6 +64,4 @@ to have a fully-featured Hypertable support
   # create `TableOutputFormat` class in Java
   # create C++ `RecordWriter`
   # integrate with thrift broker once it is ready
-
-
 
