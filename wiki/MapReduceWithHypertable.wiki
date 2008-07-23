@@ -73,6 +73,7 @@ Java JDK and fulfill usual requirements for the Hypertable.
 
 == Building ==
 
+=== Building Hadoop ===
 The first step is to prepare hadoop pipes and hadoop utils libraries. You can do this as follows (note: HADOOP_SRC_DIR is the path to the Hadoop's source code directory)
 {{{
 $ cd HADOOP_SRC_DIR/src/c++/utils
@@ -92,43 +93,38 @@ Once these libraries are compiled, you have to add their paths to the ld.so.conf
 }}}
 Apply the following patch to the hadoop Pipes source code
 {{{
---- /home/mateusz/src/hadoop/branches/branch-0.17/src/java/org/apache/hadoop/mapred/pipes/Submitter.java        2008-07-08
-15:05:51.000000000 +0200
-+++ src/java/org/apache/hadoop/mapred/pipes/Submitter.java      2008-07-08
-12:30:46.000000000 +0200
-
-@@ -365,6 +365,14 @@
-     if (results.hasOption("-jar")) {
-       conf.setJar((String) results.getValue("-jar"));
-     }
-+      // if they gave us a jar file, include it into the class path
-+      String jarFile = conf.getJar();
-+      if (jarFile != null) {
-+        ClassLoader loader =
-+          new URLClassLoader(new URL[]{ FileSystem.getLocal(conf).
-+                                        pathToFile(new
-Path(jarFile)).toURL()});
-+        conf.setClassLoader(loader);
-+      }
-     if (results.hasOption("-inputformat")) {
-       setIsJavaRecordReader(conf, true);
-       conf.setInputFormat(getClass(results, "-inputformat", conf,
-@@ -406,14 +414,6 @@
-         conf.set(keyValSplit[0], keyValSplit[1]);
+--- src/java/org/apache/hadoop/mapred/pipes/Submitter.java.orig	2008-05-15 09:20:16.000000000 +0200
++++ src/java/org/apache/hadoop/mapred/pipes/Submitter.java	2008-07-23 13:01:58.000000000 +0200
+@@ -364,6 +364,14 @@
        }
-     }
+       if (results.hasOption("-jar")) {
+         conf.setJar((String) results.getValue("-jar"));
++        // if they gave us a jar file, include it into the class path
++        String jarFile = conf.getJar();
++        if (jarFile != null) {
++          ClassLoader loader =
++            new URLClassLoader(new URL[]{ FileSystem.getLocal(conf).
++                                          pathToFile(new Path(jarFile)).toURL()});
++          conf.setClassLoader(loader);
++        }
+       }
+       if (results.hasOption("-inputformat")) {
+         setIsJavaRecordReader(conf, true);
+@@ -406,14 +414,6 @@
+           conf.set(keyValSplit[0], keyValSplit[1]);
+         }
+       }
 -      // if they gave us a jar file, include it into the class path
 -      String jarFile = conf.getJar();
 -      if (jarFile != null) {
 -        ClassLoader loader =
 -          new URLClassLoader(new URL[]{ FileSystem.getLocal(conf).
--                                        pathToFile(new
-Path(jarFile)).toURL()});
+-                                        pathToFile(new Path(jarFile)).toURL()});
 -        conf.setClassLoader(loader);
 -      }
-     submitJob(conf);
-   } catch (OptionException oe) {
-     cli.printUsage();
+       submitJob(conf);
+     } catch (OptionException oe) {
+       cli.printUsage();
 }}}
 
 and then compile Hadoop by issuing
@@ -144,11 +140,20 @@ Add the following property to your hadoop-site.xml or hadoop-default.xml (depend
 <property>
  <name>hypertable.config.path</name>
  <value>/absolute/path/to/your/hypertable/config</value>
-</property
+</property>
 }}}
 
 Start hadoop as usually.
 
+=== Building Hypertable ===
+
+To build Hypertable with !MapReduce support enabled you have to know the location of your Hadoop source dir (let's call it HADOOP_SRC_DIR) and location of Hadoop's pipes and utils libraries
+
+Let's proceed by
+{{{
+$ cd HYPERTABLE_SRC_DIR
+$ cmake -DBUILD_SHARED_LIBS=ON -DHADOOP_INCLUDE_PATH=$HADOOP_SRC_DIR/
+}}}
 = Future Work =
 
 These are things that need to be done in order
