@@ -20,6 +20,12 @@
 
 4. [#Running_MapReduce Running example MapReduce task]
 
+  4.1 [#Table_Creation Sample table creation]
+
+  4.2 [#Configure_MapReduce_Job Configure MapReduce job]
+
+  4.3 [#Run_Job Run the job]
+
 = Introduction =
 
 == A word about mapreduce ==
@@ -164,6 +170,89 @@ $ make && sudo make install
 Once the compilation finishes you are ready to advance to the next section.
 
 = Running !MapReduce =
+
+Start hypertable as usually before proceeding.
+
+== Table Creation ==
+
+Create some table and populate it with some data. Alternatively you can select existing table for this purpose. Please note the table layout. You can check the layout of the table by issuing
+{{{
+hypertable> show create table TableName;
+}}}
+
+For the sake of the example let's assume the table is called _!MyTable_ and it has
+the following column families
+ * Name
+ * Age
+ * Sex
+
+== Configure MapReduce job ==
+
+Put the HYPERTABLE_SRC_DIR/contrib/cc/MapReduce/test/mapredjob file to the HDFS by typing
+{{{
+hadoop -dfs mkdir /mapreduce/
+hadoop -dfs mkdir /mapreduce/applications
+hadoop -dfs put contrib/cc/MapReduce/test/mapredjob /mapreduce/applications/MyJob
+}}}
+
+Create the XML file called _MyJob.xml_ and paste the following data into it
+{{{
+<?xml version="1.0"?>
+<configuration>
+
+<property>
+  <name>mapred.reduce.tasks</name>
+  <value>2</value>
+</property>
+
+<property>
+  <name>hadoop.pipes.executable</name>
+  <value>/mapreduce/applications/MyJob#MyJob</value>
+</property>
+
+<property>
+  <name>hadoop.pipes.java.recordreader</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>hadoop.pipes.java.mapper</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>hadoop.pipes.java.reducer</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>keep.failed.task.files</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>hypertable.table.name</name>
+  <value>MyTable</value>
+</property>
+
+<property>
+  <name>hypertable.table.columns.all</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>hypertable.table.columns</name>
+  <value>Name</value>
+</property>
+
+</configuration>
+}}}
+
+The above configuration file will tell the !MapReduce framework to open the table called _MyTable_ and read all cells from it which are in the _Name_ column family. This information will in turn be passed to the _Map_ part of the framework. It also tells the !MapReduce framework where to find the binary which will perform all of this work.
+
+
+
+== Run the job ==
 
 
 = Future Work =
