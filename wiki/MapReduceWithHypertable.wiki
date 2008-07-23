@@ -163,11 +163,14 @@ To build Hypertable with !MapReduce support enabled you have to know the locatio
 Let's proceed by
 {{{
 $ cd HYPERTABLE_SRC_DIR
+$ ant jar # do not forget this step !!!
 $ cmake -DBUILD_SHARED_LIBS=ON -DHADOOP_INCLUDE_PATH=$HADOOP_SRC_DIR/src/c++/install/include/hadoop/ -DHADOOP_LIB_PATH=$HADOOP_SRC_DIR/src/c++/install/lib/ .
 $ make && sudo make install
 }}}
 
-Once the compilation finishes you are ready to advance to the next section.
+After the compilation copy the contrib/cc/MapReduce/libMapReduceJNI.so to the Hadoop's lib/native/<your OS>-<your architecture>/ directory (This will get automated in the near future).
+
+Once you've done this we can advance to the next section.
 
 = Running !MapReduce =
 
@@ -248,12 +251,25 @@ Create the XML file called _MyJob.xml_ and paste the following data into it
 </configuration>
 }}}
 
-The above configuration file will tell the !MapReduce framework to open the table called _!MyTable_ and read all cells from it which are in the _Name_ column family. This information will in turn be passed to the _Map_ part of the framework. It also tells the !MapReduce framework where to find the binary which will perform all of this work.
-
+The above configuration file will tell the !MapReduce framework to open the table called "!MyTable" and read all cells from it which are in the _Name_ column family. This information will in turn be passed to the _Map_ part of the framework. It also tells the !MapReduce framework where to find the binary which will perform all of this work.
 
 
 == Run the job ==
 
+Once you have uploaded the mapred file to the HDFS and configured the XML file, you are ready to test the first sample mapreduce task.This task counts the occurrences of *all* cells in the column family and outputs it to the standard output which will end up in report file. (For the Hypertable sink you have to write your own table writer as it is not possible to write a general one. Sorry)
+
+To run the job type
+{{{
+hadoop pipes -conf MyJob.xml \
+  -program /mapreduce/applications/MyJob \
+  -input MyTable \
+  -inputformat org.hypertable.mapreduce.TableInputFormat \
+  -output <output file if any> \
+  -jobconf hadoop.pipes.java.recordreader=false,hadoop.pipes.java.recordwriter=false \
+  -jar <path to hypertable-0.9.0.7.jar>
+}}}
+
+This should launch the example !MapReduce task.
 
 = Future Work =
 
@@ -262,3 +278,5 @@ to have a fully-featured Hypertable support
   # create `TableOutputFormat` class in Java
   # create C++ `RecordWriter`
   # integrate with thrift broker once it is ready
+  # fully automate Hypertable+Hadoop setup (esp. JNI library)
+  # add the hadoop fix to the hypertable source tree
