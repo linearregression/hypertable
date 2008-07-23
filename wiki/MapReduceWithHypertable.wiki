@@ -22,7 +22,7 @@
 
   4.1 [#Table_Creation Sample table creation]
 
-  4.2 [#Configure_MapReduce_Job Configure MapReduce job]
+  4.2 [#Configure_MapReduce_job Configure MapReduce job]
 
   4.3 [#Run_Job Run the job]
 
@@ -186,7 +186,7 @@ the following column families
  * Age
  * Sex
 
-== Configure MapReduce job ==
+==Configure !MapReduce job==
 
 Put the HYPERTABLE_SRC_DIR/contrib/cc/MapReduce/test/mapredjob file to the HDFS by typing
 {{{
