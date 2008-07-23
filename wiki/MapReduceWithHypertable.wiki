@@ -1,10 +1,14 @@
 #summary Design,rationale and usage information for the MapReduce support for Hypertable
 
 1. [#Introduction Introduction]
+
 2. [#Design Design information]
+
  2.1 [#Outline Outline]
 
  2.2 [#TableInputFormat TableInputFormat]
+ 
+ 2.3 [#Context Task context]
 
 = Introduction =
 
@@ -33,7 +37,7 @@ in several steps:
 
 The `TableInputFormat` class implements `InputFormat` interface for describing the data source.It does that by keeping table name and tablet ranges and their corresponding network locations, i.e. ip addresses of servers hosting them. This information is used to construct `TableSplit` objects describing particular tablets which get passed along with the task context information to the map() function.
 
-=== Passing task context to the C++ Pipes ===
+=== Context ===
 
 Hadoop's mapreduce can operate in 3 different ways:
   # utilizing native Java code
