@@ -83,6 +83,7 @@ $ sh configure
 $ make && make install  # no need for root, this is local install only
 }}}
 When compiling hadoopUtils library please make sure you add "-fPIC" code somewhere in the makefile. This is a bug in hadoop. The pipes library has PIC enabled by default.
+
 *WARNING:* compiling with CFLAGS="-fPIC" make won't work as the makefile doesn't append but rather overwrites compile flags.
 {{{
 $ cd HADOOP_SRC_DIR/src/c++/pipes
@@ -135,7 +136,7 @@ HADOOP_SRC_DIR/$ ant compile
 }}}
 
 This will compile the Hadoop with corrected code which will load custom classes
-at appropriate moment so that it can read custom _!InputFormat_ implementation. Replace the hadoop-core-*.jar archive with hadoop-core-*-dev.jar one. This will replace the old jar file with a new patched code. 
+at appropriate moment so that it can read custom _!InputFormat_ implementation. Replace the hadoop-core-\*.jar archive with hadoop-core-\*-dev.jar one. This will replace the old jar file with a new patched code. 
 
 Add the following property to your hadoop-site.xml or hadoop-default.xml (depending on your needs)
 {{{
