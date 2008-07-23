@@ -12,6 +12,10 @@
 
 3. [#Compilation Compiling MapReduce support]
 
+ 3.1 [#Prerequisites Prerequisites]
+
+ 3.2 [#Building Building MapReduce support]
+
 = Introduction =
 
 == A word about mapreduce ==
@@ -64,7 +68,78 @@ can be configured in the job configuration XML file (please refer to configurati
 
 == Prerequisites ==
 
+In order to compile MapReduce support for Hypertable you have to download
+Java JDK and fulfill usual requirements for the Hypertable.
 
+== Building ==
+
+The first step is to prepare hadoop pipes and hadoop utils libraries. You can do this as follows (note: HADOOP_SRC_DIR is the path to the Hadoop's source code directory)
+{{{
+$ cd HADOOP_SRC_DIR/src/c++/utils
+$ sh configure
+$ make && make install  # no need for root, this is local install only
+}}}
+When compiling hadoopUtils library please make sure you add "-fPIC" code somewhere in the makefile. This is a bug in hadoop. The pipes library has PIC enabled by default.
+*WARNING:* compiling with CFLAGS="-fPIC" make won't work as the makefile doesn't append but rather overwrites compile flags.
+{{{
+$ cd HADOOP_SRC_DIR/src/c++/pipes
+$ sh configure
+$ make && make install
+}}}
+Once these libraries are compiled, you have to add their paths to the ld.so.conf file. For example on Ubuntu you have to do the following:
+{{{
+# echo "$HADOOP_SRC_DIR/lib/native/<your OS>-<your architecture>/" > /etc/ld.so.conf.d/hadoop.conf
+}}}
+Apply the following patch to the hadoop Pipes source code
+{{{
+--- /home/mateusz/src/hadoop/branches/branch-0.17/src/java/org/apache/hadoop/mapred/pipes/Submitter.java        2008-07-08
+15:05:51.000000000 +0200
++++ src/java/org/apache/hadoop/mapred/pipes/Submitter.java      2008-07-08
+12:30:46.000000000 +0200
+
+@@ -365,6 +365,14 @@
+     if (results.hasOption("-jar")) {
+       conf.setJar((String) results.getValue("-jar"));
+     }
++      // if they gave us a jar file, include it into the class path
++      String jarFile = conf.getJar();
++      if (jarFile != null) {
++        ClassLoader loader =
++          new URLClassLoader(new URL[]{ FileSystem.getLocal(conf).
++                                        pathToFile(new
+Path(jarFile)).toURL()});
++        conf.setClassLoader(loader);
++      }
+     if (results.hasOption("-inputformat")) {
+       setIsJavaRecordReader(conf, true);
+       conf.setInputFormat(getClass(results, "-inputformat", conf,
+@@ -406,14 +414,6 @@
+         conf.set(keyValSplit[0], keyValSplit[1]);
+       }
+     }
+-      // if they gave us a jar file, include it into the class path
+-      String jarFile = conf.getJar();
+-      if (jarFile != null) {
+-        ClassLoader loader =
+-          new URLClassLoader(new URL[]{ FileSystem.getLocal(conf).
+-                                        pathToFile(new
+Path(jarFile)).toURL()});
+-        conf.setClassLoader(loader);
+-      }
+     submitJob(conf);
+   } catch (OptionException oe) {
+     cli.printUsage();
+}}}
+
+and then compile Hadoop by issuing
+{{{
+HADOOP_SRC_DIR/$ ant compile
+}}}
+
+This will compile the Hadoop with corrected code which will load custom classes
+at appropriate moment so that it can read custom _!InputFormat_ implementation.
+
+Start hadoop as usually.
 = Future Work =
 
 These are things that need to be done in order
