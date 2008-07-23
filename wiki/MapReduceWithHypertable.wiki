@@ -94,7 +94,7 @@ $ make && make install  # no need for root, this is local install only
 }}}
 When compiling hadoopUtils library please make sure you add "-fPIC" code somewhere in the makefile. This is a bug in hadoop. The pipes library has PIC enabled by default.
 
-*WARNING:* compiling with CFLAGS="-fPIC" make won't work as the makefile doesn't append but rather overwrites compile flags.
+*WARNING:* compiling with CXXFLAGS="-fPIC" make won't work as the makefile doesn't append but rather overwrites compile flags.
 {{{
 $ cd HADOOP_SRC_DIR/src/c++/pipes
 $ sh configure
