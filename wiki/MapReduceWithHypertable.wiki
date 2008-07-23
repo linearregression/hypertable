@@ -26,6 +26,8 @@
 
   4.3 [#Run_Job Run the job]
 
+5. [#Configuration_Options Configuration options reference]
+
 = Introduction =
 
 == A word about mapreduce ==
@@ -271,6 +273,13 @@ hadoop pipes -conf MyJob.xml \
 
 This should launch the example !MapReduce task.
 
+= Configuration Options =
+
+Below you can find a list of configuration options for the Hypertable mapreduce job configuration files
+
+ * hypertable.table.name - sets the name of the source table
+ * hypertable.table.columns - sets the column families to fetch from the table. the column names are comma separated strings.
+ * hypertable.table.columns.all - boolean flag accepting "true" or "false" values telling if the source table should feed every possible column to the map() function
 = Future Work =
 
 These are things that need to be done in order
