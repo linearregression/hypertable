@@ -1,6 +1,8 @@
 #summary Design,rationale and usage information for the MapReduce support for Hypertable
 
-1. [#Introduction Introduction]
+ # [#Introduction Introduction]
+ # [#Design Design information]
+  # [#Outline Outline]
 
 = Introduction =
 
