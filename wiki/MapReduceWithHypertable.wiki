@@ -248,7 +248,7 @@ Create the XML file called _MyJob.xml_ and paste the following data into it
 </configuration>
 }}}
 
-The above configuration file will tell the !MapReduce framework to open the table called _MyTable_ and read all cells from it which are in the _Name_ column family. This information will in turn be passed to the _Map_ part of the framework. It also tells the !MapReduce framework where to find the binary which will perform all of this work.
+The above configuration file will tell the !MapReduce framework to open the table called _!MyTable_ and read all cells from it which are in the _Name_ column family. This information will in turn be passed to the _Map_ part of the framework. It also tells the !MapReduce framework where to find the binary which will perform all of this work.
 
 
 
