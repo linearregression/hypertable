@@ -14,9 +14,9 @@
 
  3.1 [#Prerequisites Prerequisites]
  
- 3.2 [#"Building Hadoop" Building Hadoop]
+ 3.2 [#'Building Hadoop' Building Hadoop]
 
- 3.2 [#Building Building MapReduce support]
+ 3.3 [#Building Building MapReduce support]
 
 = Introduction =
 
