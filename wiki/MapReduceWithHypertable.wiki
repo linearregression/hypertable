@@ -10,6 +10,8 @@
  
  2.3 [#Context Task context]
 
+3. [#Compilation Compiling MapReduce support]
+
 = Introduction =
 
 == A word about mapreduce ==
