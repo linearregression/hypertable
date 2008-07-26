@@ -170,6 +170,11 @@ $ cmake -DBUILD_SHARED_LIBS=ON -DHADOOP_INCLUDE_PATH=$HADOOP_SRC_DIR/src/c++/ins
 $ make && sudo make install
 }}}
 
+*NOTE:* In case of JNI headers not being found run the cmake program with following flags
+{{{
+-DJAVA_INCLUDE_PATH=$JAVA_HOME/include
+-DJAVA_INCLUDE_PATH2=$JAVA_HOME/include/linux # set it to the same place as JAVA_INCLUDE_PATH if you don't run Linux
+}}}
 After the compilation copy the contrib/cc/MapReduce/libMapReduceJNI.so to the Hadoop's lib/native/<your OS>-<your architecture>/ directory (This will get automated in the near future).
 
 Once you've done this we can advance to the next section.
