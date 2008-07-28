@@ -28,10 +28,10 @@ The Hypertable distribution comes a number of scripts to start and stop the vari
   
   This script is a wrapper script that launches all of the services in the following order:
 
-  !DfsBroker
-  Hyperspace
-  Hypertable.Master
-  Hypertable.!RangeServer
+    * !DfsBroker
+    * Hyperspace
+    * Hypertable.Master
+    * Hypertable.!RangeServer
 
   It is useful launching the service on a single machine for testing.  For example:
 {{{
