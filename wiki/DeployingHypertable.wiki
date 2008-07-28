@@ -72,13 +72,7 @@ The following list of scripts are launched by Capistrano, but they can also be r
   This script is used to start the Range Server.
   * `start-all-servers.sh (local|hadoop|kfs) [<server-options>]`
   
-  This script is a wrapper script that launches all of the services in the following order:
-    * !DfsBroker
-    * Hyperspace
-    * Hypertable.Master
-    * Hypertable.!RangeServer
-
-  It is useful launching the service on a single machine for testing.  For example:
+  This script is a wrapper script that launches all of the services.  It is useful for launching the service on a single machine for testing.  For example:
 {{{
 $ bin/start-all-servers.sh local
 Successfully started DFSBroker (local)
