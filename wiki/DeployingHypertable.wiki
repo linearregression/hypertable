@@ -86,7 +86,7 @@ Successfully started Hypertable.RangeServer
 
   * `clean-database.sh`
 
-  This script will remove all of the tables in the database and bring the system back to a "fresh" state.  For this script to work properly, the DfsBroker must be running.  So for example, to clean a database running on top of Hadoop, you would issue the following commands:
+  This script will remove all of the tables in the database and bring the system back to a "fresh" state.  For this script to work properly, the !DfsBroker must be running.  So for example, to clean a database running on top of Hadoop, you would issue the following commands:
 {{{
 $ bin/start-dfsbroker.sh hadoop
 $ bin/clean-database.sh
