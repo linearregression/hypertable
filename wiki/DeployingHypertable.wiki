@@ -33,7 +33,7 @@ Here's a brief description of each variable:
 || dfs || distributed file system you are running Hypertable on top of.  Valid values are "local", "hadoop", or "kfs" ||
 || default_config || the location of the default configuration file that you want to use. ||
 
-In addition to the above variables, you also need to define two roles, one for the machine that will run the master processes (e.g. Hypertable.Master and Hyperspace) and one for the machines that will run the RangeServers.  You need to edit the following lines:
+In addition to the above variables, you also need to define two roles, one for the machine that will run the master processes (e.g. Hypertable.Master and Hyperspace) and one for the machines that will run the !RangeServers.  You need to edit the following lines:
 {{{
 role :master, "motherlode001"
 role :slave,  "motherlode001", "motherlode002", "motherlode003", "motherlode004", "motherlode005", "motherlode006", "motherlode007", "motherlode008"
@@ -54,6 +54,12 @@ If you want to wipe your database clean, removing all tables ...
 {{{
 $ cap cleandb
 }}}
+If you want to launch the service using a different config file than the default (e.g. /home/doug/conf/alternate.cfg) ...
+{{{
+$ cap -S config=/home/doug/conf/alternate.cfg dist
+$ cap -S config=/home/doug/conf/alternate.cfg start
+}}}
+
 
 == Launch Scripts ==
 The following list of scripts are launched by Capistrano, but they can also be run by hand.
