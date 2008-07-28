@@ -1,0 +1,60 @@
+#summary How to deploy Hypertable
+
+== Contents ==
+
+  * Introduction
+  * Launch Scripts
+  * Deploying with Capistrano
+
+== Introduction ==
+
+The Hypertable distribution comes a number of scripts to start and stop the various servers that make up a Hypertable cluster.  You can use your own cluster management tool to launch these scripts and deploy new binaries.  However, if you're not already using a cluster management tool, we recommend [http://www.capify.org/ Capistrano].  The distribution comes with a Capistrano config file (Capfile) that makes starting and stopping the Hypertable servers a breeze.
+
+== Launch Scripts ==
+
+  * `start-dfsbroker.sh (local|hadoop|kfs) [<server-options>]`
+  
+  This script is used to launch the !DfsBroker.  It has one required argument which is the name of the DFS broker to launch.
+  * `start-hyperspace.sh [<server-options>]`
+  
+  This script is used to start Hyperspace.
+  * `start-master.sh [<server-options>]`
+  
+  This script is used to start the Hypertable master.
+  * `start-rangeserver.sh [<server-options>]`
+  
+  This script is used to start the Range Server.
+  * `start-all-servers.sh (local|hadoop|kfs) [<server-options>]`
+  
+  This script is a wrapper script that launches all of the services in the following order:
+
+  !DfsBroker
+  Hyperspace
+  Hypertable.Master
+  Hypertable.!RangeServer
+
+  It is useful launching the service on a single machine for testing.  For example:
+{{{
+$ bin/start-all-servers.sh local
+Successfully started DFSBroker (local)
+Successfully started Hyperspace
+Successfully started Hypertable.Master
+Successfully started Hypertable.RangeServer
+}}}
+  * `stop-servers.sh`
+
+  This stops all the Hypertable servers on the machine that it is run on.  Each of the servers will drop a .pid file containing the PID of the server process in the run/ directory of the installation.  This script just reads those .pid files and kills the processes.
+
+  * `clean-database.sh`
+
+  This script will remove all of the tables in the database and bring the system back to a "fresh" state.  For this script to work properly, the DfsBroker must be running.  So for example, to clean a database running on top of Hadoop, you would issue the following commands:
+{{{
+$ bin/start-dfsbroker.sh hadoop
+$ bin/clean-database.sh
+}}}
+
+  * `slaves.sh`
+
+  This script is a handy script for executing an ssh command on all machines in the cluster.  It was taken from Hadoop and requires that you have a conf/slaves file in your installation that contains each slave machine listed on a separate line.
+
+== Deploying with Capistrano ==
