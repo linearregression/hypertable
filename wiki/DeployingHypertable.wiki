@@ -50,6 +50,10 @@ And to stop the service, shutting down all servers ...
 {{{
 $ cap stop
 }}}
+If you want to wipe your database clean, removing all tables ...
+{{{
+cap cleandb
+}}}
 
 == Launch Scripts ==
 The following list of scripts are launched by Capistrano, but they can also be run by hand.
