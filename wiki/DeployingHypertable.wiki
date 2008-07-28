@@ -29,18 +29,30 @@ set :default_config, "/home/doug/conf/cluster1-standard.cfg"
 }}}
 Here's a brief description of each variable:
 
-|| 'source_machine' || the machine from which you will build the binaries, distribute them to the other machines, and launch the service. ||
-|| 'install_dir' || the directory on the local machine where you have installed Hypertable.  It is also the directory on the remote machines where the installation will get rsync'ed to. ||
-|| 'hypertable_version' || the version of Hypertable you are deploying ||
-|| 'dfs' || the distributed file system you are running Hypertable on top of.  Valid values are "local", "hadoop", or "kfs" ||
-|| 'default_config' || the location of the default configuration file that you want to use. ||
+|| source_machine || local machine from which you will build the binaries, distribute them to the other machines, and launch the service. ||
+|| install_dir || directory on the local machine (source_machine) where you have installed Hypertable.  It is also the directory on the remote machines where the installation will get rsync'ed to. ||
+|| hypertable_version || version of Hypertable you are deploying ||
+|| dfs || distributed file system you are running Hypertable on top of.  Valid values are "local", "hadoop", or "kfs" ||
+|| default_config || the location of the default configuration file that you want to use. ||
 
+In addition to the aforementioned variables, you also need to define two roles, one for the machine that will run the master processes (e.g. Hypertable.Master and Hyperspace) and one for the machines that will run the RangeServers.  You need to edit the following lines:
+{{{
+role :master, "motherlode001"
+role :slave,  "motherlode001", "motherlode002", "motherlode003", "motherlode004", "motherlode005", "motherlode006", "motherlode007", "motherlode008"
+}}}
 
-
-  role :master, "motherlode001"
-  role :slave,  "motherlode001", "motherlode002", "motherlode003", "motherlode004", "motherlode005", "motherlode006", "motherlode007", "motherlode008"
-
-
+Once you've got the Capfile setup, put it in the directory where you will run the cap command from (I have it in my home directory).  Then, to distribute your installation, you simply execute the following
+{{{
+$ cap dist
+}}}
+To start all of the Hypertable servers ...
+{{{
+$ cap start
+}}}
+And to stop the service, shutting down all servers ...
+{{{
+$ cap stop
+}}}
 
 == Launch Scripts ==
 The following list of scripts are launched by Capistrano, but they can also be run by hand.
