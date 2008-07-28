@@ -12,9 +12,7 @@ The Hypertable distribution comes a number of scripts to start and stop the vari
 
 == Deploying with Capistrano ==
 
-Capistrano is a simple tool for automating the remote execution of tasks.  It uses ssh to do the remote execution.  You should have password-less ssh access (e.g. public key) to all of the machines in your cluster.
-
-Installing capistrano is pretty simple.  On most systems you just need to execute the following command
+Capistrano is a simple tool for automating the remote execution of tasks.  It uses ssh to do the remote execution.  To ease deployment, you should have password-less ssh access (e.g. public key) to all of the machines in your cluster.  Installing Capistrano is pretty simple.  On most systems you just need to execute the following command
 {{{
 $ sudo gem install capistrano
 }}}
@@ -35,12 +33,11 @@ Here's a brief description of each variable:
 || dfs || distributed file system you are running Hypertable on top of.  Valid values are "local", "hadoop", or "kfs" ||
 || default_config || the location of the default configuration file that you want to use. ||
 
-In addition to the aforementioned variables, you also need to define two roles, one for the machine that will run the master processes (e.g. Hypertable.Master and Hyperspace) and one for the machines that will run the RangeServers.  You need to edit the following lines:
+In addition to the above variables, you also need to define two roles, one for the machine that will run the master processes (e.g. Hypertable.Master and Hyperspace) and one for the machines that will run the RangeServers.  You need to edit the following lines:
 {{{
 role :master, "motherlode001"
 role :slave,  "motherlode001", "motherlode002", "motherlode003", "motherlode004", "motherlode005", "motherlode006", "motherlode007", "motherlode008"
 }}}
-
 Once you've got the Capfile setup, put it in the directory where you will run the cap command from (I have it in my home directory).  Then, to distribute your installation, you simply execute the following
 {{{
 $ cap dist
