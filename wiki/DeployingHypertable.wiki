@@ -3,12 +3,36 @@
 == Contents ==
 
   * Introduction
-  * Launch Scripts
   * Deploying with Capistrano
+  * Launch Scripts
 
 == Introduction ==
 
 The Hypertable distribution comes a number of scripts to start and stop the various servers that make up a Hypertable cluster.  You can use your own cluster management tool to launch these scripts and deploy new binaries.  However, if you're not already using a cluster management tool, we recommend [http://www.capify.org/ Capistrano].  The distribution comes with a Capistrano config file (Capfile) that makes starting and stopping the Hypertable servers a breeze.
+
+== Deploying with Capistrano ==
+
+Capistrano is a simple tool for automating the remote execution of tasks.  It uses ssh to do the remote execution.  You should have password-less ssh access (e.g. public key) to all of the machines in your cluster.
+
+Installing capistrano is pretty simple.  On most systems you just need to execute the following command
+{{{
+$ sudo gem install capistrano
+}}}
+
+Once you have Capistrano installed, you need to modify the Capfile that comes with the Hypertable distribution and taylor it for your environment.  You can find the Capfile under conf/Capfile in the distribution.  There are some variables that are set at the top that you need to modify for your particular environment.  The following shows the variables at the top of the Capfile that need modification:
+{{{
+set :source_machine, "motherlode000"
+set :install_dir,  "/data1/doug/hypertable" 
+set :hypertable_version, "0.9.0.7"
+set :dfs, "hadoop"
+set :default_config, "/home/doug/conf/cluster1-standard.cfg"
+}}}
+
+
+  role :master, "motherlode001"
+  role :slave,  "motherlode001", "motherlode002", "motherlode003", "motherlode004", "motherlode005", "motherlode006", "motherlode007", "motherlode008"
+
+
 
 == Launch Scripts ==
 
@@ -55,12 +79,3 @@ $ bin/clean-database.sh
   * `slaves.sh`
 
   This script is a handy script for executing an ssh command on all machines in the cluster.  It was taken from Hadoop and requires that you have a conf/slaves file in your installation that contains each slave machine listed on a separate line.
-
-== Deploying with Capistrano ==
-
-Capistrano is a simple tool for automating the remote execution of tasks.  It uses ssh to do the remote execution.  You should have password-less ssh access (e.g. public key) to all of the machines in your cluster.
-
-Installing capistrano is pretty simple.  On most systems you just need to execute the following command
-{{{
-$ sudo gem install capistrano
-}}}
