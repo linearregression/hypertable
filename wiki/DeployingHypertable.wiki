@@ -27,7 +27,6 @@ The Hypertable distribution comes a number of scripts to start and stop the vari
   * `start-all-servers.sh (local|hadoop|kfs) [<server-options>]`
   
   This script is a wrapper script that launches all of the services in the following order:
-
     * !DfsBroker
     * Hyperspace
     * Hypertable.Master
@@ -58,3 +57,10 @@ $ bin/clean-database.sh
   This script is a handy script for executing an ssh command on all machines in the cluster.  It was taken from Hadoop and requires that you have a conf/slaves file in your installation that contains each slave machine listed on a separate line.
 
 == Deploying with Capistrano ==
+
+Capistrano is a simple tool for automating the remote execution of tasks.  It uses ssh to do the remote execution.  You should have password-less ssh access (e.g. public key) to all of the machines in your cluster.
+
+Installing capistrano is pretty simple.  On most systems you just need to execute the following command
+{{{
+$ sudo gem install capistrano
+}}}
