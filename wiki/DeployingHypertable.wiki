@@ -52,7 +52,7 @@ $ cap stop
 }}}
 If you want to wipe your database clean, removing all tables ...
 {{{
-cap cleandb
+$ cap cleandb
 }}}
 
 == Launch Scripts ==
