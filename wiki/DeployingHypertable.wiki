@@ -27,6 +27,13 @@ set :hypertable_version, "0.9.0.7"
 set :dfs, "hadoop"
 set :default_config, "/home/doug/conf/cluster1-standard.cfg"
 }}}
+Here's a brief description of each variable:
+
+  * 'source_machine' - the machine from which you will build the binaries, distribute them to the other machines, and launch the service.
+  * 'install_dir' - the directory on the local machine where you have installed Hypertable.  It is also the directory on the remote machines where the installation will get rsync'ed to.
+  * 'hypertable_version' - the version of Hypertable you are deploying
+  * 'dfs' - the distributed file system you are running Hypertable on top of.  Valid values are "local", "hadoop", or "kfs"
+  * 'default_config' - the location of the default configuration file that you want to use.
 
 
   role :master, "motherlode001"
@@ -35,6 +42,7 @@ set :default_config, "/home/doug/conf/cluster1-standard.cfg"
 
 
 == Launch Scripts ==
+The following list of scripts are launched by Capistrano, but they can also be run by hand.
 
   * `start-dfsbroker.sh (local|hadoop|kfs) [<server-options>]`
   
