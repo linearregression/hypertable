@@ -22,6 +22,8 @@
  * MA  02110-1301, USA.
  */
 
+#include "Common/Compat.h"
+
 #include <cstdio>
 
 #include "Common/Error.h"
