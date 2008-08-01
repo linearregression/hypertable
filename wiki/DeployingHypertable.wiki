@@ -42,6 +42,8 @@ Once you've got the Capfile setup, put it in the directory where you will run th
 {{{
 $ cap dist
 }}}
+(*NOTE:* You may have to increase the value of *!MaxStartups* in your `/etc/sshd_config` file if it is less than the number of nodes in your cluster)
+
 To start all of the Hypertable servers ...
 {{{
 $ cap start
