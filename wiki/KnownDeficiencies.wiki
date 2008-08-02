@@ -2,6 +2,8 @@
 
 == Release 0.9.x beta ==
 || *Deficiency* || *Status* ||
+|| Master does not recover !RangeServers || Currently, if a RangeServer machine dies for whatever reason, the whole database may be hosed.  This will be fixed by beta ||
 || System is not endian-neutral || It will not work properly in a heterogeneous environment ||
+|| Master does no load balancing || This will be added in the 1.1 release ||
 || Hyperspace is single server || Hyperspace needs to be made highly available by implementing a distributed version using either a consensus protocol or something equivalent ||
 || The Master is single server || The current plan is to allow for hot standbys that monitor the master's lock in Hyperspace and grab it when it becomes available and take over.  This is implemented, but has not been tried or tested. ||
