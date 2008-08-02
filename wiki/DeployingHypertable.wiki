@@ -1,4 +1,4 @@
-#summary How to deploy Hypertable
+#summary How to Deploy Hypertable
 
 == Contents ==
 
