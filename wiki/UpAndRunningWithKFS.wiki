@@ -50,7 +50,7 @@ role :slave,  "motherlode001", "motherlode002", "motherlode003", "motherlode004"
 
 *Step 7.* Compile the Hypertable code and install under the installation directory (e.g. /data1/doug/hypertable)
 
-*Step 8.* Distribute the newly compiled installation
+*Step 8.* Distribute the installation
 {{{
 $ cap dist
 }}}
