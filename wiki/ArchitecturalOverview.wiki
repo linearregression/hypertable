@@ -114,7 +114,7 @@ Application programs can access Hypertable through a client API that is provided
   * [http://www.hypertable.org/doxygen/class_hypertable_1_1_table.html Table] - Objects of this class represent open tables.  Contains methods for creating scanners and mutators on the table.
   * [http://www.hypertable.org/doxygen/class_hypertable_1_1_table_mutator.html TableMutator] - An object of this class is used to mutate (add or delete cells) a table
   * [http://www.hypertable.org/doxygen/class_hypertable_1_1_table_scanner.html TableScanner] - An object of this class is used to scan over the cells of a table.
-  * [http://www.hypertable.org/doxygen/class_hypertable_1_1_scan_spec_builder.html ScanSpecBuilder] - Helper class for constructing ScanSpec object
+  * [http://www.hypertable.org/doxygen/class_hypertable_1_1_scan_spec_builder.html ScanSpecBuilder] - Helper class for constructing !ScanSpec object
 
 
 The following two source files provide a good example of how you use the Hypertable Client API.  Together they illustrate how to load data into a table and query it.
