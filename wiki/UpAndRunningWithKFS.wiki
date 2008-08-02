@@ -35,7 +35,7 @@ cd ~/src/kosmosfs/scripts
 python kfslaunch.py -f machines.cfg -s
 }}}
 
-*Step 6.* Configure Capistrano for your specific cluster and KFS.  See DeployingHypertable for details.  The following is an example of how the variables at the top of the Capfile might be changed for KFS.
+*Step 6.* Configure Capistrano for your specific cluster and KFS.  See [DeployingHypertable How to Deploy Hypertable] for details.  The following is an example of how the variables at the top of the Capfile might be changed for KFS.
 {{{
 ------------- Capfile ----------------
 set :source_machine, "motherlode000"
