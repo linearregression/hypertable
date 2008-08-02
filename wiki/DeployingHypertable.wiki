@@ -21,7 +21,7 @@ Once you have Capistrano installed, you need to modify the Capfile that comes wi
 {{{
 set :source_machine, "motherlode000"
 set :install_dir,  "/data1/doug/hypertable" 
-set :hypertable_version, "0.9.0.7"
+set :hypertable_version, "0.9.0.8"
 set :dfs, "hadoop"
 set :default_config, "/home/doug/conf/cluster1-standard.cfg"
 }}}
