@@ -16,7 +16,7 @@ This document gives an architectural overview of Hypertable.  Hypertable is desi
 The best way to get started hands-on using hypertable is to first [http://code.google.com/p/hypertable/wiki/SourceCode?tm=4 download the source code], build it, and get the regression tests to pass.  Once the regression tests are all passing, you can then start the servers runing on top of the local filesystem with the following command (assuming the installation directory is ~/hypertable/0.9.0.8):
 
 {{{
-$ ~/hypertable/0.9.0.5/bin/start-all-servers.sh local
+$ ~/hypertable/0.9.0.8/bin/start-all-servers.sh local
 Successfully started DFSBroker (local)
 Successfully started Hyperspace
 Successfully started Hypertable.Master
@@ -114,6 +114,7 @@ Application programs can access Hypertable through a client API that is provided
   * [http://www.hypertable.org/doxygen/class_hypertable_1_1_table.html Table] - Objects of this class represent open tables.  Contains methods for creating scanners and mutators on the table.
   * [http://www.hypertable.org/doxygen/class_hypertable_1_1_table_mutator.html TableMutator] - An object of this class is used to mutate (add or delete cells) a table
   * [http://www.hypertable.org/doxygen/class_hypertable_1_1_table_scanner.html TableScanner] - An object of this class is used to scan over the cells of a table.
+  * [http://www.hypertable.org/doxygen/class_hypertable_1_1_scan_spec_builder.html ScanSpecBuilder] - Helper class for constructing ScanSpec object
 
 
 The following two source files provide a good example of how you use the Hypertable Client API.  Together they illustrate how to load data into a table and query it.
