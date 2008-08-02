@@ -35,34 +35,35 @@ cd ~/src/kosmosfs/scripts
 python kfslaunch.py -f machines.cfg -s
 }}}
 
-*Step 6.* Start the Range Servers.  Add all of the names of the machines that will be running range servers to the file conf/slaves relative to the installation directory.  Here's what an example one looks like:
+*Step 6.* Configure Capistrano for your specific cluster and KFS.  See DeployingHypertable for details.  The following is an example of how the variables at the top of the Capfile might be changed for KFS.
 {{{
-$ cat conf/slaves 
-motherlode001
-motherlode002
-motherlode003
-motherlode004
-motherlode005
-motherlode006
-motherlode007
-motherlode008
+------------- Capfile ----------------
+set :source_machine, "motherlode000"
+set :install_dir,  "/data1/doug/hypertable" 
+set :hypertable_version, "0.9.0.8"
+set :dfs, "hadoop"
+set :default_config, "/home/doug/conf/cluster1-standard.cfg"
+
+role :master, "motherlode001"
+role :slave,  "motherlode001", "motherlode002", "motherlode003", "motherlode004", "motherlode005", "motherlode006", "motherlode007", "motherlode008"
 }}}
 
-This slaves file, along with the entire installation should be pushed out to all of the machines using something like rsync.  Once you've done this, you can launch all of the range servers with the following command (assuming installation dir is ~/hypertable on all of the machines):
+*Step 7.* Compile the Hypertable code and install under the installation directory (e.g. /data1/doug/hypertable)
+
+*Step 8.* Distribute the newly compiled installation
 {{{
-./bin/slaves.sh ~/hypertable/bin/start-range-server.sh kosmos
+$ cap dist
+}}}
+
+*Step 9.* Start the servers
+{{{
+$ cap start
 }}}
 
 Now you sould be able to run the `~/hypertable/bin/hypertable` HQL command interpreter and start playing around.
 
-
 ==Stopping the System==
 
-Execute the following commands to stop all of the servers:
-
-*NOTE: With pre-beta releases, this will remove all table data*
-
 {{{
-ssh motherlode001 ~/hypertable/bin/kill-servers.sh
-./bin/slaves.sh ~/hypertable/bin/kill-servers.sh
+$ cap stop
 }}}
