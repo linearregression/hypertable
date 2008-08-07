@@ -1,14 +1,14 @@
 #summary A proposal for an implementation of a query cache
 
 === Point of Interception ===
-For cache population and exploitation, the natural interception point seems to be the RangeServer::create_scanner() method, which is where FillScanBlock returns a buffer with the data resulting from the query, given a TableIdentifier, a RangeSpec and a ScanSpec.
+For cache population and exploitation, the natural interception point seems to be the !RangeServer::create_scanner() method, which is where !FillScanBlock returns a buffer with the data resulting from the query, given a !TableIdentifier, a !RangeSpec and a !ScanSpec.
 
-For cache invalidation, the best interception point seems to be the RangeServer::update() method, which takes a TableIdentifier and a buffer containing the affected keys and the new data associated to them.
+For cache invalidation, the best interception point seems to be the !RangeServer::update() method, which takes a !TableIdentifier and a buffer containing the affected keys and the new data associated to them.
 
 === Cache Key ===
-Ideally the key to the cache would be the TableIdentifier and the row keys that are contained in the buffer resulting from resolving the query. Since that can't be obtained without actually resolving the query, the next best thing would be to calculate the intersection of the RangeSpec (which refers to a range being served by the  RangeServer for the specified table) and the ScanSpec (which represents the WHERE clause in the HQL query). But since that intersection is also only known after obtaining the result of the query, it also can't be used as a key to the query.
+Ideally the key to the cache would be the !TableIdentifier and the row keys that are contained in the buffer resulting from resolving the query. Since that can't be obtained without actually resolving the query, the next best thing would be to calculate the intersection of the !RangeSpec (which refers to a range being served by the !RangeServer for the specified table) and the !ScanSpec (which represents the WHERE clause in the HQL query). But since that intersection is also only known after obtaining the result of the query, it also can't be used as a key to the query.
 
-So we propose using the TableIdentifier and the ScanSpec as the cache key. To that end, a TableScanSpec class is defined, which combines the two components and provides the appropriate comparators.
+So we propose using the !TableIdentifier and the !ScanSpec as the cache key. To that end, a !TableScanSpec class is defined, which combines the two components and provides the appropriate comparators.
 
 === Cache Invalidation ===
 Whenever a key contained in a range held by the cache is updated, that range needs to be invalidated, meaning that it will be deleted from the cache.
