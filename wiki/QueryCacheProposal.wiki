@@ -24,3 +24,5 @@ One way to optimize this process could be to index the cached ranges both by sta
   * For each resulting range, iterate its sub-ranges to determine if any of them contain the updated row key.
  
 This should result in a mean of N*M/4 ops and a worst case of N*M ops (when all ranges are the same), which is not ideal (we'd rather see a log() in there), but it is an improvement nonetheless.
+
+Cache eviction would be done using LRU criteria.
