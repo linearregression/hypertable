@@ -28,7 +28,7 @@ git pull
 There are a few options to contribute to the project. Email patches always work (see the documentation by git send-email --help). Regular contributor might find a public repository helpful. Both repo.or.cz and github.com works, the following instruction is for github.com:
 
   # Create an account on github.com (just follow the easy instructions :)
-  # Goto http://github.com/vicaya/hypertable/tree and click the fork button besides the project name.
+  # Goto http://github.com/nuggetwheat/hypertable/tree and click the fork button besides the project name.
   # Change directory to your local repository (assuming you've done "Get the Hypertable source code"), issue the following command:
 {{{
 git remote add github <your_push_url>
