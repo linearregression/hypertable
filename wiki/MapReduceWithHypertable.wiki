@@ -80,7 +80,7 @@ can be configured in the job configuration XML file (please refer to configurati
 
 == Prerequisites ==
 
-In order to compile MapReduce support for Hypertable you have to download
+In order to compile !MapReduce support for Hypertable you have to download
 Java JDK and fulfill usual requirements for the Hypertable.
 
 == Building ==
@@ -102,7 +102,7 @@ $ make && make install
 }}}
 Once these libraries are compiled, you have to add their paths to the ld.so.conf file. For example on Ubuntu you have to do the following:
 {{{
-# echo "$HADOOP_SRC_DIR/lib/native/<your OS>-<your architecture>/" > /etc/ld.so.conf.d/hadoop.conf
+# echo "$HADOOP_SRC_DIR/src/c++/install/lib" > /etc/ld.so.conf.d/hadoop.conf
 }}}
 Apply the following patch to the hadoop Pipes source code
 {{{
@@ -142,7 +142,7 @@ Apply the following patch to the hadoop Pipes source code
 
 and then compile Hadoop by issuing
 {{{
-HADOOP_SRC_DIR/$ ant compile
+HADOOP_SRC_DIR/$ ant compile && ant jar
 }}}
 
 This will compile the Hadoop with corrected code which will load custom classes
@@ -175,7 +175,7 @@ $ make && sudo make install
 -DJAVA_INCLUDE_PATH=$JAVA_HOME/include
 -DJAVA_INCLUDE_PATH2=$JAVA_HOME/include/linux # set it to the same place as JAVA_INCLUDE_PATH if you don't run Linux
 }}}
-After the compilation copy the contrib/cc/MapReduce/libMapReduceJNI.so to the Hadoop's lib/native/<your OS>-<your architecture>/ directory (This will get automated in the near future).
+After the compilation copy the contrib/cc/!MapReduce/libMapReduceJNI.so to the Hadoop's lib/native/<your OS>-<your architecture>/ directory (This will get automated in the near future).
 
 Once you've done this we can advance to the next section.
 
