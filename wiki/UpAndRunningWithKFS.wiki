@@ -46,8 +46,7 @@ cd /opt/kfs/bin/tools
 ------------- Capfile ----------------
 set :source_machine, "motherlode000"
 set :install_dir,  "/data1/doug/hypertable" 
-set :hypertable_version, "0.9.0.8"
-set :dfs, "kfs"
+set :hypertable_version, "0.9.0.10"
 set :default_config, "/home/doug/conf/cluster1-standard.cfg"
 
 role :master, "motherlode001"
@@ -63,7 +62,7 @@ $ cap dist
 
 *Step 10.* Start the servers
 {{{
-$ cap start
+$ cap -S dfs=kfs start
 }}}
 
 Now you sould be able to run the `~/hypertable/bin/hypertable` HQL command interpreter and start playing around.
@@ -71,5 +70,5 @@ Now you sould be able to run the `~/hypertable/bin/hypertable` HQL command inter
 ==Stopping the System==
 
 {{{
-$ cap stop
+$ cap -S dfs=kfs stop
 }}}
