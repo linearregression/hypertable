@@ -35,7 +35,13 @@ cd ~/src/kosmosfs/scripts
 python kfslaunch.py -f machines.cfg -s
 }}}
 
-*Step 6.* Configure Capistrano for your specific cluster and KFS.  See [DeployingHypertable How to Deploy Hypertable] for details.  The following is an example of how the variables at the top of the Capfile might be changed for KFS.
+*Step 6.* Make sure the servers are up
+{{{
+cd ~/src/kosmosfs/build/bin/tools
+./kfsping -m -s motherlode001 -p 20000
+}}}
+
+*Step 7.* Configure Capistrano for your specific cluster and KFS.  See [DeployingHypertable How to Deploy Hypertable] for details.  The following is an example of how the variables at the top of the Capfile might be changed for KFS.
 {{{
 ------------- Capfile ----------------
 set :source_machine, "motherlode000"
@@ -48,14 +54,14 @@ role :master, "motherlode001"
 role :slave,  "motherlode001", "motherlode002", "motherlode003", "motherlode004", "motherlode005", "motherlode006", "motherlode007", "motherlode008"
 }}}
 
-*Step 7.* Compile the Hypertable code and install under the installation directory (e.g. /data1/doug/hypertable)
+*Step 8.* Compile the Hypertable code and install under the installation directory (e.g. /data1/doug/hypertable)
 
-*Step 8.* Distribute the installation
+*Step 9.* Distribute the installation
 {{{
 $ cap dist
 }}}
 
-*Step 9.* Start the servers
+*Step 10.* Start the servers
 {{{
 $ cap start
 }}}
