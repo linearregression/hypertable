@@ -14,7 +14,7 @@ make
 make install
 }}}
 
-*Step 2.* Edit ~/src/kosmosfs/scripts/machines.cfg
+*Step 2.* Edit [http://www.hypertable.org/doc/kfs-machines.cfg ~/src/kosmosfs/scripts/machines.cfg]
 
 *Step 3.* Kill the servers
 {{{
