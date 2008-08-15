@@ -20,7 +20,8 @@ The example shown here is to upgrade from 0.9.0.0-alpha to 0.9.0.1-alpha. Adapt 
   # Tag the release:
 {{{
 git tag -a v0.9.0.1
-}}} Note, -a or -s is required for "git describe" used by the version mechanism in the build system)
+}}}
+Note, -a or -s is required for "git describe" used by the version mechanism in the build system)
   # Push the changes to official repository:
 {{{
 git push # optionally with an origin name
