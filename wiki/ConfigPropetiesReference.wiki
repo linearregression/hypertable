@@ -7,6 +7,7 @@
 || !HdfsBroker.fs.default.name || Hadoop Filesystem default name, same as fs.default.name property in Hadoop config (e.g. hdfs://localhost:9000) ||
 || !HdfsBroker.Workers || Number of HDFS broker worker threads created ||
 || !HdfsBroker.Reactors || Number of HDFS broker communication reactor threads created ||
+|| Kfs.Broker.Flush || Enable calls to KFS equivalent of fsync || false ||
 || Kfs.!MetaServer.Name || Hostname of Kosmos meta server ||
 || Kfs.!MetaServer.Port || Port number for Kosmos meta server ||
 || !DfsBroker.Local.Port || Port number on which to listen (read by !LocalBroker only) ||
