@@ -2,15 +2,17 @@
 The example shown here is to upgrade from 0.9.0.0-alpha to 0.9.0.1-alpha. Adapt accordingly.
 
   # Prepare for next release
-    * Update the CHANGES file with the list of changes for the release
-    * Modify the CMakeLists.txt file to include the new version number
+    * Update the `CHANGES` file with the list of changes for the release
+    * Modify the `CMakeLists.txt` file to include the new version number
     * Modify build.xml file to include the new version number
-    * Rename the hypertable jar file to the new release
+    * Rename the `lib/hypertable-$VERSION.jar` file to reflect the new release version
+
   # Test all changes in the 'next' branch
     * First get all changes into 'next'
     * Make sure the version number is correct (e.g. 0.9.0.1 here) in the top-level CMakeLists.txt
     * Make sure 'next' is identical to 'master', do a `git pull . master`
     * Make sure tests are passing in the 'next' branch
+
   # Pull the changes from 'next' into 'master'
   {{{
   git checkout master
