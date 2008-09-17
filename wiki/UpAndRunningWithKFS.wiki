@@ -26,7 +26,7 @@ python kfslaunch.py -f machines.cfg -S
 
 {{{
 cd ~/src/kosmosfs/scripts
-python kfssetup.py -f machines.cfg -b /opt/kfs
+python kfssetup.py -f machines.cfg -b /opt/kfs -u
 }}}
 
 *Step 5.* Launch the KFS servers
