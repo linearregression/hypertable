@@ -71,6 +71,7 @@ The following is a transcript of a shell session in which the test was run:
 [doug@motherlode000 ~]$ cd ~/tests/aol-metadata-split/
 [doug@motherlode000 aol-metadata-split]$ ./run.sh 
 }}}
+
   * [http://www.hypertable.org/doc/tests/aol-metadata-split/sample-output.txt Sample Output]
 
 
