@@ -56,7 +56,12 @@ The following is a transcript of a shell session in which the test was run:
   * [http://www.hypertable.org/doc/tests/aol-basic/sample-output.txt Sample Output]
 
 ==4. AOL Test: metadata split==
-This test can be found at `motherlode000:/home/doug/tests/aol-metadata-split`.  The test consists of the following files:
+This test can be found at `motherlode000:/home/doug/tests/aol-metadata-split`.  It is essentially the same test as the AOL basic test, except with the following lines added to the Hypertable config file:
+{{{
+Hypertable.Master.Gc.Interval=15
+Hypertable.RangeServer.Range.MetadataMaxBytes=8000
+}}}
+The test consists of the following files:
 
 all-no-timestamps.tsv
 
@@ -80,11 +85,3 @@ The following is a transcript of a shell session in which the test was run:
 }}}
 
   * [http://www.hypertable.org/doc/tests/aol-metadata-split/sample-output.txt Sample Output]
-
-
-  * Run AOL test with the following two lines added to the config file:
-  {{{
-  Hypertable.Master.Gc.Interval=15
-  Hypertable.RangeServer.Range.MetadataMaxBytes=8000
-  }}}
-  These tests should run to completion and the number of lines outputted with `select *` should match the number that were inserted.
