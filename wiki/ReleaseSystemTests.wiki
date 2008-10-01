@@ -47,7 +47,7 @@ Test project /Users/doug/build/hypertable/debug
 100% tests passed, 0 tests failed out of 27
 }}}
 
-  * rsclient regression test 10 times back-to-back
+==Regression test: rsclient 10 times back-to-back==
 {{{
   cd ~/hypertable/0.9.0.11
   cp ~/src/html/doc/tests/rsclient/hypertable.cfg conf
@@ -55,6 +55,13 @@ Test project /Users/doug/build/hypertable/debug
   cd ~/build/hypertable/debug/src/cc/Tools/rsclient
   make test; make test; make test; make test; make test; make test; make test; make test; make test; make test
 }}}
+The following file contains a shell transcript of this test run:
+  * sample-output.txt
+
+==AOL Test: basic==
+This test can be found on motherlode000 at motherlode000:/home/doug/tests/aol-basic.  
+
+==AOL Test: metadata split==
   * Run AOL test with single client 
   * Run AOL test with four simultaneous clients.
   * Run AOL test with the following two lines added to the config file:
