@@ -2,7 +2,7 @@
 
 The following tests must run and pass
 
-==Regression Tests==
+==Regression Test==
 These should run on as many systems as you can reasonably try them on. (e.g. CentOS 5 x86_64, mac OSX, FC6 i386, Ubuntu, Gentoo).  The following is a transcript of a shell session in which the regressions were run:
 {{{
 [doug@doug-judds-computer doug]$ cd ~/hypertable/0.9.0.11/
@@ -15,7 +15,7 @@ Successfully started Hypertable.RangeServer
 [doug@doug-judds-computer debug]$ make test
 }}}
   * [http://www.hypertable.org/doc/tests/regressions/sample-output.txt Sample Output]
-==Regression test: rsclient 10 times back-to-back==
+==Regression Test: rsclient 10 times back-to-back==
 {{{
   cd ~/hypertable/0.9.0.11
   cp ~/src/html/doc/tests/rsclient/hypertable.cfg conf
@@ -23,8 +23,7 @@ Successfully started Hypertable.RangeServer
   cd ~/build/hypertable/debug/src/cc/Tools/rsclient
   make test; make test; make test; make test; make test; make test; make test; make test; make test; make test
 }}}
-The following file contains a shell transcript of this test run:
-  * sample-output.txt
+  * [http://www.hypertable.org/doc/tests/regressions-rsclient/sample-output.txt Sample Output]
 
 ==AOL Test: basic==
 This test can be found on motherlode000 at motherlode000:/home/doug/tests/aol-basic.  
