@@ -1,6 +1,6 @@
 #summary Set of tests to run prior to giving the OK on any release
 
-==Regression Test==
+==1. Regression Test==
 These should run on as many systems as you can reasonably try them on. (e.g. CentOS 5 x86_64, mac OSX, FC6 i386, Ubuntu, Gentoo).  The following is a transcript of a shell session in which the regressions were run:
 {{{
 [doug@doug-judds-computer doug]$ cd ~/hypertable/0.9.0.11/
@@ -13,14 +13,14 @@ Successfully started Hypertable.RangeServer
 [doug@doug-judds-computer debug]$ make test
 }}}
   * [http://www.hypertable.org/doc/tests/regressions/sample-output.txt Sample Output]
-==Regression Test: rsclient 10 times back-to-back==
+==2. Regression Test: rsclient 10 times back-to-back==
 This test involves running the rsclient regression 10 times back-to-back with the following three lines added to the configuration file:
 {{{
 Hypertable.RangeServer.AccessGroup.MaxFiles=2
 Hypertable.RangeServer.AccessGroup.MergeFiles=2
 Hypertable.RangeServer.AccessGroup.MaxMemory=2M
 }}}
-The following is a transcript of a shell session in which the test was run.
+See [http://www.hypertable.org/doc/tests/regressions-rsclient/hypertable.cfg hypertable.cfg].  The following is a transcript of a shell session in which the test was run.
 {{{
   cd ~/hypertable/0.9.0.11
   cp ~/src/html/doc/tests/rsclient/hypertable.cfg conf
@@ -30,7 +30,7 @@ The following is a transcript of a shell session in which the test was run.
 }}}
   * [http://www.hypertable.org/doc/tests/regressions-rsclient/sample-output.txt Sample Output]
 
-==AOL Test: basic==
+==3. AOL Test: basic==
 This test can be found at `motherlode000:/home/doug/tests/aol-basic`.  The test consists of the following files:
 
 all-no-timestamps.tsv
@@ -55,7 +55,7 @@ The following is a transcript of a shell session in which the test was run:
 }}}
   * [http://www.hypertable.org/doc/tests/aol-basic/sample-output.txt Sample Output]
 
-==AOL Test: metadata split==
+==4. AOL Test: metadata split==
 This test can be found at `motherlode000:/home/doug/tests/aol-metadata-split`.  The test consists of the following files:
 
 all-no-timestamps.tsv
