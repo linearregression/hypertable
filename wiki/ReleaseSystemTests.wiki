@@ -14,6 +14,13 @@ Successfully started Hypertable.RangeServer
 }}}
   * [http://www.hypertable.org/doc/tests/regressions/sample-output.txt Sample Output]
 ==Regression Test: rsclient 10 times back-to-back==
+This test involves running the rsclient regression 10 times back-to-back with the following three lines added to the configuration file:
+{{{
+Hypertable.RangeServer.AccessGroup.MaxFiles=2
+Hypertable.RangeServer.AccessGroup.MergeFiles=2
+Hypertable.RangeServer.AccessGroup.MaxMemory=2M
+}}}
+The following is a transcript of a shell session in which the test was run.
 {{{
   cd ~/hypertable/0.9.0.11
   cp ~/src/html/doc/tests/rsclient/hypertable.cfg conf
@@ -81,9 +88,3 @@ The following is a transcript of a shell session in which the test was run:
   Hypertable.RangeServer.Range.MetadataMaxBytes=8000
   }}}
   These tests should run to completion and the number of lines outputted with `select *` should match the number that were inserted.
-  * Run the Tests/rsclient test 10 times with the following config properties
-  {{{
-  Hypertable.RangeServer.AccessGroup.MaxFiles=2
-  Hypertable.RangeServer.AccessGroup.MergeFiles=2
-  Hypertable.RangeServer.AccessGroup.MaxMemory=2M
-  }}}
