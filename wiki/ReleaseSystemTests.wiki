@@ -2,7 +2,15 @@
 
 The following tests must run and pass
 
-  * Run functional tests on CentOS 5 x86_64, mac OSX, FC6 i386, Ubuntu, Gentoo
+  * Regression tests (Run on as many different systems as possible, e.g.CentOS 5 x86_64, mac OSX, FC6 i386, Ubuntu, Gentoo)
+  * rsclient regression test 10 times back-to-back
+{{{
+  cd ~/hypertable/0.9.0.11
+  cp ~/src/html/doc/tests/rsclient/hypertable.cfg conf
+  ./bin/start-all-servers.sh local
+  cd ~/build/hypertable/debug/src/cc/Tools/rsclient
+  make test; make test; make test; make test; make test; make test; make test; make test; make test; make test
+}}}
   * Run AOL test with single client 
   * Run AOL test with four simultaneous clients.
   * Run AOL test with the following two lines added to the config file:
