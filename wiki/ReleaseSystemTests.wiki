@@ -1,7 +1,5 @@
 #summary Set of tests to run prior to giving the OK on any release
 
-The following tests must run and pass
-
 ==Regression Test==
 These should run on as many systems as you can reasonably try them on. (e.g. CentOS 5 x86_64, mac OSX, FC6 i386, Ubuntu, Gentoo).  The following is a transcript of a shell session in which the regressions were run:
 {{{
@@ -26,7 +24,15 @@ Successfully started Hypertable.RangeServer
   * [http://www.hypertable.org/doc/tests/regressions-rsclient/sample-output.txt Sample Output]
 
 ==AOL Test: basic==
-This test can be found on motherlode000 at motherlode000:/home/doug/tests/aol-basic.  
+This test can be found at `motherlode000:/home/doug/tests/aol-basic`.  The test consists of the following files:
+
+all-no-timestamps.tsv
+[http://www.hypertable.org/doc/tests/aol-basic/Capfile Capfile]
+[http://www.hypertable.org/doc/tests/aol-basic/count.golden count.golden]
+[http://www.hypertable.org/doc/tests/aol-basic/dump-query-log.hql dump-query-log.hql]
+[http://www.hypertable.org/doc/tests/aol-basic/load.hql load.hql]
+[http://www.hypertable.org/doc/tests/aol-basic/query-log-create.hql query-log-create.hql]
+[http://www.hypertable.org/doc/tests/aol-basic/run.sh run.sh]
 
 ==AOL Test: metadata split==
   * Run AOL test with single client 
