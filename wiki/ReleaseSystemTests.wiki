@@ -25,7 +25,7 @@ Successfully started Hypertable.RangeServer
 
 ==AOL Test: basic==
 This test can be found at `motherlode000:/home/doug/tests/aol-basic`.  The test consists of the following files:
-
+{{{
 all-no-timestamps.tsv
 [http://www.hypertable.org/doc/tests/aol-basic/Capfile Capfile]
 [http://www.hypertable.org/doc/tests/aol-basic/count.golden count.golden]
@@ -33,6 +33,7 @@ all-no-timestamps.tsv
 [http://www.hypertable.org/doc/tests/aol-basic/load.hql load.hql]
 [http://www.hypertable.org/doc/tests/aol-basic/query-log-create.hql query-log-create.hql]
 [http://www.hypertable.org/doc/tests/aol-basic/run.sh run.sh]
+}}}
 
 ==AOL Test: metadata split==
   * Run AOL test with single client 
