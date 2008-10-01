@@ -47,6 +47,11 @@ all-no-timestamps.tsv
 
 [http://www.hypertable.org/doc/tests/aol-basic/run.sh run.sh]
 
+This test assumes that the file `~/.hypertable_version` contains the version number of the release that is being tested (e.g. 0.9.0.11).  The Capfile should also be modified to contain the proper version number as well:
+{{{
+set :hypertable_version, "0.9.0.11"
+}}}
+
 The following is a transcript of a shell session in which the test was run:
 
 {{{
@@ -76,6 +81,11 @@ all-no-timestamps.tsv
 [http://www.hypertable.org/doc/tests/aol-metadata-split/query-log-create.hql query-log-create.hql]
 
 [http://www.hypertable.org/doc/tests/aol-metadata-split/run.sh run.sh]
+
+This test assumes that the file `~/.hypertable_version` contains the version number of the release that is being tested (e.g. 0.9.0.11).  The Capfile should also be modified to contain the proper version number as well:
+{{{
+set :hypertable_version, "0.9.0.11"
+}}}
 
 The following is a transcript of a shell session in which the test was run:
 
