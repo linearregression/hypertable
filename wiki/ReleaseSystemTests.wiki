@@ -2,7 +2,51 @@
 
 The following tests must run and pass
 
-  * Regression tests (Run on as many different systems as possible, e.g.CentOS 5 x86_64, mac OSX, FC6 i386, Ubuntu, Gentoo)
+==Regression tests==
+These should run on as many systems as you can reasonably try them on. (e.g. CentOS 5 x86_64, mac OSX, FC6 i386, Ubuntu, Gentoo).  The following is a transcript of a shell session in which the regressions were run:
+{{{
+[doug@doug-judds-computer doug]$ cd ~/hypertable/0.9.0.11/
+[doug@doug-judds-computer 0.9.0.11]$ ./bin/start-all-servers.sh local
+Successfully started DFSBroker (local)
+Successfully started Hyperspace
+Successfully started Hypertable.Master
+Successfully started Hypertable.RangeServer
+[doug@doug-judds-computer doug]$ cd ~/build/hypertable/debug/
+[doug@doug-judds-computer debug]$ make test
+Running tests...
+Start processing tests
+Test project /Users/doug/build/hypertable/debug
+  1/ 27 Testing Common-Exception                 Passed
+  2/ 27 Testing Common-Logging                   Passed
+  3/ 27 Testing Common-Serialization             Passed
+  4/ 27 Testing HyperComm                        Passed
+  5/ 27 Testing HyperComm-datagram               Passed
+  6/ 27 Testing HyperComm-timeout                Passed
+  7/ 27 Testing HyperComm-timer                  Passed
+  8/ 27 Testing HyperComm-reverse-request        Passed
+  9/ 27 Testing BerkeleyDbFilesystem             Passed
+ 10/ 27 Testing FileBlockCache                   Passed
+ 11/ 27 Testing CellStoreScanner                 Passed
+ 12/ 27 Testing Schema                           Passed
+ 13/ 27 Testing LocationCache                    Passed
+ 14/ 27 Testing LoadDataSource                   Passed
+ 15/ 27 Testing BlockCompressor-BMZ              Passed
+ 16/ 27 Testing BlockCompressor-LZO              Passed
+ 17/ 27 Testing BlockCompressor-NONE             Passed
+ 18/ 27 Testing BlockCompressor-QUICKLZ          Passed
+ 19/ 27 Testing BlockCompressor-ZLIB             Passed
+ 20/ 27 Testing CommitLog                        Passed
+ 21/ 27 Testing LargeInsert                      Passed
+ 22/ 27 Testing MetaLog-Master                   Passed
+ 23/ 27 Testing MetaLog-RangeServer              Passed
+ 24/ 27 Testing HyperDfsBroker                   Passed
+ 25/ 27 Testing Hyperspace                       Passed
+ 26/ 27 Testing hypertable                       Passed
+ 27/ 27 Testing RangeServer                      Passed
+
+100% tests passed, 0 tests failed out of 27
+}}}
+
   * rsclient regression test 10 times back-to-back
 {{{
   cd ~/hypertable/0.9.0.11
