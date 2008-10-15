@@ -135,6 +135,6 @@ foreach(Schema::ColumnFamily *cf, columns)
 }}}
   instead of:
 {{{
-for (vector<Schema::ColumnFamily *>::iterator it = columns.begin(); it != columns.end(); ++it)
+for (std::vector<Schema::ColumnFamily *>::iterator it = columns.begin(); it != columns.end(); ++it)
   do_something_to(*it);
 }}}
