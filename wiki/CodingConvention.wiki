@@ -32,7 +32,7 @@ namespace Hypertable {
 = Style =
   # Filename: `CamelCase.h` and `CamelCase.cc` for C++ source; `lower-case.h` and `lower-case.c` for C source.
   # Namespace, class and type identifiers: use `CamelCase`, e.g.: `Hypertable::TableIdentifier` (Exceptions: use `lower_case` for boost::spirit parser action functors as recommended by the spirit documentation.) Use `CamelCaseT` for template arguments. e.g.: `template <typename TypeFamilyT>`.
-  # Function/method, variable identifiers: use `lower_case`. private member variable is prefixed with `m_` (ms_ for static members), e.g.: `m_table`. Variable naming should focus on semantics and try to avoid type annotations (like somethingp, something_ptr etc.) except for special cases like pointer arithmetic code (e.g., `void *buf` and `uint8_t **bufp` in serialization code). Let language syntax and compiler take care of types.
+  # Function/method, variable identifiers: use `lower_case`. private member variable is prefixed with `m_` (`ms_` for static members), e.g.: `m_table`. Variable naming should focus on semantics and try to avoid type annotations (like somethingp, something_ptr etc.) except for special cases like pointer arithmetic code (e.g., `void *buf` and `uint8_t **bufp` in serialization code). Let language syntax and compiler take care of types.
   # Constants, enums, macros: use `UPPER_CASE`
   # Indentation: 2 spaces per level. 4 spaces (or more for alignment) for line continuation. [http://www.jwz.org/doc/tabs-vs-spaces.html No tabs allowed].
     * Emacs: put the following in your .emacs
