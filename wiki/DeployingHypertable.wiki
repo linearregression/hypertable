@@ -1,10 +1,5 @@
 #summary How to Deploy Hypertable
 <wiki:toc/>
-== Contents ==
-
-  * Introduction
-  * Deploying with Capistrano
-  * Launch Scripts
 
 == Introduction ==
 
