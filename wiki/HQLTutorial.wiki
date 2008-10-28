@@ -3,7 +3,7 @@
 _This walk through was written using a pre-release version of hypertable -- you may see small variations in output from the current release._
 <wiki:toc/>
 
-===SETUP===
+==SETUP==
 
 For this example you'll need to download the data from [http://hypertable.googlecode.com/files/access.tsv.gz] and run:
 
@@ -72,7 +72,7 @@ the preceeding list.
 
 }}}
 
-===INTERACTIVE HYPERTABLE & HQL===
+==INTERACTIVE HYPERTABLE & HQL==
 
 For this example we're working with a simplified access log that contains four columns: a `date` field, the referrer's url 'refer-url', an http code 'http-code', and a field we'll call 'rowkey' -- actually a url from one of the hosts we serve. There are 100,000 records in the file. 
 
@@ -122,7 +122,7 @@ hypertable> describe table Pages;
 
 }}}
 
-===LOAD DATA INFILE===
+==LOAD DATA INFILE==
 
 Now, let's load some data using the MySQL-like TAB delimited format (TSV). For that, we assume you have the example data in `examples/hql_tutorial/access.tsv`. This format includes a single header line that gives `column_family_names` (no `column_qualifiers` supported for this format yet). For the example, our data file has header:
 
@@ -137,7 +137,7 @@ www.zvents.com/search   2008-01-25 15:19:32     www.zvents.com/search   200
 
 _Reminder: you'll need to unzip it first if it's still compressed._
 
-====LOAD DATA INFILE (INTO TABLE)====
+===LOAD DATA INFILE (INTO TABLE)===
 
 So, now we load it into our Pages table -- notice that we are specifying a column present in the data file ('rowkey') that's not in our schema. We can specify any field name present in the data for the ROW_KEY_COLUMN option.
 
@@ -161,7 +161,7 @@ Avg value size:  18.68 bytes
 
 }}}
 
-====LOAD DATA INFILE (INTO FILE)====
+===LOAD DATA INFILE (INTO FILE)===
 
 Also, make sure you don't skip over an important utility for converting these more standard formatted files into insert files used by hypertable client programs:
 
@@ -199,7 +199,7 @@ calendar.denverpost.com/search  refer-url       calendar.denverpost.com/search
 calendar.denverpost.com/search  http-code       200
 }}}
 
-===SELECT===
+==SELECT==
 
 In the examples that follow I'm using the options spec DISPLAY_TIMESTAMPS at the end of each select but that's entirely optional and you can omit them from most of the examples (except where you want to see them in the output) -- here's a minimal SELECT:
 
@@ -281,7 +281,7 @@ hypertable> select "refer-url" from Pages where "www.zvents.com/events/buy_ticke
 
 You can type "help select" in the hypertable command shell to see the full syntax of "select".
 
-===INSERT & DELETE===
+==INSERT & DELETE==
 
 Though it's unlikely to be needed in interactive mode let's do a quick demonstration of `INSERT`. The key to remember is that hypertable data is versioned by time stamp and that you can either set the time stamp on insert or accept the default based on your current system time. Delete operations also have a time stamp and the delete operates on all data occurring at the time stamp or *_before_*.
 
@@ -319,7 +319,7 @@ delete: row='www.hypertable.org' family=0 ts=2146031999000000001
 hypertable> select * from Pages where ROW = "www.hypertable.org";
 }}}
 
-===SHOW TABLES & DROP TABLE===
+==SHOW TABLES & DROP TABLE==
 
 Now, we want to get rid of our table so we'll use DROP TABLE to do that -- first verify the tables we have, then drop, then verify that they are gone after the command:
 
@@ -334,7 +334,7 @@ METADATA
 
 The name of the table is case insensitive. 
 
-===BATCH MODE AND SOURCE===
+==BATCH MODE AND SOURCE==
 
 After killing the servers via `kill-servers.sh` your tables and data are no longer available (for the initial alpha release, even though the data is persisted on disk, as the logic to restart the servers is tied with server failover/recovery, which is not yet complete until the beta release. The replicated commit logs in hypertable is designed prevent data loss in the event of hardware failure).  To load your tables and other data back to the system, run the system in batch mode or use `SOURCE` from an interactive console. First, run `kill-servers.sh` and `start-all-servers.sh`:
 
