@@ -1,4 +1,5 @@
 #summary Coding conventions for the project
+<wiki:toc/>
 
 = Introduction =
 
