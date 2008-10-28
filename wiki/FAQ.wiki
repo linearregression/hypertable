@@ -1,6 +1,5 @@
 #summary Frequently Asked Questions about Hypertable
 <wiki:toc/>
-=FAQ=
 
 ==What is Hypertable?==
 Hypertable is a high performance, scalable, distributed storage and processing system for structured and unstructured data. It is designed to manage the storage and processing of information on a large cluster of commodity servers, providing resilience to machine and component failures.
