@@ -1,6 +1,6 @@
 #summary Design of range meta-operation transactions
 #labels Phase-Design
-
+<wiki:toc/>
 == Introduction ==
 
 Ranges are assigned and re-assigned to !RangeServers by the following operations:
