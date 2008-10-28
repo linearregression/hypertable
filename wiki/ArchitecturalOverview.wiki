@@ -2,12 +2,7 @@
 
 == Contents ==
 
-  * Introduction
-  * Data Model
-  * Physical Data Layout
-  * System Components
-  * C++ Client API
-  * Source Code Overview
+<wiki:toc/>
 
 == Introduction ==
 
