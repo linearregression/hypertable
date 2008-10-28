@@ -1,5 +1,5 @@
 #summary Frequently Asked Questions about Hypertable
-
+<wiki:toc/>
 =FAQ=
 
 ==What is Hypertable?==
