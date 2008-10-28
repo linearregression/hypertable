@@ -1,17 +1,7 @@
 #summary A brief introduction to Hypertable Query Language (HQL)
 
 _This walk through was written using a pre-release version of hypertable -- you may see small variations in output from the current release._
-
-==CONTENTS==
-
-  * SETUP
-  * INTERACTIVE HYPERTABLE & HQL
-  * CREATE TABLE
-  * LOAD DATA INFILE
-  * SELECT
-  * INSERT & DELETE
-  * SHOW TABLES & DROP TABLE
-  * BATCH MODE AND SOURCE
+<wiki:toc/>
 
 ===SETUP===
 
