@@ -31,7 +31,7 @@ The query log was sorted by timestamp. Each line of the query log could generate
 
   * 1 1.8GHz Dual-core Opteron Processor 2210
   * 4 GB RAM
-  * 4 7200 RPM SATA drives (mounted JBOD)
+  * 4 7200 RPM SATA drives (mounted JBOD, 3 were used for [http://hadoop.apache.org/core/docs/current/hdfs_design.html HDFS] data partitions)
 
 ==Insert Test==
 *_
