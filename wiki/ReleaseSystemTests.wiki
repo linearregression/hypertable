@@ -1,5 +1,5 @@
 #summary Set of tests to run prior to giving the OK on any release
-
+<wiki:toc/>
 ==1. Regression Test==
 These should run on as many systems as you can reasonably try them on. (e.g. CentOS 5 x86_64, mac OSX, FC6 i386, Ubuntu, Gentoo).  The following is a transcript of a shell session in which the regressions were run:
 {{{
