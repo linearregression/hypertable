@@ -1,5 +1,5 @@
 #summary API description of Hyperspace, a Chubby-like service
-
+<wiki:toc/>
 = Introduction =
 
 To provide some level of high availability, Hypertable needs something
