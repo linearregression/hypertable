@@ -1,5 +1,5 @@
 #summary Design overview for Range Server recovery
-
+<wiki:toc/>
 == Introduction ==
 
 When a Range Server goes down, all of the ranges that it manages need to get re-assigned to other range servers.  This is performed by the Master.  This document describes the process.
