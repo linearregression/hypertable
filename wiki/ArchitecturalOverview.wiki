@@ -1,7 +1,5 @@
 #summary Overview of Hypertable Architecture
 
-== Contents ==
-
 <wiki:toc/>
 
 == Introduction ==
