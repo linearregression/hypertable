@@ -1,5 +1,5 @@
 #summary How to Deploy Hypertable
-
+<wiki:toc/>
 == Contents ==
 
   * Introduction
