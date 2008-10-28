@@ -2,6 +2,8 @@
 
 This document contains an ongoing benchmark of Hypertable, comparing the performance of the system run on top of KFS and HDFS.
 
+<wiki:toc/>
+
 ==Small Insert Test==
 
 ===Machine Profile===
