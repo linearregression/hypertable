@@ -1,32 +1,5 @@
 #summary Design,rationale and usage information for the MapReduce support for Hypertable
-
-1. [#Introduction Introduction]
-
-2. [#Design Design information]
-
- 2.1 [#Outline Outline]
-
- 2.2 [#TableInputFormat TableInputFormat]
- 
- 2.3 [#Context Task context]
-
-3. [#Compilation Compiling MapReduce support]
-
- 3.1 [#Prerequisites Prerequisites]
- 
- 3.2 [#Building_Hadoop Building Hadoop]
-
- 3.3 [#Building_Hypertable Building MapReduce support]
-
-4. [#Running_MapReduce Running example MapReduce task]
-
-  4.1 [#Table_Creation Sample table creation]
-
-  4.2 [#Configure_MapReduce_job Configure MapReduce job]
-
-  4.3 [#Run_Job Run the job]
-
-5. [#Configuration_Options Configuration options reference]
+<wiki:toc/>
 
 = Introduction =
 
