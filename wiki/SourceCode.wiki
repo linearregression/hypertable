@@ -1,6 +1,6 @@
 #summary How to obtain latest source code
-
-== Get the Hypertable source code ==
+<wiki:toc/>
+= Get the Hypertable source code =
 
 We're using the [http://git.or.cz/ git] version control system to manage the source code for this project.  To obtain a local copy of the repository, install the latest version of git (at least 1.5.3.7) and then issue the following commands:
 {{{
@@ -23,9 +23,9 @@ git pull
 
 }}}
 
-== Become a contributor ==
+= Become a contributor =
 
-There are a few options to contribute to the project. Email patches always work (see the documentation by git send-email --help). Regular contributor might find a public repository helpful. Both repo.or.cz and github.com works, the following instruction is for github.com:
+There are a few options to contribute to the project. Email patches always work (see the documentation by git send-email --help). Regular contributor might find a public repository hosting service helpful. For example, repo.or.cz, unfuddle.com and github.com all offer free git hosting, enough for hypertable. The following instruction is for github.com (as it's the easiest to fork a project):
 
   # Create an account on github.com (just follow the easy instructions :)
   # Goto http://github.com/nuggetwheat/hypertable/tree and click the fork button besides the project name.
@@ -39,7 +39,7 @@ git remote add github <your_push_url>
 {{{
 git push github topic/name
 }}}
-  # Tell us about your repo: http://github.com/<your_user_name>/hypertable/tree
+  # Tell everyone about your repo: `http://github.com/<your_user_name>/hypertable/tree`
 
-== Browse the wiki (documentation) source and history ==
+= Browse the wiki (documentation) source and history =
 http://code.google.com/p/hypertable/source/browse/wiki
