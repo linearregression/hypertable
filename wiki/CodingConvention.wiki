@@ -38,7 +38,7 @@ namespace Hypertable {
   # Indentation: 2 spaces per level. 4 spaces (or more for alignment) for line continuation. [http://www.jwz.org/doc/tabs-vs-spaces.html No tabs allowed].
     * Emacs: put the following at the *end* of your .emacs
 {{{
-(setq indent-tabs-mode nil)
+(setq-default indent-tabs-mode nil)
 (setq c-basic-offset 2)
 }}}
     * Vim: put the following in your .vimrc
