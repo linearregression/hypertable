@@ -139,7 +139,7 @@ Test 1 FAILED.
 Test 2 PASSED.
 }}}
 
-This is OK because the number of cells inserted ended up being more than expected.  The reason that this sometimes happens is that 
+This is OK because the number of cells inserted ended up being more than expected.  The reason that this sometimes happens is that the loading process sends over a batch of updates that gets successfully inserted and the range server crashes before sending back the acknowledgment.  The loader will continue to retry the batch of updates and when the range server comes back up, it will receive the batch of updates for the second time, insert them (again) and then acknowledge, resulting in a double insert of the batch.
 
 The test consists of the following files:
 
