@@ -121,14 +121,22 @@ set :hypertable_version, "0.9.0.11"
 This test can be found at `motherlode000:/home/doug/tests/split-recovery`.  It runs the following three tests:
 
   # Loads 'query-log' table with data, shuts down the servers, starts them up again, and then dumps out the 'query-log' table.
-  # Loads 'query-log' table with data, but using this hypertable.cfg file and with the RangeServer supplied with the --crash-test=split-1:0 argument causing it to crash after the first phase of a split.  The RangeServer is immediately restarted which causes the load to continue.  After all of the data is loaded, the table is dumped.
-  # Loads 'query-log' table with data, but using this hypertable.cfg file and with the RangeServer supplied with the --crash-test=split-2:0 argument causing it to crash after the first phase of a split.  The RangeServer is immediately restarted which causes the load to continue.  After all of the data is loaded, the table is dumped.
+  # Loads 'query-log' table with data, but using this hypertable.cfg file and with the RangeServer supplied with the `--crash-test=split-1:0` argument causing it to crash after the first phase of a split.  The !RangeServer is immediately restarted which causes the load to continue.  After all of the data is loaded, the table is dumped.
+  # Loads 'query-log' table with data, but using this hypertable.cfg file and with the RangeServer supplied with the `--crash-test=split-2:0` argument causing it to crash after the second phase of a split.  The !RangeServer is immediately restarted which causes the load to continue.  After all of the data is loaded, the table is dumped.
 
+Sometimes this test will fail with output that looks something like the following:
 
+{{{
+Test 0 PASSED.
+Test 1 FAILED.
+1c1
+< 3075313
+---
+> 3063834
+Test 2 PASSED.
+}}}
 
-  It runs the random_read_test and random_write_test benchmark programs.  Since the output is not deterministic, you need to just eyeball it to make sure it passed.  Here is an example of the expected output:
-
-  * [http://www.hypertable.org/doc/tests/random/sample.output Sample Output]
+This is OK because the number of cells inserted ended up being more than expected.  The reason that this sometimes happens is that 
 
 The test consists of the following files:
 
