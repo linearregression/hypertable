@@ -143,13 +143,21 @@ This is OK because the number of cells inserted ended up being more than expecte
 
 The test consists of the following files:
 
-[http://www.hypertable.org/doc/tests/random/Capfile Capfile]
+[http://www.hypertable.org/doc/tests/split-recovery/Capfile Capfile]
 
-[http://www.hypertable.org/doc/tests/random/random-test-create-table.hql random-test-create-table.hql]
+[http://www.hypertable.org/doc/tests/split-recovery/count.golden count.golden]
 
-[http://www.hypertable.org/doc/tests/random/random-test-create-table-memory.hql random-test-create-table-memory.hql]
+[http://www.hypertable.org/doc/tests/split-recovery/dump-query-log.hql dump-query-log.hql]
 
-[http://www.hypertable.org/doc/tests/random/run.sh run.sh]
+[http://www.hypertable.org/doc/tests/split-recovery/hypertable.cfg hypertable.cfg]
+
+[http://www.hypertable.org/doc/tests/split-recovery/load.hql load.hql]
+
+[http://www.hypertable.org/doc/tests/split-recovery/query-log-create.hql query-log-create.hql]
+
+[http://www.hypertable.org/doc/tests/split-recovery/rangeserver-launcher.sh rangeserver-launcher.sh]
+
+[http://www.hypertable.org/doc/tests/split-recovery/run.sh run.sh]
 
 This test assumes that the file `~/.hypertable_version` contains the version number of the release that is being tested (e.g. 0.9.0.11).  The Capfile should also be modified to contain the proper version number as well:
 {{{
