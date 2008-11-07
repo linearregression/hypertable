@@ -121,12 +121,15 @@ set :hypertable_version, "0.9.0.11"
 This test can be found at `motherlode000:/home/doug/tests/split-recovery`.  It runs the following three tests:
 
   # Loads 'query-log' table with data, shuts down the servers, starts them up again, and then dumps out the 'query-log' table.
-  # Loads 'query-log' table with data, but using this hypertable.cfg file and with the RangeServer supplied with the `--crash-test=split-1:0` argument causing it to crash after the first phase of a split.  The !RangeServer is immediately restarted which causes the load to continue.  After all of the data is loaded, the table is dumped.
-  # Loads 'query-log' table with data, but using this hypertable.cfg file and with the RangeServer supplied with the `--crash-test=split-2:0` argument causing it to crash after the second phase of a split.  The !RangeServer is immediately restarted which causes the load to continue.  After all of the data is loaded, the table is dumped.
+  # Loads 'query-log' table with data, but using this hypertable.cfg file and with the !RangeServer supplied with the `--crash-test=split-1:0` argument causing it to crash after the first phase of a split.  The !RangeServer is immediately restarted which causes the load to continue.  After all of the data is loaded, the table is dumped.
+  # Loads 'query-log' table with data, but using this hypertable.cfg file and with the !RangeServer supplied with the `--crash-test=split-2:0` argument causing it to crash after the second phase of a split.  The !RangeServer is immediately restarted which causes the load to continue.  After all of the data is loaded, the table is dumped.
 
 Sometimes this test will fail with output that looks something like the following:
 
 {{{
+
+**** TEST REPORT ****
+
 Test 0 PASSED.
 Test 1 FAILED.
 1c1
