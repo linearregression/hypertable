@@ -115,3 +115,32 @@ This test assumes that the file `~/.hypertable_version` contains the version num
 {{{
 set :hypertable_version, "0.9.0.11"
 }}}
+
+
+==6. Split Recovery==
+This test can be found at `motherlode000:/home/doug/tests/split-recovery`.  It runs the following three tests:
+
+  # Loads 'query-log' table with data, shuts down the servers, starts them up again, and then dumps out the 'query-log' table.
+  # Loads 'query-log' table with data, but using this hypertable.cfg file and with the RangeServer supplied with the --crash-test=split-1:0 argument causing it to crash after the first phase of a split.  The RangeServer is immediately restarted which causes the load to continue.  After all of the data is loaded, the table is dumped.
+  # Loads 'query-log' table with data, but using this hypertable.cfg file and with the RangeServer supplied with the --crash-test=split-2:0 argument causing it to crash after the first phase of a split.  The RangeServer is immediately restarted which causes the load to continue.  After all of the data is loaded, the table is dumped.
+
+
+
+  It runs the random_read_test and random_write_test benchmark programs.  Since the output is not deterministic, you need to just eyeball it to make sure it passed.  Here is an example of the expected output:
+
+  * [http://www.hypertable.org/doc/tests/random/sample.output Sample Output]
+
+The test consists of the following files:
+
+[http://www.hypertable.org/doc/tests/random/Capfile Capfile]
+
+[http://www.hypertable.org/doc/tests/random/random-test-create-table.hql random-test-create-table.hql]
+
+[http://www.hypertable.org/doc/tests/random/random-test-create-table-memory.hql random-test-create-table-memory.hql]
+
+[http://www.hypertable.org/doc/tests/random/run.sh run.sh]
+
+This test assumes that the file `~/.hypertable_version` contains the version number of the release that is being tested (e.g. 0.9.0.11).  The Capfile should also be modified to contain the proper version number as well:
+{{{
+set :hypertable_version, "0.9.0.11"
+}}}
