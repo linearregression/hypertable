@@ -4,3 +4,11 @@
 
 || *Item* || *Owner* || *Estimate (days)* || *Status* ||
 || Comm Layer Upgrade || doug || 7 || in progress ||
+|| Request Throttling || doug || 10 || tbd ||
+|| Load Balancing || doug || ? || tbd ||
+|| Query Cache || ? || ? || tbd ||
+|| Bloom Filter || naveen || ? || almost complete ||
+|| RangeServer Recovery || doug || ? || tbd ||
+
+
+== 1.1 ==
