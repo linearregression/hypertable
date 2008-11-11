@@ -6,6 +6,7 @@
 || Comm Layer Upgrade || 5 || doug || 7 || in progress ||
 || Bloom Filter || 77 || naveen || ? || almost complete ||
 || Thrift Broker || 53 || luke || ? || almost complete ||
+|| Master !MetaLog Library || ? || luke || ? || in progress ||
 || !RangeServer Recovery || 79,168 || doug || ? || tbd ||
 || Shorter !CellStore Filenames || 11 || luke || ? || tbd ||
 || Change Client::create_table schema syntax || 167 || sanjit || ?? || tbd ||
