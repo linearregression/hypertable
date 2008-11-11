@@ -3,7 +3,7 @@
 == 0.9.2.0 (beta) ==
 
 || *Item* || *Issue(s)* || *Owner* || *Estimate (days)* || *Status* ||
-|| Comm Layer Upgrade || 5 || doug || 7 || in progress ||
+|| Comm Layer Upgrade || 5 || doug || 5 || in progress ||
 || Bloom Filter || 77 || naveen || ? || almost complete ||
 || Thrift Broker || 53 || luke || ? || almost complete ||
 || Master !MetaLog Library || ? || luke || ? || in progress ||
