@@ -5,7 +5,7 @@
 || *Item* || *Issue(s)* || *Owner* || *Estimate (days)* || *Status* ||
 || Comm Layer Upgrade || 5 || doug || 3 || in progress ||
 || Table paths in DFS should be formed with ID, not name || 174 || doug || 3 || tbd ||
-|| Bloom Filter || 77 || naveen || ? || almost complete ||
+|| Bloom Filter || 77 || naveen || 2 || almost complete ||
 || Thrift Broker || 53 || luke || 1 || almost complete ||
 || Master !MetaLog Library || ? || luke || 3 || in progress ||
 || !RangeServer Recovery || 79,168 || doug || 30 || tbd ||
