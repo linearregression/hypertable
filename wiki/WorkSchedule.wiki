@@ -2,15 +2,18 @@
 
 == 0.9.2.0 (beta) ==
 
-|| *Item* || *Owner* || *Estimate (days)* || *Status* ||
-|| Comm Layer Upgrade || doug || 7 || in progress ||
-|| Request Throttling || doug || 10 || tbd ||
-|| Load Balancing || doug || ? || tbd ||
-|| Query Cache || ? || ? || tbd ||
-|| Bloom Filter || naveen || ? || almost complete ||
-|| RangeServer Recovery || doug || ? || tbd ||
-|| Thrift Broker || luke || ? || tbd ||
-|| Highly Available Hyperspace || ? || ? || tbd ||
+|| *Item* || *Issue* || *Owner* || *Estimate (days)* || *Status* ||
+|| Comm Layer Upgrade || 5 || doug || 7 || in progress ||
+|| Request Throttling || 84 || doug || 10 || tbd ||
+|| Query Cache || 76 || ? || ? || tbd ||
+|| Bloom Filter || 77 || naveen || ? || almost complete ||
+|| RangeServer Recovery || ? || doug || ? || tbd ||
+|| Thrift Broker || 53 || luke || ? || tbd ||
+|| Highly Available Hyperspace || 7 || ? || ? || tbd ||
+|| Shorter CellStore Filenames || 11 || luke || ? || tbd ||
 
 
 == 1.1 ==
+
+|| *Item* || *Issue* || *Owner* || *Estimate (days)* || *Status* ||
+|| Load Balancing || 80 || doug || ? || tbd ||
