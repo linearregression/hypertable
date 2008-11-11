@@ -13,8 +13,12 @@
 || Shorter !CellStore Filenames || 11 || luke || ? || tbd ||
 || Memory Tracking / Better Compaction scheduler || 83,100 || doug || ? || tbd ||
 
+== 1.0 ==
+
+|| *Item* || *Issue* || *Owner* || *Estimate (days)* || *Status* ||
+|| RPM Builds || 109 || ? || ? || tbd ||
 
 == 1.1 ==
 
 || *Item* || *Issue* || *Owner* || *Estimate (days)* || *Status* ||
-|| Load Balancing || 80 || doug || ? || tbd ||
+|| Load Balancing || 80 || ? || ? || tbd ||
