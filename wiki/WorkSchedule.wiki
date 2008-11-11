@@ -4,19 +4,18 @@
 
 || *Item* || *Issue(s)* || *Owner* || *Estimate (days)* || *Status* ||
 || Comm Layer Upgrade || 5 || doug || 7 || in progress ||
-|| Request Throttling || 84 || doug || 10 || tbd ||
-|| Query Cache || 76 || ? || ? || tbd ||
 || Bloom Filter || 77 || naveen || ? || almost complete ||
-|| !RangeServer Recovery || 79,168 || doug || ? || tbd ||
 || Thrift Broker || 53 || luke || ? || almost complete ||
-|| Highly Available Hyperspace || 7 || ? || ? || tbd ||
+|| !RangeServer Recovery || 79,168 || doug || ? || tbd ||
 || Shorter !CellStore Filenames || 11 || luke || ? || tbd ||
-|| Memory Tracking / Better Compaction scheduler || 83,100,132 || doug || ? || tbd ||
-|| Add !StaticBufferPtr class || 111 || doug || ?? || tbd ||
 || Change Client::create_table schema syntax || 167 || sanjit || ?? || tbd ||
 || Port hyperspace interpreter to !CommandShell || 87 || sanjit || ?? || tbd ||
 || Add cwd tracking to !CommandShell || 172 || sanjit || ?? || tbd ||
 || Add ls -R command to hyperspace command interpreter || ? || sanjit || ?? || tbd ||
+|| Memory Tracking / Better Compaction scheduler || 83,100,132 || doug || ? || tbd ||
+|| Add !StaticBufferPtr class || 111 || doug || ?? || tbd ||
+|| Request Throttling || 84 || doug || 10 || tbd ||
+|| Query Cache || 76 || ? || ? || tbd ||
 
 
 == 1.0 ==
@@ -29,3 +28,4 @@
 
 || *Item* || *Issue* || *Owner* || *Estimate (days)* || *Status* ||
 || Load Balancing || 80 || ? || ? || tbd ||
+|| Highly Available Hyperspace || 7 || doug || ? || tbd ||
