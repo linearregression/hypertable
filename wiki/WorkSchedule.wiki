@@ -7,14 +7,14 @@
 || Bloom Filter || 77 || naveen || ? || almost complete ||
 || Thrift Broker || 53 || luke || ? || almost complete ||
 || Master !MetaLog Library || ? || luke || ? || in progress ||
-|| !RangeServer Recovery || 79,168 || doug || ? || tbd ||
+|| !RangeServer Recovery || 79,168 || doug || 30 || tbd ||
 || Shorter !CellStore Filenames || 11 || luke || ? || tbd ||
 || Change Client::create_table schema syntax || 167 || sanjit || ?? || tbd ||
 || Port hyperspace interpreter to !CommandShell || 87 || sanjit || ?? || tbd ||
 || Add cwd tracking to !CommandShell || 172 || sanjit || ?? || tbd ||
 || Add ls -R command to hyperspace command interpreter || 173 || sanjit || ?? || tbd ||
-|| Memory Tracking / Better Compaction scheduler || 83,100,132 || doug || ? || tbd ||
-|| Highly Available Hyperspace || 7 || doug || 30 || tbd ||
+|| Memory Tracking / Better Compaction scheduler || 83,100,132 || doug || 5 || tbd ||
+|| Highly Available Hyperspace || 7 || sanjit || 30 || tbd ||
 || Add !StaticBufferPtr class || 111 || doug || ?? || tbd ||
 || Request Throttling || 84 || doug || 10 || tbd ||
 || Query Cache || 76 || sanjit || ? || tbd ||
