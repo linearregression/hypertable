@@ -2,7 +2,7 @@
 
 == 0.9.2.0 (beta) ==
 
-|| *Item* || *Issue* || *Owner* || *Estimate (days)* || *Status* ||
+|| *Item* || *Issue(s)* || *Owner* || *Estimate (days)* || *Status* ||
 || Comm Layer Upgrade || 5 || doug || 7 || in progress ||
 || Request Throttling || 84 || doug || 10 || tbd ||
 || Query Cache || 76 || ? || ? || tbd ||
