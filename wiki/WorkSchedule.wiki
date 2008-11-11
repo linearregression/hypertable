@@ -7,10 +7,10 @@
 || Request Throttling || 84 || doug || 10 || tbd ||
 || Query Cache || 76 || ? || ? || tbd ||
 || Bloom Filter || 77 || naveen || ? || almost complete ||
-|| RangeServer Recovery || ? || doug || ? || tbd ||
+|| !RangeServer Recovery || 79 || doug || ? || tbd ||
 || Thrift Broker || 53 || luke || ? || tbd ||
 || Highly Available Hyperspace || 7 || ? || ? || tbd ||
-|| Shorter CellStore Filenames || 11 || luke || ? || tbd ||
+|| Shorter !CellStore Filenames || 11 || luke || ? || tbd ||
 || Memory Tracking / Better Compaction scheduler || ? || doug || ? || tbd ||
 
 
