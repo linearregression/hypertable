@@ -9,7 +9,7 @@
 || Master !MetaLog Library || ? || luke || ? || in progress ||
 || !RangeServer Recovery || 79,168 || doug || 30 || tbd ||
 || Shorter !CellStore Filenames || 11 || luke || ? || tbd ||
-|| Improve hyperspace CLI for better diagnostic support || 87-172-173 || sanjit || ?? || tbd ||
+|| Improve hyperspace CLI for better diagnostic support || 87-172-173 || sanjit || 15 || tbd ||
 || Memory Tracking / Better Compaction scheduler || 83-100-132 || doug || 5 || tbd ||
 || Highly Available Hyperspace || 7 || sanjit || 30 || tbd ||
 || Add !StaticBufferPtr class || 111 || doug || ?? || tbd ||
