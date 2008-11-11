@@ -16,6 +16,7 @@
 || Add !StaticBufferPtr class || 111 || doug || ?? || tbd ||
 || Request Throttling || 84 || doug || 10 || tbd ||
 || Query Cache || 76 || sanjit || 15 || tbd ||
+|| Table paths in DFS should be formed with ID, not name || 174 || doug || 5 || tbd ||
 
 
 == 1.0 ==
