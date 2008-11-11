@@ -27,5 +27,5 @@
 == 1.1 ==
 
 || *Item* || *Issue* || *Owner* || *Estimate (days)* || *Status* ||
-|| Load Balancing || 80 || ? || ? || tbd ||
-|| Highly Available Hyperspace || 7 || doug || ? || tbd ||
+|| Load Balancing || 80 || ? || 30 || tbd ||
+|| Highly Available Hyperspace || 7 || doug || 30 || tbd ||
