@@ -9,6 +9,8 @@
 || Query Cache || ? || ? || tbd ||
 || Bloom Filter || naveen || ? || almost complete ||
 || RangeServer Recovery || doug || ? || tbd ||
+|| Thrift Broker || luke || ? || tbd ||
+|| Highly Available Hyperspace || ? || ? || tbd ||
 
 
 == 1.1 ==
