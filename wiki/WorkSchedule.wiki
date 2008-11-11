@@ -12,7 +12,7 @@
 || Highly Available Hyperspace || 7 || ? || ? || tbd ||
 || Shorter !CellStore Filenames || 11 || luke || ? || tbd ||
 || Memory Tracking / Better Compaction scheduler || 83,100,132 || doug || ? || tbd ||
-|| Add StaticBufferPtr class || 111 || doug || ?? || tbd ||
+|| Add !StaticBufferPtr class || 111 || doug || ?? || tbd ||
 
 == 1.0 ==
 
