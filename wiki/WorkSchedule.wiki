@@ -15,7 +15,7 @@
 || Memory Tracking / Better Compaction scheduler || 83,100,132 || doug || ? || tbd ||
 || Add !StaticBufferPtr class || 111 || doug || ?? || tbd ||
 || Request Throttling || 84 || doug || 10 || tbd ||
-|| Query Cache || 76 || ? || ? || tbd ||
+|| Query Cache || 76 || sanjit || ? || tbd ||
 
 
 == 1.0 ==
