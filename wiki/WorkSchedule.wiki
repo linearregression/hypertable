@@ -7,12 +7,13 @@
 || Request Throttling || 84 || doug || 10 || tbd ||
 || Query Cache || 76 || ? || ? || tbd ||
 || Bloom Filter || 77 || naveen || ? || almost complete ||
-|| !RangeServer Recovery || 79,165 || doug || ? || tbd ||
+|| !RangeServer Recovery || 79,168 || doug || ? || tbd ||
 || Thrift Broker || 53 || luke || ? || almost complete ||
 || Highly Available Hyperspace || 7 || ? || ? || tbd ||
 || Shorter !CellStore Filenames || 11 || luke || ? || tbd ||
 || Memory Tracking / Better Compaction scheduler || 83,100,132 || doug || ? || tbd ||
 || Add !StaticBufferPtr class || 111 || doug || ?? || tbd ||
+|| Change Client::create_table schema syntax || 167 || sanjit || ?? || tbd ||
 
 == 1.0 ==
 
