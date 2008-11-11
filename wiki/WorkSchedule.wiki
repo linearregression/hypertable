@@ -13,6 +13,7 @@
 || Add cwd tracking to !CommandShell || 172 || sanjit || ?? || tbd ||
 || Add ls -R command to hyperspace command interpreter || 173 || sanjit || ?? || tbd ||
 || Memory Tracking / Better Compaction scheduler || 83,100,132 || doug || ? || tbd ||
+|| Highly Available Hyperspace || 7 || doug || 30 || tbd ||
 || Add !StaticBufferPtr class || 111 || doug || ?? || tbd ||
 || Request Throttling || 84 || doug || 10 || tbd ||
 || Query Cache || 76 || sanjit || ? || tbd ||
@@ -28,4 +29,3 @@
 
 || *Item* || *Issue* || *Owner* || *Estimate (days)* || *Status* ||
 || Load Balancing || 80 || ? || 30 || tbd ||
-|| Highly Available Hyperspace || 7 || doug || 30 || tbd ||
