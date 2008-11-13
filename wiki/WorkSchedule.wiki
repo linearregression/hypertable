@@ -12,6 +12,8 @@
 || Improve hyperspace CLI for better diagnostic support || 87-172-173 || sanjit || 10 || tbd ||
 || Memory Tracking / Better Compaction scheduler / Request throttling || 5-83-100-132 || doug || 8 || tbd ||
 || Highly Available Hyperspace || 7 || sanjit || 30 || tbd ||
+|| ALTER TABLE (add, drop, rename, ttl) || ? || sanjit || ? || tbd ||
+|| RENAME TABLE || ? || sanjit || ? || tbd ||
 
 == 1.0 ==
 
