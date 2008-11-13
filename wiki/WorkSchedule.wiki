@@ -26,6 +26,8 @@
 
 || *Item* || *Issue* || *Owner* || *Estimate (days)* || *Status* ||
 || Ability to select qualified columns (possibly with regex) || ? || ? || ? || tbd ||
+|| Return rows based on cell content || ? || ? || ? || tbd ||
 || Load Balancing || 80 || ? || 30 || tbd ||
 || Add !StaticBufferPtr class || 111 || doug || 3 || tbd ||
 || Query Cache || 76 || sanjit || 5 || tbd ||
+|| GROUP BY || ? || ? || ? || tbd ||
