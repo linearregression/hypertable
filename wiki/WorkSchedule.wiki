@@ -14,6 +14,7 @@
 || Highly Available Hyperspace || 7 || sanjit || 30 || tbd ||
 || ALTER TABLE (add, drop, rename, ttl) || ? || sanjit || ? || tbd ||
 || RENAME TABLE || ? || sanjit || ? || tbd ||
+|| Add TTL as CREATE TABLE option || ? || sanjit || ? || tbd ||
 
 == 1.0 ==
 
