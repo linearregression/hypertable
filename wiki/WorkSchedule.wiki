@@ -9,7 +9,7 @@
 || Master !MetaLog Library || ? || luke || 3 || in progress ||
 || !RangeServer Recovery || 79,168 || doug || 30 || tbd ||
 || Shorter !CellStore Filenames || 11,174 || luke || 5 || tbd ||
-|| Memory Tracking / Better Compaction scheduler / Request throttling || 5-83-100-132 || doug || 10 || tbd ||
+|| Memory Tracking / Better Compaction scheduler / Request throttling || 5,83,100,132 || doug || 10 || tbd ||
 || Highly Available Hyperspace || 7 || sanjit || 30 || tbd ||
 || ALTER TABLE (add, drop, rename, ttl) || ? || sanjit || 5 || tbd ||
 || RENAME TABLE || ? || sanjit || 2 || tbd ||
