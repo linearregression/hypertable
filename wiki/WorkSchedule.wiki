@@ -25,9 +25,10 @@
 == 1.1 ==
 
 || *Item* || *Issue* || *Owner* || *Estimate (days)* || *Status* ||
+|| Improve hyperspace CLI for better diagnostic support || 87-172-173 || sanjit || 10 || tbd ||
 || Ability to select qualified columns (possibly with regex) || ? || ? || ? || tbd ||
 || Return rows based on cell content || ? || ? || ? || tbd ||
 || Load Balancing || 80 || ? || 30 || tbd ||
 || Add !StaticBufferPtr class || 111 || doug || 3 || tbd ||
-|| Query Cache || 76 || sanjit || 5 || tbd ||
+|| Query Cache || 76 || sanjit || 10 || tbd ||
 || GROUP BY || ? || ? || ? || tbd ||
