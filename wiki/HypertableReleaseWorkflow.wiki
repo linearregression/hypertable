@@ -7,6 +7,7 @@ The example shown here is to upgrade from 0.9.0.0-alpha to 0.9.0.1-alpha. Adapt 
     * Modify `build.xml` file to include the new version number
     * Rename the `lib/hypertable-$VERSION.jar` file to reflect the new release version
     * Update version number in `conf/Capfile`
+    * Run `make doc` and try to eliminate doxygen warnings
   # Test all changes in the 'next' branch
     * First get all changes into 'next'
     * Make sure the version number is correct (e.g. 0.9.0.1 here) in the top-level CMakeLists.txt
@@ -38,4 +39,5 @@ git archive --format=tar --prefix=hypertable-0.9.0.1-alpha/ v0.9.0.1 | gzip -9 >
 sed -i.bak 's/February 4/February 7/g' *.html
 }}}
   # Update github repository
+  # Re-build doxygen source documentation, check it in and publish it
   # Send a note to the mailing lists (hypertable-...)
