@@ -79,7 +79,7 @@ cap> df
 
 == Step 3. Check Hypertable Processes ==
 
-Start with the DFS broker:
+Start with the *DFS broker*:
 {{{
 cap> ps auxww | fgrep -i broker | fgrep -v grep | fgrep -v cronolog | fgrep -v "start-dfs"
  ** [out :: motherlode013] zvents   29391  1.5  2.7 1442524 448072 ?      Sl   Nov21 106:14 java -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n -classpath /opt/hypertable/0.9.0.12:/opt/hypertable/0.9.0.12/lib/*.jar:/opt/hypertable/0.9.0.12/java/lib/commons-logging-1.0.4.jar:/opt/hypertable/0.9.0.12/java/lib/hadoop-0.18.2-core.jar:/opt/hypertable/0.9.0.12/java/lib/hypertable-0.9.0.12.jar:/opt/hypertable/0.9.0.12/java/lib/junit-4.3.1.jar:/opt/hypertable/0.9.0.12/java/lib/log4j-1.2.13.jar:/opt/hypertable/0.9.0.12/lib/jetty-ext/*.jar org.hypertable.DfsBroker.hadoop.main --verbose --config=/opt/hypertable/0.9.0.12/conf/production-hypertable.cfg
@@ -93,7 +93,7 @@ cap> ps auxww | fgrep -i broker | fgrep -v grep | fgrep -v cronolog | fgrep -v "
  ** [out :: motherlode012] zvents   30954 43.4  1.8 1500672 311268 ?      Sl   Nov21 2902:23 java -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n -classpath /opt/hypertable/0.9.0.12:/opt/hypertable/0.9.0.12/lib/*.jar:/opt/hypertable/0.9.0.12/java/lib/commons-logging-1.0.4.jar:/opt/hypertable/0.9.0.12/java/lib/hadoop-0.18.2-core.jar:/opt/hypertable/0.9.0.12/java/lib/hypertable-0.9.0.12.jar:/opt/hypertable/0.9.0.12/java/lib/junit-4.3.1.jar:/opt/hypertable/0.9.0.12/java/lib/log4j-1.2.13.jar:/opt/hypertable/0.9.0.12/lib/jetty-ext/*.jar org.hypertable.DfsBroker.hadoop.main --verbose --config=/opt/hypertable/0.9.0.12/conf/production-hypertable.cfg
 }}}
 
-Then check for the range servers:
+Then check for the *range servers*:
 {{{
 cap> cd /tmp; ps auxww | fgrep RangeServer | fgrep -v grep | fgrep -v cronolog
  ** [out :: motherlode013] zvents   29475 13.7 23.9 4424544 3934624 ?     Sl   Nov21 917:34 /opt/hypertable/0.9.0.12/bin/Hypertable.RangeServer --pidfile=/opt/hypertable/0.9.0.12/run/Hypertable.RangeServer.pid --verbose --config=/opt/hypertable/0.9.0.12/conf/production-hypertable.cfg
@@ -107,7 +107,7 @@ cap> cd /tmp; ps auxww | fgrep RangeServer | fgrep -v grep | fgrep -v cronolog
  ** [out :: motherlode015] zvents   26907 12.7 27.8 5038916 4570380 ?     Sl   Nov21 854:01 /opt/hypertable/0.9.0.12/bin/Hypertable.RangeServer --pidfile=/opt/hypertable/0.9.0.12/run/Hypertable.RangeServer.pid --verbose --config=/opt/hypertable/0.9.0.12/conf/production-hypertable.cfg
 }}}
 
-Then check for the Hypertable and Hyperspace master processes:
+Then check for the *Hypertable* and *Hyperspace master* processes:
 {{{
 cap> cd /tmp; ps auxww | fgrep Master | fgrep -v grep | fgrep -v cronolog
  ** [out :: motherlode010] zvents   27358  0.0  0.1 314044 19432 ?        Sl   Nov21   2:18 /opt/hypertable/0.9.0.12/bin/Hyperspace.Master --pidfile=/opt/hypertable/0.9.0.12/run/Hyperspace.pid --verbose --config=/opt/hypertable/0.9.0.12/conf/production-hypertable.cfg
