@@ -36,7 +36,7 @@ For example:
 
 {{{
 [doug@motherlode010 clusterB]$ cap shell
-  * executing `shell'
+  * executing 'shell'
 ====================================================================
 Welcome to the interactive Capistrano shell! This is an experimental
 feature, and is liable to change in future releases. Type 'help' for
