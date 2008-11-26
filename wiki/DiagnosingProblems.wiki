@@ -143,3 +143,22 @@ _day[venue_878255..venue_973606]'
 1227427227 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
 _day[venue_878255..venue_973606]'
 }}}
+
+== Step 5: Inspect the DFS ==
+
+Here's how you do it on our production cluster.  First make sure the following processes are running on the master node:
+
+{{{
+org.apache.hadoop.dfs.NameNode
+org.apache.hadoop.dfs.DataNode
+org.apache.hadoop.dfs.SecondaryNameNode
+org.apache.hadoop.mapred.JobTracker
+org.apache.hadoop.mapred.TaskTracker
+}}}
+
+Then on each of the slave nodes, ensure the following two java processes are running:
+
+{{{
+org.apache.hadoop.dfs.DataNode
+org.apache.hadoop.mapred.TaskTracker
+}}}
