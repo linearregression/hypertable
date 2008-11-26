@@ -114,3 +114,32 @@ cap> cd /tmp; ps auxww | fgrep Master | fgrep -v grep | fgrep -v cronolog
  ** [out :: motherlode010] zvents   27412  0.0  0.0 329404 13656 ?        Sl   Nov21   0:05 /opt/hypertable/0.9.0.12/bin/Hypertable.Master --pidfile=/opt/hypertable/0.9.0.12/run/Hypertable.Master.pid --verbose --config=/opt/hypertable/0.9.0.12/conf/production-hypertable.cfg
 error: command "cd /tmp; ps auxww | fgrep Master | fgrep -v grep | fgrep -v cronolog" failed on motherlode011,motherlode012,motherlode013,motherlode014,motherlode015,motherlode016,motherlode017,motherlode019
 }}}
+
+== Step 4: Inspect Hypertable Logs ==
+
+On each machine, you can run the following command:
+
+{{{
+[doug@motherlode011 0.9.0.12]$ find /opt/hypertable/0.9.0.12/log/archive -name '*.log' -print -exec fgrep ERROR {} \; | more
+/opt/hypertable/0.9.0.12/log/archive/2008-11/23/Hypertable.RangeServer.log
+1227427200 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
+_day[venue_878255..venue_973606]'
+1227427203 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
+_day[venue_878255..venue_973606]'
+1227427206 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
+_day[venue_878255..venue_973606]'
+1227427209 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
+_day[venue_878255..venue_973606]'
+1227427212 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
+_day[venue_878255..venue_973606]'
+1227427215 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
+_day[venue_878255..venue_973606]'
+1227427218 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
+_day[venue_878255..venue_973606]'
+1227427221 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
+_day[venue_878255..venue_973606]'
+1227427224 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
+_day[venue_878255..venue_973606]'
+1227427227 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
+_day[venue_878255..venue_973606]'
+}}}
