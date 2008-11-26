@@ -1,5 +1,5 @@
 #summary How to Diagnose the problem when Hypertable goes down
-
+<wiki:toc/>
 
 == Step 1: Inspect System Log ==
 
