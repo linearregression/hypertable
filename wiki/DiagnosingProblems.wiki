@@ -3,7 +3,7 @@
 
 == Step 1: Inspect System Log ==
 
-On our system (CentOS 5) this is in /var/log/messages and /var/log/message.\*.  It should be inspected on all machines and you should look out for things like processes that were killed because they ran out of memory.  For example, here's a snippet from the system log on one of our machines that had a problem.  Notice the "java invoked oom-killer".
+On our system (CentOS 5) this is in /var/log/messages and /var/log/message.*  It should be inspected on all machines and you should look out for things like processes that were killed because they ran out of memory.  For example, here's a snippet from the system log on one of our machines that had a problem.  Notice the "java invoked oom-killer".
 
 {{{
 Nov 21 11:29:10 motherlode013 kernel: Swap cache: add 7079047, delete 7078792, find 2157462/2384265, race 0+179
