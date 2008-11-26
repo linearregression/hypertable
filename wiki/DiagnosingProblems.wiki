@@ -1,0 +1,39 @@
+#summary How to Diagnose the problem when Hypertable goes down
+
+
+== Step 1: Inspect System Log ==
+
+On our system (CentOS 5) this is in /var/log/messages and /var/log/message.*.  It should be inspected on all machines and you should look out for things like processes that were killed because they ran out of memory.  For example, here's a snippet from the system log on one of our machines that had a problem.  Notice the "java invoked oom-killer".
+
+{{{
+Nov 21 11:29:10 motherlode013 kernel: Swap cache: add 7079047, delete 7078792, find 2157462/2384265, race 0+179
+Nov 21 11:29:10 motherlode013 kernel: Free swap  = 0kB
+Nov 21 11:29:11 motherlode013 kernel: Total swap = 8385856kB
+Nov 21 11:29:11 motherlode013 kernel: Free swap:            0kB
+Nov 21 11:29:11 motherlode013 kernel: 4456448 pages of RAM
+Nov 21 11:29:11 motherlode013 kernel: 348373 reserved pages
+Nov 21 11:29:11 motherlode013 kernel: 14473 pages shared
+Nov 21 11:29:11 motherlode013 kernel: 257 pages swap cached
+Nov 21 11:29:12 motherlode013 kernel: java invoked oom-killer: gfp_mask=0x201d2, order=0, oomkilladj=0
+Nov 21 11:29:12 motherlode013 kernel: 
+Nov 21 11:29:12 motherlode013 kernel: Call Trace:
+Nov 21 11:29:12 motherlode013 kernel:  [<ffffffff800bed05>] out_of_memory+0x8e/0x2f5
+Nov 21 11:29:12 motherlode013 kernel:  [<ffffffff8000f071>] __alloc_pages+0x22b/0x2b4
+Nov 21 11:29:12 motherlode013 kernel:  [<ffffffff80012720>] __do_page_cache_readahead+0x95/0x1d9
+Nov 21 11:29:12 motherlode013 kernel:  [<ffffffff8003d03b>] lock_timer_base+0x1b/0x3c
+Nov 21 11:29:12 motherlode013 kernel:  [<ffffffff800352ff>] find_extend_vma+0x16/0x59
+Nov 21 11:29:12 motherlode013 kernel:  [<ffffffff800130ab>] filemap_nopage+0x148/0x322
+Nov 21 11:29:12 motherlode013 kernel:  [<ffffffff800087ed>] __handle_mm_fault+0x1f8/0xdf4
+Nov 21 11:29:12 motherlode013 kernel:  [<ffffffff80064a6a>] do_page_fault+0x4b8/0x81d
+Nov 21 11:29:12 motherlode013 kernel:  [<ffffffff8009b446>] autoremove_wake_function+0x0/0x2e
+Nov 21 11:29:12 motherlode013 kernel:  [<ffffffff8005bde9>] error_exit+0x0/0x84
+Nov 21 11:29:12 motherlode013 kernel: 
+}}}
+
+== Step 2: Check Disk Usage on All Machines ==
+
+For example:
+
+{{{
+
+}}}
