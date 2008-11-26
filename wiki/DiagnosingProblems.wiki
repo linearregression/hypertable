@@ -3,7 +3,7 @@
 
 == Step 1: Inspect System Log ==
 
-On our system (CentOS 5) this is in /var/log/messages and /var/log/message.*.  It should be inspected on all machines and you should look out for things like processes that were killed because they ran out of memory.  For example, here's a snippet from the system log on one of our machines that had a problem.  Notice the "java invoked oom-killer".
+On our system (CentOS 5) this is in /var/log/messages and /var/log/message.\*.  It should be inspected on all machines and you should look out for things like processes that were killed because they ran out of memory.  For example, here's a snippet from the system log on one of our machines that had a problem.  Notice the "java invoked oom-killer".
 
 {{{
 Nov 21 11:29:10 motherlode013 kernel: Swap cache: add 7079047, delete 7078792, find 2157462/2384265, race 0+179
@@ -35,5 +35,44 @@ Nov 21 11:29:12 motherlode013 kernel:
 For example:
 
 {{{
-
+[doug@motherlode010 clusterB]$ cap shell
+  * executing `shell'
+====================================================================
+Welcome to the interactive Capistrano shell! This is an experimental
+feature, and is liable to change in future releases. Type 'help' for
+a summary of how to use the shell.
+--------------------------------------------------------------------
+cap> df
+[establishing connection(s) to motherlode010, motherlode011, motherlode012, motherlode013, motherlode014, motherlode015, motherlode016, motherlode017, motherlode019]
+ ** [out :: motherlode013] Filesystem           1K-blocks      Used Available Use% Mounted on
+ ** [out :: motherlode013] /dev/md1              59522644  15510252  40940008  28% /
+ ** [out :: motherlode013] /dev/sdd5            687649580  22251900 629903272   4% /data4
+ ** [out :: motherlode013] /dev/sdc5            687649580  22905696 629249476   4% /data3
+ ** [out :: motherlode013] /dev/sdb5            687649580  21882712 630272460   4% /data2
+ ** [out :: motherlode013] /dev/sda7            685554676  69937104 580231600  11% /data1
+ ** [out :: motherlode013] /dev/md0                101018     11580     84222  13% /boot
+ ** [out :: motherlode013] tmpfs                  8216148         0   8216148   0% /dev/shm
+ ** [out :: motherlode013] netapp-a:/vol/vol1/common
+ ** [out :: motherlode013] 770623808 525759488 244864320  69% /common
+ ** [out :: motherlode013] netapp-b.admin.zvents.com:/vol/vol0/home/zvents
+ ** [out :: motherlode013] 90390400  47017280  43373120  53% /home/zvents
+ ** [out :: motherlode013] netapp-b.admin.zvents.com:/vol/vol0/home/doug
+ ** [out :: motherlode013] 90390400  47017280  43373120  53% /home/doug
+ ** [out :: motherlode012] Filesystem           1K-blocks      Used Available Use% Mounted on
+ ** [out :: motherlode012] /dev/md1              59522644  56458664         0 100% /
+ ** [out :: motherlode012] /dev/sdd5            687649580  22523020 629632152   4% /data4
+ ** [out :: motherlode012] /dev/sdc5            687649580  21937116 630218056   4% /data3
+ ** [out :: motherlode012] /dev/sdb5            687649580  21504128 630651044   4% /data2
+ ** [out :: motherlode012] /dev/sda7            685554676  70094352 580074352  11% /data1
+ ** [out :: motherlode012] /dev/md0                101018     11580     84222  13% /boot
+ ** [out :: motherlode012] tmpfs                  8216148         0   8216148   0% /dev/shm
+ ** [out :: motherlode012] netapp-a:/vol/vol1/common
+ ** [out :: motherlode012] 770623808 525759488 244864320  69% /common
+ ** [out :: motherlode012] netapp-b.admin.zvents.com:/vol/vol0/home/zvents
+ ** [out :: motherlode012] 90390400  47017280  43373120  53% /home/zvents
+ ** [out :: motherlode012] netapp-b.admin.zvents.com:/vol/vol0/home/dranch
+ ** [out :: motherlode012] 90390400  47017280  43373120  53% /home/dranch
+ ** [out :: motherlode012] netapp-b.admin.zvents.com:/vol/vol0/home/doug
+ ** [out :: motherlode012] 90390400  47017280  43373120  53% /home/doug
+[...]
 }}}
