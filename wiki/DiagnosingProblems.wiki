@@ -39,7 +39,74 @@ cap> cd /tmp; ps auxww | fgrep Master | fgrep -v grep | fgrep -v cronolog
 error: command "cd /tmp; ps auxww | fgrep Master | fgrep -v grep | fgrep -v cronolog" failed on motherlode011,motherlode012,motherlode013,motherlode014,motherlode015,motherlode016,motherlode017,motherlode019
 }}}
 
-== Step 2: Inspect System Log ==
+== Step 2: Inspect Hypertable Logs ==
+
+On each machine, you can run the following command:
+
+{{{
+[doug@motherlode011 0.9.0.12]$ find /opt/hypertable/0.9.0.12/log/archive -name '*.log' -print -exec fgrep ERROR {} \; | more
+/opt/hypertable/0.9.0.12/log/archive/2008-11/23/Hypertable.RangeServer.log
+1227427200 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
+_day[venue_878255..venue_973606]'
+1227427203 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
+_day[venue_878255..venue_973606]'
+1227427206 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
+_day[venue_878255..venue_973606]'
+1227427209 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
+_day[venue_878255..venue_973606]'
+1227427212 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
+_day[venue_878255..venue_973606]'
+1227427215 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
+_day[venue_878255..venue_973606]'
+1227427218 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
+_day[venue_878255..venue_973606]'
+1227427221 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
+_day[venue_878255..venue_973606]'
+1227427224 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
+_day[venue_878255..venue_973606]'
+1227427227 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
+_day[venue_878255..venue_973606]'
+}}}
+
+== Step 3: Inspect the DFS ==
+
+Here's how you do it on our production cluster (running HDFS).  First make sure the following processes are running on the master node:
+
+{{{
+org.apache.hadoop.dfs.NameNode
+org.apache.hadoop.dfs.DataNode
+org.apache.hadoop.dfs.SecondaryNameNode
+org.apache.hadoop.mapred.JobTracker
+org.apache.hadoop.mapred.TaskTracker
+}}}
+
+Then on each of the slave nodes, ensure the following two java processes are running:
+
+{{{
+org.apache.hadoop.dfs.DataNode
+org.apache.hadoop.mapred.TaskTracker
+}}}
+
+Then on any machine that looks like it is having problems, check the HDFS log files for exceptions:
+
+{{{
+cd /opt/hadoop/current/logs/
+[doug@motherlode010 logs]$ fgrep -i exception *.log | more
+hadoop-zvents-datanode-motherlode010.admin.zvents.com.log:2008-12-01 00:28:26,420 WARN org.apache.hadoop.dfs.DataNode: DatanodeRegistration(10.0.30.213:50010, st
+orageID=DS-393702405-10.0.30.213-50010-1222839388069, infoPort=50075, ipcPort=50020):Got exception while serving blk_8389698773741314860_195578 to /10.0.30.213:
+hadoop-zvents-datanode-motherlode010.admin.zvents.com.log:java.net.SocketTimeoutException: 480000 millis timeout while waiting for channel to be ready for write.
+ ch : java.nio.channels.SocketChannel[connected local=/10.0.30.213:50010 remote=/10.0.30.213:60792]
+hadoop-zvents-datanode-motherlode010.admin.zvents.com.log:2008-12-01 00:28:26,420 ERROR org.apache.hadoop.dfs.DataNode: DatanodeRegistration(10.0.30.213:50010, s
+torageID=DS-393702405-10.0.30.213-50010-1222839388069, infoPort=50075, ipcPort=50020):DataXceiver: java.net.SocketTimeoutException: 480000 millis timeout while w
+aiting for channel to be ready for write. ch : java.nio.channels.SocketChannel[connected local=/10.0.30.213:50010 remote=/10.0.30.213:60792]
+hadoop-zvents-datanode-motherlode010.admin.zvents.com.log:2008-12-01 00:28:26,968 WARN org.apache.hadoop.dfs.DataNode: DatanodeRegistration(10.0.30.213:50010, st
+orageID=DS-393702405-10.0.30.213-50010-1222839388069, infoPort=50075, ipcPort=50020):Got exception while serving blk_-2928881016196368948_207241 to /10.0.30.213:
+hadoop-zvents-datanode-motherlode010.admin.zvents.com.log:java.net.SocketTimeoutException: 480000 millis timeout while waiting for channel to be ready for write.
+ ch : java.nio.channels.SocketChannel[connected local=/10.0.30.213:50010 remote=/10.0.30.213:60803]
+
+}}}
+
+== Step 4: Inspect System Log ==
 
 On our system (CentOS 5) this is in /var/log/messages.  It should be inspected on all machines and you should look out for things like processes that were killed because they ran out of memory.  For example, here's a snippet from the system log on one of our machines that had a problem.  Notice the "java invoked oom-killer".
 
@@ -68,7 +135,7 @@ Nov 21 11:29:12 motherlode013 kernel:  [<ffffffff8005bde9>] error_exit+0x0/0x84
 Nov 21 11:29:12 motherlode013 kernel: 
 }}}
 
-== Step 3: Check Disk Usage on All Machines ==
+== Step 5: Check Disk Usage ==
 
 For example:
 
@@ -113,71 +180,4 @@ cap> df
  ** [out :: motherlode012] netapp-b.admin.zvents.com:/vol/vol0/home/doug
  ** [out :: motherlode012] 90390400  47017280  43373120  53% /home/doug
 [...]
-}}}
-
-== Step 4: Inspect Hypertable Logs ==
-
-On each machine, you can run the following command:
-
-{{{
-[doug@motherlode011 0.9.0.12]$ find /opt/hypertable/0.9.0.12/log/archive -name '*.log' -print -exec fgrep ERROR {} \; | more
-/opt/hypertable/0.9.0.12/log/archive/2008-11/23/Hypertable.RangeServer.log
-1227427200 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
-_day[venue_878255..venue_973606]'
-1227427203 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
-_day[venue_878255..venue_973606]'
-1227427206 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
-_day[venue_878255..venue_973606]'
-1227427209 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
-_day[venue_878255..venue_973606]'
-1227427212 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
-_day[venue_878255..venue_973606]'
-1227427215 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
-_day[venue_878255..venue_973606]'
-1227427218 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
-_day[venue_878255..venue_973606]'
-1227427221 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
-_day[venue_878255..venue_973606]'
-1227427224 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
-_day[venue_878255..venue_973606]'
-1227427227 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
-_day[venue_878255..venue_973606]'
-}}}
-
-== Step 5: Inspect the DFS ==
-
-Here's how you do it on our production cluster (running HDFS).  First make sure the following processes are running on the master node:
-
-{{{
-org.apache.hadoop.dfs.NameNode
-org.apache.hadoop.dfs.DataNode
-org.apache.hadoop.dfs.SecondaryNameNode
-org.apache.hadoop.mapred.JobTracker
-org.apache.hadoop.mapred.TaskTracker
-}}}
-
-Then on each of the slave nodes, ensure the following two java processes are running:
-
-{{{
-org.apache.hadoop.dfs.DataNode
-org.apache.hadoop.mapred.TaskTracker
-}}}
-
-Then on any machine that looks like it is having problems, check the HDFS log files for exceptions:
-
-{{{
-cd /opt/hadoop/current/logs/
-[doug@motherlode010 logs]$ fgrep -i exception *.log | more
-hadoop-zvents-datanode-motherlode010.admin.zvents.com.log:2008-12-01 00:28:26,420 WARN org.apache.hadoop.dfs.DataNode: DatanodeRegistration(10.0.30.213:50010, st
-orageID=DS-393702405-10.0.30.213-50010-1222839388069, infoPort=50075, ipcPort=50020):Got exception while serving blk_8389698773741314860_195578 to /10.0.30.213:
-hadoop-zvents-datanode-motherlode010.admin.zvents.com.log:java.net.SocketTimeoutException: 480000 millis timeout while waiting for channel to be ready for write.
- ch : java.nio.channels.SocketChannel[connected local=/10.0.30.213:50010 remote=/10.0.30.213:60792]
-hadoop-zvents-datanode-motherlode010.admin.zvents.com.log:2008-12-01 00:28:26,420 ERROR org.apache.hadoop.dfs.DataNode: DatanodeRegistration(10.0.30.213:50010, s
-torageID=DS-393702405-10.0.30.213-50010-1222839388069, infoPort=50075, ipcPort=50020):DataXceiver: java.net.SocketTimeoutException: 480000 millis timeout while w
-aiting for channel to be ready for write. ch : java.nio.channels.SocketChannel[connected local=/10.0.30.213:50010 remote=/10.0.30.213:60792]
-hadoop-zvents-datanode-motherlode010.admin.zvents.com.log:2008-12-01 00:28:26,968 WARN org.apache.hadoop.dfs.DataNode: DatanodeRegistration(10.0.30.213:50010, st
-orageID=DS-393702405-10.0.30.213-50010-1222839388069, infoPort=50075, ipcPort=50020):Got exception while serving blk_-2928881016196368948_207241 to /10.0.30.213:
-hadoop-zvents-datanode-motherlode010.admin.zvents.com.log:java.net.SocketTimeoutException: 480000 millis timeout while waiting for channel to be ready for write.
- ch : java.nio.channels.SocketChannel[connected local=/10.0.30.213:50010 remote=/10.0.30.213:60803]
-
 }}}
