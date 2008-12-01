@@ -146,7 +146,7 @@ _day[venue_878255..venue_973606]'
 
 == Step 5: Inspect the DFS ==
 
-Here's how you do it on our production cluster.  First make sure the following processes are running on the master node:
+Here's how you do it on our production cluster (running HDFS).  First make sure the following processes are running on the master node:
 
 {{{
 org.apache.hadoop.dfs.NameNode
@@ -161,4 +161,23 @@ Then on each of the slave nodes, ensure the following two java processes are run
 {{{
 org.apache.hadoop.dfs.DataNode
 org.apache.hadoop.mapred.TaskTracker
+}}}
+
+Then on any machine that looks like it is having problems, check the HDFS log files for exceptions:
+
+{{{
+cd /opt/hadoop/current/logs/
+[doug@motherlode010 logs]$ fgrep -i exception *.log | more
+hadoop-zvents-datanode-motherlode010.admin.zvents.com.log:2008-12-01 00:28:26,420 WARN org.apache.hadoop.dfs.DataNode: DatanodeRegistration(10.0.30.213:50010, st
+orageID=DS-393702405-10.0.30.213-50010-1222839388069, infoPort=50075, ipcPort=50020):Got exception while serving blk_8389698773741314860_195578 to /10.0.30.213:
+hadoop-zvents-datanode-motherlode010.admin.zvents.com.log:java.net.SocketTimeoutException: 480000 millis timeout while waiting for channel to be ready for write.
+ ch : java.nio.channels.SocketChannel[connected local=/10.0.30.213:50010 remote=/10.0.30.213:60792]
+hadoop-zvents-datanode-motherlode010.admin.zvents.com.log:2008-12-01 00:28:26,420 ERROR org.apache.hadoop.dfs.DataNode: DatanodeRegistration(10.0.30.213:50010, s
+torageID=DS-393702405-10.0.30.213-50010-1222839388069, infoPort=50075, ipcPort=50020):DataXceiver: java.net.SocketTimeoutException: 480000 millis timeout while w
+aiting for channel to be ready for write. ch : java.nio.channels.SocketChannel[connected local=/10.0.30.213:50010 remote=/10.0.30.213:60792]
+hadoop-zvents-datanode-motherlode010.admin.zvents.com.log:2008-12-01 00:28:26,968 WARN org.apache.hadoop.dfs.DataNode: DatanodeRegistration(10.0.30.213:50010, st
+orageID=DS-393702405-10.0.30.213-50010-1222839388069, infoPort=50075, ipcPort=50020):Got exception while serving blk_-2928881016196368948_207241 to /10.0.30.213:
+hadoop-zvents-datanode-motherlode010.admin.zvents.com.log:java.net.SocketTimeoutException: 480000 millis timeout while waiting for channel to be ready for write.
+ ch : java.nio.channels.SocketChannel[connected local=/10.0.30.213:50010 remote=/10.0.30.213:60803]
+
 }}}
