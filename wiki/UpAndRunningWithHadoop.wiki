@@ -1,4 +1,4 @@
-#summary Instructions on how to get Hypertable up and running with Hadoop
+#summary Instructions on how to get Hypertable up and running with Hadoop (HDFS)
 <wiki:toc/>
 ==Starting the Servers==
 
@@ -21,7 +21,7 @@ Hyperspace.Master.Host=motherlode001
 Hypertable.Master.Host=motherlode001
 }}}
 
-*Step 4.* Configure Capistrano for your specific cluster and KFS.  See [DeployingHypertable How to Deploy Hypertable] for details.  The following is an example of how the variables at the top of the Capfile might be changed for KFS.
+*Step 4.* Configure Capistrano for your specific cluster and HDFS.  See [DeployingHypertable How to Deploy Hypertable] for details.  The following is an example of how the variables at the top of the Capfile might be changed for HDFS.
 {{{
 ------------- Capfile ----------------
 set :source_machine, "motherlode000"
