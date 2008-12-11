@@ -61,6 +61,7 @@ These logs are where all Range meta operations get recorded for the !RangeServer
   
   # Master::report_split() called by originating !RangeServer
   # Selects a !RangeServer for the newly split off range
+  # Writes M_LOAD_RANGE_START (with location of receiving RangeServer) entry to MML 
   # Returns OK response for Master::report_split() back to originating !RangeServer
   # Calls load_range(<split-log>) on receiving !RangeServer
   # Update METADATA 'Location' column for the new range
