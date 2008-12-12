@@ -115,7 +115,7 @@ namespace {
     "  This format facilitates queries that return\n"
     "  a historical portion of the log.\n";
 
-  const int RETRY_TIMEOUT = 30;
+  const int RETRY_TIMEOUT = 30000; // ms
 
 }
 
@@ -169,7 +169,7 @@ int main(int argc, char **argv) {
   try {
 
     // Create Hypertable client object
-    client_ptr = new Client( System::locate_install_dir(argv[0]) );
+    client_ptr = new Client();
 
     // Open the 'LogDb' table
     table_ptr = client_ptr->open_table("LogDb");
@@ -183,8 +183,6 @@ int main(int argc, char **argv) {
     report_error(e);
     return 1;
   }
-
-  memset(&key, 0, sizeof(key));
 
   // Load the log file into the ApacheLogParser
   // object
@@ -226,7 +224,7 @@ int main(int argc, char **argv) {
       mutator_ptr->set(key, entry.user_agent);
     }
     catch (Exception &e) {
-      cerr << "Exception caught: " << Error::get_text(e.code()) << " - " << e.what() << endl;
+      cerr << e << endl;
       do {
         if (!mutator_ptr->need_retry())
           _exit(1);
@@ -240,7 +238,7 @@ int main(int argc, char **argv) {
     mutator_ptr->flush();
   }
   catch (Exception &e) {
-    cerr << "Exception caught: " << Error::get_text(e.code()) << endl;
+    cerr << e << endl;
     do {
       if (!mutator_ptr->need_retry())
         _exit(1);
