@@ -25,7 +25,7 @@ These logs are where all Range meta operations get recorded for the !RangeServer
 === Master ===
 
   # Writes M_LOAD_RANGE_START (with location of receiving !RangeServer) entry to MML
-  # Calls load_range(<split-log>) on receiving !RangeServer
+  # Calls `load_range(range_state)` on receiving !RangeServer
   # Update METADATA 'Location' column for the new range
   # Write M_LOAD_RANGE_DONE entry to MML
 
@@ -63,7 +63,7 @@ These logs are where all Range meta operations get recorded for the !RangeServer
   # Selects a !RangeServer for the newly split off range
   # Writes M_LOAD_RANGE_START (with location of receiving RangeServer) entry to MML 
   # Returns OK response for Master::report_split() back to originating !RangeServer
-  # Calls load_range(<split-log>) on receiving !RangeServer
+  # Calls `load_range(range_state)` on receiving !RangeServer
   # Update METADATA 'Location' column for the new range
   # Issue drop_range() for the new range to the originating !RangeServer
   # Write M_LOAD_RANGE_DONE entry to MML
@@ -163,12 +163,6 @@ where the ip-address and port correspond to the !RangeServer that died.  If it i
 
 == Implementation TODO Tasks ==
 
-  * Sweep through code and change location from `<ip-address>_<port>_<timestamp>` to just `<ip-address>_<port>`
-  * Implement !MetaLog
-  * Change code so that Ranges can be created in the RS_SPLIT_START state which involves installing a !SplitLog and initiating a split
-  * Change code so that Ranges can be created in the RS_SPLIT_SHRUNK state, which involves scheduling a "notify master" task.
-  * Modify !MaintainenceQueue to allow for certain failed tasks to get rescheduled (e.g. "notify master")
-  * Implement "Fast Recovery" in !RangeServer.  This involves obtaining the lock on the !RangeServer's lock in Hyperpspace, reading the RSML and re-building the Range objects in  their various states.
   * Change !RangeServer split logic as described above in Range Split -> Originating !RangeServer above
   * Allow load_range() on already loaded ranges.  If the Master dies in the middle of recovery, when the next Master takes over it may ask a !RangeServer to load a range that it already successfully loaded.  I should return an error like RANGE_ALREADY_LOADED.
   * ...
