@@ -14,5 +14,5 @@ closed (0 bytes received so far) [receiver]
 *** [err :: uranos4.dq.isl.ntt.co.jp]
 ....
 }}}
-*A:* This is because the default _!MaxStartups_ value of `/etc/sshd_config` is
+*A:* This is because the default !_MaxStartups_ value of `/etc/sshd_config` is
 too small.  Set the value of this parameter to a number that is at least as large as the number of nodes in your cluster.
