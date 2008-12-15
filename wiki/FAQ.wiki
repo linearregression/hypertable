@@ -1,11 +1,21 @@
 #summary Frequently Asked Questions about Hypertable
 <wiki:toc/>
 
-==What is Hypertable?==
-Hypertable is a high performance, scalable, distributed storage and processing system for structured and unstructured data. It is designed to manage the storage and processing of information on a large cluster of commodity servers, providing resilience to machine and component failures.
-
-==Why is distributed computing good?==
-Distributed computing allows very high performance, scalable and robust solutions to be built on cheap commodity hardware.  Low cost, high performance and easy expandability are a few of the benefits of distributed computing.
+==Q: Why do I get these rsync errors when running 'cap dist'?===
+{{{
+When I used "cap dist", then the following errors occurred on half of 100 nodes,
+*** [err :: uranos4.dq.isl.ntt.co.jp] ssh_exchange_identification:
+Connection closed by remote host
+*** [err :: uranos4.dq.isl.ntt.co.jp] rsync: connection unexpectedly
+closed (0 bytes received so far) [receiver]
+*** [err :: uranos4.dq.isl.ntt.co.jp]
+*** [err :: uranos4.dq.isl.ntt.co.jp] rsync error: unexplained error
+(code 255) at io.c(453) [receiver=2.6.9]
+*** [err :: uranos4.dq.isl.ntt.co.jp]
+....
+}}}
+A: This is because the default "MaxStartups" value of /etc/sshd_config is
+too small.  Set the value of this parameter to a number that is at least as large as the number of nodes in your cluster.
 
 ==Who built Hypertable and why?==
 Hypertable was developed by Doug Judd with assistance from Luke Lu for [http://www.zvents.com Zvents].  Zvents funded the project to develop a system to reliably store and process the massive amounts of behavioral data they collect from users searching and browsing for local events and venues.
