@@ -181,3 +181,37 @@ cap> df
  ** [out :: motherlode012] 90390400  47017280  43373120  53% /home/doug
 [...]
 }}}
+
+== Restarting Hadoop ==
+
+If you're running Hadoop and the Hadoop processes die on some or all of the machines, here's how you restart them.  In this case, motherlode018 died and restarted.
+
+{{{
+ssh zvents@motherlode010
+[zvents@motherlode010 ~]$ cd /opt/hadoop/current
+[zvents@motherlode010 current]$ ./bin/start-all.sh
+namenode running as process 16394. Stop it first.
+motherlode014: datanode running as process 4419. Stop it first.
+motherlode018: starting datanode, logging to /opt/hadoop/current/bin/../logs/hadoop-zvents-datanode-motherlode018.admin.zvents.com.out
+motherlode010: datanode running as process 16539. Stop it first.
+motherlode015: datanode running as process 1921. Stop it first.
+motherlode012: datanode running as process 20888. Stop it first.
+motherlode013: datanode running as process 16921. Stop it first.
+motherlode011: datanode running as process 26245. Stop it first.
+motherlode017: datanode running as process 6468. Stop it first.
+motherlode019: datanode running as process 25705. Stop it first.
+motherlode016: datanode running as process 26279. Stop it first.
+motherlode010: secondarynamenode running as process 16656. Stop it first.
+jobtracker running as process 16729. Stop it first.
+motherlode010: tasktracker running as process 17194. Stop it first.
+motherlode014: tasktracker running as process 4515. Stop it first.
+motherlode013: tasktracker running as process 17349. Stop it first.
+motherlode012: tasktracker running as process 21436. Stop it first.
+motherlode015: tasktracker running as process 2480. Stop it first.
+motherlode017: tasktracker running as process 6980. Stop it first.
+motherlode016: tasktracker running as process 26796. Stop it first.
+motherlode011: tasktracker running as process 26809. Stop it first.
+motherlode019: tasktracker running as process 26245. Stop it first.
+motherlode018: starting tasktracker, logging to /opt/hadoop/current/bin/../logs/hadoop-zvents-tasktracker-motherlode018.admin.zvents.com.out
+[zvents@motherlode010 current]$ 
+}}}
