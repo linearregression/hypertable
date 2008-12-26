@@ -3,13 +3,15 @@
 
 = Introduction =
 
+_"Programs must be written for people to read, and only incidentally for machines to execute."_ - Abelson and Sussman (<a href="http://www.amazon.com/gp/product/0262011530?ie=UTF8&tag=ebagle-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=0262011530">Structure and Interpretation of Computer Programs - 2nd Edition</a><img src="http://www.assoc-amazon.com/e/ir?t=ebagle-20&l=as2&o=1&a=0262011530" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />)
+
 Most successful software projects have consistent coding convention/guidelines. We're not an exception. The following are rules of thumb that meant to give the project a consistent look and feel and to improve code readability and ultimately maintainability.  
 
 
 = Namespace =
 
   # All project symbols should reside in Hypertable or Hyperspace namespace.
-  # Macros should be prefixed with `HT_`.
+  # Project wide macros (in a header file) should be prefixed with `HT_`.
   # Avoid "using namespace blah" in the global namespace of a header file. e.g., instead of
 {{{
 using namespace boost::spirit;
