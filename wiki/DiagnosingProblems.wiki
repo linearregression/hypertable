@@ -120,6 +120,37 @@ hadoop-zvents-datanode-motherlode010.admin.zvents.com.log:java.net.SocketTimeout
 
 }}}
 
+== Step 4: Run fsck ==
+
+{{{
+
+[zvents@motherlode010 current]$ hadoop fsck /
+
+[...]
+
+....................................................................................................
+....................................................................................................
+....................................................................................................
+..........................................................................................Status: HEALTHY
+ Total size:	942589668108 B
+ Total dirs:	21658
+ Total files:	72590
+ Total blocks (validated):	75341 (avg. block size 12510978 B)
+ Minimally replicated blocks:	75341 (100.0 %)
+ Over-replicated blocks:	0 (0.0 %)
+ Under-replicated blocks:	0 (0.0 %)
+ Mis-replicated blocks:		0 (0.0 %)
+ Default replication factor:	3
+ Average block replication:	1.0
+ Corrupt blocks:		0
+ Missing replicas:		0 (0.0 %)
+ Number of data-nodes:		10
+ Number of racks:		1
+
+
+The filesystem under path '/' is HEALTHY
+
+}}}
 == Step 4: Inspect System Log ==
 
 On our system (CentOS 5) this is in /var/log/messages.  It should be inspected on all machines and you should look out for things like processes that were killed because they ran out of memory.  For example, here's a snippet from the system log on one of our machines that had a problem.  Notice the "java invoked oom-killer".
