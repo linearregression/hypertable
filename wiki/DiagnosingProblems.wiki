@@ -41,32 +41,46 @@ error: command "cd /tmp; ps auxww | fgrep Master | fgrep -v grep | fgrep -v cron
 
 == Step 2: Inspect Hypertable Logs ==
 
-On each machine, you can run the following command:
+Start with the !RangeServer logs:
 
 {{{
-[doug@motherlode011 0.9.0.12]$ find /opt/hypertable/0.9.0.12/log/archive -name '*.log' -print -exec fgrep ERROR {} \; | more
-/opt/hypertable/0.9.0.12/log/archive/2008-11/23/Hypertable.RangeServer.log
-1227427200 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
-_day[venue_878255..venue_973606]'
-1227427203 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
-_day[venue_878255..venue_973606]'
-1227427206 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
-_day[venue_878255..venue_973606]'
-1227427209 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
-_day[venue_878255..venue_973606]'
-1227427212 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
-_day[venue_878255..venue_973606]'
-1227427215 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
-_day[venue_878255..venue_973606]'
-1227427218 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
-_day[venue_878255..venue_973606]'
-1227427221 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
-_day[venue_878255..venue_973606]'
-1227427224 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
-_day[venue_878255..venue_973606]'
-1227427227 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:671) RANGE SERVER range not found '(a) pageviews_per
-_day[venue_878255..venue_973606]'
+cap> fgrep -s ERROR /opt/hypertable/current/log/Hypertable.RangeServer.log | perl -pe "s/^\d+/localtime($&)/e"
+
+ ** [out :: motherlode010] Fri Jan  2 03:05:39 2009 ERROR Hypertable.RangeServer : finalize (/usr/src/hypertable/src/cc/Hypertable/RangeServer/CellStoreV0.cc:340): Hypertable::Exception: Error closing DFS fd: 3153 - COMM request timeout
+ ** [out :: motherlode010] at virtual void Hypertable::DfsBroker::Client::close(int32_t) (/usr/src/hypertable/src/cc/DfsBroker/Lib/Client.cc:209): Event: type=ERROR "COMM request timeout" from=127.0.0.1:38030
+ ** [out :: motherlode010] Fri Jan  2 03:05:39 2009 ERROR Hypertable.RangeServer : run_compaction (/usr/src/hypertable/src/cc/Hypertable/RangeServer/AccessGroup.cc:469): Hypertable::Exception: Problem finalizing CellStore '/hypertable/tables/Production/default/AB2A0D28DE6B77FFDD6C72AF/cs1057' - But that's unpossible!
+ ** [out :: motherlode010] Fri Jan  2 03:05:50 2009 ERROR Hypertable.RangeServer : ~CellStoreV0 (/usr/src/hypertable/src/cc/Hypertable/RangeServer/CellStoreV0.cc:75): Error closing DFS client: Hypertable::Exception: Error closing DFS fd: 3153 - DFS BROKER bad file handle
+ ** [out :: motherlode010] Fri Jan  2 03:05:50 2009 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/MaintenanceQueue.h:114) But that's unpossible! (Problem finalizing CellStore '/hypertable/tables/Production/default/AB2A0D28DE6B77FFDD6C72AF/cs1057')
+ ** [out :: motherlode011] Fri Jan  2 05:11:22 2009 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/Lib/CommitLog.cc:281) Problem rolling commit log: /hypertable/servers/10.0.30.214_38060/log/user/70: Error closing DFS fd: 2773
+ ** [out :: motherlode011] Fri Jan  2 05:11:22 2009 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:889) COMM request timeout 'Unable to link transfer log (/hypertable/servers/10.0.30.220_38060/log/8D74C10A8E26DF225B3ADCBB) into commit log(/hypertable/servers/10.0.30.214_38060/log/user/)'
+ ** [out :: motherlode011] Fri Jan  2 05:27:46 2009 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/Lib/CommitLog.cc:313) Problem writing commit log: /hypertable/servers/10.0.30.214_38060/log/user/70: Error appending 426 bytes to DFS fd 2773
+ ** [out :: motherlode011] Fri Jan  2 05:27:46 2009 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:1299) Exception caught: DFS BROKER bad file handle
+ ** [out :: motherlode011] Fri Jan  2 05:27:46 2009 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:1341) DFS BROKER bad file handle 'Problem writing 921 bytes to commit log (/hypertable/servers/10.0.30.214_38060/log/user/)'
+ ** [out :: motherlode011] Fri Jan  2 05:32:11 2009 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/Lib/CommitLog.cc:313) Problem writing commit log: /hypertable/servers/10.0.30.214_38060/log/user/70: Error appending 799 bytes to DFS fd 2773
+ ** [out :: motherlode011] Fri Jan  2 05:32:11 2009 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:1299) Exception caught: DFS BROKER bad file handle
+ ** [out :: motherlode011] Fri Jan  2 05:32:11 2009 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:1341) DFS BROKER bad file handle 'Problem writing 2752 bytes to commit log (/hypertable/servers/10.0.30.214_38060/log/user/)'
+ ** [out :: motherlode011] Fri Jan  2 05:32:11 2009 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/Lib/CommitLog.cc:313) Problem writing commit log: /hypertable/servers/10.0.30.214_38060/log/user/70: Error appending 2185 bytes to DFS fd 2773
+ ** [out :: motherlode011] Fri Jan  2 05:32:11 2009 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:1299) Exception caught: DFS BROKER bad file handle
+ ** [out :: motherlode011] Fri Jan  2 05:32:11 2009 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:1341) DFS BROKER bad file handle 'Problem writing 7989 bytes to commit log (/hypertable/servers/10.0.30.214_38060/log/user/)'
+ ** [out :: motherlode011] Fri Jan  2 05:32:11 2009 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/Lib/CommitLog.cc:313) Problem writing commit log: /hypertable/servers/10.0.30.214_38060/log/user/70: Error appending 213 bytes to DFS fd 2773
+ ** [out :: motherlode011] Fri Jan  2 05:32:11 2009 ERROR Hypertable.RangeServer : (/usr/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:1299) Exception caught: DFS BROKER bad file handle
+
 }}}
+
+Then check the Hypertable.Master log.  Currently there is a spurious error message "Error removing DFS file" that you'll need to filter out:
+
+{{{
+
+fgrep -s ERROR /opt/hypertable/current/log/Hypertable.Master.log | fgrep -v "Error removing DFS file" | perl -pe "s/^\d+/localtime($&)/e"
+
+}}}
+
+Then check the Hyperspace.Master log.
+
+{{{
+fgrep -s ERROR /opt/hypertable/current/log/Hyperspace.Master.log | fgrep -v "Error removing DFS file" | perl -pe "s/^\d+/localtime($&)/e" 
+}}}
+
 
 == Step 3: Inspect the DFS ==
 
