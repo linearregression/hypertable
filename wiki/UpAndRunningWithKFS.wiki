@@ -2,6 +2,24 @@
 
 ==Starting the Servers==
 
+*Step 1.* Synchronize clocks on all machines
+
+The system cannot operate correctly unless the clocks on all machines are synchronized.  Use the [http://www.ntp.org/ Network Time Protocol (ntp)] to ensure that the clocks get synchronized and remain in sync.  Run the 'date' command on all machines to make sure they are in sync.  The following Capistrano shell session show the output of a cluster with properly synchronized clocks.
+
+{{{
+cap> date
+[establishing connection(s) to motherlode000, motherlode001, motherlode002, motherlode003, motherlode004, motherlode005, motherlode006, motherlode007, motherlode008]
+ ** [out :: motherlode001] Sat Jan  3 18:05:33 PST 2009
+ ** [out :: motherlode002] Sat Jan  3 18:05:33 PST 2009
+ ** [out :: motherlode003] Sat Jan  3 18:05:33 PST 2009
+ ** [out :: motherlode004] Sat Jan  3 18:05:33 PST 2009
+ ** [out :: motherlode005] Sat Jan  3 18:05:33 PST 2009
+ ** [out :: motherlode007] Sat Jan  3 18:05:33 PST 2009
+ ** [out :: motherlode006] Sat Jan  3 18:05:33 PST 2009
+ ** [out :: motherlode000] Sat Jan  3 18:05:33 PST 2009
+ ** [out :: motherlode008] Sat Jan  3 18:05:33 PST 2009
+}}}
+
 *Step 1.* Pull the latest KFS source code and build it
 {{{
 cd ~/src/
