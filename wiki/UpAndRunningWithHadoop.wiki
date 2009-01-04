@@ -4,7 +4,7 @@
 
 *Step 1.* Synchronize clocks on all machines
 
-The system cannot operate correctly unless the clocks on all machines are synchronized.  Use the Network Time Protocol (ntp) to ensure that the clocks get synchronized and remain in sync.  Run the 'date' command on all machines to make sure they are in sync.  The following Capistrano shell session show the output of a cluster with properly synchronized clocks.
+The system cannot operate correctly unless the clocks on all machines are synchronized.  Use the [http://www.ntp.org/ Network Time Protocol (ntp)] to ensure that the clocks get synchronized and remain in sync.  Run the 'date' command on all machines to make sure they are in sync.  The following Capistrano shell session show the output of a cluster with properly synchronized clocks.
 
 {{{
 cap> date
