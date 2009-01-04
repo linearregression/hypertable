@@ -20,7 +20,7 @@ cap> date
  ** [out :: motherlode008] Sat Jan  3 18:05:33 PST 2009
 }}}
 
-*Step 1.* Pull the latest KFS source code and build it
+*Step 2.* Pull the latest KFS source code and build it
 {{{
 cd ~/src/
 svn co https://kosmosfs.svn.sourceforge.net/svnroot/kosmosfs/trunk kosmosfs 
@@ -32,34 +32,34 @@ make
 make install
 }}}
 
-*Step 2.* Edit [http://www.hypertable.org/doc/kfs-machines.cfg ~/src/kosmosfs/scripts/machines.cfg]
+*Step 3.* Edit [http://www.hypertable.org/doc/kfs-machines.cfg ~/src/kosmosfs/scripts/machines.cfg]
 
-*Step 3.* Kill the servers
+*Step 4.* Kill the servers
 {{{
 cd ~/src/kosmosfs/scripts
 python kfslaunch.py -f machines.cfg -S
 }}}
 
-*Step 4.* Upgrade the binaries
+*Step 5.* Upgrade the binaries
 
 {{{
 cd ~/src/kosmosfs/scripts
 python kfssetup.py -f machines.cfg -b /opt/kfs -u
 }}}
 
-*Step 5.* Launch the KFS servers
+*Step 6.* Launch the KFS servers
 {{{
 cd ~/src/kosmosfs/scripts
 python kfslaunch.py -f machines.cfg -s
 }}}
 
-*Step 6.* Make sure the servers are up
+*Step 7.* Make sure the servers are up
 {{{
 cd /opt/kfs/bin/tools
 ./kfsping -m -s motherlode001 -p 20000
 }}}
 
-*Step 7.* Configure Capistrano for your specific cluster and KFS.  See [DeployingHypertable How to Deploy Hypertable] for details.  The following is an example of how the variables at the top of the Capfile might be changed for KFS.
+*Step 8.* Configure Capistrano for your specific cluster and KFS.  See [DeployingHypertable How to Deploy Hypertable] for details.  The following is an example of how the variables at the top of the Capfile might be changed for KFS.
 {{{
 ------------- Capfile ----------------
 set :source_machine, "motherlode000"
@@ -71,14 +71,14 @@ role :master, "motherlode001"
 role :slave,  "motherlode001", "motherlode002", "motherlode003", "motherlode004", "motherlode005", "motherlode006", "motherlode007", "motherlode008"
 }}}
 
-*Step 8.* Compile the Hypertable code and install under the installation directory (e.g. /data1/doug/hypertable)
+*Step 9.* Compile the Hypertable code and install under the installation directory (e.g. /data1/doug/hypertable)
 
-*Step 9.* Distribute the installation
+*Step 10.* Distribute the installation
 {{{
 $ cap dist
 }}}
 
-*Step 10.* Start the servers
+*Step 11.* Start the servers
 {{{
 $ cap -S dfs=kfs start
 }}}
