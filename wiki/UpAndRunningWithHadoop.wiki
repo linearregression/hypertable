@@ -21,16 +21,16 @@ cap> date
 }}}
 
 
-*Step 1.* Install and start Hadoop.
+*Step 2.* Install and start Hadoop.
 
-*Step 2.* Create the directory `/hypertable` in HDFS and make it writeable by all.
+*Step 3.* Create the directory `/hypertable` in HDFS and make it writeable by all.
 
 {{{
 $ hadoop fs -mkdir /hypertable
 $ hadoop fs -chmod 777 /hypertable
 }}}
 
-*Step 3.* Edit the config file conf/hypertable.cfg  Change the following property to point to the Hadoop filesystem that got up and running in step 1 (assuming hdfs://motherlode000:9000):
+*Step 4.* Edit the config file conf/hypertable.cfg  Change the following property to point to the Hadoop filesystem that got up and running in step 1 (assuming hdfs://motherlode000:9000):
 {{{
 HdfsBroker.fs.default.name=hdfs://motherlode001:9000
 }}}
@@ -40,7 +40,7 @@ Hyperspace.Master.Host=motherlode001
 Hypertable.Master.Host=motherlode001
 }}}
 
-*Step 4.* Configure Capistrano for your specific cluster and HDFS.  See [DeployingHypertable How to Deploy Hypertable] for details.  The following is an example of how the variables at the top of the Capfile might be changed for HDFS.
+*Step 5.* Configure Capistrano for your specific cluster and HDFS.  See [DeployingHypertable How to Deploy Hypertable] for details.  The following is an example of how the variables at the top of the Capfile might be changed for HDFS.
 {{{
 ------------- Capfile ----------------
 set :source_machine, "motherlode000"
@@ -53,14 +53,14 @@ role :master, "motherlode001"
 role :slave,  "motherlode001", "motherlode002", "motherlode003", "motherlode004", "motherlode005", "motherlode006", "motherlode007", "motherlode008"
 }}}
 
-*Step 5.* Compile the Hypertable code and install under the installation directory (e.g. /data1/doug/hypertable)
+*Step 6.* Compile the Hypertable code and install under the installation directory (e.g. /data1/doug/hypertable)
 
-*Step 6.* Distribute the installation
+*Step 7.* Distribute the installation
 {{{
 $ cap dist
 }}}
 
-*Step 7.* Start the servers
+*Step 8.* Start the servers
 {{{
 $ cap start
 }}}
