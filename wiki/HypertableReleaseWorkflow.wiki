@@ -10,12 +10,12 @@ The example shown here is to upgrade from 0.9.0.0-alpha to 0.9.0.1-alpha. Adapt 
   # Test all changes in the 'next' branch
     * First get all changes into 'next'
     * Make sure the version number is correct (e.g. 0.9.0.1 here) in the top-level CMakeLists.txt
-    * Make sure 'next' is identical to 'master', do a `git pull . master`
+    * Make sure 'next' is a superset of 'master', do a `git merge master`
     * Make sure tests are passing in the 'next' branch
   # Pull the changes from 'next' into 'master'
   {{{
   git checkout master
-  git pull . next
+  git merge next
   }}}
   # Tag the release:
 {{{
