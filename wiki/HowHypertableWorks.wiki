@@ -9,7 +9,7 @@ For an example of what data in Hypertable looks like, let's say we wanted to sto
 || Fedora || 3 || 0 || 145 || 34 || 78 || "" || "a very fine hat" || 50.00 || 40.00 || 
  
 
-Schemas in Hypertable are very flexible, with only the column familys needing to be defined before hand.  To create our example table the HQL command would be:
+Schemas in Hypertable are very flexible, with only the column families needing to be defined before hand.  To create our example table the HQL command would be:
 {{{ 
 
 CREATE TABLE Items {
