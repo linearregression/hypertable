@@ -38,13 +38,13 @@ The `BloomFilter` in a `CellStore` will have bits set for every `key` and `key:c
 
 
 = Hql Example =
-
+{{{
 create table  Foo (
   Field1,
   Field2,
   Field3,
   ACCESS GROUP one bloomfilter='ROWS' bloom_false_positive_rate=0.01 (Field1),
-  ACCESS GROUP two bloomfilter='ROWS_COLS' bloom_false_positive_rate=0.05 (Field2, Field3),
+  ACCESS GROUP two bloomfilter='ROWS_COLS' bloom_false_positive_rate=0.05 (Field2, Field3)
 );
-
+}}}
 In this example the table Foo has two access groups. The group "one" consists of column family "Field1" and the BloomFilter for this group uses just the row as the filter key and has a false positive rate of 1% (this is the default false positive rate). The group "two" which consists of column family "Field2" and "Field3" has the BloomFilter configured to contain keys based on the row as well as row + column family. It also has a higher false positive rate.
