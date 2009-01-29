@@ -92,10 +92,10 @@ Column names that contain a dash or any non-alphanumeric character (e.g. "refer-
 hypertable> show create table Pages;
 
 CREATE TABLE Pages (
+  date,
   'refer-url',
   'http-code',
-  date,
-  ACCESS GROUP default ( 'refer-url', 'http-code' )
+  ACCESS GROUP default (date, 'refer-url', 'http-code')
 )
 
 }}}
