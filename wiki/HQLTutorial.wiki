@@ -336,7 +336,7 @@ The name of the table is case insensitive.
 
 ==BATCH MODE AND SOURCE==
 
-After killing the servers via `kill-servers.sh` your tables and data are no longer available (for the initial alpha release, even though the data is persisted on disk, as the logic to restart the servers is tied with server failover/recovery, which is not yet complete until the beta release. The replicated commit logs in hypertable is designed prevent data loss in the event of hardware failure).  To load your tables and other data back to the system, run the system in batch mode or use `SOURCE` from an interactive console. First, run `kill-servers.sh` and `start-all-servers.sh`:
+To load your tables and other data back to the system, run the system in batch mode or use `SOURCE` from an interactive console. First, run `kill-servers.sh` and `start-all-servers.sh`:
 
 {{{
 tinweasel:~/hypertable>  bin/kill-servers.sh 
