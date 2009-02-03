@@ -1,13 +1,17 @@
 #summary How to build and run Hypertable on Amazon EC2
 <wiki:toc/>
 
-== Creating the Instance ==
+== Creating the Instance Example==
+
+The following steps got me up and running with an machine on EC2.  The following command will actually create the instance.  The ami-5c709435 is a public AMI.  Check out the [http://developer.amazonwebservices.com/connect/kbcategory.jspa?categoryID=101 Public EC2 AMI Directory] for other images.  
 
 {{{
 $ ec2-run-instances ami-5c709435 -k gsg-keypair 
 RESERVATION               r-9c5aeaf5            724784214682 default
 INSTANCE                  i-ccf678a5            ami-5c709435            pending gsg-keypair     0               m1.small 2009-02-03T05:50:57+0000 us-east-1a aki-a71cf9ce ari-a51cf9cc 
+}}}
 
+{{{
 $ ec2-describe-instances 
 RESERVATION               r-9c5aeaf5                 724784214682                       default
 INSTANCE                  i-ccf678a5                 ami-5c709435                       ec2-75-101-254-105.compute-1.amazonaws.com domU-12-31-38-00-6C-78.compute-1.internal running gsg-keypair 0  m1.small 2009-02-03T05:50:57+0000 us-east-1a aki-a71cf9ce ari-a51cf9cc 
