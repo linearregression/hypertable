@@ -27,8 +27,9 @@ Primary differences from a typical database
 
 == !ActiveRecord, !HyperRecord and the Hypertable Adapter ==
 
-The integration between Hypertable and !ActiveRecord is provided by two separate Ruby modules.
+The integration between Hypertable and !ActiveRecord is provided by three separate Ruby modules.
 
+  * Ruby Hypertable Thrift Client:  Exposes a low-level communication API to the Ruby programming language.
   * Hypertable Adapter: In !ActiveRecord, each supported data store has an adapter that implements functionality specific to that store as well as providing metadata for data held within the store.  Features implemented by adapters typically include connection handling, listings metadata (tables and schema), statement execution (selects, writes, etc.), latency measurement, fixture handling.
   * HyperRecord: A subclass of !ActiveRecord that overrides many internal methods to use the Hypertable API exposed through the Hypertable Adapter. Also includes logic required to expose column qualifier support to !ActiveRecord and support for basic associations. 
 
