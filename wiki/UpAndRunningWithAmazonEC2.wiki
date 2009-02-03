@@ -31,7 +31,9 @@ To make my life easier, I created an account called 'doug', added myself to `/et
 $ ssh -A ec2-75-101-254-105.compute-1.amazonaws.com
 }}}
 
-== Machine Setup and Hypertable Build ==
+== Ubuntu Ibex Machine Setup (ami-5c709435) ==
+
+Here's how you setup the basic environment.
 
 {{{
 # apt-get update
@@ -42,6 +44,15 @@ $ ssh -A ec2-75-101-254-105.compute-1.amazonaws.com
 # cp hyperic-sigar-1.6.0/sigar-bin/include/*.h /usr/local/include
 # cp hyperic-sigar-1.6.0/sigar-bin/lib/libsigar-x86-linux.so /usr/local/lib/
 # ldconfig
+}}}
+
+And here's how you get the Thrift broker environment setup.
+
+{{{
+}}}
+
+== Building Hypertable and Running Tests ==
+{{{
 # mkdir src
 # cd src
 # git clone git://scm.hypertable.org/pub/repos/hypertable.git
