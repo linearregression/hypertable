@@ -33,7 +33,7 @@ $ ssh -A ec2-75-101-254-105.compute-1.amazonaws.com
 
 == Ubuntu Ibex Machine Setup (ami-5c709435) ==
 
-Here's how you setup the basic environment.
+_Basic Setup_
 
 {{{
 # apt-get update
@@ -46,7 +46,7 @@ Here's how you setup the basic environment.
 # ldconfig
 }}}
 
-And here's how you get the Thrift broker environment setup.
+_Thrift Broker_
 
 {{{
 }}}
