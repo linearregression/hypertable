@@ -1,7 +1,7 @@
 #summary How to build and run Hypertable on Amazon EC2
 <wiki:toc/>
 
-= Creating the Instance =
+== Creating the Instance ==
 
 {{{
 $ ec2-run-instances ami-5c709435 -k gsg-keypair 
@@ -18,7 +18,7 @@ $ ssh -A ec2-75-101-254-105.compute-1.amazonaws.com
 
 }}}
 
-= Machine Setup and Hypertable Build =
+== Machine Setup and Hypertable Build ==
 
 {{{
 # apt-get update
