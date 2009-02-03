@@ -1,0 +1,14 @@
+#summary How to use the Thrift Client to access Hypertable from ruby.
+
+= Introduction =
+
+Add your content here.
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * how to download and install the thrift gem
+  * sample programs
+  * refer to thrift API reference
+  * refer to tests for more complete examples
