@@ -8,7 +8,7 @@ Add your content here.
 = Details =
 
 Add your content here.  Format your content with:
-  * how to download and install the thrift gem
+  * how to download and install the thrift gem (make sure hypertable is running and you know hostname/port of thrift broker)
   * sample programs
   * refer to thrift API reference
   * refer to tests for more complete examples
