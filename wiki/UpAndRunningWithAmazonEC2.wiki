@@ -22,14 +22,12 @@ $ ssh -A ec2-75-101-254-105.compute-1.amazonaws.com
 
 {{{
 # apt-get update
-# apt-get install g++ make cmake libboost-dev liblog4cpp5-dev git-core
-cronolog libgoogle-perftools-dev libevent-dev zlib1g-dev
+# apt-get install g++ make cmake libboost-dev liblog4cpp5-dev git-core cronolog libgoogle-perftools-dev libevent-dev zlib1g-dev
 # apt-get install libexpat1-dev liblog4cpp5-dev libboost-dev libdb4.6++-dev libncurses-dev libreadline5-dev
 # wget http://internap.dl.sourceforge.net/sourceforge/sigar/hyperic-sigar-1.6.0.tar.gz
 # tar -xzvf hyperic-sigar-1.6.0.tar.gz
 # cp hyperic-sigar-1.6.0/sigar-bin/include/*.h /usr/local/include
-# cp hyperic-sigar-1.6.0/sigar-bin/lib/libsigar-x86-linux.so /usr/
-local/lib/
+# cp hyperic-sigar-1.6.0/sigar-bin/lib/libsigar-x86-linux.so /usr/local/lib/
 # ldconfig
 # mkdir src
 # cd src
