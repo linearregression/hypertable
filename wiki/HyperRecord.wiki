@@ -6,7 +6,7 @@ Hypertable is a high performance distributed data storage system designed to sup
 
 HyperRecord exists to integrate Hypertable with ActiveRecord (the Ruby on Rails ORM) allowing objects to be stored in Hypertable while maintaining as many of the built-in ORM features as possible. 
 
-= Hypertable for Database Users =
+== Hypertable for Database Users ==
 
 Hypertable has a lot in common with a typical RDBMS but also has many important differences. Through the Rails ORM, an object stored in Hypertable has many of the same features as an object stored in a regular RBDMS. In fact, for most operations, the programmer doesn't need to know or care that the data is actually stored in Hypertable. That said, one of the primary goals of HyperRecord is to provide seamless integration with ActiveRecord by abstracting these differences without completely preventing the programmer from making use of the unique features that Hypertable brings to the table.
 
@@ -23,6 +23,14 @@ Primary differences from a typical database
   # No Types (yet): Hypertable cells do not have types. All data stored in Hypertable are strings.
   # No AUTO_INCREMENT: Hypertable does not support AUTO_INCREMENT (may come after support for types). Unique ROW keys must be supplied externally.
   # HQL is not SQL: HQL is similar to SQL though they are not compatible.   See http://code.google.com/p/hypertable/wiki/HQLTutorial for more detail on HQL.
+
+
+== ActiveRecord, HyperRecord and the Hypertable Adapter ==
+
+The integration between Hypertable and ActiveRecord is provided by two separate Ruby modules.
+
+  * Hypertable Adapter: In ActiveRecord, each supported data store has an adapter that implements functionality specific to that store as well as providing metadata for data held within the store.  Features implemented by adapters typically include connection handling, listings metadata (tables and schema), statement execution (selects, writes, etc.), latency measurement, fixture handling.
+  * HyperRecord: A subclass of ActiveRecord that overrides many internal methods to use the Hypertable API exposed through the Hypertable Adapter. Also includes logic required to expose column qualifier support to ActiveRecord and support for basic associations. 
 
 
 = Details =
