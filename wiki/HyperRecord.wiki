@@ -1,4 +1,6 @@
 #summary Allow ActiveRecord objects to reside in Hypertable.
+= Table Of Contents =
+<wiki:toc max_depth="2" />
 
 = Introduction =
 
