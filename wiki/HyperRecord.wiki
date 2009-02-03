@@ -2,7 +2,27 @@
 
 = Introduction =
 
-Add your content here.
+Hypertable is a high performance distributed data storage system designed to support applications requiring maximum performance, scalability, and reliability. Modeled after Google's well known Bigtable project, Hypertable is designed to manage the storage and processing of information on a large cluster of commodity servers, providing resilience to machine and component failures.
+
+HyperRecord exists to integrate Hypertable with ActiveRecord (the Ruby on Rails ORM) allowing objects to be stored in Hypertable while maintaining as many of the built-in ORM features as possible. 
+
+= Hypertable for Database Users =
+
+Hypertable has a lot in common with a typical RDBMS but also has many important differences. Through the Rails ORM, an object stored in Hypertable has many of the same features as an object stored in a regular RBDMS. In fact, for most operations, the programmer doesn't need to know or care that the data is actually stored in Hypertable. That said, one of the primary goals of HyperRecord is to provide seamless integration with ActiveRecord by abstracting these differences without completely preventing the programmer from making use of the unique features that Hypertable brings to the table.
+
+Primary differences from a typical database
+
+  # Replication: Data stored in Hypertable is automatically replicated across machines in the cluster. Capacity and scalability is increased linearly simply by adding more servers to the cluster.
+  # ROW Keys: Each "row" within a table is identified by a unique ROW key. The ROW key is equivalent to a primary key in most databases. It is not necessary to declare the ROW key when creating a table since all tables automatically have a ROW key.
+  # No Secondary Indexes: In Hypertable, only the ROW key is indexed.  As a result, queries with constraints on columns other than the ROW key are not efficient. Support for indexes on non-ROW key columns *might* come in a later release. For now, applications must be designed with this constraint in mind.
+  # Sparse Cell Storage: Each cell in a table can be written individually and is not dependent on the presence of other cells within a row. For instance, in a table declared with 5 columns, a "row" can be created by writing to a single cell. The other 4 cells are not written and therefore do not consume space.
+  # Cell Versioning: Hypertable can maintain multiple revisions of a cell. Each time the cell is written, the older revision are kept around and can be retrieved at any time.  When creating a table, Hypertable allows the programmer to specify a maximum number of revisions to maintain.  
+  # No Transactions (yet): Hypertable does not yet support transactions.
+  # Flexible Schema: Through the use of column qualifiers, data can be stored in cells that are not explicitly declared at table creation. Column qualifiers can be used on any column in the table definition. For instance, if a table is declared with a single column called key, then data can be written directly to the column name (key) or any number of column qualifiers (e.g., key:foo1, key:foo2, key:bar9). In Bigtable terminology, foo is known as a column family.  Since cells are stored sparsely, this provides a form of dynamic schema where data can be stored in arbitrary column qualifiers that were not declared at table creation.  Note: Hypertable does not yet support an ALTER TABLE command though that feature will be included in a future release.
+  # Single-table Operations: Hypertable does not support JOINs between tables. All operations are confined to a single table.  As a result, Hypertable does not have the notion of a foreign key.  These features can be emulated at the application layer and, in fact, HyperRecord already supports some of them.
+  # No Types (yet): Hypertable cells do not have types. All data stored in Hypertable are strings.
+  # No AUTO_INCREMENT: Hypertable does not support AUTO_INCREMENT (may come after support for types). Unique ROW keys must be supplied externally.
+  # HQL is not SQL: HQL is similar to SQL though they are not compatible.   See http://code.google.com/p/hypertable/wiki/HQLTutorial for more detail on HQL.
 
 
 = Details =
