@@ -1,13 +1,44 @@
 #summary How to build and run Hypertable on Amazon EC2
+<wiki:toc/>
 
-= Introduction =
+= Creating the Instance =
 
-Add your content here.
+{{{
+$ ec2-run-instances ami-5c709435 -k gsg-keypair 
+RESERVATION               r-9c5aeaf5            724784214682 default
+INSTANCE                  i-ccf678a5            ami-5c709435            pending gsg-keypair     0               m1.small 2009-02-03T05:50:57+0000 us-east-1a aki-a71cf9ce ari-a51cf9cc 
 
+$ ec2-describe-instances 
+RESERVATION               r-9c5aeaf5                 724784214682                       default
+INSTANCE                  i-ccf678a5                 ami-5c709435                       ec2-75-101-254-105.compute-1.amazonaws.com domU-12-31-38-00-6C-78.compute-1.internal running gsg-keypair 0  m1.small 2009-02-03T05:50:57+0000 us-east-1a aki-a71cf9ce ari-a51cf9cc 
 
-= Details =
+$ ssh -i ec2/id_rsa-gsg-keypair ec2-75-101-254-105.compute-1.amazonaws.com -l root
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+$ ssh -A ec2-75-101-254-105.compute-1.amazonaws.com
+
+}}}
+
+= Machine Setup and Hypertable Build =
+
+{{{
+# apt-get update
+# apt-get install g++ make cmake libboost-dev liblog4cpp5-dev git-core
+cronolog libgoogle-perftools-dev libevent-dev zlib1g-dev
+# apt-get install libexpat1-dev liblog4cpp5-dev libboost-dev libdb4.6+
++-dev libncurses-dev libreadline5-dev
+# wget http://internap.dl.sourceforge.net/sourceforge/sigar/hyperic-sigar-1.6.0.tar.gz
+# tar -xzvf hyperic-sigar-1.6.0.tar.gz
+# cp hyperic-sigar-1.6.0/sigar-bin/include/*.h /usr/local/include
+# cp hyperic-sigar-1.6.0/sigar-bin/lib/libsigar-x86-linux.so /usr/
+local/lib/
+# ldconfig
+# mkdir src
+# cd src
+# git clone git://scm.hypertable.org/pub/repos/hypertable.git
+# mkdir -p ../build/hypertable
+# cd ../build/hypertable
+# cmake ~/src/hypertable
+# make
+# make install
+# make alltests
+}}}
