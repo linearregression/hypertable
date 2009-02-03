@@ -4,11 +4,11 @@
 
 Hypertable is a high performance distributed data storage system designed to support applications requiring maximum performance, scalability, and reliability. Modeled after Google's well known Bigtable project, Hypertable is designed to manage the storage and processing of information on a large cluster of commodity servers, providing resilience to machine and component failures.
 
-HyperRecord exists to integrate Hypertable with ActiveRecord (the Ruby on Rails ORM) allowing objects to be stored in Hypertable while maintaining as many of the built-in ORM features as possible. 
+HyperRecord exists to integrate Hypertable with !ActiveRecord (the Ruby on Rails ORM) allowing objects to be stored in Hypertable while maintaining as many of the built-in ORM features as possible. 
 
 == Hypertable for Database Users ==
 
-Hypertable has a lot in common with a typical RDBMS but also has many important differences. Through the Rails ORM, an object stored in Hypertable has many of the same features as an object stored in a regular RBDMS. In fact, for most operations, the programmer doesn't need to know or care that the data is actually stored in Hypertable. That said, one of the primary goals of HyperRecord is to provide seamless integration with ActiveRecord by abstracting these differences without completely preventing the programmer from making use of the unique features that Hypertable brings to the table.
+Hypertable has a lot in common with a typical RDBMS but also has many important differences. Through the Rails ORM, an object stored in Hypertable has many of the same features as an object stored in a regular RBDMS. In fact, for most operations, the programmer doesn't need to know or care that the data is actually stored in Hypertable. That said, one of the primary goals of HyperRecord is to provide seamless integration with !ActiveRecord by abstracting these differences without completely preventing the programmer from making use of the unique features that Hypertable brings to the table.
 
 Primary differences from a typical database
 
@@ -25,12 +25,12 @@ Primary differences from a typical database
   # HQL is not SQL: HQL is similar to SQL though they are not compatible.   See http://code.google.com/p/hypertable/wiki/HQLTutorial for more detail on HQL.
 
 
-== ActiveRecord, HyperRecord and the Hypertable Adapter ==
+== !ActiveRecord, HyperRecord and the Hypertable Adapter ==
 
-The integration between Hypertable and ActiveRecord is provided by two separate Ruby modules.
+The integration between Hypertable and !ActiveRecord is provided by two separate Ruby modules.
 
-  * Hypertable Adapter: In ActiveRecord, each supported data store has an adapter that implements functionality specific to that store as well as providing metadata for data held within the store.  Features implemented by adapters typically include connection handling, listings metadata (tables and schema), statement execution (selects, writes, etc.), latency measurement, fixture handling.
-  * HyperRecord: A subclass of ActiveRecord that overrides many internal methods to use the Hypertable API exposed through the Hypertable Adapter. Also includes logic required to expose column qualifier support to ActiveRecord and support for basic associations. 
+  * Hypertable Adapter: In !ActiveRecord, each supported data store has an adapter that implements functionality specific to that store as well as providing metadata for data held within the store.  Features implemented by adapters typically include connection handling, listings metadata (tables and schema), statement execution (selects, writes, etc.), latency measurement, fixture handling.
+  * HyperRecord: A subclass of !ActiveRecord that overrides many internal methods to use the Hypertable API exposed through the Hypertable Adapter. Also includes logic required to expose column qualifier support to !ActiveRecord and support for basic associations. 
 
 = Getting Started =
 == Installation ==
@@ -41,7 +41,7 @@ The integration between Hypertable and ActiveRecord is provided by two separate 
 == Column Qualifiers ==
 == Associations ==
 
-= ActiveRecord Compatibility Matrix =
+= !ActiveRecord Compatibility Matrix =
 
 
 = TODO =
