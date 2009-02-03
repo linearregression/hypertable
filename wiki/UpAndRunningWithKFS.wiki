@@ -51,7 +51,7 @@ python kfssetup.py -f machines.cfg -b /opt/kfs -w ../webui -u
 *Step 6.* Launch the KFS servers
 {{{
 cd ~/src/kosmosfs/scripts
-python kfslaunch.py -f machines.cfg -w ../webui -s
+python kfslaunch.py -f machines.cfg -s
 }}}
 
 *Step 7.* Make sure the servers are up
