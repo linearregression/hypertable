@@ -1,5 +1,4 @@
 #summary Allow ActiveRecord objects to reside in Hypertable.
-#sidebar TableOfContents
 
 = Table Of Contents =
 <wiki:toc max_depth="2" />
@@ -26,7 +25,7 @@ Primary differences from a typical database
   # Single-table Operations: Hypertable does not support JOINs between tables. All operations are confined to a single table.  As a result, Hypertable does not have the notion of a foreign key.  These features can be emulated at the application layer and, in fact, HyperRecord already supports some of them.
   # No Types (yet): Hypertable cells do not have types. All data stored in Hypertable are strings.
   # No AUTO_INCREMENT: Hypertable does not support AUTO_INCREMENT (may come after support for types). Unique ROW keys must be supplied externally.
-  # HQL is not SQL: HQL is similar to SQL though they are not compatible.   See http://code.google.com/p/hypertable/wiki/HQLTutorial for more detail on HQL.
+  # HQL is not SQL: HQL is similar to SQL though they are not compatible.   [http://code.google.com/p/hypertable/wiki/HQLTutorial See the HQL Tutorial] for more detail.
 
 
 == !ActiveRecord, !HyperRecord and the Hypertable Adapter ==
