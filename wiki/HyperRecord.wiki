@@ -34,8 +34,11 @@ The integration between Hypertable and !ActiveRecord is provided by three separa
   * HyperRecord: A subclass of !ActiveRecord that overrides many internal methods to use the Hypertable API exposed through the Hypertable Adapter. Also includes logic required to expose column qualifier support to !ActiveRecord and support for basic associations. 
 
 = Getting Started =
-== Installation ==
-== Configuration ==
+== Installation and Configuration ==
+ # install Thrift gem and test communicatino
+ # install and configure hypertable adapter
+ # install hyperrecord
+
 == Creating !HyperRecord Classes ==
 
 = Usage =
