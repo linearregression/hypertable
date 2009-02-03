@@ -3,7 +3,7 @@
 
 == How to Create an EC2 Instance ==
 
-The following steps got me up and running with a machine on EC2.  The following command created the machine instance.  The `ami-5c709435` parameter refers to a public AMI.  Check out the [http://developer.amazonwebservices.com/connect/kbcategory.jspa?categoryID=101 Public EC2 AMI Directory] for other images.  The '-k gsg-keypair' argument refers to the keypair generated with a previous run of the command `ec2-add-keypair gsg-keypair`.  See [http://docs.amazonwebservices.com/AWSEC2/latest/GettingStartedGuide/ Amazon EC2 Getting Started Guide] for help getting setup.  I cut and pasted the private key into the file `~/.ec2/id_rsa-gsg-keypair`
+The following steps got me up and running with a machine on EC2.  The following command created the machine instance.  The `ami-5c709435` parameter refers to a public AMI.  Check out the [http://developer.amazonwebservices.com/connect/kbcategory.jspa?categoryID=101 Public EC2 AMI Directory] for other images.  The `-k gsg-keypair` argument refers to the keypair generated with a previous run of the command `ec2-add-keypair gsg-keypair`.  See [http://docs.amazonwebservices.com/AWSEC2/latest/GettingStartedGuide/ Amazon EC2 Getting Started Guide] for help getting setup.  I cut and pasted the private key into the file `~/.ec2/id_rsa-gsg-keypair`
 
 {{{
 $ ec2-run-instances ami-5c709435 -k gsg-keypair 
