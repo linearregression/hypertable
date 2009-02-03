@@ -32,8 +32,19 @@ The integration between Hypertable and ActiveRecord is provided by two separate 
   * Hypertable Adapter: In ActiveRecord, each supported data store has an adapter that implements functionality specific to that store as well as providing metadata for data held within the store.  Features implemented by adapters typically include connection handling, listings metadata (tables and schema), statement execution (selects, writes, etc.), latency measurement, fixture handling.
   * HyperRecord: A subclass of ActiveRecord that overrides many internal methods to use the Hypertable API exposed through the Hypertable Adapter. Also includes logic required to expose column qualifier support to ActiveRecord and support for basic associations. 
 
+= Getting Started =
+== Installation ==
+== Configuration ==
+== Creating HyperRecord Classes ==
 
-= Details =
+= Usage =
+== Column Qualifiers ==
+== Associations ==
+
+= ActiveRecord Compatibility Matrix =
+
+
+= TODO =
 
 Add your content here.  Format your content with:
   * rewrite README for new config
