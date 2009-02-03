@@ -1,0 +1,19 @@
+#summary Allow ActiveRecord objects to reside in Hypertable.
+
+= Introduction =
+
+Add your content here.
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * rewrite README for new config
+  * pull in docs from internal wiki
+  * how to support hypertable fixtures in tests/specs in regular rails tests
+  * add INSTALL file
+  * :row_keys, :start_inclusive, :end_inclusive finder options
+  * Hash conditions not supported (explain why)
+  * update internal docs re: can't specify select list
+  * futures (efficient lookup outside of row key)
+  * benchmark MySQL vs. Hypertable (read, write)
