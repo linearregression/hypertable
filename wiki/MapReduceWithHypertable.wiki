@@ -9,7 +9,7 @@ The details are located at http://labs.google.com/papers/mapreduce-osdi04.pdf
 
 == Filesystem support for !MapReduce and Hypertable ==
 
-The mapreduce (MR) is currently supported  by the Hadoop DFS only.
+The mapreduce (MR) is currently supported  by the Hadoop only.
 
 = Design =
 
