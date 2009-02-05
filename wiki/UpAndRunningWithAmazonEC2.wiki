@@ -36,37 +36,37 @@ $ ssh -A ec2-75-101-254-105.compute-1.amazonaws.com
 _Basic Dependencies_
 
 {{{
-# apt-get update
-# apt-get install g++ make cmake libboost-dev liblog4cpp5-dev git-core cronolog libgoogle-perftools-dev libevent-dev zlib1g-dev
-# apt-get install libexpat1-dev liblog4cpp5-dev libboost-dev libdb4.6++-dev libncurses-dev libreadline5-dev
-# wget http://internap.dl.sourceforge.net/sourceforge/sigar/hyperic-sigar-1.6.0.tar.gz
-# tar -xzvf hyperic-sigar-1.6.0.tar.gz
-# cp hyperic-sigar-1.6.0/sigar-bin/include/*.h /usr/local/include
-# cp hyperic-sigar-1.6.0/sigar-bin/lib/libsigar-x86-linux.so /usr/local/lib/
-# ldconfig
+apt-get update
+apt-get install g++ make cmake libboost-dev liblog4cpp5-dev git-core cronolog libgoogle-perftools-dev libevent-dev zlib1g-dev
+apt-get install libexpat1-dev liblog4cpp5-dev libboost-dev libdb4.6++-dev libncurses-dev libreadline5-dev
+wget http://internap.dl.sourceforge.net/sourceforge/sigar/hyperic-sigar-1.6.0.tar.gz
+tar -xzvf hyperic-sigar-1.6.0.tar.gz
+cp hyperic-sigar-1.6.0/sigar-bin/include/*.h /usr/local/include
+cp hyperic-sigar-1.6.0/sigar-bin/lib/libsigar-x86-linux.so /usr/local/lib/
+ldconfig
 }}}
 
 _Thrift Broker Dependencies_
 
 See this [http://wiki.apache.org/thrift/ThriftInstallation official thrift installation wiki page] for up-to-date installation instructions.
 {{{
-# apt-get install sun-java6-jdk
-# update-java-alternatives --set java-6-sun
-# apt-get install ant autoconf automake libtool bison flex pkg-config php5 php5-cli ruby-dev libbit-vector-perl
-# ln -f -s /bin/bash /bin/sh
-# wget -O thrift.tgz http://tr.im/2r61  (See hypertable README for location of working Thrift snapshot)
-# tar -xzvf thrift.tgz
-# cd thrift
-# ./bootstrap.sh
-# ./configure
-# make
-# make install
-# cd ~/thrift/lib/py
-# make install
-# cd ~/thrift/lib/perl
-# perl Makefile.PL
-# make install
-# ldconfig
+apt-get install sun-java6-jdk
+update-java-alternatives --set java-6-sun
+apt-get install ant autoconf automake libtool bison flex pkg-config php5 php5-cli ruby-dev libbit-vector-perl
+ln -f -s /bin/bash /bin/sh
+wget -O thrift.tgz http://tr.im/2r61  (See hypertable README for location of working Thrift snapshot)
+tar -xzvf thrift.tgz
+cd thrift
+./bootstrap.sh
+./configure
+make
+make install
+cd ~/thrift/lib/py
+make install
+cd ~/thrift/lib/perl
+perl Makefile.PL
+make install
+ldconfig
 }}}
 
 == CentOS 5 (ami-0459bc6d) ==
@@ -74,20 +74,20 @@ See this [http://wiki.apache.org/thrift/ThriftInstallation official thrift insta
 _Basic Dependencies_
 
 {{{
-# yum install gcc-c++ make cmake
+yum install gcc-c++ make cmake
 }}}
 
 _Thrift Broker Dependencies_
 
 == Building Hypertable and Running Tests ==
 {{{
-# mkdir src
-# cd src
-# git clone git://scm.hypertable.org/pub/repos/hypertable.git
-# mkdir -p ../build/hypertable
-# cd ../build/hypertable
-# cmake -DPHPTHRIFT_ROOT=$HOME/thrift/lib/php/src ~/src/hypertable
-# make
-# make install
-# make alltests
+mkdir src
+cd src
+git clone git://scm.hypertable.org/pub/repos/hypertable.git
+mkdir -p ../build/hypertable
+cd ../build/hypertable
+cmake -DPHPTHRIFT_ROOT=$HOME/thrift/lib/php/src ~/src/hypertable
+make
+make install
+make alltests
 }}}
