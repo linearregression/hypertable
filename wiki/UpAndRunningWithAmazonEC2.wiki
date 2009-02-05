@@ -69,6 +69,16 @@ See this [http://wiki.apache.org/thrift/ThriftInstallation official thrift insta
 # ldconfig
 }}}
 
+== CentOS 5 (ami-0459bc6d) ==
+
+_Basic Dependencies_
+
+{{{
+# yum install gcc-c++ make cmake
+}}}
+
+_Thrift Broker Dependencies_
+
 == Building Hypertable and Running Tests ==
 {{{
 # mkdir src
