@@ -48,9 +48,25 @@ _Basic Setup_
 
 _Thrift Broker_
 
-  * Install thrift (compiler and libraries)
-    See this [http://wiki.apache.org/thrift/ThriftInstallation official thrift installation wiki page] for details.
-  * Thrift Broker will be built along with Hypertable, when thrift is detected.
+See this [http://wiki.apache.org/thrift/ThriftInstallation official thrift installation wiki page] for up-to-date installation information.
+{{{
+# apt-get install sun-java6-jdk
+# update-java-alternatives --set java-6-sun
+# apt-get install ant autoconf automake libtool bison flex pkg-config php5 ruby-dev libbit-vector-perl
+# ln -f -s /bin/bash /bin/sh
+# wget -O thrift.tgz http://tr.im/2r61  (See hypertable README for location of working Thrift snapshot)
+# tar -xzvf thrift.tgz
+# cd thrift
+# ./bootstrap.sh
+# ./configure
+# make
+# make install
+# cd ~/thrift/lib/py
+# make install
+# cd ~/thrift/lib/perl
+# perl Makefile.PL
+# make install
+}}}
 
 == Building Hypertable and Running Tests ==
 {{{
@@ -59,7 +75,7 @@ _Thrift Broker_
 # git clone git://scm.hypertable.org/pub/repos/hypertable.git
 # mkdir -p ../build/hypertable
 # cd ../build/hypertable
-# cmake ~/src/hypertable
+# cmake -DPHPTHRIFT_ROOT=$HOME/thrift/lib/php/src ~/src/hypertable
 # make
 # make install
 # make alltests
