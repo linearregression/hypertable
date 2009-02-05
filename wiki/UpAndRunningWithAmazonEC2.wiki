@@ -31,9 +31,9 @@ To make my life easier, I created an account called 'doug', added myself to `/et
 $ ssh -A ec2-75-101-254-105.compute-1.amazonaws.com
 }}}
 
-== Ubuntu Ibex Machine Setup (ami-5c709435) ==
+== Ubuntu Ibex (ami-5c709435) ==
 
-_Basic Setup_
+_Basic Dependencies_
 
 {{{
 # apt-get update
@@ -46,7 +46,7 @@ _Basic Setup_
 # ldconfig
 }}}
 
-_Thrift Broker_
+_Thrift Broker Dependencies_
 
 See this [http://wiki.apache.org/thrift/ThriftInstallation official thrift installation wiki page] for up-to-date installation instructions.
 {{{
