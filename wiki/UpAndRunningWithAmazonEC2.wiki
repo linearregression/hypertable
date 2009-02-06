@@ -85,7 +85,16 @@ make
 make install
 cd /etc/yum.repos.d
 wget http://dries.eu/pub/dries-el.repo
-yum install log4cpp-devel git-core cronolog google-perftools-devel	libevent-devel readline-devel db4-devel
+yum install log4cpp-devel git-core cronolog google-perftools-devel libevent-devel readline-devel
+wget http://internap.dl.sourceforge.net/sourceforge/sigar/hyperic-sigar-1.6.0.tar.gz
+tar -xzvf hyperic-sigar-1.6.0.tar.gz
+cp hyperic-sigar-1.6.0/sigar-bin/include/*.h /usr/local/include
+cp hyperic-sigar-1.6.0/sigar-bin/lib/libsigar-x86-linux.so /usr/local/lib/
+wget http://download.oracle.com/berkeley-db/db-4.7.25.tar.gz
+tar -xzvf db-4.7.25.tar.gz
+cd db-4.7.25/build_unix/
+../dist/configure --enable-cxx
+make
 /sbin/ldconfig
 }}}
 
