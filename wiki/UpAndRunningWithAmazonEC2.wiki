@@ -74,7 +74,19 @@ ldconfig
 _Basic Dependencies_
 
 {{{
-yum install gcc-c++ make cmake
+rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm
+yum install gcc-c++ make cmake python-devel bzip2-devel zlib-devel expat-devel
+wget http://downloads.sourceforge.net/boost/boost_1_37_0.tar.bz2
+bzip2 -d boost_1_37_0.tar.bz2
+tar -xvf boost_1_37_0.tar
+cd boost_1_37_0
+./configure
+make
+make install
+cd /etc/yum.repos.d
+wget http://dries.eu/pub/dries-el.repo
+yum install log4cpp-devel git-core cronolog google-perftools-devel	libevent-devel readline-devel db4-devel
+/sbin/ldconfig
 }}}
 
 _Thrift Broker Dependencies_
