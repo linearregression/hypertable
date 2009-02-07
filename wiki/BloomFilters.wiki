@@ -39,7 +39,24 @@ The `BloomFilter` in a `CellStore` will have bits set for every `key` and option
 
 = Hql Example =
 {{{
-create table  Foo (
+hypertable> help create table;
+
+CREATE TABLE [table_option ...] name '(' [create_definition, ...] ')'
+CREATE TABLE name LIKE example_name
+
+table_option:
+    COMPRESSOR '=' string_literal
+.
+.
+.
+access_group_option:
+    IN_MEMORY
+    | BLOCKSIZE '=' value
+    | COMPRESSOR '=' string_literal
+    | *BLOOMFILTER '=' string_literal [BLOOM_FALSE_POSITIVE_RATE '=' value]*
+
+
+hypertable> create table  Foo (
   Field1,
   Field2,
   Field3,
@@ -48,3 +65,5 @@ create table  Foo (
 );
 }}}
 In this example the table Foo has two access groups. The group "one" consists of column family "Field1" and the BloomFilter for this group uses just the rowkey as the filter key and has a false positive rate of 1% (this is the default false positive rate). The group "two" which consists of column family "Field2" and "Field3" has the BloomFilter configured to contain keys based on the rowkey as well as rowkey + column family. It also has a higher false positive rate.
+
+Currently the default false positive rate is 1%. 
