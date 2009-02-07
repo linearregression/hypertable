@@ -40,3 +40,7 @@ Then, after logging into the machine, setup the doug account:
 # su - doug
 $ tar xzvf /tmp/doug-bash-account-setup.tgz 
 }}}
+
+== Useful Links ===
+  * [http://aws.amazon.com/ec2/#pricing EC2 Instance Pricing]
+  * [http://developer.amazonwebservices.com/connect/kbcategory.jspa?categoryID=101 Public EC2 AMI Directory]
