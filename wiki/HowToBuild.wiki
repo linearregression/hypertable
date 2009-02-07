@@ -96,7 +96,7 @@ make install
 /sbin/ldconfig
 }}}
 
-= Building, Installing, and Running Tests =
+== Building, Installing, and Running Tests ==
 {{{
 mkdir src
 cd src
