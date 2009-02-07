@@ -1,7 +1,7 @@
 #summary How to Build Hypertable on Various Platforms
 <wiki:toc/>
 
-= Ubuntu Ibex Dependency Setup =
+= Ubuntu Ibex =
 
 EC2 Images:  ami-5c709435
 
@@ -41,7 +41,7 @@ make install
 ldconfig
 }}}
 
-= CentOS 5 Dependency Setup =
+= CentOS 5 =
 
 EC2 Images:  ami-0459bc6d
 
@@ -83,7 +83,7 @@ chmod 755 jdk-6u12-linux-i586-rpm.bin
 
 }}}
 
-== Building, Installing, and Running Tests ==
+= Building, Installing, and Running Tests =
 {{{
 mkdir src
 cd src
