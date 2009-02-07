@@ -1,6 +1,9 @@
 #summary How to Build Hypertable on Various Platforms
+<wiki:toc/>
 
-== Ubuntu Ibex (ami-5c709435) ==
+== Ubuntu Ibex ==
+
+EC2 Images:  ami-5c709435
 
 _Basic Dependencies_
 
