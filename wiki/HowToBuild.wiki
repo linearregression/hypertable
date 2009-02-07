@@ -29,6 +29,7 @@ tar -xzvf db-4.7.25.tar.gz
 cd db-4.7.25/build_unix/
 ../dist/configure --enable-cxx
 make
+make install
 echo "/usr/local/lib" > /etc/ld.so.conf.d/local.conf
 echo "/usr/local/BerkeleyDB.4.7/lib" > /etc/ld.so.conf.d/BerkeleyDB.4.7.conf
 /sbin/ldconfig
@@ -70,19 +71,12 @@ wget http://dag.wieers.com/rpm/packages/log4cpp/log4cpp-1.0-1.el5.rf.i386.rpm
 rpm -i log4cpp-1.0-1.el5.rf.i386.rpm 
 wget http://dag.wieers.com/rpm/packages/log4cpp/log4cpp-devel-1.0-1.el5.rf.i386.rpm
 rpm -i log4cpp-devel-1.0-1.el5.rf.i386.rpm 
-yum install cronolog google-perftools-devel libevent-devel readline-devel ncurses-devel
+yum install cronolog google-perftools-devel libevent-devel readline-devel ncurses-devel db4-devel
 wget http://internap.dl.sourceforge.net/sourceforge/sigar/hyperic-sigar-1.6.0.tar.gz
 tar -xzvf hyperic-sigar-1.6.0.tar.gz
 cp hyperic-sigar-1.6.0/sigar-bin/include/*.h /usr/local/include
 cp hyperic-sigar-1.6.0/sigar-bin/lib/libsigar-x86-linux.so /usr/local/lib/
-wget http://download.oracle.com/berkeley-db/db-4.7.25.tar.gz
-tar -xzvf db-4.7.25.tar.gz
-tar -xzvf db-4.7.25.tar.gz
-cd db-4.7.25/build_unix/
-../dist/configure --enable-cxx
-make
 echo "/usr/local/lib" > /etc/ld.so.conf.d/local.conf
-echo "/usr/local/BerkeleyDB.4.7/lib" > /etc/ld.so.conf.d/BerkeleyDB.4.7.conf
 /sbin/ldconfig
 }}}
 
