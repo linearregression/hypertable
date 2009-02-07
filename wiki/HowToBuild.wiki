@@ -67,9 +67,11 @@ _Basic Dependencies_
 {{{
 rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm
 yum install gcc-c++ make cmake python-devel bzip2-devel zlib-devel expat-devel boost-devel
-cd /etc/yum.repos.d
-wget http://dries.eu/pub/dries-el.repo
-yum install log4cpp-devel git-core cronolog google-perftools-devel libevent-devel readline-devel ncurses-devel
+wget http://dag.wieers.com/rpm/packages/log4cpp/log4cpp-1.0-1.el5.rf.i386.rpm
+rpm -i log4cpp-1.0-1.el5.rf.i386.rpm 
+wget http://dag.wieers.com/rpm/packages/log4cpp/log4cpp-devel-1.0-1.el5.rf.i386.rpm
+rpm -i log4cpp-devel-1.0-1.el5.rf.i386.rpm 
+yum install git-core cronolog google-perftools-devel libevent-devel readline-devel ncurses-devel
 wget http://internap.dl.sourceforge.net/sourceforge/sigar/hyperic-sigar-1.6.0.tar.gz
 tar -xzvf hyperic-sigar-1.6.0.tar.gz
 cp hyperic-sigar-1.6.0/sigar-bin/include/*.h /usr/local/include
