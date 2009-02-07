@@ -58,6 +58,57 @@ make install
 /sbin/ldconfig
 }}}
 
+== Fedora Core 8 ==
+
+_EC2:  ami-5647a33f_
+
+_Basic Dependencies_
+
+{{{
+rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm
+yum install gcc-c++ make cmake python-devel bzip2-devel zlib-devel expat-devel boost-devel
+cd /etc/yum.repos.d
+wget http://dries.eu/pub/dries-el.repo
+yum install log4cpp-devel git-core cronolog google-perftools-devel libevent-devel readline-devel ncurses-devel
+wget http://internap.dl.sourceforge.net/sourceforge/sigar/hyperic-sigar-1.6.0.tar.gz
+tar -xzvf hyperic-sigar-1.6.0.tar.gz
+cp hyperic-sigar-1.6.0/sigar-bin/include/*.h /usr/local/include
+cp hyperic-sigar-1.6.0/sigar-bin/lib/libsigar-x86-linux.so /usr/local/lib/
+wget http://download.oracle.com/berkeley-db/db-4.7.25.tar.gz
+tar -xzvf db-4.7.25.tar.gz
+tar -xzvf db-4.7.25.tar.gz
+cd db-4.7.25/build_unix/
+../dist/configure --enable-cxx
+make
+echo "/usr/local/lib" > /etc/ld.so.conf.d/local.conf
+echo "/usr/local/BerkeleyDB.4.7/lib" > /etc/ld.so.conf.d/BerkeleyDB.4.7.conf
+/sbin/ldconfig
+}}}
+
+_Thrift Broker Dependencies_
+
+See this [http://wiki.apache.org/thrift/ThriftInstallation official thrift installation wiki page] for up-to-date installation instructions.  Fetch JDK rpm from [http://java.sun.com/javase/downloads/index.jsp Sun JAVA Download] page
+
+{{{
+wget -O jdk-6u12-linux-i586-rpm.bin <really-long-url-from-sun>
+chmod 755 jdk-6u12-linux-i586-rpm.bin
+./jdk-6u12-linux-i586-rpm.bin
+yum install ant automake libtool flex bison pkgconfig libevent-devel ruby-devel perl-Bit-Vector php
+wget -O thrift.tgz http://tr.im/2r61  (See hypertable README for location of working Thrift snapshot)
+tar -xzvf thrift.tgz
+cd thrift
+./bootstrap.sh
+./configure
+make
+make install
+cd ~/thrift/lib/py
+make install
+cd ~/thrift/lib/perl
+perl Makefile.PL
+make install
+/sbin/ldconfig
+}}}
+
 == Ubuntu 8.10 Intrepid Ibex ==
 
 _EC2: ami-5c709435_
