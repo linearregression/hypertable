@@ -1,7 +1,7 @@
 #summary How to Build Hypertable on Various Platforms
 <wiki:toc/>
 
-== CentOS 5 ==
+== CentOS 5 32-bit ==
 
 _EC2:  ami-0459bc6d_
 
@@ -59,7 +59,7 @@ make install
 /sbin/ldconfig
 }}}
 
-== Fedora Core 8 ==
+== Fedora Core 8 32-bit ==
 
 _EC2:  ami-5647a33f_
 
@@ -104,7 +104,7 @@ make install
 /sbin/ldconfig
 }}}
 
-== Ubuntu 8.10 Intrepid Ibex ==
+== Ubuntu 8.10 Intrepid Ibex 32-bit ==
 
 _EC2: ami-5c709435_
 
