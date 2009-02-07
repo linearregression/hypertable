@@ -19,16 +19,26 @@ RESERVATION               r-9c5aeaf5                 724784214682               
 INSTANCE                  i-ccf678a5                 ami-5c709435                       ec2-75-101-254-105.compute-1.amazonaws.com domU-12-31-38-00-6C-78.compute-1.internal running gsg-keypair 0  m1.small 2009-02-03T05:50:57+0000 us-east-1a aki-a71cf9ce ari-a51cf9cc 
 }}}
 
+Copy my account tarball to the machine:
+
+{{{
+scp -i .ec2/id_rsa-gsg-keypair ec2/doug-bash-account-setup.tgz root@ec2-75-101-254-105.compute-1.amazonaws.com:/tmp
+}}}
+
 I was then able to log into the system as root without a password with the following comand:
 
 {{{
-$ ssh -i .ec2/id_rsa-gsg-keypair ec2-75-101-254-105.compute-1.amazonaws.com -l root
+$ ssh -i .ec2/id_rsa-gsg-keypair root@ec2-75-101-254-105.compute-1.amazonaws.com
 }}}
 
-To make my life easier, I created an account called 'doug', added myself to `/etc/sudoers`, then put my public ssh key into the `~doug/.ssh/authorized_keys` files.  This enabled me to log in without a password.
+Then, after logging into the machine, setup the doug account:
 
 {{{
-$ ssh -A ec2-75-101-254-105.compute-1.amazonaws.com
+# useradd -d /home/doug -s /bin/bash doug
+# echo "doug    ALL=(ALL) ALL" >> /etc/sudoers
+# passwd doug
+# su - doug
+$ tar xzvf /tmp/doug-bash-account-setup.tgz 
 }}}
 
 == Ubuntu Ibex (ami-5c709435) ==
