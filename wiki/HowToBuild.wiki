@@ -74,6 +74,7 @@ make
 }}}
 
 _Thrift Broker Dependencies_
+
 See this [http://wiki.apache.org/thrift/ThriftInstallation official thrift installation wiki page] for up-to-date installation instructions.  Fetch JDK rpm from [http://java.sun.com/javase/downloads/index.jsp Sun JAVA Download] page
 
 {{{
