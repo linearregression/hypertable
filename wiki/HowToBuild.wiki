@@ -1,7 +1,7 @@
 #summary How to Build Hypertable on Various Platforms
 <wiki:toc/>
 
-= Ubuntu Ibex =
+= Ubuntu 8.10 Intrepid Ibex =
 
 EC2 Images:  ami-5c709435
 
