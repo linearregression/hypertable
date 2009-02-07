@@ -65,7 +65,7 @@ _EC2:  ami-5647a33f_
 _Basic Dependencies_
 
 {{{
-rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm
+yum install git
 yum install gcc-c++ make cmake python-devel bzip2-devel zlib-devel expat-devel boost-devel
 wget http://dag.wieers.com/rpm/packages/log4cpp/log4cpp-1.0-1.el5.rf.i386.rpm
 rpm -i log4cpp-1.0-1.el5.rf.i386.rpm 
