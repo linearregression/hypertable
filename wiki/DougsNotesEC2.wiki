@@ -46,3 +46,4 @@ $ tar xzvf /tmp/doug-bash-account-setup.tgz
   * [http://aws.amazon.com/ec2/#pricing Instance Pricing]
   * [http://aws.amazon.com/ec2/instance-types/ Instance Types]
   * [http://developer.amazonwebservices.com/connect/kbcategory.jspa?categoryID=101 Public EC2 AMI Directory]
+  * [http://docs.amazonwebservices.com/AWSEC2/2008-02-01/DeveloperGuide/index.html Developer's Guide]
