@@ -43,5 +43,5 @@ $ tar xzvf /tmp/doug-bash-account-setup.tgz
 
 == Useful Links ===
   * [http://aws.amazon.com/ec2/#pricing EC2 Instance Pricing]
-  * [http://aws.amazon.com/ec2/#instance EC2 Instance Types]
+  * [http://aws.amazon.com/ec2/instance-types/ EC2 Instance Types]
   * [http://developer.amazonwebservices.com/connect/kbcategory.jspa?categoryID=101 Public EC2 AMI Directory]
