@@ -161,9 +161,15 @@ Regular expressions can also be used in the qualifier list.  For instance, the f
  end
 }}}
 
-
-
 == Associations ==
+
+Hypertable has some attributes that affect implementation of ActiveRecord associations.  Specifically, Hypertable does not support JOINs across tables and does not allow an index on arbitrary columns.  
+
+  # *belongs_to*:  Supported.
+  # *has_many*: Supported but inefficient.  The association load requires retrieving rows based on a column value that is not the ROW key.  Since Hypertable has indexed lookups only on the ROW key, this operation will be relatively slow.
+  # *has_and_belongs_to_many*: Supported.  Instead of using a separate join table, the association information is written to each table using qualified columns.  For instance, assume that you have two models (Book and Author) in a has_and_belongs_to_many association.  The traditional HABTM association requires a join table (authors_books) to list the associated objects.  In Hypertable, instead of using a separate join table, each table must have a column dedicated to listing the associations.  So, the books table has an author_id column and the authors table has a book_id column.  Column qualifiers are used to list as many associated objects are necessary.  So, if an Author with the ROW key charles_dickens is added to a Book with the ROW key tale_of_two_cities, then a cell called author_id:charles_dickens is added to the Book object and a cell called book_id:tale_of_two_cities is added to the Author object.  The value of the cells is inconsequential - their presence alone indicates an association between the objects.  When a object in an HABTM association is destroyed, the corresponding entries in the associated table are removed (warning: don't use delete because it will leave behind stale association information)
+
+Eager loading of associations is ignored since Hypertable does not support JOINs.
 
 = !ActiveRecord Compatibility Matrix =
 
