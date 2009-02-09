@@ -38,9 +38,10 @@ The integration between Hypertable and !ActiveRecord is provided by three separa
 
 = Getting Started =
 == Installation and Configuration ==
- # install Thrift gem and test communicatino
+ # install Thrift gem
  # install and configure hypertable adapter
  # install hyperrecord
+ # add "require 'hypertable/thrift_client' to config/environment.rb
 
 == Creating !HyperRecord Classes ==
 
