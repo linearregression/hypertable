@@ -88,3 +88,5 @@ EOF
 }}}
 Refer to "test/thrift_client_test.rb" under the Thrift gem installation
 for many more examples.
+
+http://github.com/tylerkovacs/hypertable/blob/4c15fb35726841154491725c2ad20e831f5b32ba/src/rb/ThriftClient/test/thrift_client_test.rb
