@@ -2,10 +2,24 @@
 
 = Introduction =
 
-Add your content here.
+hypertable-thrift-client allows programs written in Ruby to communicate with
+Hypertable using Thrift.
 
+Hypertable is a high performance distributed data storage system designed·
+to support applications requiring maximum performance, scalability, and·
+reliability. Modeled after Google's well known Bigtable project, Hypertable·
+is designed to manage the storage and processing of information on a large·
+cluster of commodity servers, providing resilience to machine and component·
+failures.
 
-= Details =
+http://hypertable.org/
+
+Thrift is a software framework for scalable cross-language services·
+development.
+
+http://developers.facebook.com/thrift/
+
+= Installation =
 
 Add your content here.  Format your content with:
   * how to download and install the thrift gem (make sure hypertable is running and you know hostname/port of thrift broker)
