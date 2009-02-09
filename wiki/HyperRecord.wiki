@@ -38,7 +38,7 @@ The integration between Hypertable and !ActiveRecord is provided by three separa
 
 = Getting Started =
 == Installation and Configuration ==
- # install Thrift gem
+ # Install Thrift gem.  See UsingThriftClientWithRuby
  # install and configure hypertable adapter
  # install hyperrecord
  # add "require 'hypertable/thrift_client' to config/environment.rb
