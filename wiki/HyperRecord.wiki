@@ -172,7 +172,7 @@ Hypertable has some attributes that affect implementation of ActiveRecord associ
 Eager loading of associations is ignored since Hypertable does not support JOINs.
 
 = !ActiveRecord Compatibility Matrix =
-
+= New Finder Options =
 
 = TODO =
 
