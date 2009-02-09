@@ -61,6 +61,8 @@ gem install tylerkovacs-hyper_record
  # Add the following to the bottom of config/environment.rb:
 {{{
 require 'hypertable/thrift_client'
+require 'active_record/connection_adapters/hypertable_adapter'
+require 'hyper_record'
 }}}
 
 == Creating !HyperRecord Classes ==
