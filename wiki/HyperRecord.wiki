@@ -39,8 +39,25 @@ The integration between Hypertable and !ActiveRecord is provided by three separa
 = Getting Started =
 == Installation and Configuration ==
  # Install Thrift gem.  See UsingThriftClientWithRuby
- # install and configure hypertable adapter
- # install hyperrecord
+ # Add github as a gem source (if you haven't already)
+{{{
+gem sources -a http://gems.github.com
+}}}
+ # Install hypertable_adapter gem
+{{{
+gem install tylerkovacs-hypertable_adapter
+}}}
+ # Configure Hypertable Adapter by adding an entry to config/database.yml that points to an instance of the Hypertable Thrift Broker (uses port 38080 by default).
+{{{
+ hypertable:
+   adapter: hypertable
+   host: localhost
+   port: 38080
+}}}
+ # Install HyperRecord gem
+{{{
+gem install tylerkovacs-hypertable_adapter
+}}}
  # add "require 'hypertable/thrift_client' to config/environment.rb
 
 == Creating !HyperRecord Classes ==
