@@ -67,8 +67,102 @@ require 'hyper_record'
 
 == Creating !HyperRecord Classes ==
 
-= Usage =
+To create a !HyperRecord class, simply inherit from ActiveRecord::HyperBase and establish a connection to your Hypertable instance (this latter step is not necessary if Hypertable is declared as the default connection for your current environment).
+{{{
+  class Page < ActiveRecord::HyperBase
+    self.establish_connection(:hypertable)
+  end
+}}}
+To create a table for this class in Hypertable:
+{{{
+  hql = "CREATE TABLE #{Page.table_name} (
+    'name',
+    'url'
+  )"
+  Page.connection.execute(hql)
+}}}
+For more information on creating tables in Hypertable, see the HQL Tutorial on the Hypertable web site.
+* http://code.google.com/p/hypertable/wiki/HQLTutorial
+
 == Column Qualifiers ==
+
+Column qualifiers allow tables to have a flexible schema.  It is not necessary to declare anything special during table creation.  Any column in a table can support qualifiers. 
+{{{
+    CREATE TABLE authors (
+      'name',
+      'foo'
+    )
+}}}
+The schema for this table looks like this:
+{{{
+  hypertable> describe table authors;
+  <Schema generation="1">
+    <AccessGroup name="default">
+      <ColumnFamily id="1">
+        <Name>name</Name>
+      </ColumnFamily>
+      <ColumnFamily id="2">
+        <Name>foo</Name>
+      </ColumnFamily>
+    </AccessGroup>
+  </Schema>
+}}}
+All columns support qualifiers, so you could write to cells named foo:bar1, foo:bar2 or any legal qualifier name of your choosing.  It is important to note, however, that the schema for the table does not change.  The schema command always lists only the name and book_id columns with no indication of qualifier usage.
+
+This behavior makes things difficult on the ORM since it relies on the schema to tell it what attributes are supported on the object.  As a result, HyperRecord objects support explicit declaration of columns that will be used with qualifiers.
+{{{
+ class Author < ActiveRecord::HyperBase
+   self.establish_connection(:hypertable)
+   qualified_column :foo
+ end
+}}}
+As a result, qualified columns are represented as hashes in HyperRecord objects.
+{{{
+  >> a = Author.new
+  >> a.foo
+  => {}
+  >> a.foo['bar1'] = 1
+  => 1
+  >> a.foo
+  => {'bar1' => 1}
+}}}
+Since a qualified column can have a near infinite number of qualifiers, it would be inefficient for HyperRecord to instantiate an object with all existing qualifiers.  As a result, the hash for a qualified column will be empty unless specific qualifiers are requested at load time.
+{{{  
+  >> a = Author.find(:first)
+  => #<Author ROW: james_joyce, name: "James Joyce", foo: {}>
+}}}
+Specific qualified columns can be requested using :select.
+{{{
+  >> a = Author.find(:first, :select => "name, foo:bar")
+  => #<Author ROW: james_joyce, name: "James Joyce", foo: {'bar' => 1}>
+}}}
+Regular expressions can be used with specifying the list of qualifiers.
+{{{
+  >> a = Author.find(:first, :select => "name, foo:b*")
+  => #<Author ROW: james_joyce, name: "James Joyce", foo: {'bar' => 1}>
+}}}
+If you want find to automatically load certain qualifiers, you must declare them in the qualified_column statement.
+{{{
+ class Author < ActiveRecord::HyperBase
+   self.establish_connection(:hypertable)
+   qualified_column :foo, :qualifiers => [:bar]
+ end
+}}}
+A subsequent find will automatically include the :bar qualifier of the foo column.
+{{{
+  >> a = Author.find(:first)
+  => #<Author ROW: james_joyce, name: "James Joyce", foo: {'bar' => 1}>
+}}}
+Regular expressions can also be used in the qualifier list.  For instance, the following code configures the Author model to load all qualifiers from the foo column family by default.
+{{{
+ class Author < ActiveRecord::HyperBase
+   self.establish_connection(:hypertable)
+   qualified_column :foo, :qualifiers => ['*']
+ end
+}}}
+
+
+
 == Associations ==
 
 = !ActiveRecord Compatibility Matrix =
