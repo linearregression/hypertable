@@ -192,7 +192,7 @@ Eager loading of associations is ignored since Hypertable does not support JOINs
 || || update_attribute || Yes || ||
 || || update_attributes || Yes || ||
 || || validations || Yes || ||
-|| '''Associations''' || belongs_to association || Yes ||
+|| *Associations* || belongs_to association || Yes ||
 || || has_many association || Yes || Retrieval inefficient due to lookup by column other than ROW key. ||
 || || has_and_belongs_to_many association || Yes || No join table.  Association information stored in qualified columns within main tables. ||
 || || association.new || Partial || has_many: new record is instantiated but the association cells are not written to the owner record. ||
