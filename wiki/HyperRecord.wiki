@@ -203,7 +203,7 @@ Eager loading of associations is ignored since Hypertable does not support JOINs
 || || association.<< || Yes || ||
 || || association.loaded?  || Yes || }}
 || || association.reset || Partial || Reset does not work for HABTM associations since the association data is stored within qualified columns directly on the object.  Reloading the object is the equivalent operation. ||
-|| || || || *Notes*: * Most association options (e.g., finder_sql, counter_cache) are not supported.  * Associations between HyperRecord objects and regular ActiveRecord objects work in some limited cases. ||
+|| || || || *Notes*: Most association options (e.g., finder_sql, counter_cache) are not supported.  Associations between !HyperRecord objects and regular !ActiveRecord objects work in some limited cases. ||
 || *Finders* || find(id) || Yes || ||
 || || find(:first) || Yes || ||
 || || find([id1, id2, ...]) || Yes || ||
