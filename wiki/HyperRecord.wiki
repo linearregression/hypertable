@@ -217,8 +217,12 @@ Eager loading of associations is ignored since Hypertable does not support JOINs
 || || find_by_x_and_y || No || Not yet implemented.  ||
 
 
-== Untested ActiveRecord Methods ==
+== Untested !ActiveRecord Methods ==
   * serialize
   * counters
   * created_at, updated_at timestamps
   * many more
+
+
+== Coming Soon ==
+  # Migrations
