@@ -43,6 +43,8 @@ Then, after logging into the machine, setup the doug account:
 {{{
 # useradd -d /home/doug -s /bin/bash doug
 # echo "doug    ALL=(ALL) ALL" >> /etc/sudoers
+# mkdir /mnt/hypertable
+# chmod a+rwx /mnt/hypertable 
 # passwd doug
 # su - doug
 $ tar xzvf /tmp/doug-bash-account-setup.tgz 
