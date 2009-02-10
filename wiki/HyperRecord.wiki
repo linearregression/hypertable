@@ -172,6 +172,60 @@ Hypertable has some attributes that affect implementation of ActiveRecord associ
 Eager loading of associations is ignored since Hypertable does not support JOINs.
 
 = !ActiveRecord Compatibility Matrix =
+
+
+|| *Class* || *Feature* || *Supported* || *Notes ** ||
+|| *General* || columns || Yes ||Return may include QualifiedColumn objects - a subclass of Column. ||
+|| || delete || Yes || Warning: Avoid using delete on objects that belong to HABTM associations.  Hypertable does not support foreign keys and delete does not instantiate the object before removal.  As a result, the association cells are not removed from the association table leaving behind stale data.  Use destroy instead. ||
+|| ||  decrement || Yes || Converts the value to an integer for the operation, though it reverts to a string in storage. ||
+|| || decrement!  || Yes || Converts the value to an integer for the operation, though it reverts to a string in storage. ||
+|| || destroy || Yes || Both object.destroy and Class.destroy([...]) ||
+|| || exists?  || Yes || Supports a single ROW key or a condition Hash.  e.g., Page.exists?(:name => 'ESPN') ||
+|| || increment || Yes || Converts the value to an integer for the operation, though it reverts to a string in storage. ||
+|| || increment!  || Yes || Converts the value to an integer for the operation, though it reverts to a string in storage. ||
+|| || new_record?  || Yes || ||
+|| || reload || Yes || ||
+|| || save || Yes || ||
+|| || table_exists?  || Yes || ||
+|| || update || Yes || ||
+|| || update_all || No || Not Yet Implemented.  Could be done with Hypertable API-style conditions instead of SQL strings. ||
+|| || update_attribute || Yes || ||
+|| || update_attributes || Yes || ||
+|| || validations || Yes ||
+|| '''Associations''' || belongs_to association || Yes
+|| || has_many association || Yes || Retrieval inefficient due to lookup by column other than ROW key.
+|| || has_and_belongs_to_many association || Yes || No join table.  Association information stored in qualified columns within main tables.
+|| || association.new || Partial || has_many: new record is instantiated but the association cells are not written to the owner record.
+|| || association.create || Yes ||
+|| || association.clear || Yes ||
+|| || association.delete || Yes ||
+|| || association.= || Yes ||
+|| || association.<< || Yes ||
+|| || association.loaded?  || Yes ||
+|| || association.reset || Partial || Reset does not work for HABTM associations since the association data is stored within qualified columns directly on the object.  Reloading the object is the equivalent operation.
+|| || colspan="3"| '''Notes''': * Most association options (e.g., finder_sql, counter_cache) are not supported.  * Associations between HyperRecord objects and regular ActiveRecord objects work in some limited cases.
+|| '''Finders''' || find(id) || Yes ||
+|| || find(:first) || Yes ||
+|| || find([id1, id2, ...]) || Yes ||
+|| || find_by_sql("...") || No || Waiting for support for issuing command via HQL in underlying API.
+|| || :select option || Yes ||
+|| || :include option || No || Eager loading not supported since Hypertable does not support JOINs.
+|| || :limit option || Yes ||
+|| || :conditions option || Partial || Supports Hash-style conditions for column values (not ROW key values).  e.g., Page.find(:all, :conditions => {:name => 'ESPN'})
+|| || :order option || No || Not yet supported by Hypertable.
+|| || :group option || No || Not yet supported by Hypertable.
+|| || find_by_x_and_y || No || Not yet implemented. 
+
+
+Untested:
+* serialize
+* counters
+* created_at, updated_at timestamps
+* many more
+
+
+
+
 = New Finder Options =
 
 = TODO =
