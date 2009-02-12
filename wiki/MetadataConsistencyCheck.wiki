@@ -2,7 +2,7 @@
 
 = Introduction =
 
-Under some unexpected situations, e.g. after recovery with incomplete meta logs (probably due to buggy underlying DFS), the METADATA table might become inconsistent. It'd be nice to have a maintenance tool that checks the consistency of METADATA and tries to fix it.
+Under some unexpected situations, e.g. after recovery with incomplete meta logs (probably due to buggy underlying DFS), the METADATA table might become inconsistent with range server states. It'd be nice to have a maintenance tool that checks the consistency of METADATA and tries to fix it.
 
 = Types of Common Inconsistencies =
 
