@@ -4,10 +4,41 @@
 
 Under some unexpected situations, e.g. after recovery with incomplete meta logs, the METADATA table might become inconsistent. It'd be nice to have a maintenance tool that checks the consistency of METADATA and tries to fix it.
 
-= Preconditions =
+= Types of Common Inconsistencies =
 
-TBD
+1. Range is assigned to a range server, but the range server is unreachable
 
-= Design =
+This is common since auto recovery is not implemented yet. When a range server crashes, all of its ranges goes into this state before the server's restarted 
+
+2. Range is assigned to a range server in the METADATA, while the range server denies it
+
+Possbile cause: fast recovery with incomplete meta log.
+
+3. Range is unassigned
+
+Possible cause: range server crashes before a new range is successfully loaded
+
+
+= Preparation =
+
+To find the actual reason of an inconsistency, the current information stored in the METADATA table is inadequate, e.g.:
+
+1. It is OK if new ranges came from a split are unassigned before the master gets notified. While it is not if the range are assigned by the master to a range server but the server fails to load it. It's hard to tell the difference of these two situations without knowing the state of the range i.e. NEW or ASSIGNED.
+
+2. It is hard to detect if a range is `lost' i.e. locates on a crashed server and needs recovery, if the crashed server is restarted and is alive again. The reason is due to the lack of generation information of range servers.
+
+Thus I propose two new columns be added into the schema of METADATA table: state and generation.
+
+Some possible states include: NEW, ASSIGNED and LOST (to be recovered), it'd be nice to define more states like READONLY and UNLOADED (HBase supports unloading a table completely from memory).
+
+The generation a a serial number that is strictly increasing. A range server must use a new generation number every time it restarts. For now I think It's OK to borrow the Hypertable session id.
+
+= Design & Implementation =
+
+I decide to implement this feature as a stand-alone tool instead of integrated into a master maintenance thread because it is simpler and more controllable right now. The integration may be a good idea in the future, to make sure only the master does range assignments to range servers.
+
+to be continued...
+
+= Usage =
 
 TBD
