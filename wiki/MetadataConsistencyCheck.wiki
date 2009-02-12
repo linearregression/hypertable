@@ -1,4 +1,4 @@
-# Design of a maintenance tool that checks and fixes the METADATA table 
+#Design of a maintenance tool that checks and fixes the METADATA table 
 
 = Introduction =
 
@@ -11,4 +11,3 @@ TBD
 = Design =
 
 TBD
-
