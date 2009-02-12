@@ -1,0 +1,14 @@
+# Design of a maintenance tool that checks and fixes the METADATA table 
+
+= Introduction =
+
+Under some unexpected situations, e.g. after recovery with incomplete meta logs, the METADATA table might become inconsistent. It'd be nice to have a maintenance tool that checks the consistency of METADATA and tries to fix it.
+
+= Preconditions =
+
+TBD
+
+= Design =
+
+TBD
+
