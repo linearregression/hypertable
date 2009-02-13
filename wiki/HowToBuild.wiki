@@ -45,6 +45,8 @@ wget -O jdk-6u12-linux-i586-rpm.bin <really-long-url-from-sun>
 chmod 755 jdk-6u12-linux-i586-rpm.bin
 ./jdk-6u12-linux-i586-rpm.bin
 yum install ant automake libtool flex bison pkgconfig libevent-devel ruby-devel perl-Bit-Vector php
+wget http://dag.wieers.com/rpm/packages/perl-Class-Accessor/perl-Class-Accessor-0.31-1.el5.rf.noarch.rpm
+yum localinstall perl-Class-Accessor-0.31-1.el5.rf.noarch.rpm
 wget -O thrift.tgz http://tr.im/2r61  (See hypertable README for location of working Thrift snapshot)
 tar -xzvf thrift.tgz
 cd thrift
