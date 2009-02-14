@@ -40,21 +40,26 @@ The check phase has two modes: fast scan (default) and deep scan (-d). The diffe
 == Fast Scan ==
 
  # Reads a list of live range servers along with their generation numbers from Hyperspace
- # Scan the METADATA row by row to see if the corresponding range's location & generation matches a live range server. 
+ # Scan the METADATA row by row to see if the corresponding range's location & generation columns match a live range server. 
+ # If the match fails, check the state column to see if the range is NEW, LOST or UNLOADED, if so save and report the inconsistency, otherwise skip and proceed.
 
-to be continued...
+In more details: to deal with LOST portions of the METADATA table. Step 2 should take place in stages, i.e. first check /hyperspace/root, then the ROOT table, then second-level METADATA. 
 
 == Deep Scan ==
 
-TBD.
+Deep scan is the same as fast scan except that, for each range in the METADATA table, htck also inquires the corresponding range server to see if the range is there. This can be done by adding a new RPC method that returns true or false:
+
+{{{
+bool RangeServerClient::load_range(const sockaddr_in &addr, const TableIdentifier &table, const RangeSpec &range);
+}}}
 
 == Fix Phase ==
 
 TBD.
 
-== Potential Problems ==
+== Potential Risks ==
 
-A potential problem is that htck / master / range servers may read / update the METADATA table concurrently 
+A potential problem is that htck / master / range servers may read / update the METADATA table concurrently.
 
 == Summary of Changes ==
 
