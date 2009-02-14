@@ -2,7 +2,7 @@
 
 = Introduction =
 
-Under some unexpected situations, e.g. after recovery with incomplete meta logs (probably due to [https://issues.apache.org/jira/browse/HADOOP-4379 buggy underlying DFS]), the METADATA table might become inconsistent with range server states. It'd be nice to have a maintenance tool that checks the consistency of METADATA and tries to fix it.
+Under some unexpected situations, e.g. after recovery with incomplete meta logs (probably due to [https://issues.apache.org/jira/browse/HADOOP-4379 buggy underlying DFS]), the METADATA table might become inconsistent with range server states. It'd be nice to have a maintenance tool (we'll call it _htck_) that checks the consistency of METADATA and tries to fix it.
 
 = Types of Common Inconsistencies =
 
@@ -19,16 +19,43 @@ To find the actual reason of an inconsistency, the current information stored in
 
 Thus I propose two new columns be added into the schema of METADATA table: state and generation.
 
-Some possible states include: NEW, ASSIGNED and LOST (to be recovered), it'd be nice to define more states like READONLY and UNLOADED (HBase supports unloading a table completely from memory).
+Some possible states include: NEW, ASSIGNED and LOST (to be recovered), it'd be nice to define more states like READONLY and UNLOADED (HBase supports unloading a table completely from memory). The ASSIGNED state doesn't need to be explicitly specified as it is the default one.
 
-The generation a a serial number that is strictly increasing. A range server must use a new generation number every time it restarts. For now I think It's OK to borrow the Hypertable session id.
-
-= Design & Implementation =
-
-I decide to implement this feature as a stand-alone tool instead of integrated into a master maintenance thread because it is simpler and more controllable right now. The integration may be a good idea in the future, to make sure only the master does range assignments to range servers.
-
-to be continued...
+The generation is a serial number that is strictly increasing. A range server must use a new generation number every time it restarts. For now I think It's OK to borrow the Hyperspace session id.
 
 = Usage =
 
-TBD
+I decide to implement htck as a stand-alone tool instead of integrated into a master maintenance thread because it is simpler and more controllable. Administrators may run htck multiple times to make sure everything goes well or stop it half-way if the process takes too long. The command line usage of htck is:
+
+{{{
+   htck [-d] [-f]
+}}}
+
+By default, htck just checks the consistency of METADATA table, but doesn't try to fix it immediately. To do the real fix, an explicit command line switch '-f' must be used.
+
+The check phase has two modes: fast scan (default) and deep scan (-d). The difference is, for every range deep scan inquires the corresponding range server to see if it is really there, which is much more time-consuming. See the following sections for more details.
+
+= Design Details =
+
+== Fast Scan ==
+
+ # Reads a list of live range servers along with their generation numbers from Hyperspace
+ # Scan the METADATA row by row to see if the corresponding range's location & generation matches a live range server. 
+
+to be continued...
+
+== Deep Scan ==
+
+TBD.
+
+== Fix Phase ==
+
+TBD.
+
+== Potential Problems ==
+
+A potential problem is that htck / master / range servers may read / update the METADATA table concurrently 
+
+== Summary of Changes ==
+
+to be continued...
