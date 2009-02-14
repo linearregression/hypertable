@@ -4,7 +4,7 @@
 
 Under some unexpected situations, e.g. after recovery with incomplete meta logs (probably due to [https://issues.apache.org/jira/browse/HADOOP-4379 buggy underlying DFS]), the METADATA table might become inconsistent with range server states. It'd be nice to have a maintenance tool (we'll call it _htck_) that checks the consistency of METADATA and tries to fix it.
 
-= Usage =
+== Usage ==
 
 I decide to implement htck as a stand-alone tool instead of integrated into a master maintenance thread because it is simpler and more controllable. Administrators may run htck multiple times to make sure everything goes well or stop it half-way if the process takes too long. The command line usage of htck is:
 
@@ -57,10 +57,20 @@ bool RangeServerClient::load_range(const sockaddr_in &addr, const TableIdentifie
 
 TBD.
 
-== Potential Risks ==
+== Potential Problems ==
 
 A potential problem is that htck / master / range servers may read / update the METADATA table concurrently.
 
+The solution is to let the Hypertable cluster go into read-only state while htck is running, which may e a future task. For now, if the admin is sure there's no updates to Hypertable during a time period, which is roughly the same as having a read-only state, it is also safe to run htck. This makes htck useful especially in cases that data is always loaded in batch during certain time periods (e.g. a crawler db that gets updated once every week).
+
+Another problem is range servers may still crash while htck is running even if the cluster is read-only. This is actually a rare case. If it really happens, htck may detect it by subscribing changes to the "/hypertable/servers" hyperspace directory, and stop running with an error message printed. The admin may then deal with the situation and run htck again later.
+
 == Summary of Changes ==
 
-to be continued...
+TBD.
+
+= Future Work =
+
+As range state is added to the METADATA, we may add more features to Hypertable in the future, for example make a table READONLY or unload it from memory. These features are useful if we need to do snapshots of tables in Hypertable.
+
+Client table scanner / mutator can also make use of the range state information while handling errors. For instance, if a scanner fails to look up a key in a specific range, it may then look at the state column of that range to see whether the range is NEW (most likely to be the result of a recent split), LOST or UNLOADED, and apply different policies, e.g. wait and retry on the NEW and LOST state, and fail directly if the range is UNLOADED.
