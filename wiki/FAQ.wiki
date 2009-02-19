@@ -1,7 +1,7 @@
 #summary Frequently Asked Questions about Hypertable
 <wiki:toc/>
 
-==Q: Why do I get "rsync: connection unexpectedly closed" when running 'cap dist'?===
+==Q: Why do I get "rsync: connection unexpectedly closed" when running cap dist?===
 {{{
 When I used "cap dist", then the following errors occurred on half of 100 nodes,
 *** [err :: uranos4.dq.isl.ntt.co.jp] ssh_exchange_identification:
@@ -16,3 +16,6 @@ closed (0 bytes received so far) [receiver]
 }}}
 *A:* This is because the default !MaxStartups value of `/etc/sshd_config` is
 too small.  Set the value of this parameter to a number that is at least as large as the number of nodes in your cluster.
+
+==Q: Why am I seeing "accept() failure: Too many open files" in the Master log file?==
+*A:* This is because you have the soft file descriptor limit set too low.
