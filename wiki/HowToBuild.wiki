@@ -167,3 +167,51 @@ make
 make install
 make alltests
 }}}
+
+== Mac OS X 10.5 Leopard ==
+
+First, download and install macports from this page [http://www.macports.org/install.php MacPorts]
+
+
+Once you installed MacPorts open Terminal and type following commands as root or in sudo shell
+{{{
+port install libevent boost google-perftools google-sparsehash log4cpp db47 pkgconfig
+}}}
+
+This step should take a while, but once finished you should be almost done.
+
+Download Hyperic SIGAR from this page [http://sourceforge.net/project/showfiles.php?group_id=172552&package_id=197466&release_id=625208 Hyperic SIGAR] and unpack it
+{{{
+tar -zxf hyperic-sigar-1.6.0.tar.gz
+# type these as root or in su/sudo -s shell
+cp hyperic-sigar-1.6.0/sigar-bin/lib/libsigar-universal-macosx.dylib /usr/local/lib
+cp hyperic-sigar-1.6.0/sigar-bin/include/*.h /usr/local/include
+}}}
+
+Download, configure, compile and install Thrift by typing
+{{{
+wget -O thrift.tgz http://tr.im/2r61
+tar -zxf thrift.tgz
+cd thrift
+cp /opt/local/share/aclocal/pkg.m4 aclocal
+./bootstrap.sh
+./configure --with-libevent=/opt/local --with-boost=/opt/local
+make
+make install # as root or in su/sudo shell
+}}}
+
+Download Berkeley DB from [http://download.oracle.com/berkeley-db/db-4.7.25.tar.gz here] and install it by running
+{{{
+tar -zxf db-4.7.25.tar.gz
+cd db-4.7.25/build-unix
+../dist/configure --enable-cxx
+make
+make install
+}}}
+
+
+This should effectively make all missing dependencies present on your system so you can proceed with Hypertable compilation.
+
+== Mac OS X 10.4 Tiger ==
+
+Same as on Leopard, except have to disable every Java target in CMakeLists files. Tiger does not support Java 6 so unless you compile hadoop by hand with your version of java, java libraries will not compile because of version mismatch. Missing hadoop support does not cripple Hypertable in any way, so you can still use it with local filesystem or !CloudStore (Kfs).
