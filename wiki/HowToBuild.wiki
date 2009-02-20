@@ -155,25 +155,12 @@ make install
 ldconfig
 }}}
 
-== Building, Installing, and Running Tests ==
-{{{
-mkdir src
-cd src
-git clone git://scm.hypertable.org/pub/repos/hypertable.git
-mkdir -p ../build/hypertable
-cd ../build/hypertable
-cmake -DPHPTHRIFT_ROOT=$HOME/thrift/lib/php/src ~/src/hypertable
-make
-make install
-make alltests
-}}}
-
 == Mac OS X 10.5 Leopard ==
 
 First, download and install macports from this page [http://www.macports.org/install.php MacPorts]
 
 
-Once you installed MacPorts open Terminal and type following commands as root or in sudo shell
+Once you installed !MacPorts open Terminal and type following commands as root or in sudo shell
 {{{
 port install libevent boost google-perftools google-sparsehash log4cpp db47 pkgconfig
 }}}
@@ -215,3 +202,16 @@ This should effectively make all missing dependencies present on your system so 
 == Mac OS X 10.4 Tiger ==
 
 Same as on Leopard, except have to disable every Java target in CMakeLists files. Tiger does not support Java 6 so unless you compile hadoop by hand with your version of java, java libraries will not compile because of version mismatch. Missing hadoop support does not cripple Hypertable in any way, so you can still use it with local filesystem or !CloudStore (Kfs).
+
+== Building, Installing, and Running Tests ==
+{{{
+mkdir src
+cd src
+git clone git://scm.hypertable.org/pub/repos/hypertable.git
+mkdir -p ../build/hypertable
+cd ../build/hypertable
+cmake -DPHPTHRIFT_ROOT=$HOME/thrift/lib/php/src ~/src/hypertable
+make
+make install
+make alltests
+}}}
