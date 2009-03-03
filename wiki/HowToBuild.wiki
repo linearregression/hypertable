@@ -1,7 +1,7 @@
 #summary How to Build Hypertable on Various Platforms
 <wiki:toc/>
 
-== CentOS 5 32-bit ==
+== CentOS 5.1 32-bit ==
 
 _EC2:  ami-0459bc6d_
 
