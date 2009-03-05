@@ -21,15 +21,26 @@ http://developers.facebook.com/thrift/
 
 = Installation =
 
-1. Download latest hypertable-thrift-client gem:
-  $ wget http://github.com/tylerkovacs/hypertable/raw/4c15fb35726841154491725c2ad20e831f5b32ba/src/rb/ThriftClient/pkg/hypertable-thrift-client-0.2.0.gem
+1. Install Thrift.  Version 747635 or later is required
+{{{
+  cd /usr/local/src
+  svn co -r 747635 http://svn.apache.org/repos/asf/incubator/thrift/trunk thrift
+  cd thrift
+  ./bootstrap.sh
+  ./configure
+  make
+  make install
+}}}
+
+2. Download latest hypertable-thrift-client gem:
+  $ wget http://github.com/tylerkovacs/hypertable/raw/4c15fb35726841154491725c2ad20e831f5b32ba/src/rb/ThriftClient/pkg/hypertable-thrift-client-0.3.0.gem
 
 Note:
-  * check http://github.com/tylerkovacs/hypertable/tree/4c15fb35726841154491725c2ad20e831f5b32ba/src/rb/ThriftClient/pkg for a more recent version than 0.2.0
+  * check http://github.com/tylerkovacs/hypertable/tree/4c15fb35726841154491725c2ad20e831f5b32ba/src/rb/ThriftClient/pkg for a more recent version than 0.3.0
   * gem installation will be simplified in the future
 
-2. Install gem from file
-  $ gem install hypertable-thrift-client-0.2.0.gem
+3. Install gem from file
+  $ gem install hypertable-thrift-client-0.3.0.gem
 
 = Example Usage =
 
