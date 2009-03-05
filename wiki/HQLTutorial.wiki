@@ -392,6 +392,12 @@ hypertable> describe table Pages;
 </Schema>
 }}}
 
+Also currently you can't add a previously dropped column. If you try you will see this:
+{{{
+hypertable> ALTER TABLE Pages ADD('http-code');
+Error: Column family 'http-code' multiply defined - HYPERTABLE bad schema
+}}}
+
 ==SHOW TABLES & DROP TABLE==
 
 Now, we want to get rid of our table so we'll use DROP TABLE to do that -- first verify the tables we have, then drop, then verify that they are gone after the command:
