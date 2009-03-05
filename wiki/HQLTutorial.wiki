@@ -111,17 +111,22 @@ hypertable> describe table Pages;
 <Schema generation="1">
   <AccessGroup name="default">
     <ColumnFamily id="1">
-      <Name>refer-url</Name>
+      <Generation>1</Generation>
+      <Name>date</Name>
+      <deleted>false</deleted>
     </ColumnFamily>
     <ColumnFamily id="2">
-      <Name>http-code</Name>
+      <Generation>1</Generation>
+      <Name>refer-url</Name>
+      <deleted>false</deleted>
     </ColumnFamily>
     <ColumnFamily id="3">
-      <Name>date</Name>
+      <Generation>1</Generation>
+      <Name>http-code</Name>
+      <deleted>false</deleted>
     </ColumnFamily>
   </AccessGroup>
 </Schema>
-
 }}}
 
 ==LOAD DATA INFILE==
