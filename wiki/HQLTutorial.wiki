@@ -325,6 +325,15 @@ hypertable> select * from Pages where ROW = "www.hypertable.org";
 
 Now, we want to get rid of the column family 'http-code' and add a couple of new column families, namely 'load-time' and 'error-message'. Moreover we want to create a new ACCESS GROUP for fast access to the data in 'load-time'. You can do this with the "ALTER TABLE"  command.
 {{{
+hypertable> SHOW CREATE TABLE Pages;
+
+CREATE TABLE Pages (
+  date,
+  'refer-url',
+  'http-code',
+  ACCESS GROUP default (date, 'refer-url', 'http-code')
+)
+
 hypertable> ALTER TABLE Pages ADD('load-time', 'error-message', ACCESS GROUP stats('load-time')) DROP ('http-code');
 hypertable> show create table Pages;
 
