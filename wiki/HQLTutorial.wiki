@@ -60,11 +60,13 @@ CREATE TABLE ....... Creates a table
 DELETE ............. Deletes all or part of a row from a table
 DESCRIBE TABLE ..... Displays a table's schema
 DROP TABLE ......... Removes a table
+ALTER TABLE ........ Add/remove column family from existing table
 INSERT ............. Inserts data into a table
-LOAD DATA INFILE ... Loads data from a tab delimited input file into a table
+LOAD DATA INFILE ... Loads data from a TSV input file into a table
 SELECT ............. Selects (and display) cells from a table
 SHOW CREATE TABLE .. Displays CREATE TABLE command used to create table
 SHOW TABLES ........ Displays the list of tables
+SHUTDOWN ........... Shuts servers down gracefully
 
 Statements must be terminated with ';' to execute.  For more information on
 a specific statement, type 'help <statement>', where <statement> is one from
@@ -317,6 +319,63 @@ Now, let's get rid of it with `DELETE` time stamped further into the future:
 hypertable> delete * from Pages where ROW = "www.hypertable.org" TIMESTAMP '2038-01-01 23:59:59';
 delete: row='www.hypertable.org' family=0 ts=2146031999000000001
 hypertable> select * from Pages where ROW = "www.hypertable.org";
+}}}
+
+==ALTER TABLE (ADD/DROP COLUMN FAMILIES)==
+
+Now, we want to get rid of the column family 'http-code' and add a couple of new column families, namely 'load-time' and 'error-message'. Moreover we want to create a new ACCESS GROUP for fast access to the data in 'load-time'. You can do this with the "ALTER TABLE"  command.
+{{{
+hypertable> ALTER TABLE Pages ADD('load-time', 'error-message', ACCESS GROUP stats('load-time')) DROP ('http-code');
+hypertable> show create table Pages;
+
+CREATE TABLE Pages (
+  date,
+  'refer-url',
+  'error-message',
+  'load-time',
+  ACCESS GROUP default (date, 'refer-url', 'http-code', 'error-message'),
+  ACCESS GROUP stats ('load-time'),
+)
+
+}}}
+
+You can also specify other standard access group options including bloom filter settings etc when adding columns.
+ 
+At present you can have a maximum of 255 column families created in a table. Dropped columns count towards this limit, so users are advised to use this feature thriftily.
+Note how the dropped columns are still counted in the schema below.
+{{{
+hypertable> describe table Pages;
+<Schema generation="2">
+  <AccessGroup name="default">
+    <ColumnFamily id="1">
+      <Generation>1</Generation>
+      <Name>date</Name>
+      <deleted>false</deleted>
+    </ColumnFamily>
+    <ColumnFamily id="2">
+      <Generation>1</Generation>
+      <Name>refer-url</Name>
+      <deleted>false</deleted>
+    </ColumnFamily>
+    <ColumnFamily id="3">
+      <Generation>1</Generation>
+      <Name>http-code</Name>
+      <deleted>true</deleted>
+    </ColumnFamily>
+    <ColumnFamily id="5">
+      <Generation>2</Generation>
+      <Name>error-message</Name>
+      <deleted>false</deleted>
+    </ColumnFamily>
+  </AccessGroup>
+  <AccessGroup name="stats">
+    <ColumnFamily id="4">
+      <Generation>2</Generation>
+      <Name>load-time</Name>
+      <deleted>false</deleted>
+    </ColumnFamily>
+  </AccessGroup>
+</Schema>
 }}}
 
 ==SHOW TABLES & DROP TABLE==
