@@ -28,13 +28,15 @@ Primary differences from a typical database
   # HQL is not SQL: HQL is similar to SQL though they are not compatible.   [http://code.google.com/p/hypertable/wiki/HQLTutorial See the HQL Tutorial] for more detail.
 
 
-== !ActiveRecord, !HyperRecord and the Hypertable Adapter ==
+== !ActiveRecord, !HyperRecord, the Hypertable Adapter and Thrift ==
 
-The integration between Hypertable and !ActiveRecord is provided by three separate Ruby modules.
+The integration between Hypertable and !ActiveRecord is provided by three separate Ruby libraries.
 
-  * Ruby Hypertable Thrift Client:  Exposes a low-level communication API to the Ruby programming language.
+  * Ruby Hypertable Thrift Client:  Exposes a low-level communication API to the Ruby programming language.  Can be used to interface with Hypertable outside of Ruby on Rails.
   * Hypertable Adapter: In !ActiveRecord, each supported data store has an adapter that implements functionality specific to that store as well as providing metadata for data held within the store.  Features implemented by adapters typically include connection handling, listings metadata (tables and schema), statement execution (selects, writes, etc.), latency measurement, fixture handling.
   * HyperRecord: A subclass of !ActiveRecord that overrides many internal methods to use the Hypertable API exposed through the Hypertable Adapter. Also includes logic required to expose column qualifier support to !ActiveRecord and support for basic associations. 
+
+All of these libraries are actually bundled within the HyperRecord distribution, so there's no need to install or configure them separately.
 
 = Getting Started =
 == Installation and Configuration ==
