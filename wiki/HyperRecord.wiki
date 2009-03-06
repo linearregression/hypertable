@@ -40,24 +40,23 @@ All of these libraries are actually bundled within the HyperRecord distribution,
 
 = Getting Started =
 == Installation and Configuration ==
- # Add github as a gem source (if you haven't already)
+ # Install HyperRecord gem.  The first command adds github as a gem source and only needs to be run if you haven't done it already.
 {{{
 gem sources -a http://gems.github.com
-}}}
- # Install HyperRecord gem
-{{{
 gem install tylerkovacs-hyper_record
 }}}
+
+ # Add the following to the bottom of config/environment.rb:
+{{{
+require 'hyper_record'
+}}}
+
  # Configure Hypertable Adapter by adding an entry to config/database.yml that points to an instance of the Hypertable Thrift Broker (uses port 38080 by default).
 {{{
  hypertable:
    adapter: hypertable
    host: localhost
    port: 38080
-}}}
- # Add the following to the bottom of config/environment.rb:
-{{{
-require 'hyper_record'
 }}}
 
 == Creating !HyperRecord Classes ==
