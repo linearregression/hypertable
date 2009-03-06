@@ -171,6 +171,35 @@ Hypertable has some attributes that affect implementation of ActiveRecord associ
 
 Eager loading of associations is ignored since Hypertable does not support JOINs.
 
+== Migrations ==
+
+HyperRecord includes support for schema changes written in raw HQL and in ActiveRecord::Migration format.  Be sure to use the connection from a HyperRecord model in your migrations.
+
+{{{
+  def self.up
+    Model.connection.execute "ALTER TABLE table_name ADD(column_name MAX_VERSIONS=1)"
+  end
+}}}
+
+An example in ActiveRecord::Migration format
+
+{{{
+  def self.up
+    Model.connection.add_column :change_logs, :new_column, :string, :max_versions => 1
+    Model.connection.create_table :new_table do |t| 
+      t.column :name, :string 
+      t.column :value, :string, :max_versions => 1 
+    end 
+  end
+
+  def self.down
+    Model.connection.remove_column :change_logs, :new_column
+    Model.connection.drop_table(:new_table)
+  end
+}}}
+
+Support for renaming column and changing column definitions will come in a future Hypertable release.
+
 = !ActiveRecord Compatibility Matrix =
 
 
