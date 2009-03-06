@@ -7,7 +7,7 @@
 
 Hypertable is a high performance distributed data storage system designed to support applications requiring maximum performance, scalability, and reliability. Modeled after Google's well known Bigtable project, Hypertable is designed to manage the storage and processing of information on a large cluster of commodity servers, providing resilience to machine and component failures.
 
-HyperRecord exists to integrate Hypertable with !ActiveRecord (the Ruby on Rails ORM) allowing objects to be stored in Hypertable while maintaining as many of the built-in ORM features as possible. 
+!HyperRecord exists to integrate Hypertable with !ActiveRecord (the Ruby on Rails ORM) allowing objects to be stored in Hypertable while maintaining as many of the built-in ORM features as possible. 
 
 == Hypertable for Database Users ==
 
@@ -173,7 +173,7 @@ Eager loading of associations is ignored since Hypertable does not support JOINs
 
 == Migrations ==
 
-HyperRecord includes support for schema changes written in raw HQL and in ActiveRecord::Migration format.  Be sure to use the connection from a HyperRecord model in your migrations.
+!HyperRecord includes support for schema changes written in raw HQL and in !ActiveRecord::Migration format.  Be sure to use the connection from a !HyperRecord model in your migrations.
 
 {{{
   def self.up
@@ -181,7 +181,7 @@ HyperRecord includes support for schema changes written in raw HQL and in Active
   end
 }}}
 
-An example in ActiveRecord::Migration format
+An example in !ActiveRecord::Migration format
 
 {{{
   def self.up
@@ -204,7 +204,7 @@ Support for renaming column and changing column definitions will come in a futur
 
 
 || *Class* || *Feature* || *Supported* || *Notes ** ||
-|| *General* || columns || Yes ||Return may include QualifiedColumn objects - a subclass of Column. ||
+|| *General* || columns || Yes ||Return may include !QualifiedColumn objects - a subclass of Column. ||
 || || delete || Yes || Warning: Avoid using delete on objects that belong to HABTM associations.  Hypertable does not support foreign keys and delete does not instantiate the object before removal.  As a result, the association cells are not removed from the association table leaving behind stale data.  Use destroy instead. ||
 || ||  decrement || Yes || Converts the value to an integer for the operation, though it reverts to a string in storage. ||
 || || decrement!  || Yes || Converts the value to an integer for the operation, though it reverts to a string in storage. ||
