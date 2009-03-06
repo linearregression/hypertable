@@ -251,7 +251,3 @@ Support for renaming column and changing column definitions will come in a futur
   * counters
   * created_at, updated_at timestamps
   * many more
-
-
-== Coming Soon ==
-  # Migrations
