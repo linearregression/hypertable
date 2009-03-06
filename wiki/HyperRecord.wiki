@@ -45,12 +45,10 @@ All of these libraries are actually bundled within the HyperRecord distribution,
 gem sources -a http://gems.github.com
 gem install tylerkovacs-hyper_record
 }}}
-
  # Add the following to the bottom of config/environment.rb:
 {{{
 require 'hyper_record'
 }}}
-
  # Configure Hypertable Adapter by adding an entry to config/database.yml that points to an instance of the Hypertable Thrift Broker (uses port 38080 by default).
 {{{
  hypertable:
