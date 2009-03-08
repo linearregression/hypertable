@@ -42,8 +42,7 @@ All of these libraries are actually bundled within the HyperRecord distribution,
 == Installation and Configuration ==
  # Install HyperRecord gem.  The first command adds github as a gem source and only needs to be run if you haven't done it already.
 {{{
-gem sources -a http://gems.github.com
-gem install tylerkovacs-hyper_record
+gem install tylerkovacs-hyper_record --source http://gems.github.com
 }}}
  # Add the following to the bottom of config/environment.rb:
 {{{
