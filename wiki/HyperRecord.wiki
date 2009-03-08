@@ -193,7 +193,6 @@ Support for renaming column and changing column definitions will come in a futur
 
 = !ActiveRecord Compatibility Matrix =
 
-
 || *Class* || *Feature* || *Supported* || *Notes ** ||
 || *General* || columns || Yes ||Return may include !QualifiedColumn objects - a subclass of Column. ||
 || || delete || Yes || Warning: Avoid using delete on objects that belong to HABTM associations.  Hypertable does not support foreign keys and delete does not instantiate the object before removal.  As a result, the association cells are not removed from the association table leaving behind stale data.  Use destroy instead. ||
@@ -235,7 +234,6 @@ Support for renaming column and changing column definitions will come in a futur
 || || :order option || No || Not yet supported by Hypertable. ||
 || || :group option || No || Not yet supported by Hypertable. ||
 || || find_by_x_and_y || No || Not yet implemented.  ||
-
 
 == Untested !ActiveRecord Methods ==
   * serialize
