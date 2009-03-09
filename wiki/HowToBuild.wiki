@@ -47,7 +47,7 @@ chmod 755 jdk-6u12-linux-i586-rpm.bin
 yum install ant automake libtool flex bison pkgconfig libevent-devel ruby-devel perl-Bit-Vector php
 wget http://dag.wieers.com/rpm/packages/perl-Class-Accessor/perl-Class-Accessor-0.31-1.el5.rf.noarch.rpm
 yum localinstall perl-Class-Accessor-0.31-1.el5.rf.noarch.rpm
-wget -O thrift.tgz http://tr.im/2r61  (See hypertable README for location of working Thrift snapshot)
+wget -O thrift.tgz http://tr.im/gL5F#.tgz  (See hypertable README for location of working Thrift snapshot)
 tar -xzvf thrift.tgz
 cd thrift
 ./bootstrap.sh
@@ -94,7 +94,7 @@ wget -O jdk-6u12-linux-i586-rpm.bin <really-long-url-from-sun>
 chmod 755 jdk-6u12-linux-i586-rpm.bin
 ./jdk-6u12-linux-i586-rpm.bin
 yum install ant automake libtool flex bison pkgconfig libevent-devel ruby-devel perl-Bit-Vector perl-devel php
-wget -O thrift.tgz http://tr.im/2r61  (See hypertable README for location of working Thrift snapshot)
+wget -O thrift.tgz http://tr.im/gL5F#.tgz  (See hypertable README for location of working Thrift snapshot)
 tar -xzvf thrift.tgz
 cd thrift
 ./bootstrap.sh
@@ -130,7 +130,7 @@ apt-get install sun-java6-jdk
 update-java-alternatives --set java-6-sun
 apt-get install ant autoconf automake libtool bison flex pkg-config php5 php5-cli ruby-dev libbit-vector-perl
 ln -f -s /bin/bash /bin/sh
-wget -O thrift.tgz http://tr.im/2r61  (See hypertable README for location of working Thrift snapshot)
+wget -O thrift.tgz http://tr.im/gL5F#.tgz  (See hypertable README for location of working Thrift snapshot)
 tar -xzvf thrift.tgz
 cd thrift
 ./bootstrap.sh
@@ -162,7 +162,7 @@ cp hyperic-sigar-1.6.0/sigar-bin/include/*.h /usr/local/include
 
 Download, configure, compile and install Thrift by typing
 {{{
-wget -O thrift.tgz http://tr.im/2r61
+wget -O thrift.tgz http://tr.im/gL5F#.tgz
 tar -zxf thrift.tgz
 cd thrift
 cp /opt/local/share/aclocal/pkg.m4 aclocal
