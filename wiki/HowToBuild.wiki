@@ -54,11 +54,6 @@ cd thrift
 ./configure
 make
 make install
-cd ~/thrift/lib/py
-make install
-cd ~/thrift/lib/perl
-perl Makefile.PL
-make install
 /sbin/ldconfig
 }}}
 
@@ -106,11 +101,6 @@ cd thrift
 ./configure
 make
 make install
-cd ~/thrift/lib/py
-make install
-cd ~/thrift/lib/perl
-perl Makefile.PL
-make install
 /sbin/ldconfig
 }}}
 
@@ -146,11 +136,6 @@ cd thrift
 ./bootstrap.sh
 ./configure
 make
-make install
-cd ~/thrift/lib/py
-make install
-cd ~/thrift/lib/perl
-perl Makefile.PL
 make install
 ldconfig
 }}}
