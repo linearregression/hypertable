@@ -111,11 +111,11 @@ _EC2:  ami-8b8a6fe2_
 _Basic Dependencies_
 
 {{{
-emerge --sync
 echo 'CONFIG_PROTECT="-*"' >> /etc/make.conf
 cd /etc/
 rm make.profile
 ln -s /mnt/usr/portage/profiles/default-linux/x86/2008.0 make.profile
+emerge --sync
 }}}
 
 == Ubuntu 8.10 Intrepid Ibex 32-bit ==
