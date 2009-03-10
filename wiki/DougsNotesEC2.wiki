@@ -29,7 +29,7 @@ INSTANCE                  i-ccf678a5                 ami-5c709435               
 Copy my account tarball to the machine:
 
 {{{
-scp -i .ec2/id_rsa-gsg-keypair ec2/doug-bash-account-setup.tgz root@ec2-75-101-254-105.compute-1.amazonaws.com:/tmp
+scp -i .ec2/id_rsa-gsg-keypair ec2/doug-ec2-account.tgz root@ec2-75-101-254-105.compute-1.amazonaws.com:/tmp
 }}}
 
 I was then able to log into the system as root without a password with the following comand:
