@@ -104,6 +104,16 @@ make install
 /sbin/ldconfig
 }}}
 
+== Gentoo 2007.0 ==
+
+_EC2:  ami-8b8a6fe2_
+
+_Basic Dependencies_
+
+{{{
+emerge --sync
+}}}
+
 == Ubuntu 8.10 Intrepid Ibex 32-bit ==
 
 _EC2: ami-5c709435_
