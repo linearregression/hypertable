@@ -355,7 +355,7 @@ CREATE TABLE Pages (
 
 You can also specify other standard access group options including bloom filter settings etc when adding columns.
  
-At present you can have a maximum of 255 column families created in a table. Dropped columns count towards this limit, so users are advised to use this feature thriftily.
+At present you can have a maximum of 255 column families created during the lifespan of a table. This means dropped columns count towards this limit, so users are advised to use this feature thriftily.
 Note how the dropped columns are still counted in the schema below.
 {{{
 hypertable> describe table Pages;
