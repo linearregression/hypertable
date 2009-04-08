@@ -49,32 +49,8 @@ $ ulimit -n
 
 ==Problem building libunwind: #error Cannnot calculate stack trace: ...==
 {{{
- g++ -DHAVE_CONFIG_H -I. -I. -I./src -I./src -Wall -Wwrite-strings
--Woverloaded-virtual -Wno-sign-compare -DNO_FRAME_POINTER -g -O2 -MT
-stacktrace.lo -MD -MP -MF .deps/stacktrace.Tpo -c src/stacktrace.cc
--fPIC -DPIC -o .libs/stacktrace.o
-In file included from src/stacktrace.cc:57:
-src/stacktrace_config.h:66:5: #error Cannnot calculate stack trace:
-need either libunwind or frame-pointers (see INSTALL file)
-src/stacktrace.cc:70:3: #error Cannot calculate stack trace: will need
-to write for your environment
-make: *** [stacktrace.lo] Error 1
-[root@zap1 google-perftools-1.1]# make install
-if /bin/sh ./libtool --tag=CXX --mode=compile g++ -DHAVE_CONFIG_H -I.
--I. -I./src  -I./src   -Wall -Wwrite-strings -Woverloaded-virtual
--Wno-sign-compare  -DNO_FRAME_POINTER -g -O2 -MT stacktrace.lo -MD -MP
--MF ".deps/stacktrace.Tpo" -c -o stacktrace.lo `test -f
-'src/stacktrace.cc' || echo './'`src/stacktrace.cc; \
-then mv -f ".deps/stacktrace.Tpo" ".deps/stacktrace.Plo"; else rm -f
-".deps/stacktrace.Tpo"; exit 1; fi
- g++ -DHAVE_CONFIG_H -I. -I. -I./src -I./src -Wall -Wwrite-strings
--Woverloaded-virtual -Wno-sign-compare -DNO_FRAME_POINTER -g -O2 -MT
-stacktrace.lo -MD -MP -MF .deps/stacktrace.Tpo -c src/stacktrace.cc
--fPIC -DPIC -o .libs/stacktrace.o
-In file included from src/stacktrace.cc:57:
-src/stacktrace_config.h:66:5: #error Cannnot calculate stack trace:
-need either libunwind or frame-pointers (see INSTALL file)
-src/stacktrace.cc:70:3: #error Cannot calculate stack trace: will need
-to write for your environment
+ g++ -DHAVE_CONFIG_H -I. -I. -I./src -I./src -Wall -Wwrite-strings-Woverloaded-virtual -Wno-sign-compare -DNO_FRAME_POINTER -g -O2 -MT stacktrace.lo -MD -MP -MF .deps/stacktrace.Tpo -c src/stacktrace.cc -fPIC -DPIC -o .libs/stacktrace.o
+In file included from src/stacktrace.cc:57: src/stacktrace_config.h:66:5: #error Cannnot calculate stack trace: need either libunwind or frame-pointers (see INSTALL file)
+src/stacktrace.cc:70:3: #error Cannot calculate stack trace: will need to write for your environment
 make: *** [stacktrace.lo] Error 1
 }}}
