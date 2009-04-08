@@ -1,6 +1,6 @@
 #summary Frequently Asked Questions about Hypertable
 
-<wiki:toc max_depth="1" />
+<wiki:toc/>
 
 ==Q: Why do I get "rsync: connection unexpectedly closed" when running cap dist?==
 {{{
