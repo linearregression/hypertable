@@ -2,7 +2,7 @@
 
 <wiki:toc/>
 
-==Q: Why do I get "rsync: connection unexpectedly closed" when running cap dist?==
+==Why do I get "rsync: connection unexpectedly closed" when running cap dist?==
 {{{
 When I used "cap dist", then the following errors occurred on half of 100 nodes,
 *** [err :: uranos4.dq.isl.ntt.co.jp] ssh_exchange_identification:
@@ -18,7 +18,7 @@ closed (0 bytes received so far) [receiver]
 *A:* This is because the default !MaxStartups value of `/etc/sshd_config` is
 too small.  Set the value of this parameter to a number that is at least as large as the number of nodes in your cluster.
 
-==Q: Why am I seeing "accept() failure: Too many open files" in the Master log file?==
+==Why am I seeing "accept() failure: Too many open files" in the Master log file?==
 {{{
 1234563919 ERROR Hypertable.Master : (/usr/src/hypertable/src/cc/AsyncComm/IOHandlerAccept.cc:78) accept() failure: Too many open files
 1234563922 ERROR Hypertable.Master : (/usr/src/hypertable/src/cc/AsyncComm/IOHandlerAccept.cc:78) accept() failure: Too many open files
@@ -45,4 +45,36 @@ Then you need to log out and log back in for the changes to take effect.   Here'
 {{{
 $ ulimit -n
 16384
+}}}
+
+==Problem building libunwind: #error Cannnot calculate stack trace: ...==
+{{{
+ g++ -DHAVE_CONFIG_H -I. -I. -I./src -I./src -Wall -Wwrite-strings
+-Woverloaded-virtual -Wno-sign-compare -DNO_FRAME_POINTER -g -O2 -MT
+stacktrace.lo -MD -MP -MF .deps/stacktrace.Tpo -c src/stacktrace.cc
+-fPIC -DPIC -o .libs/stacktrace.o
+In file included from src/stacktrace.cc:57:
+src/stacktrace_config.h:66:5: #error Cannnot calculate stack trace:
+need either libunwind or frame-pointers (see INSTALL file)
+src/stacktrace.cc:70:3: #error Cannot calculate stack trace: will need
+to write for your environment
+make: *** [stacktrace.lo] Error 1
+[root@zap1 google-perftools-1.1]# make install
+if /bin/sh ./libtool --tag=CXX --mode=compile g++ -DHAVE_CONFIG_H -I.
+-I. -I./src  -I./src   -Wall -Wwrite-strings -Woverloaded-virtual
+-Wno-sign-compare  -DNO_FRAME_POINTER -g -O2 -MT stacktrace.lo -MD -MP
+-MF ".deps/stacktrace.Tpo" -c -o stacktrace.lo `test -f
+'src/stacktrace.cc' || echo './'`src/stacktrace.cc; \
+then mv -f ".deps/stacktrace.Tpo" ".deps/stacktrace.Plo"; else rm -f
+".deps/stacktrace.Tpo"; exit 1; fi
+ g++ -DHAVE_CONFIG_H -I. -I. -I./src -I./src -Wall -Wwrite-strings
+-Woverloaded-virtual -Wno-sign-compare -DNO_FRAME_POINTER -g -O2 -MT
+stacktrace.lo -MD -MP -MF .deps/stacktrace.Tpo -c src/stacktrace.cc
+-fPIC -DPIC -o .libs/stacktrace.o
+In file included from src/stacktrace.cc:57:
+src/stacktrace_config.h:66:5: #error Cannnot calculate stack trace:
+need either libunwind or frame-pointers (see INSTALL file)
+src/stacktrace.cc:70:3: #error Cannot calculate stack trace: will need
+to write for your environment
+make: *** [stacktrace.lo] Error 1
 }}}
