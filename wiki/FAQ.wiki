@@ -2,7 +2,7 @@
 
 <wiki:toc max_depth="1" />
 
-==Q: Why do I get "rsync: connection unexpectedly closed" when running cap dist?===
+==Q: Why do I get "rsync: connection unexpectedly closed" when running cap dist?==
 {{{
 When I used "cap dist", then the following errors occurred on half of 100 nodes,
 *** [err :: uranos4.dq.isl.ntt.co.jp] ssh_exchange_identification:
