@@ -49,6 +49,7 @@ set expandtab shiftwidth=2
 }}}
     * KDevelop: goto "Settings"/"Configure Editor...", check "Use spaces" radio button.
     * Eclipse: goto "Preference"/"Java"/"Code Style"/"Formatter", click "Edit..." button, which pops up the "Profile" panel, where you select "Spaces only" Tab policy and set indentation size to 2.
+  # Avoid trailing whitespaces.
   # Line length: try to stay within 80 characters for [http://psychology.wichita.edu/surl/usabilitynews/72/columns.asp better readability] ("the optimal number of characters per line is between 45 and 65".) and compatibility with existing tools.
   # Comment: we use [http://java.sun.com/javadoc/writingdoccomments/index.html javadoc] style [http://java.sun.com/docs/codeconv/html/CodeConventions.doc4.html comment](adapt accordingly), which is supported by doxygen to generate code documentation; 
   # Curly brace placement: examples:
