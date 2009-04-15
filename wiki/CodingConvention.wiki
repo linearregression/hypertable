@@ -82,11 +82,16 @@ function_or_method_name(Argument arg) {
 }}}
 {{{
 ConstructorWithInitializer(Foo foo, Bar bar)
-    : m_foo(foo), m_bar(bar) {
+  : m_foo(foo), m_bar(bar) {
   // ...
 }
 }}}
   Note: it's basically [http://en.wikipedia.org/wiki/Indent_style#K.26R_style K&R], except for the placement of `else`, and the open `{` for functions, which is more consistent :)
+
+= Gotchas avoidance =
+  * Avoid none-trivial (other than int/floats/pointers) globals to reduce global initialization/destruction order issues.
+  * Make single argument constructors explict (e.g., explict SimpleCtor(int foo);) to avoid unintended automatic conversion.
+  * Make destructors virtual for classes with at least one virtual member functions.
 
 = Logging =
   * Use the `HT_<event_type>` etc. logging macros in Common/Logger.h
