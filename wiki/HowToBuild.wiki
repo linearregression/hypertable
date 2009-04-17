@@ -17,10 +17,10 @@ cd boost_1_38_0
 make
 make install
 yum install log4cpp-devel git-core cronolog google-perftools-devel libevent-devel readline-devel ncurses-devel
-wget http://internap.dl.sourceforge.net/sourceforge/sigar/hyperic-sigar-1.6.0.tar.gz
-tar -xzvf hyperic-sigar-1.6.0.tar.gz
-cp hyperic-sigar-1.6.0/sigar-bin/include/*.h /usr/local/include
-cp hyperic-sigar-1.6.0/sigar-bin/lib/libsigar-x86-linux.so /usr/local/lib/
+wget http://internap.dl.sourceforge.net/sourceforge/sigar/hyperic-sigar-1.6.2.tar.gz
+tar -xzvf hyperic-sigar-1.6.2.tar.gz
+cp hyperic-sigar-1.6.2/sigar-bin/include/*.h /usr/local/include
+cp hyperic-sigar-1.6.2/sigar-bin/lib/libsigar-amd64-linux.so /usr/local/lib
 wget http://download.oracle.com/berkeley-db/db-4.7.25.tar.gz
 tar -xzvf db-4.7.25.tar.gz
 cd db-4.7.25/build_unix/
