@@ -39,9 +39,9 @@ _Thrift Broker Dependencies_
 See this [http://wiki.apache.org/thrift/ThriftInstallation official thrift installation wiki page] for up-to-date installation instructions.  Fetch JDK rpm from [http://java.sun.com/javase/downloads/index.jsp Sun JAVA Download] page
 
 {{{
-wget -O jdk-6u12-linux-i586-rpm.bin <really-long-url-from-sun>
-chmod 755 jdk-6u12-linux-i586-rpm.bin
-./jdk-6u12-linux-i586-rpm.bin
+wget -O jdk-6u13-linux-i586-rpm.bin <really-long-url-from-sun>
+chmod 755 jdk-6u13-linux-i586-rpm.bin
+./jdk-6u13-linux-i586-rpm.bin
 yum install ant automake libtool flex bison pkgconfig libevent-devel ruby-devel perl-Bit-Vector php
 wget http://dag.wieers.com/rpm/packages/perl-Class-Accessor/perl-Class-Accessor-0.31-1.el5.rf.noarch.rpm
 yum localinstall perl-Class-Accessor-0.31-1.el5.rf.noarch.rpm
