@@ -8,6 +8,7 @@ _EC2:  ami-0be90e62_
 _Basic Dependencies_
 
 {{{
+rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/x86_64/epel-release-5-3.noarch.rpm
 yum install gcc-c++ make cmake python-devel bzip2-devel zlib-devel expat-devel
 wget http://downloads.sourceforge.net/boost/boost_1_38_0.tar.bz2
 bzip2 -d boost_1_38_0.tar.bz2
