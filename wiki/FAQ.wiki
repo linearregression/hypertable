@@ -63,3 +63,23 @@ To fix this, try running configure as follows
 {{{
 CFLAGS=-fPIC ./configure
 }}}
+
+
+==How do I convert the log file entries from Unix time (seconds since the Epoch) to something human readable?==
+
+Try adding the following alias to your .bashrc file:
+
+{{{
+alias lcat='perl -pe "s/^\d+/localtime($&)/e"'
+}}}
+
+And then you can examine the log files like this:
+
+{{{
+$ lcat Hypertable.RangeServer.log
+Wed Apr 15 00:00:14 2009 INFO Hypertable.RangeServer : (/usr/local/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:2047) Memory Usage: 299447013 bytes
+Wed Apr 15 00:00:14 2009 INFO Hypertable.RangeServer : (/usr/local/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:2104) Cleaning log (threshold=200000000)
+Wed Apr 15 00:00:34 2009 INFO Hypertable.RangeServer : (/usr/local/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:2047) Memory Usage: 299447013 bytes
+Wed Apr 15 00:00:34 2009 INFO Hypertable.RangeServer : (/usr/local/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:2104) Cleaning log (threshold=200000000)
+...
+}}}
