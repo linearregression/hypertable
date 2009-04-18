@@ -60,5 +60,5 @@ scp *.pem ec2-67-202-14-246.compute-1.amazonaws.com:~
 Make all modifications to the instance.  Then, as root, execute something like the following:
 
 {{{
-# ec2-bundle-vol -k pk-NRYJO62L5QOCL56G43ZLJ7VNDUBALHH4.pem -c cert-NRYJO62L5QOCL56G43ZLJ7VNDUBALHH4.pem 724784214682 -u 724784214682 --arch x86_64
+# ec2-bundle-vol -k pk-*.pem -c cert-*.pem 724784214682 -u 724784214682 --arch x86_64
 }}}
