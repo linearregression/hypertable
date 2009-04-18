@@ -61,8 +61,7 @@ depmod -a; modprobe loop
 }}}
 4. Bundle the image
 {{{
-cd ~/.ec2
-scp *.pem ec2-67-202-14-246.compute-1.amazonaws.com:~
+scp -i .ec2/id_rsa-gsg-keypair .ec2/*.pem root@ec2-75-101-234-105.compute-1.amazonaws.com:/mnt
 }}}
 
 Make all modifications to the instance.  Then, as root, execute something like the following:
