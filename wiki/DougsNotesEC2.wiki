@@ -53,6 +53,13 @@ $ tar xzvf /tmp/doug-bash-account-setup.tgz
 
 == Creating a new Image ==
 
+1. Start with an existing AMI
+2. Make modifications
+3. Run this
+{{{
+depmod -a; modprobe loop
+}}}
+4. Bundle the image
 {{{
 cd ~/.ec2
 scp *.pem ec2-67-202-14-246.compute-1.amazonaws.com:~
