@@ -53,8 +53,11 @@ $ tar xzvf /tmp/doug-bash-account-setup.tgz
 
 == Creating a new Image ==
 
-1. Start with an existing AMI
-2. Make modifications
+  # Start from an existing instance
+{{{
+ec2-run-instances -t m1.large ami-0be90e62 -k gsg-keypair
+}}}
+  # Make modifications
 3. Run this
 {{{
 depmod -a; modprobe loop
