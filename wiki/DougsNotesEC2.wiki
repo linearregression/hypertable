@@ -61,10 +61,13 @@ $ ec2-describe-instances
 RESERVATION	r-7b45ce12	724784214682	default
 INSTANCE	i-20721b49	ami-0be90e62	ec2-67-202-13-144.compute-1.amazonaws.com	domU-12-31-39-01-64-51.compute-1.internal	running	gsg-keypair	0		m1.large	2009-04-19T17:54:58+0000	us-east-1c
 }}}
-  # Make modifications
-3. Run this
+  # Make modifications, but be sure to clean up afterwards.  The /mnt directory does not get bundled into the new images, so that's good place to put temporary files.
+3. As per the the AMI instructions
 {{{
-depmod -a; modprobe loop
+$ depmod -a; modprobe loop
+$ echo '127.0.0.1 localhost.localdomain localhost' > /etc/hosts
+$ echo "RUBYLIB=/usr/lib/site_ruby; export RUBYLIB" >> ~/.bash_profile
+$ source ~/.bash_profile
 }}}
 4. Bundle the image
 {{{
