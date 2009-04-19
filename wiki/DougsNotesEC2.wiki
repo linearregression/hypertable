@@ -55,7 +55,10 @@ $ tar xzvf /tmp/doug-bash-account-setup.tgz
 
   # Start from an existing instance
 {{{
-ec2-run-instances -t m1.large ami-0be90e62 -k gsg-keypair
+$ ec2-run-instances -t m1.large ami-0be90e62 -k gsg-keypair
+$ ec2-describe-instances 
+RESERVATION	r-7b45ce12	724784214682	default
+INSTANCE	i-20721b49	ami-0be90e62	ec2-67-202-13-144.compute-1.amazonaws.com	domU-12-31-39-01-64-51.compute-1.internal	running	gsg-keypair	0		m1.large	2009-04-19T17:54:58+0000	us-east-1c
 }}}
   # Make modifications
 3. Run this
