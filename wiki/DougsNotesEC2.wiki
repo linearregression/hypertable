@@ -88,3 +88,7 @@ ec2-upload-bundle -b /hypertable/ami/hypertable-0.9.2.3-centos -m /tmp/image.man
 $ ec2-register /hypertable/ami/hypertable-0.9.2.3-centos/image.manifest.xml
 IMAGE	ami-5c56b135
 }}}
+  # Make it public
+{{{
+$ ec2-modify-image-attribute ami-5c56b135 --launch-permission -a all
+}}}
