@@ -83,3 +83,8 @@ $ ec2-bundle-vol -k /mnt/pk-*.pem -c /mnt/cert-*.pem -u 724784214682 --arch x86_
 {{{
 ec2-upload-bundle -b /hypertable/ami/hypertable-0.9.2.3-centos -m /tmp/image.manifest.xml -a 1DYT... -s P6Tl...
 }}}
+  # Register the image.  On laptop, execute the following command:
+{{{
+$ ec2-register /hypertable/ami/hypertable-0.9.2.3-centos/image.manifest.xml
+IMAGE	ami-5c56b135
+}}}
