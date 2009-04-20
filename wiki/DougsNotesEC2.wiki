@@ -79,7 +79,8 @@ scp -i .ec2/id_rsa-gsg-keypair .ec2/*.pem root@ec2-67-202-13-144.compute-1.amazo
 {{{
 $ ec2-bundle-vol -k /mnt/pk-*.pem -c /mnt/cert-*.pem -u 724784214682 --arch x86_64
 }}}
-  # On the VM, upload the bundle to S3 (assuming bucket is /hypertable/ami/hypertable-0.9.2.3-centos)
+  # Create a bucket in S3 to hold the image.  Use S3 Firefox Organizer to create the bucket.
+  # On the VM, upload the bundle to S3 (assuming bucket /hypertable/ami/hypertable-0.9.2.3-centos)
 {{{
 ec2-upload-bundle -b /hypertable/ami/hypertable-0.9.2.3-centos -m /tmp/image.manifest.xml -a 1DYT... -s P6Tl...
 }}}
