@@ -41,7 +41,12 @@ python kfslaunch.py -f machines.cfg -S
 }}}
 
 *Step 5.* Upgrade the binaries
-
+If you just want to upgrade a pre-existing install, do the following:
+{{{
+cd ~/src/kosmosfs/scripts
+python kfssetup.py -f machines.cfg -b /opt/kfs -w ../webui -u
+}}}
+If you want to delete an install and start over, then issue these commands:
 {{{
 cd ~/src/kosmosfs/scripts
 python kfssetup.py -f machines.cfg -b /opt/kfs -w ../webui -U
