@@ -4,7 +4,7 @@
 == EC2 Links ===
   * [http://aws.amazon.com/ec2/ Service Overview]
   * [http://aws.amazon.com/ec2/#pricing Instance Pricing]
-  * [http://docs.amazonwebservices.com/AWSEC2/2008-02-01/DeveloperGuide/index.html Instance Types]
+  * [http://docs.amazonwebservices.com/AWSEC2/2008-02-01/DeveloperGuide/instance-types.html Instance Types]
   * [http://developer.amazonwebservices.com/connect/kbcategory.jspa?categoryID=101 Public EC2 AMI Directory]
   * [http://docs.amazonwebservices.com/AWSEC2/2008-02-01/DeveloperGuide/index.html Developer's Guide]
   * [https://console.aws.amazon.com/ec2/home Management Console]
