@@ -51,7 +51,7 @@ cd ~/src/kosmosfs/scripts
 python kfssetup.py -f machines.cfg -b /opt/kfs -w ../webui -U
 python kfssetup.py -f machines.cfg -b /opt/kfs -w ../webui
 }}}
-If you're installing from scratch, just do
+If you're installing from scratch, just issue the following commands:
 {{{
 cd ~/src/kosmosfs/scripts
 python kfssetup.py -f machines.cfg -b /opt/kfs -w ../webui
