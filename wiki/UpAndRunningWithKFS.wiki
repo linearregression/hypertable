@@ -118,7 +118,7 @@ $ cap -S dfs=kfs stop
 
 ==Additional Notes==
 
-*1.* To change the replication factor, stop the servers and add the following property (example shows replication factor of 2) to the !MetaServer.prp property file (/mnt/kfs/meta/bin/MetaServer.prp) on the metaserver:
+*1.* To change the replication factor, stop the servers and add the following property (example shows replication factor of 2) to the !MetaServer.prp property file (/mnt/kfs/meta/bin/!MetaServer.prp) on the metaserver:
 
 {{{
 metaServer.maxReplicasPerFile = 2
