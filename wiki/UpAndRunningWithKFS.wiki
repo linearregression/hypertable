@@ -20,7 +20,22 @@ cap> date
  ** [out :: motherlode008] Sat Jan  3 18:05:33 PST 2009
 }}}
 
-*Step 2.* Pull the latest KFS source code and build it
+*Step 2.* Obtain the KFS source code and build it.  A working snapshot can be found at [http://www.hypertable.org/pub/kosmosfs.tgz kosmosfs.tgz].  To install it do the following:
+
+{{{
+cd ~/src/
+wget http://www.hypertable.org/pub/kosmosfs.tgz
+tar xzf kosmosfs.tgz
+cd kosmosfs/
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ~/src/kosmosfs
+make
+make install
+}}}
+
+Alternatively, if you wish to pull from the KFS repository, issue the following commands:
+
 {{{
 cd ~/src/
 svn co https://kosmosfs.svn.sourceforge.net/svnroot/kosmosfs/trunk kosmosfs 
