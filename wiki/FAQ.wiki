@@ -4,7 +4,13 @@
 
 ==!RangeServer Silently Dies==
 
+When the system is undergoing intense loading activity, a RangeServer will periodically disappear, leaving no core file or ERROR message in the log.
+
+The RangeServer has been designed to track its memory usage.  By default, when it sees that the memory usage has exceeded 70% of physical RAM, it will pause the incoming request queue and allow system maintenance activity to proceed, freeing up memory.  When memory usage drops back down below the threshold, the incoming request queue is un-paused.
+
 {{{
+$ dmesg
+[...]
 Out of Memory: Kill process 4564 (start-rangeserv) score 1528534 and children.
 Out of memory: Killed process 4565 (Hypertable.Rang).
 oom-killer: gfp_mask=0x201d2, order=0
