@@ -4,9 +4,11 @@
 
 ==!RangeServer Silently Dies==
 
-When the system is undergoing intense loading activity, a RangeServer will periodically disappear, leaving no core file or ERROR message in the log.
+When the system is undergoing intense loading activity, a !RangeServer will periodically disappear, leaving no core file or ERROR message in the log.
 
-The RangeServer has been designed to track its memory usage.  By default, when it sees that the memory usage has exceeded 70% of physical RAM, it will pause the incoming request queue and allow system maintenance activity to proceed, freeing up memory.  When memory usage drops back down below the threshold, the incoming request queue is un-paused.
+The !RangeServer has been designed to track its memory usage.  By default, when it sees that the memory usage has exceeded 70% of physical RAM, it will pause the incoming request queue and allow system maintenance activity to proceed, freeing up memory.  When memory usage drops back down below the threshold, the incoming request queue is un-paused.
+
+The RangeServer tracks memory consumption by keeping track of the amount of memory allocated.  However, it does not account for any heap fragmentation.  Some memory allocators (e.g. the default glibc allocator) can get fragmented to the point where the program's estimation of memory usage is way off.  This can cause the system to start paging and eventually the !RangeServer process can get killed by the Linux "out of memory killer".  To verify
 
 {{{
 $ dmesg
