@@ -8,7 +8,7 @@ When the system is undergoing intense loading activity, a !RangeServer will peri
 
 The !RangeServer has been designed to track its memory usage.  By default, when it sees that the memory usage has exceeded 70% of physical RAM, it will pause the incoming request queue and allow system maintenance activity to proceed, freeing up memory.  When memory usage drops back down below the threshold, the incoming request queue is un-paused.
 
-The RangeServer tracks memory consumption by keeping track of the amount of memory allocated.  However, it does not account for any heap fragmentation.  Some memory allocators (e.g. the default glibc allocator) can get fragmented to the point where the program's estimation of memory usage is way off.  This can cause the system to start paging and eventually the !RangeServer process can get killed by the Linux "out of memory killer".  To verify
+The !RangeServer tracks memory consumption by keeping track of the amount of memory allocated.  However, it does not account for any heap fragmentation.  Some memory allocators (e.g. the default glibc allocator) can get fragmented to the point where the program's estimation of memory usage is off significantly.  This can cause the system to start paging and eventually the !RangeServer process can get killed by the Linux "out of memory killer".  To check whether or not this is what you're experiencing, run the dmesg command and look for "Out of Memory" messages:
 
 {{{
 $ dmesg
@@ -25,6 +25,16 @@ Call Trace: <ffffffff8012f335>{printk_ratelimit+21}
        <ffffffff80163008>{__handle_mm_fault+1752} <ffffffff801180c9>{do_page_fault+3657}
        <ffffffff8031d23c>{schedule_hrtimer+60} <ffffffff80149150>{hrtimer_nanosleep+96}
        <ffffffff801490f1>{hrtimer_nanosleep+1} <ffffffff8010bb5b>{error_exit+0}
+}}}
+
+There are two ways in which you can correct this problem:
+
+1. Install google-perftools and then re-configure and re-build Hypertable.  Google perftools comes with a memory allocation library called tcmalloc.  From the RangeServer perspective, it is very efficient and has low heap fragmentation.  To use it, just download and install it, then re-run cmake to configure your build and then re-build the Hypertable software.
+
+2. Decrease the MaxMemory.Percentage property to account for increased memory fragmentation overhead:
+
+{{{
+Hypertable.RangeServer.CommitLog.PruneThreshold.Max.MemoryPercentage=60
 }}}
 
 ==Why do I get "rsync: connection unexpectedly closed" when running cap dist?==
