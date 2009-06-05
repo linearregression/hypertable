@@ -2,7 +2,7 @@
 
 <wiki:toc/>
 
-==RangeServer Silently Dies==
+==!RangeServer Silently Dies==
 
 {{{
 Out of Memory: Kill process 4564 (start-rangeserv) score 1528534 and children.
