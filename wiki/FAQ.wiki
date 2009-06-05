@@ -2,6 +2,23 @@
 
 <wiki:toc/>
 
+==RangeServer Silently Dies==
+
+{{{
+Out of Memory: Kill process 4564 (start-rangeserv) score 1528534 and children.
+Out of memory: Killed process 4565 (Hypertable.Rang).
+oom-killer: gfp_mask=0x201d2, order=0
+
+Call Trace: <ffffffff8012f335>{printk_ratelimit+21}
+       <ffffffff80157267>{out_of_memory+55} <ffffffff80159137>{__alloc_pages+567}
+       <ffffffff8015ae4f>{__do_page_cache_readahead+335} <ffffffff8031c462>{io_schedule+50}
+       <ffffffff8031ce08>{__wait_on_bit_lock+104} <ffffffff80153890>{sync_page+0}
+       <ffffffff8015b3f1>{do_page_cache_readahead+97} <ffffffff80156733>{filemap_nopage+323}
+       <ffffffff80163008>{__handle_mm_fault+1752} <ffffffff801180c9>{do_page_fault+3657}
+       <ffffffff8031d23c>{schedule_hrtimer+60} <ffffffff80149150>{hrtimer_nanosleep+96}
+       <ffffffff801490f1>{hrtimer_nanosleep+1} <ffffffff8010bb5b>{error_exit+0}
+}}}
+
 ==Why do I get "rsync: connection unexpectedly closed" when running cap dist?==
 {{{
 When I used "cap dist", then the following errors occurred on half of 100 nodes,
