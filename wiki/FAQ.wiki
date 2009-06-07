@@ -82,24 +82,6 @@ $ ulimit -n
 16384
 }}}
 
-==Problem building libunwind: #error Cannnot calculate stack trace: ...==
-
-When I try to build libunwind, I get errors like the following:
-
-{{{
- g++ -DHAVE_CONFIG_H -I. -I. -I./src -I./src -Wall -Wwrite-strings-Woverloaded-virtual -Wno-sign-compare -DNO_FRAME_POINTER -g -O2 -MT stacktrace.lo -MD -MP -MF .deps/stacktrace.Tpo -c src/stacktrace.cc -fPIC -DPIC -o .libs/stacktrace.o
-In file included from src/stacktrace.cc:57: src/stacktrace_config.h:66:5: #error Cannnot calculate stack trace: need either libunwind or frame-pointers (see INSTALL file)
-src/stacktrace.cc:70:3: #error Cannot calculate stack trace: will need to write for your environment
-make: *** [stacktrace.lo] Error 1
-}}}
-
-To fix this, try running configure as follows
-
-{{{
-CFLAGS=-fPIC ./configure
-}}}
-
-
 ==How do I convert the log file entries from Unix time (seconds since the Epoch) to something human readable?==
 
 Try adding the following alias to your .bashrc file:
@@ -117,4 +99,21 @@ Wed Apr 15 00:00:14 2009 INFO Hypertable.RangeServer : (/usr/local/src/hypertabl
 Wed Apr 15 00:00:34 2009 INFO Hypertable.RangeServer : (/usr/local/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:2047) Memory Usage: 299447013 bytes
 Wed Apr 15 00:00:34 2009 INFO Hypertable.RangeServer : (/usr/local/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:2104) Cleaning log (threshold=200000000)
 ...
+}}}
+
+==Problem building libunwind: #error Cannnot calculate stack trace: ...==
+
+When I try to build libunwind, I get errors like the following:
+
+{{{
+ g++ -DHAVE_CONFIG_H -I. -I. -I./src -I./src -Wall -Wwrite-strings-Woverloaded-virtual -Wno-sign-compare -DNO_FRAME_POINTER -g -O2 -MT stacktrace.lo -MD -MP -MF .deps/stacktrace.Tpo -c src/stacktrace.cc -fPIC -DPIC -o .libs/stacktrace.o
+In file included from src/stacktrace.cc:57: src/stacktrace_config.h:66:5: #error Cannnot calculate stack trace: need either libunwind or frame-pointers (see INSTALL file)
+src/stacktrace.cc:70:3: #error Cannot calculate stack trace: will need to write for your environment
+make: *** [stacktrace.lo] Error 1
+}}}
+
+To fix this, try running configure as follows
+
+{{{
+CFLAGS=-fPIC ./configure
 }}}
