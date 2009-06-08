@@ -27,7 +27,7 @@ Call Trace: <ffffffff8012f335>{printk_ratelimit+21}
        <ffffffff801490f1>{hrtimer_nanosleep+1} <ffffffff8010bb5b>{error_exit+0}
 }}}
 
-There are two ways in which you can correct this problem:
+There are two ways in which you can correct this problem (#1 is preferable) :
 
 1. Install [http://code.google.com/p/google-perftools/ Google perftools] and then re-configure and re-build Hypertable.  Google perftools comes with a memory allocation library called tcmalloc.  From the !RangeServer perspective, it is very efficient and has low heap fragmentation.  To use it, just download and install it, then re-run cmake to configure your build and then re-build the Hypertable software.
 
