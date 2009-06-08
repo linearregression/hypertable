@@ -36,7 +36,7 @@
 || Hypertable.!RangeServer.!AccessGroup.!MaxMemory || Maximum amount of memory consumed by an Access Group || 50M ||
 || Hypertable.!RangeServer.!AccessGroup.!MergeFiles || How many files to merge during a merging compaction || 4 ||
 || Hypertable.!RangeServer.!BlockCache.!MaxMemory || Amount of memory to dedicate to the block cache || 200M ||
-|| Hypertable.!RangeServer.Range.!MaxBytes || Maximum number of bytes per range before splitting || 200M ||
+|| Hypertable.!RangeServer.Range.!MaximumSize || Maximum number of bytes per range before splitting || 200M ||
 || Hypertable.!RangeServer.Range.!MetadataMaxBytes || Maximum number of bytes per METADATA range before splitting (for testing) ||
 || Hypertable.!RangeServer.!CommitLog.!DfsBroker.Host || Host of DFS Broker to use for Commit Log ||
 || Hypertable.!RangeServer.!CommitLog.!DfsBroker.Port || Port of DFS Broker to use for Commit Log ||
