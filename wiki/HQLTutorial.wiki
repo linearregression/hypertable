@@ -142,7 +142,7 @@ www.zvents.com/search   2008-01-25 15:19:32     www.zvents.com/search   200
 
 }}}
 
-_Reminder: you'll need to unzip it first if it's still compressed._
+_Tip: In case the file is gzipped and its name ends with '.gz', you can directly load it without having to unzip it first._
 
 ===LOAD DATA INFILE (INTO TABLE)===
 
