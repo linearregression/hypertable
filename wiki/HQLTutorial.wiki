@@ -209,7 +209,7 @@ calendar.denverpost.com/search  http-code       200
 
 ===LOAD DATA INFILE (FROM STDIN)===
 You can redirect the output from a process directly into Hypertable via this feature. For example, this feature could be used to stream the output of a mapreduce process into hypertable without having to save it to an intermediate file for loading. To use this feature the file name in the load data infile should be set to "-". In the example below we will redirect a file to the hypertable shell STDIN to load a table.
-Imagine you have a file called LdiStdin.hql with contents:
+Imagine you have a file called 'LdiStdin.hql' with contents:
 
 {{{
 codeslinger:~/hypertable>  cat LdiStdin.hql
@@ -224,7 +224,7 @@ key2    tcf2
 
 You can run:
 {{{
-<HT_INSTALL_PATH>/bin/hypertable < LdiStdin.hql
+/bin/hypertable < LdiStdin.hql
 }}}
 
 On inspecting the contents of the table you should see:
