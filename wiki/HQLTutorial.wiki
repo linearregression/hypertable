@@ -206,6 +206,34 @@ calendar.denverpost.com/search  refer-url       calendar.denverpost.com/search
 calendar.denverpost.com/search  http-code       200
 }}}
 
+
+===LOAD DATA INFILE (FROM STDIN)===
+You can redirect the output from a process directly into Hypertable via this feature. For example, this feature could be used to stream the output of a mapreduce process into hypertable without having to save it to an intermediate file for loading. To use this feature the file name in the load data infile should be set to "-". In the example below we will redirect a file to the hypertable shell STDIN to load a table.
+Imagine you have a file called LdiStdin.hql with contents:
+
+{{{
+codeslinger:~/hypertable>  cat LdiStdin.hql
+DROP TABLE IF EXISTS LdiStdin;
+CREATE TABLE LdiStdin(TestColumnFamily);
+LOAD DATA INFILE ROW_KEY_COLUMN=rowkey "-" INTO TABLE LdiStdin;
+# rowkey        TestColumnFamily
+key1    tcf1
+key2    tcf2
+ 
+}}}
+
+You can run:
+{{{
+<HT_INSTALL_PATH>/bin/hypertable < LdiStdin.hql
+}}}
+
+On inspecting the contents of the LdiStdin table you should see:
+{{{
+hypertable> SELECT * FROM LdiStdin;
+key1    TestColumnFamily        tcf1
+key2    TestColumnFamily        tcf2
+}}}
+
 ==SELECT==
 
 In the examples that follow I'm using the options spec DISPLAY_TIMESTAMPS at the end of each select but that's entirely optional and you can omit them from most of the examples (except where you want to see them in the output) -- here's a minimal SELECT:
