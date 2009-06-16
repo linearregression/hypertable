@@ -227,7 +227,7 @@ You can run:
 <HT_INSTALL_PATH>/bin/hypertable < LdiStdin.hql
 }}}
 
-On inspecting the contents of the LdiStdin table you should see:
+On inspecting the contents of the table you should see:
 {{{
 hypertable> SELECT * FROM LdiStdin;
 key1    TestColumnFamily        tcf1
