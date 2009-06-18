@@ -93,3 +93,6 @@ IMAGE	ami-5c56b135
 {{{
 $ ec2-modify-image-attribute ami-5c56b135 --launch-permission -a all
 }}}
+
+== Latest AMI ==
+ami-2f40a646
