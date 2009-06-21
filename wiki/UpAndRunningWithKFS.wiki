@@ -80,8 +80,7 @@ python kfslaunch.py -f machines.cfg -s
 
 *Step 7.* Make sure the servers are up
 {{{
-cd /opt/kfs/bin/tools
-./kfsping -m -s motherlode001 -p 20000
+/opt/kfs/bin/tools/kfsping -m -s motherlode000 -p 20000
 }}}
 
 *Step 8.* Configure Capistrano for your specific cluster and KFS.  See [DeployingHypertable How to Deploy Hypertable] for details.  The following is an example of how the variables at the top of the Capfile might be changed for KFS.
