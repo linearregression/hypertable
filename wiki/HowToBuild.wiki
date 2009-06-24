@@ -247,7 +247,7 @@ make install # as root or in su/sudo shell
 Download Berkeley DB from [http://download.oracle.com/berkeley-db/db-4.7.25.tar.gz here] and install it by running
 {{{
 tar -zxf db-4.7.25.tar.gz
-cd db-4.7.25/build-unix
+cd db-4.7.25/build_unix
 ../dist/configure --enable-cxx
 make
 make install
