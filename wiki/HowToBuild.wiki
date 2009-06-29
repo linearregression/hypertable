@@ -214,12 +214,13 @@ ldconfig
 
 == Mac OS X 10.5 Leopard ==
 
-First, download and install macports from this page [http://www.macports.org/install.php MacPorts]
+Install [developer.apple.com/technology/Xcode.html XCode]
 
+Install [http://www.macports.org/install.php MacPorts]
 
 Once you installed !MacPorts open Terminal and type following commands as root or in sudo shell
 {{{
-port install libevent boost google-perftools google-sparsehash log4cpp db47 pkgconfig
+port install libevent boost google-perftools google-sparsehash log4cpp pkgconfig
 }}}
 
 This step should take a while, but once finished you should be almost done.
