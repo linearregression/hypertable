@@ -214,7 +214,7 @@ ldconfig
 
 == Mac OS X 10.5 Leopard ==
 
-Install [developer.apple.com/technology/Xcode.html XCode]
+Install [developer.apple.com/technology/Xcode.html !XCode]
 
 Install [http://www.macports.org/install.php MacPorts]
 
