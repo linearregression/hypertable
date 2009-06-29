@@ -236,7 +236,7 @@ cp hyperic-sigar-1.6.2/sigar-bin/include/*.h /opt/local/include
 
 Download, configure, compile and install Thrift by typing
 {{{
-wget -O thrift.tgz http://tr.im/hu0b
+wget http://www.hypertable.org/pub/thrift.tgz
 tar -zxf thrift.tgz
 cd thrift
 cp /opt/local/share/aclocal/pkg.m4 aclocal
