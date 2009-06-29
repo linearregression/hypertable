@@ -264,6 +264,8 @@ Install cmake
 git clone git://scm.hypertable.org/pub/repos/hypertable.git
 }}}
 
+Upgrade to Java 1.6 by dowloading it [http://developer.apple.com/java/download/ here] and installing it as follows
+
 This should effectively make all missing dependencies present on your system so you can proceed with Hypertable compilation.
 
 == Mac OS X 10.4 Tiger ==
