@@ -255,6 +255,11 @@ make
 make install
 }}}
 
+Install git
+{{{
+port -f install git-core +bash_completion+doc
+}}}
+
 
 This should effectively make all missing dependencies present on your system so you can proceed with Hypertable compilation.
 
