@@ -227,6 +227,7 @@ This step should take a while, but once finished you should be almost done.
 
 Download Hyperic SIGAR from this page [http://sourceforge.net/project/showfiles.php?group_id=172552&package_id=197466&release_id=625208 Hyperic SIGAR] and unpack it
 {{{
+port install wget
 wget http://superb-west.dl.sourceforge.net/sourceforge/sigar/hyperic-sigar-1.6.2.tar.gz
 tar -xzvf hyperic-sigar-1.6.2.tar.gz 
 cp hyperic-sigar-1.6.2/sigar-bin/lib/libsigar-universal-macosx.dylib /usr/local/lib
