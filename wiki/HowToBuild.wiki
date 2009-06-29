@@ -223,9 +223,7 @@ Once you installed !MacPorts open Terminal and type following commands as root o
 port install libevent boost google-perftools google-sparsehash log4cpp pkgconfig
 }}}
 
-This step should take a while, but once finished you should be almost done.
-
-Download Hyperic SIGAR from this page [http://sourceforge.net/project/showfiles.php?group_id=172552&package_id=197466&release_id=625208 Hyperic SIGAR] and unpack it
+Download Hyperic SIGAR from this page [http://sourceforge.net/project/showfiles.php?group_id=172552&package_id=197466&release_id=625208 Hyperic SIGAR] and install it
 {{{
 port install wget
 wget http://superb-west.dl.sourceforge.net/sourceforge/sigar/hyperic-sigar-1.6.2.tar.gz
@@ -234,7 +232,7 @@ cp hyperic-sigar-1.6.2/sigar-bin/lib/libsigar-universal-macosx.dylib /opt/local/
 cp hyperic-sigar-1.6.2/sigar-bin/include/*.h /opt/local/include
 }}}
 
-Download, configure, compile and install Thrift by typing
+Install Thrift
 {{{
 wget http://www.hypertable.org/pub/thrift.tgz
 tar -zxf thrift.tgz
@@ -246,7 +244,7 @@ make
 make install # as root or in su/sudo shell
 }}}
 
-Download Berkeley DB from [http://download.oracle.com/berkeley-db/db-4.7.25.tar.gz here] and install it by running
+Download Berkeley DB from [http://download.oracle.com/berkeley-db/db-4.7.25.tar.gz here] and install it
 {{{
 tar -zxf db-4.7.25.tar.gz
 cd db-4.7.25/build_unix
@@ -260,6 +258,11 @@ Install git
 port -f install git-core +bash_completion+doc
 }}}
 
+Install cmake
+
+{{{
+git clone git://scm.hypertable.org/pub/repos/hypertable.git
+}}}
 
 This should effectively make all missing dependencies present on your system so you can proceed with Hypertable compilation.
 
