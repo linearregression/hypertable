@@ -264,7 +264,7 @@ Install cmake
 git clone git://scm.hypertable.org/pub/repos/hypertable.git
 }}}
 
-Upgrade to Java 1.6 by dowloading it [http://developer.apple.com/java/download/ here] and installing it as follows
+Upgrade to Java 1.6 by dowloading it [http://developer.apple.com/java/download/ here] and installing it by double-clicking on the installer.  Then switch the current version of java and the jdk with the following commands:
 
 {{{
 cd /System/Library/Frameworks/JavaVM.framework/Versions/
