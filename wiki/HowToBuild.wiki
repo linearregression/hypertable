@@ -216,9 +216,9 @@ ldconfig
 
 Same with 8.10 32-bit, except you can optionally substitute libdb4.6++-dev with libdb4.7++-dev. You'll need to create a symlink in /usr/lib/python2.6 (python 2.6 in Debian ignores site-packages according to comments in the site.py):
 
-{{
+{{{
 cd /usr/lib/python2.6 && sudo ln -s dist-packages site-packages
-}}
+}}}
 
 == Mac OS X 10.5 Leopard ==
 
