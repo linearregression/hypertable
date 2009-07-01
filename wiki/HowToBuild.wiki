@@ -214,7 +214,7 @@ ldconfig
 
 == Ubuntu 9.04 Jaunty Jackalope 32-bit ==
 
-Same with 8.10 32-bit, except you can optionally substitute libdb4.6++-dev with libdb4.7++-dev. You'll need to create a symlink in /usr/lib/python2.6 (python 2.6 in Debian ignores site-packages according to comments in the site.py):
+Same with 8.10 32-bit, except you can optionally substitute libdb4.6++-dev with libdb4.7++-dev. If you care about python interface, you'll need to create a symlink in /usr/lib/python2.6 (python 2.6 on Debian distributions ignores site-packages according to the comments in the site.py):
 
 {{{
 cd /usr/lib/python2.6 && sudo ln -s dist-packages site-packages
