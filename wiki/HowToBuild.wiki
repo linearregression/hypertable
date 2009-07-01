@@ -184,12 +184,11 @@ _Basic Dependencies_
 
 {{{
 apt-get update
-apt-get install g++ make cmake libboost-dev liblog4cpp5-dev git-core cronolog libgoogle-perftools-dev libevent-dev zlib1g-dev
-apt-get install libexpat1-dev liblog4cpp5-dev libboost-dev libdb4.6++-dev libncurses-dev libreadline5-dev
-wget http://internap.dl.sourceforge.net/sourceforge/sigar/hyperic-sigar-1.6.0.tar.gz
-tar -xzvf hyperic-sigar-1.6.0.tar.gz
-cp hyperic-sigar-1.6.0/sigar-bin/include/*.h /usr/local/include
-cp hyperic-sigar-1.6.0/sigar-bin/lib/libsigar-x86-linux.so /usr/local/lib/
+apt-get install g++ cmake libboost-dev liblog4cpp5-dev git-core cronolog libgoogle-perftools-dev libevent-dev zlib1g-dev libexpat1-dev libdb4.6++-dev libncurses-dev libreadline5-dev
+wget http://internap.dl.sourceforge.net/sourceforge/sigar/hyperic-sigar-1.6.2.tar.gz
+tar -xzvf hyperic-sigar-1.6.2.tar.gz
+cp hyperic-sigar-1.6.2/sigar-bin/include/*.h /usr/local/include
+cp hyperic-sigar-1.6.2/sigar-bin/lib/libsigar-x86-linux.so /usr/local/lib/
 ldconfig
 }}}
 
@@ -202,7 +201,7 @@ apt-get install sun-java6-jdk
 update-java-alternatives --set java-6-sun
 apt-get install ant autoconf automake libtool bison flex pkg-config php5 php5-cli ruby-dev libbit-vector-perl
 ln -f -s /bin/bash /bin/sh
-wget -O thrift.tgz http://tr.im/hu0b  (See hypertable README for location of working Thrift snapshot)
+wget http://hypertable.org/pub/thrift.tgz  (See hypertable README for location of working Thrift snapshot)
 tar -xzvf thrift.tgz
 cd thrift
 ./bootstrap.sh
@@ -211,6 +210,15 @@ make
 make install
 ldconfig
 }}}
+
+
+== Ubuntu 9.04 Jaunty Jackalope 32-bit ==
+
+Same with 8.10 32-bit, except you can optionally substitute libdb4.6++-dev with libdb4.7++-dev. You'll need to create a symlink in /usr/lib/python2.6 (python 2.6 in Debian ignores site-packages according to comments in the site.py):
+
+{{
+cd /usr/lib/python2.6 && sudo ln -s dist-packages site-packages
+}}
 
 == Mac OS X 10.5 Leopard ==
 
