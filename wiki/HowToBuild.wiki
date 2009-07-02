@@ -269,7 +269,7 @@ port -f install git-core +bash_completion+doc
 Install cmake
 
 {{{
-git clone git://scm.hypertable.org/pub/repos/hypertable.git
+port install cmake
 }}}
 
 Upgrade to Java 1.6 by dowloading it [http://developer.apple.com/java/download/ here] and installing it by double-clicking on the installer.  Then switch the current version of java and the jdk with the following commands:
