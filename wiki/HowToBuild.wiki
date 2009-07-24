@@ -242,6 +242,7 @@ cp hyperic-sigar-1.6.2/sigar-bin/include/*.h /opt/local/include
 
 Install Thrift
 {{{
+port install p5-bit-vector
 wget http://www.hypertable.org/pub/thrift.tgz
 tar -zxf thrift.tgz
 cd thrift
