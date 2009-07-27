@@ -273,7 +273,7 @@ Install cmake
 port install cmake
 }}}
 
-Upgrade to Java 1.6 by dowloading it [http://developer.apple.com/java/download/ here] and installing it by double-clicking on the installer.  Then switch the current version of java and the jdk with the following commands:
+Upgrade to Java 1.6 by dowloading it [http://developer.apple.com/java/download/ here] and installing it by double-clicking on the installer.  Then switch the current version of java and the jdk.  I'm sure there is a better way to do this, but here are the commands that I ran to get it working on my system:
 
 {{{
 cd /System/Library/Frameworks/JavaVM.framework/Versions/
@@ -281,6 +281,8 @@ rm Current
 ln -s 1.6.0 Current
 rm CurrentJDK
 ln -s 1.6.0 CurrentJDK
+cd CurrentJDK/Home/lib/security
+cp /System/Library/Frameworks/JavaVM.framework/Versions/A/Resources/Deploy.bundle/Contents/Home/lib/security/cacerts .
 }}}
 
 This should effectively make all missing dependencies present on your system so you can proceed with Hypertable compilation.
