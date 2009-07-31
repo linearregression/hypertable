@@ -1,5 +1,7 @@
 #summary Configuration properties reference
 
+Note: complete configure properties can also be printed using install_dir/bin/hypertable --help-config
+
 || *Property* || *Description* || *Default* ||
 || Hypertable.Request.Timeout || Length of time, in seconds, before timing out requests (system wide)||
 || Hypertable.Verbose || Enable verbose output (system wide) ||
