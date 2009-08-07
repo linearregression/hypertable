@@ -303,3 +303,12 @@ make
 make install
 make alltests
 }}}
+
+== Other useful packages to install ==
+  * tcpdump
+  * tcptrace
+  * netperf (ftp://ftp.netperf.org/netperf/)
+  * Capistrano (http://www.capify.org/index.php/Capistrano)
+  * dstat
+  * oprofile
+  * iozone
