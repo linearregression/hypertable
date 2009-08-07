@@ -305,6 +305,7 @@ make alltests
 }}}
 
 == Other useful packages to install ==
+  * ganglia (http://ganglia.info/)
   * tcpdump
   * tcptrace
   * netperf (ftp://ftp.netperf.org/netperf/)
