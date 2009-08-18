@@ -16,6 +16,12 @@ tar jxvf <package.tar.bz2
 Start the hypertable servers (in local/single node mode)
 {{{
 <install_dir>/bin/ht start all-servers local
+DFS broker: available file descriptors: 1024
+Started DFS Broker (local)
+Started Hyperspace
+Started Hypertable.Master
+Started Hypertable.RangeServer
+Started ThriftBroker
 }}}
 
 Use the hypertable shell for experiments
