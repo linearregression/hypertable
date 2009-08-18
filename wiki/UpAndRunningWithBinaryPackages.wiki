@@ -33,7 +33,7 @@ hypertable>
 
 Use Jruby to experiment with Hypertable API (via ThriftBroker)
 {{{
-$ CLASSPATH=/opt/hypertable/0.9.2.6/lib/java/hypertable-0.9.2.6.jar:/opt/hypertabl/0.9.2.6/lib/java/log4j-1.2.13.jar:/opt/hypertable/0.9.2.6/lib/libthrift.jar jirb
+$ CLASSPATH=/opt/hypertable/0.9.2.6/lib/java/hypertable-0.9.2.6.jar:/opt/hypertabl/0.9.2.6/lib/java/log4j-1.2.13.jar:/opt/hypertable/0.9.2.6/lib/java/libthrift.jar jirb
 irb(main):001:0> require 'java'
 => false
 irb(main):002:0> include_class 'org.hypertable.thrift.ThriftClient'
