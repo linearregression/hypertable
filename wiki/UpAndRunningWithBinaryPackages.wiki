@@ -6,7 +6,7 @@ The latest release of Hypertable comes with a few binary packages, which can cut
 
 = Getting Started =
 
-System packages (*.rpm, *.deb and *.dmg) are meant to be installed by system admins. For regular users, the *.tar.bz2 is a good choice to start playing with Hypertable.
+System packages (`*.rpm`, `*.deb` and `*.dmg`) are meant to be installed by system admins. For regular users, the *.tar.bz2 is a good choice to start playing with Hypertable.
 
 Unpack the `<package>.tar.bz2` in any directory:
 {{{
