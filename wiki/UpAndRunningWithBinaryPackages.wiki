@@ -1,4 +1,4 @@
-#Getting started with Hypertable in 5 minutes
+#summary Getting started with Hypertable in 5 minutes
 
 = Introduction =
 
