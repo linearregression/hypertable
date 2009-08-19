@@ -10,7 +10,7 @@ System packages (`*.rpm`, `*.deb` and `*.dmg`) are meant to be installed by syst
 
 Unpack the `<package>.tar.bz2` in any directory:
 {{{
-tar jxvf <package.tar.bz2
+tar jxvf <package>.tar.bz2
 }}}
 
 Start the hypertable servers (in local/single node mode)
