@@ -35,6 +35,7 @@ git archive --format=tar --prefix=hypertable-0.9.0.1-alpha/ v0.9.0.1 | gzip -9 >
    Note: gzip compress better than bzip2 for hypertable source, go figure; the trailing / in the prefix is important.
   # Upload the tarball to the google code download area:  http://code.google.com/p/hypertable/downloads/list
   # Update github repository
+  # Build binary packages using bin/src-utils/htbuild
   # Update website (in the html.git repository): change wordings in `src/*.php` and `src/*.inc` if necessary. But more importantly edit the src/release.inc to make sure variables: $download_version, $release_version and $release_date are set correctly. And then in the web root directory, run the following command:
 {{{
 src/generate.sh
