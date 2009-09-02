@@ -26,7 +26,7 @@ Started ThriftBroker
 
 Use the hypertable shell for experiments
 {{{
-<install_dir>/bin/hypertable
+<install_dir>/bin/ht shell
 
 Welcome to the hypertable command interpreter.
 For information about Hypertable, visit http://www.hypertable.org/
