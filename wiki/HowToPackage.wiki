@@ -4,11 +4,29 @@
 
 This document describes how to build binary packages for Hypertable.
 
-  * Install all of the Hypertable dependencies
+  * Install all of the Hypertable dependencies see HowToBuild
   * Build the software
 
 == Redhat-based systems ==
 {{{
 cd <build-dir>
 <source-dir>/bin/src-utils/htpkg --srcdir ~/src/hypertable RPM
+}}}
+
+== Debian-based systems ==
+{{{
+cd <build-dir>
+<source-dir>/bin/src-utils/htpkg --srcdir ~/src/hypertable DEB
+}}}
+
+== Mac OSX ==
+{{{
+cd <build-dir>
+<source-dir>/bin/src-utils/htpkg --srcdir ~/src/hypertable PackageMaker
+}}}
+
+== tar bzip archive ==
+{{{
+cd <build-dir>
+<source-dir>/bin/src-utils/htpkg --srcdir ~/src/hypertable TBZ2
 }}}
