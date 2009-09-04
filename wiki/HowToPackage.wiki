@@ -20,6 +20,8 @@ cd <build-dir>
 }}}
 
 == Mac OSX ==
+Before packaging, you must first install [http://developer.apple.com/technology/Xcode.html Xcode]
+
 {{{
 cd <build-dir>
 <source-dir>/bin/src-utils/htpkg --srcdir ~/src/hypertable PackageMaker
