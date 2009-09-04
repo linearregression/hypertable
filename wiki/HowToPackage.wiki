@@ -1,13 +1,14 @@
 #summary How to Build Binary Packages
 
-= Introduction =
+== Introduction ==
 
-Add your content here.
+This document describes how to build binary packages for Hypertable.
 
+  * Install all of the Hypertable dependencies
+  * Build the software
 
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+== Redhat-based systems ==
+{{{
+cd <build-dir>
+<source-dir>/bin/src-utils/htpkg --srcdir ~/src/hypertable RPM
+}}}
