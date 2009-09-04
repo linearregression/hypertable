@@ -2,7 +2,7 @@
 
 == Introduction ==
 
-This document describes how to build binary packages for Hypertable.
+This document describes how to build binary packages for Hypertable.  Before building packages, the following steps must be performed.
 
   * Install all of the Hypertable dependencies see HowToBuild
   * Build the software
