@@ -3,7 +3,7 @@
 
 == Introduction ==
 
-The Hypertable distribution comes a number of scripts to start and stop the various servers that make up a Hypertable cluster.  You can use your own cluster management tool to launch these scripts and deploy new binaries.  However, if you're not already using a cluster management tool, we recommend [http://www.capify.org/ Capistrano].  The distribution comes with a Capistrano config file (Capfile) that makes deploying and launching Hypertable a breeze.
+The Hypertable distribution comes a number of scripts to start and stop the various servers that make up a Hypertable cluster.  You can use your own cluster management tool to launch these scripts and deploy new binaries.  However, if you're not already using a cluster management tool, we recommend [http://www.capify.org/ Capistrano].  The distribution comes with a Capistrano config file (Capfile.cluster) that makes deploying and launching Hypertable a breeze.
 
 == Deploying with Capistrano ==
 
