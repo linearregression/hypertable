@@ -9,7 +9,7 @@ This document describes how to build binary packages for Hypertable. Before buil
 
 == Using `htbuild` ==
 
-`htbuild` is a script included in the source distribution (under bin/src-utils) that can build Hypertable binary package on freshly installed systems (currently only Fedora, CentOS and Ubuntu and Debian are tested) directly. One notable feature of htbuild is to build binary packages on Amazon EC2 (with c2-api-tools installed) in one line like this:
+`htbuild` is a script included in the source distribution (under bin/src-utils) that can build Hypertable binary package on freshly installed systems (currently only Fedora, CentOS and Ubuntu and Debian are tested) directly. One notable feature of htbuild is to build binary packages on Amazon EC2 (with ec2-api-tools installed) in one line like this:
 {{{
 <path_to>/htbuild --ami <ami-of-ubuntu> DEB RPM TBZ2
 }}}
