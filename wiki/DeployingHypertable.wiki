@@ -12,20 +12,20 @@ Capistrano is a simple tool for automating the remote execution of tasks.  It us
 $ sudo gem install capistrano
 }}}
 
-Once you have Capistrano installed, you need to modify the Capfile that comes with the Hypertable distribution and taylor it for your environment.  You can find the Capfile under conf/Capfile in the distribution.  There are some variables that are set at the top that you need to modify for your particular environment.  The following shows the variables at the top of the Capfile that need modification:
+Once you have Capistrano installed, you need to copy the Capfile.cluster that comes with the Hypertable distribution to Capfile and taylor it for your environment.  You can find the Capfile.cluster in the conf directory in the source tree. There are some variables that are set at the top that you need to modify for your particular environment.  The following shows the variables at the top of the Capfile that need modification:
 {{{
-set :source_machine, "motherlode000"
-set :install_dir,  "/data1/doug/hypertable" 
-set :hypertable_version, "0.9.0.8"
-set :dfs, "hadoop"
-set :default_config, "/home/doug/conf/cluster1-standard.cfg"
+set :source_machine,     "motherlode000"
+set :install_dir,        "/opt/hypertable" 
+set :hypertable_version, "0.9.2.7"
+set :default_dfs,        "hadoop"
+set :default_config,     "/opt/hypertable/cluster1-standard.cfg"
 }}}
 Here's a brief description of each variable:
 
 || source_machine || local machine from which you will build the binaries, distribute them to the other machines, and launch the service. ||
 || install_dir || directory on the local machine (source_machine) where you have installed Hypertable.  It is also the directory on the remote machines where the installation will get rsync'ed to. ||
 || hypertable_version || version of Hypertable you are deploying ||
-|| dfs || distributed file system you are running Hypertable on top of.  Valid values are "local", "hadoop", or "kfs" ||
+|| default_dfs || distributed file system you are running Hypertable on top of.  Valid values are "local", "hadoop", or "kfs" ||
 || default_config || the location of the default configuration file that you want to use. ||
 
 In addition to the above variables, you also need to define two roles, one for the machine that will run the master processes (e.g. Hypertable.Master and Hyperspace) and one for the machines that will run the !RangeServers.  You need to edit the following lines:
@@ -71,7 +71,10 @@ The following list of scripts are launched by Capistrano, but they can also be r
   
   This script is used to start the Hypertable master.
   * `start-rangeserver.sh [<server-options>]`
-  
+
+  This script is used to start the ThriftBroker.
+  * `start-thriftbroker.sh [<server-options>]`
+    
   This script is used to start the Range Server.
   * `start-all-servers.sh (local|hadoop|kfs) [<server-options>]`
   
@@ -82,6 +85,7 @@ Successfully started DFSBroker (local)
 Successfully started Hyperspace
 Successfully started Hypertable.Master
 Successfully started Hypertable.RangeServer
+Successfully started ThriftBroker
 }}}
   * `stop-servers.sh`
 
@@ -95,6 +99,6 @@ $ bin/start-dfsbroker.sh hadoop
 $ bin/clean-database.sh
 }}}
 
-  * `slaves.sh`
+  * `slaves.sh` (deprecated, use cap shell instead)
 
   This script is a handy script for executing an ssh command on all machines in the cluster.  It was taken from Hadoop and requires that you have a conf/slaves file in your installation that contains each slave machine listed on a separate line.
