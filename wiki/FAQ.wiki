@@ -159,14 +159,14 @@ Once you have confirmed this is the issue, you can tighten the port access restr
 
 ==RANGE SERVER clock skew detected==
 
-Hypertable requires that all machines participating in a Hypertable cluster have their clocks synchronized.  
+Hypertable requires that all machines participating in a Hypertable cluster have their clocks synchronized.  The system uses Multi-Version Concurrency Control and by default will auto-assign revision numbers using a high resolution timestamp.  These revision numbers are used for snapshot isolation as well as determining which portions of the commit log can be safely deleted.  When clocks are significantly out-of-skew (e.g. several seconds), old results can suddenly appear in a query, or worse, when the system is brought down and back up again, data can go missing.  In almost all circumstances, the system will detect clock skew and either refuse updates by throwing an exception up to the application,
 
 {{{
 Failed: (3405054,ItemRank,9223372036854775810) - RANGE SERVER clock skew detected
 Failed: (3405054,ClickURL,9223372036854775810) - RANGE SERVER clock skew detected
 }}}
 
-or 
+and/or by dropping an error message in the range server log:
 
 {{{
  ** [out :: motherlode004] 1253227860 ERROR Hypertable.RangeServer : (/home/doug/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:1554) RANGE SERVER clock skew detected 'Clocks skew of 20504726 microseconds exceeds maximum (3000000) range=query-log[1709153..197905]'
