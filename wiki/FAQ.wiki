@@ -4,15 +4,18 @@
 
 ==!RangeServer fails to start on HDFS with failed expectation (nread == RSML_HEADER_SIZE)==
 
-The Hypertable.RangeServer.log file will have an entry like the following at the end of it:
+The Hypertable.!RangeServer.log file will have an entry like the following at the end of it:
 
 {{{
-1252947174 ERROR Hypertable.RangeServer : local_recover (/root/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:460): Hypertable::Exception: failed expectation: nread == RSML_HEADER_SIZE - METALOG bad range server metalog header
-        at
-Hypertable::RangeServerMetaLogReader::RangeServerMetaLogReader(Hypertable::Filesystem*, const Hypertable::String&) (/root/hypertable/src/cc/Hypertable/Lib/RangeServerMetaLogReader.cc:201
+1252947174 ERROR Hypertable.RangeServer : local_recover (/root/
+hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:460):
+Hypertable::Exception: failed expectation: nread == RSML_HEADER_SIZE -
+METALOG bad range server metalog header
 }}}
 
+The range server writes state changes to a meta log in the underlying DFS (`/hypertable/servers/<ip>_<port>/log/range_txn`).  It replays this metalog when it restarts in order to reconstruct its state at the time it stopped.
 
+The current version of HDFS (0.20.1) does not have a properly functioning fsync() operation
 
 ==!RangeServer silently dies==
 
