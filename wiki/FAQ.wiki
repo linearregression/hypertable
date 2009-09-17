@@ -143,7 +143,6 @@ CFLAGS=-fPIC ./configure
 }}}
 
 
-
 ==!RangeServer unable to connect to Hyperspace on EC2==
 
 If the server logs complain about being able to connect to each other:
@@ -157,3 +156,19 @@ $prompt> ec2-authorize $your-access-group -p 1-65000 -P udp
 
 You can confirm your changes by examining the output of ec2-describe-group.
 Once you have confirmed this is the issue, you can tighten the port access restrictions by just opening up the ports used by hypertable (consult your config file).
+
+==RANGE SERVER clock skew detected==
+
+Hypertable requires that all machines participating in a Hypertable cluster have their clocks synchronized.  
+
+{{{
+Failed: (3405054,ItemRank,9223372036854775810) - RANGE SERVER clock skew detected
+Failed: (3405054,ClickURL,9223372036854775810) - RANGE SERVER clock skew detected
+}}}
+
+or 
+
+{{{
+ ** [out :: motherlode004] 1253227860 ERROR Hypertable.RangeServer : (/home/doug/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:1554) RANGE SERVER clock skew detected 'Clocks skew of 20504726 microseconds exceeds maximum (3000000) range=query-log[1709153..197905]'
+ ** [out :: motherlode004] 1253227867 ERROR Hypertable.RangeServer : (/home/doug/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:1506) Exception caught: RANGE SERVER clock skew detected
+}}}
