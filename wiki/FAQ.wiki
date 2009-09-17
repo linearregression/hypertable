@@ -166,14 +166,14 @@ Failed: (3405054,ItemRank,9223372036854775810) - RANGE SERVER clock skew detecte
 Failed: (3405054,ClickURL,9223372036854775810) - RANGE SERVER clock skew detected
 }}}
 
-and/or by dropping an error message in the range server log:
+or will log an error message in the range server log file:
 
 {{{
  ** [out :: motherlode004] 1253227860 ERROR Hypertable.RangeServer : (/home/doug/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:1554) RANGE SERVER clock skew detected 'Clocks skew of 20504726 microseconds exceeds maximum (3000000) range=query-log[1709153..197905]'
  ** [out :: motherlode004] 1253227867 ERROR Hypertable.RangeServer : (/home/doug/src/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:1506) Exception caught: RANGE SERVER clock skew detected
 }}}
 
-Use the [http://www.ntp.org/ Network Time Protocol (ntp)] to ensure that the clocks get synchronized and remain in sync.  Run the 'date' command on all machines to make sure they are in sync.  The following Capistrano shell session show the output of a cluster with properly synchronized clocks.
+To prevent this situation, use the [http://www.ntp.org/ Network Time Protocol (ntp)] to ensure that the clocks get synchronized and remain in sync.  Run the 'date' command on all machines to make sure they are in sync.  The following Capistrano shell session show the output of a cluster with properly synchronized clocks.
 
 {{{
 cap> date
