@@ -13,9 +13,14 @@ Hypertable::Exception: failed expectation: nread == RSML_HEADER_SIZE -
 METALOG bad range server metalog header
 }}}
 
-The range server writes state changes to a meta log in the underlying DFS (`/hypertable/servers/<ip>_<port>/log/range_txn`).  It replays this metalog when it restarts in order to reconstruct its state at the time it stopped.
+The range server writes state changes to a meta log in the underlying DFS (`/hypertable/servers/<ip>_<port>/log/range_txn`).  It replays this log when it restarts in order to reconstruct its state at the time it stopped.
 
-The current version of HDFS (0.20.1) does not have a properly functioning fsync() operation
+Hypertable relies on the underlying filesystem to provide a properly functioning fsync() operation, which the current version of HDFS (0.20.1) does not.  HDFS 0.21 will support this operation.  In the meantime, there are two things you can do:
+
+1. When shutting down Hypertable, use either `cap stop` or the hypertable command interpreter `shutdown` command.  This will cause the shutdown() method on the range servers to get invoked, which will properly close the meta log so that it will appear in its entirety in the filesystem.
+
+2. If a server goes down unexpectedly you may be able to recover by first shutting down Hypertable properly, then restarting HDFS.   
+
 
 ==!RangeServer silently dies==
 
