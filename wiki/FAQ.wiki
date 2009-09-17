@@ -2,6 +2,13 @@
 
 <wiki:toc/>
 
+== RangeServer fails to start on HDFS ==
+
+{{{
+Hypertable::Exception: failed expectation: nread == RSML_HEADER_SIZE -
+METALOG bad range server metalog header
+}}}
+
 ==!RangeServer Silently Dies==
 
 When the system is undergoing intense loading activity, a !RangeServer will periodically disappear, leaving no core file or ERROR message in the log.
