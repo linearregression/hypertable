@@ -2,7 +2,7 @@
 
 <wiki:toc/>
 
-==!RangeServer fails to start on HDFS with failed expectation (nread =\= RSML_HEADER_SIZE)==
+==!RangeServer fails to start on HDFS with failed expectation (nread == RSML_HEADER_SIZE)==
 
 {{{
 Hypertable::Exception: failed expectation: nread == RSML_HEADER_SIZE -
