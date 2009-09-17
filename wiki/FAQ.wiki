@@ -4,10 +4,15 @@
 
 ==!RangeServer fails to start on HDFS with failed expectation (nread == RSML_HEADER_SIZE)==
 
+The Hypertable.RangeServer.log file will have an entry like the following at the end of it:
+
 {{{
-Hypertable::Exception: failed expectation: nread == RSML_HEADER_SIZE -
-METALOG bad range server metalog header
+1252947174 ERROR Hypertable.RangeServer : local_recover (/root/hypertable/src/cc/Hypertable/RangeServer/RangeServer.cc:460): Hypertable::Exception: failed expectation: nread == RSML_HEADER_SIZE - METALOG bad range server metalog header
+        at
+Hypertable::RangeServerMetaLogReader::RangeServerMetaLogReader(Hypertable::Filesystem*, const Hypertable::String&) (/root/hypertable/src/cc/Hypertable/Lib/RangeServerMetaLogReader.cc:201
 }}}
+
+
 
 ==!RangeServer silently dies==
 
