@@ -1,4 +1,4 @@
-#summary Hard won lessons about running Hypertable
+#summary Frequently Asked Questions (a.k.a. hard won lessons)
 
 <wiki:toc/>
 
