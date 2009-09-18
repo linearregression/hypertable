@@ -1,4 +1,4 @@
-#summary Frequently Asked Questions about Hypertable
+#summary Hard won lessons about running Hypertable
 
 <wiki:toc/>
 
