@@ -2,7 +2,7 @@
 
 <wiki:toc/>
 
-==Error mkdirs DFS directory /hypertable/servers/IPADDR_38060/log/user - DFS BROKER i/o error==
+==Error mkdirs DFS directory /hypertable/servers/$ip_38060/log/user - DFS BROKER i/o error==
 
 Hypertable persists all of its state in the DFS under the directory `/hypertable`.  This directory needs to exist and be writeable by the Hypertable server processes.  
 
