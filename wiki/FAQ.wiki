@@ -2,6 +2,10 @@
 
 <wiki:toc/>
 
+==Error mkdirs DFS directory /hypertable/servers/<ip>_38060/log/user - DFS BROKER i/o error==
+
+Hypertable persists all of its state in the DFS under the directory `/hypertable`.  This directory needs to exist and be writeable by the Hypertable server processes.  
+
 ==!RangeServer fails to start on HDFS with failed expectation (nread == RSML_HEADER_SIZE)==
 
 The Hypertable.!RangeServer.log file will have an entry like the following at the end of it:
