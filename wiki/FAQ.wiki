@@ -149,10 +149,12 @@ If the server logs complain about being able to connect to each other:
 {{{
 1248816365 ERROR Hypertable.RangeServer : (/foo/hypertable-0.9.2.4-alpha/src/cc/Hypertable/RangeServer/main.cc:82) Unable to connect to hyperspace, exiting...
 }}}
-, you may need to open up ports on your EC2 hosts. To do this run something like:
 
+you may need to open up ports on your EC2 hosts. To do this run something like:
+{{{
 $prompt> ec2-authorize $your-access-group -p 1-65000 -P tcp
 $prompt> ec2-authorize $your-access-group -p 1-65000 -P udp
+}}}
 
 You can confirm your changes by examining the output of ec2-describe-group.
 Once you have confirmed this is the issue, you can tighten the port access restrictions by just opening up the ports used by hypertable (consult your config file).
