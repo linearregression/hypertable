@@ -58,7 +58,7 @@ There are two ways in which you can correct this problem (#1 is preferable) :
 2. Decrease the !MaxMemory.Percentage property to account for increased memory fragmentation overhead:
 
 {{{
-Hypertable.RangeServer.MemoryLimit.Percentage=60
+Hypertable.RangeServer.MemoryLimit.Percentage=50
 }}}
 
 ==Why do I get "rsync: connection unexpectedly closed" when running cap dist?==
