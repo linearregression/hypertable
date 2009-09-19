@@ -8,8 +8,16 @@ _*NOTE*: This document assumes that Hypertable has been installed under */opt/hy
 
 = Getting Started =
 
-System packages (`*.rpm`, `*.deb` and `*.dmg`) are meant to be installed by system admins. For regular users, the `*.tar.bz2` is a good choice to start playing with Hypertable.
+System packages (`*.rpm`, `*.deb` and `*.dmg`) can be installed if you have root access.  For users without root access, the compressed archive `*.tar.bz2` can be unpacked in the user's home directory.
 
+RPM
+{{{
+rpm -i <package>.rpm
+}}}
+Debian
+{{{
+
+}}}
 Unpack the `<package>.tar.bz2` in any directory:
 {{{
 tar jxvf <package>.tar.bz2
