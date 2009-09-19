@@ -30,7 +30,7 @@ $ hadoop fs -mkdir /hypertable
 $ hadoop fs -chmod 777 /hypertable
 }}}
 
-*Step 4.* Edit the config file conf/hypertable.cfg  Change the following property to point to the Hadoop filesystem that got up and running in step 1 (assuming hdfs://motherlode000:9000):
+*Step 4.* Edit the config file conf/hypertable.cfg  Change the following property to point to the Hadoop filesystem that got up and running in step 2 (assuming hdfs://motherlode000:9000):
 {{{
 HdfsBroker.fs.default.name=hdfs://motherlode001:9000
 }}}
