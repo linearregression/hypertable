@@ -17,7 +17,7 @@ tar jxvf <package>.tar.bz2
 
 Start the hypertable servers (in local/single node mode)
 {{{
-<install_dir>/bin/ht start all-servers local
+/opt/hypertable/current/bin/ht start all-servers local
 DFS broker: available file descriptors: 1024
 Started DFS Broker (local)
 Started Hyperspace
@@ -28,7 +28,7 @@ Started ThriftBroker
 
 Use the hypertable shell for experiments
 {{{
-<install_dir>/bin/ht shell
+/opt/hypertable/current/bin/ht shell
 
 Welcome to the hypertable command interpreter.
 For information about Hypertable, visit http://www.hypertable.org/
@@ -41,7 +41,7 @@ hypertable>
 
 Use Jruby to experiment with Hypertable API (via !ThriftBroker)
 {{{
-$ CLASSPATH=<install_dir>/lib/java/hypertable-0.9.2.6.jar:<install_dir>/lib/java/log4j-1.2.13.jar:<install_dir>/lib/java/libthrift.jar jirb
+$ CLASSPATH=/opt/hypertable/current/lib/java/hypertable-0.9.2.7.jar:/opt/hypertable/current/lib/java/log4j-1.2.13.jar:/opt/hypertable/current/lib/java/libthrift.jar jirb
 irb(main):001:0> require 'java'
 => false
 irb(main):002:0> include_class 'org.hypertable.thrift.ThriftClient'
