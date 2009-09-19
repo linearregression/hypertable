@@ -4,24 +4,24 @@
 
 The latest release of Hypertable comes with a few [http://package.hypertable.org/ binary packages], which can cut down significant amount of build time (including dependencies) if your platform is included (Linux (intel/amd x86 32 and 64-bit) and Mac OS X (intel only) in the list.
 
-_*NOTE*: This document assumes that Hypertable has been installed under */opt/hypertable/$RELEASE* with the symlink */opt/hypertable/current* pointing to it._
-
 = Getting Started =
 
-System packages (`*.rpm`, `*.deb` and `*.dmg`) can be installed if you have root access.  For users without root access, the compressed archive `*.tar.bz2` can be unpacked in the user's home directory.
+System packages (`*.rpm`, `*.deb` and `*.dmg`) can be installed by users with root access.  For users without root access, the compressed archive `*.tar.bz2` can be unpacked in any directory the user has write permission.
 
-RPM
+RPM installation
 {{{
 rpm -i <package>.rpm
 }}}
-Debian
+Debian installation
 {{{
-
+dpkg --install <package>.deb
 }}}
-Unpack the `<package>.tar.bz2` in any directory:
+Bzipped archive installation
 {{{
 tar jxvf <package>.tar.bz2
 }}}
+
+_*NOTE*: This document assumes that Hypertable has been installed under */opt/hypertable/$RELEASE* with the symlink */opt/hypertable/current* pointing to it._
 
 Start the hypertable servers (in local/single node mode)
 {{{
