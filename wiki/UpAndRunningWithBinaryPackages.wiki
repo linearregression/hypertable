@@ -4,6 +4,8 @@
 
 The latest release of Hypertable comes with a few [http://package.hypertable.org/ binary packages], which can cut down significant amount of build time (including dependencies) if your platform is included (Linux (intel/amd x86 32 and 64-bit) and Mac OS X (intel only) in the list.
 
+NOTE: This document assumes that Hypertable has been installed under /opt/hypertable/$RELEASE with the symlink /opt/hypertable/current pointing to it.
+
 = Getting Started =
 
 System packages (`*.rpm`, `*.deb` and `*.dmg`) are meant to be installed by system admins. For regular users, the `*.tar.bz2` is a good choice to start playing with Hypertable.
