@@ -62,3 +62,6 @@ METADATA
 => nil
 irb(main):005:0> 
 }}}
+
+Note, C++ and [http://en.wikipedia.org/wiki/List_of_JVM_languages JVM languages] clients are usable without installing additional software, as the thrift libraries of C++ and Java are bundled with the package. For [http://wiki.apache.org/thrift other Thrift supported languages], you'll need to install the thrift package. Sample clients of  
+java, perl, php, python and ruby are included in the package under the /opt/hypertable/current/lib directory.
