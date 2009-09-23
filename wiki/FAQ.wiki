@@ -28,7 +28,7 @@ Hypertable relies on the underlying filesystem to provide a properly functioning
 
 If a server goes down unexpectedly you should be able to recover with the following steps:
 
-  # Properly shut down Hypertable (`cap stop` or `hypertable> shutdown`)
+  # Properly shut down Hypertable (`cap stop`)
   # Shutdown HDFS
   # Restart HDFS
   # Restart Hypertable
