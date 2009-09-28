@@ -253,18 +253,14 @@ make
 make install # as root or in su/sudo shell
 }}}
 
-Download Berkeley DB from [http://download.oracle.com/berkeley-db/db-4.7.25.tar.gz here] and install it
+Install BerkeleyDB
 {{{
-tar -zxf db-4.7.25.tar.gz
-cd db-4.7.25/build_unix
-../dist/configure --enable-cxx
-make
-make install
+port install db47
 }}}
 
 Install git
 {{{
-port -f install git-core +bash_completion+doc
+port -f install git-core +bash_completion +doc
 }}}
 
 Install cmake
@@ -273,7 +269,7 @@ Install cmake
 port install cmake
 }}}
 
-Upgrade to Java 1.6 by dowloading it [http://developer.apple.com/java/download/ here] and installing it by double-clicking on the installer.  Then switch the current version of java and the jdk.  I'm sure there is a better way to do this, but here are the commands that I ran to get it working on my system:
+Upgrade to Java 1.6 by downloading it [http://developer.apple.com/java/download/ here] and installing it by double-clicking on the installer.  Then switch the current version of java and the jdk.  I'm sure there is a better way to do this, but here are the commands that I ran to get it working on my system:
 
 {{{
 cd /System/Library/Frameworks/JavaVM.framework/Versions/
