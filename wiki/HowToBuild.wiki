@@ -59,7 +59,7 @@ make install
 
 
 
-== CentOS 5.1 32-bit ==
+== CentOS 5.2 32-bit ==
 
 _EC2:  ami-0459bc6d_
 
@@ -68,13 +68,13 @@ _Basic Dependencies_
 {{{
 rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm
 yum install gcc-c++ make cmake python-devel bzip2-devel zlib-devel expat-devel
-wget http://downloads.sourceforge.net/boost/boost_1_37_0.tar.bz2
-bzip2 -d boost_1_37_0.tar.bz2
-tar -xvf boost_1_37_0.tar
-cd boost_1_37_0
-./configure
-make
-make install
+wget http://downloads.sourceforge.net/boost/boost_1_39_0.tar.bz2
+bzip2 -d boost_1_39_0.tar.bz2
+tar -xvf boost_1_39_0.tar
+cd boost_1_39_0
+./bootstrap.sh 
+./bjam 
+./bjam install --prefix=/usr/local
 cd /etc/yum.repos.d
 wget http://dries.eu/pub/dries-el.repo
 yum install log4cpp-devel git-core cronolog google-perftools-devel libevent-devel readline-devel ncurses-devel
