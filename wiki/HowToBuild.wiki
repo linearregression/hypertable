@@ -78,7 +78,7 @@ cd boost_1_39_0
 cd /etc/yum.repos.d
 wget http://dries.eu/pub/dries-el.repo
 yum install log4cpp-devel git-core cronolog google-perftools-devel libevent-devel readline-devel ncurses-devel
-wget http://internap.dl.sourceforge.net/sourceforge/sigar/hyperic-sigar-1.6.0.tar.gz
+wget http://internap.dl.sourceforge.net/sourceforge/sigar/hyperic-sigar-1.6.3.tar.gz
 tar -xzvf hyperic-sigar-1.6.3.tar.gz
 cp hyperic-sigar-1.6.3/sigar-bin/include/*.h /usr/local/include
 cp hyperic-sigar-1.6.3/sigar-bin/lib/libsigar-x86-linux.so /usr/local/lib/
