@@ -220,7 +220,7 @@ Same with 8.10 32-bit, except you can optionally substitute libdb4.6++-dev with 
 cd /usr/lib/python2.6 && sudo ln -s dist-packages site-packages
 }}}
 
-== Mac OS X 10.6 Leopard ==
+== Mac OS X 10.6 Snow Leopard ==
 
 The description for OS X 10.5 should work for 10.6 equally well.
 
