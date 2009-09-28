@@ -61,7 +61,7 @@ make install
 
 == CentOS 5.2 32-bit ==
 
-_EC2:  ami-0459bc6d_
+_EC2:  ami-6d749504_
 
 _Basic Dependencies_
 
@@ -79,9 +79,9 @@ cd /etc/yum.repos.d
 wget http://dries.eu/pub/dries-el.repo
 yum install log4cpp-devel git-core cronolog google-perftools-devel libevent-devel readline-devel ncurses-devel
 wget http://internap.dl.sourceforge.net/sourceforge/sigar/hyperic-sigar-1.6.0.tar.gz
-tar -xzvf hyperic-sigar-1.6.0.tar.gz
-cp hyperic-sigar-1.6.0/sigar-bin/include/*.h /usr/local/include
-cp hyperic-sigar-1.6.0/sigar-bin/lib/libsigar-x86-linux.so /usr/local/lib/
+tar -xzvf hyperic-sigar-1.6.3.tar.gz
+cp hyperic-sigar-1.6.3/sigar-bin/include/*.h /usr/local/include
+cp hyperic-sigar-1.6.3/sigar-bin/lib/libsigar-x86-linux.so /usr/local/lib/
 wget http://download.oracle.com/berkeley-db/db-4.7.25.tar.gz
 tar -xzvf db-4.7.25.tar.gz
 cd db-4.7.25/build_unix/
