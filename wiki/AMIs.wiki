@@ -1,0 +1,11 @@
+#summary Amazon Machine Images (AMIs) with Hypertable dependencies
+
+= Introduction =
+
+Add your content here.
+
+
+= Details =
+
+  * *CentOS 5.2, i386
+  ami-bea84bd7
