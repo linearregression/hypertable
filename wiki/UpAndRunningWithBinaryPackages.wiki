@@ -3,7 +3,7 @@
 
 = Introduction =
 
-The latest release of Hypertable comes with a few [http://package.hypertable.org/ binary packages], which can cut down significant amount of build time (including dependencies) if your platform is included (Linux (intel/amd x86 32 and 64-bit) and Mac OS X (intel only) in the list.
+The latest release of Hypertable comes with a few [http://package.hypertable.org/ binary packages], which can cut down significant amount of build time (including dependencies) if your platform is included (Linux (Intel/AMD x86 32 and 64-bit) and Mac OS X (Intel only) in the list.
 
 = Getting Started =
 
@@ -22,6 +22,14 @@ Bzipped archive installation
 tar jxvf <package>.tar.bz2
 }}}
 
+The binary packages create the */opt/hypertable* and */var/opt/hypertable* directories.  
+After installation, make a symlink from */opt/hypertable/current* to your current version.
+
+{{{
+cd /opt/hypertable
+sudo ln -s 0.9.2.7/ current
+}}}
+
 _*NOTE*: This document assumes that Hypertable has been installed under */opt/hypertable/$RELEASE* with the symlink */opt/hypertable/current* pointing to it._
 
 Start the hypertable servers (in local/single node mode)
@@ -35,7 +43,8 @@ Started Hypertable.RangeServer
 Started ThriftBroker
 }}}
 
-Use the hypertable shell for experiments
+Use the Hypertable shell for experiments.  For an introduction to the commands available, see [HQLTutorial].
+
 {{{
 /opt/hypertable/current/bin/ht shell
 
@@ -48,7 +57,7 @@ list of shell meta commands.
 hypertable> 
 }}}
 
-Use Jruby to experiment with Hypertable API (via !ThriftBroker)
+Use Jruby to experiment with the Hypertable API (via !ThriftBroker)
 {{{
 $ CLASSPATH=/opt/hypertable/current/lib/java/hypertable-0.9.2.7.jar:/opt/hypertable/current/lib/java/log4j-1.2.13.jar:/opt/hypertable/current/lib/java/libthrift.jar jirb
 irb(main):001:0> require 'java'
@@ -63,5 +72,12 @@ METADATA
 irb(main):005:0> 
 }}}
 
-Note, C++ and [http://en.wikipedia.org/wiki/List_of_JVM_languages JVM languages] clients are usable without installing additional software, as the thrift libraries of C++ and Java are bundled with the package. For [http://wiki.apache.org/thrift other Thrift supported languages], you'll need to install the thrift package. Sample clients of  
-java, perl, php, python and ruby are included in the package under the /opt/hypertable/current/lib directory.
+The C++ and [http://en.wikipedia.org/wiki/List_of_JVM_languages JVM languages] clients are usable without installing additional software, as the Thrift libraries for C++ and Java are bundled with the package. For [http://wiki.apache.org/thrift other Thrift supported languages], you'll need to install the Thrift package. Sample clients in  
+Java, Perl, PHP, Python and Ruby are included in the package under the /opt/hypertable/current/lib directory.
+
+Finally, to shut everything down, use the *stop-servers.sh* script:
+
+{{{
+/opt/hypertable/current/bin/stop-servers.sh
+}}}
+
