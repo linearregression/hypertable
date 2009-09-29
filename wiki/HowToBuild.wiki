@@ -61,7 +61,8 @@ make install
 
 == CentOS 5.2 32-bit ==
 
-_EC2:  ami-6d749504_
+_September 28, 2009_
+_Base AMI:  ami-6d749504_
 
 _Basic Dependencies_
 
@@ -108,7 +109,6 @@ yum localinstall perl-Class-Accessor-0.31-1.el5.rf.noarch.rpm
 wget http://www.hypertable.org/pub/thrift.tgz
 tar -xzvf thrift.tgz
 cd thrift
-./bootstrap.sh
 ./configure
 make
 make install
