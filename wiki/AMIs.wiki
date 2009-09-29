@@ -1,11 +1,4 @@
 #summary Hypertable Amazon Machine Images (AMIs)
-<wiki:toc/>
-
-== i386 CentOS 5.2 ==
-
-`ami-bea84bd7`
-
-Boost 1.39, Hyperic SIGAR 1.6.3, BerkeleyDB 4.7.25, JDK 6 update 16, ant 1.7.1, tcpdump, tcptrace, netperf, Capistrano, dstat, oprofile, iozone
 
 || *System* || *ID* || *Installed Dependencies* ||
 || i386 CentOS 5.2 || ami-bea84bd7 || Boost 1.39, Hyperic SIGAR 1.6.3, BerkeleyDB 4.7.25, JDK 6 update 16, ant 1.7.1, tcpdump, tcptrace, netperf, Capistrano, dstat, oprofile, iozone ||
