@@ -106,6 +106,13 @@ chmod 755 jdk-6u16-linux-i586-rpm.bin
 yum install ant automake libtool flex bison pkgconfig libevent-devel ruby-devel perl-Bit-Vector php
 wget http://ftp.belnet.be/packages/dries.ulyssis.org/redhat/el5/en/i386/RPMS.dries/perl-Class-Accessor-0.31-1.el5.rf.noarch.rpm
 yum localinstall perl-Class-Accessor-0.31-1.el5.rf.noarch.rpm
+cd /usr/share/
+wget http://www.apache.org/dist/ant/ant-current-bin.zip
+unzip ant-current-bin.zip
+mv ant ant.old
+ln -s apache-ant-1.7.1 ant
+rm -rf java/ant*
+cp apache-ant-1.7.1/lib/*.jar java
 wget http://www.hypertable.org/pub/thrift.tgz
 tar -xzvf thrift.tgz
 cd thrift
