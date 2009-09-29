@@ -1,7 +1,7 @@
 #summary Amazon Machine Images (AMIs) with Hypertable dependencies
 <wiki:toc/>
 
-== i386 - CentOS 5.2 ==
+== i386 CentOS 5.2 ==
 
 `ami-bea84bd7`
 
