@@ -115,6 +115,12 @@ The following two source files provide a good example of how you use the Hyperta
   * [http://www.hypertable.org/doxygen/apache__log__load_8cc_source.html apache_log_load.cc] - Loads one or more Apache log files into Hypertable
   * [http://www.hypertable.org/doxygen/apache__log__query_8cc_source.html apache_log_query.cc] - Dumps a portion of the log table whose rows match a supplied prefix
 
+== Thrift API ==
+
+The [http://hypertable.org/thrift-api-ref/index.html Thrift API] supports [http://wiki.apache.org/thrift/ThriftFeatures many programming languages] besides C++
+
+Here are some examples for [http://github.com/vicaya/hypertable/blob/master/src/java/ThriftClient/org/hypertable/thrift/BasicClientTest.java Java], [http://github.com/vicaya/hypertable/blob/master/src/php/ThriftClient/client_test.php PHP], [http://github.com/vicaya/hypertable/blob/master/src/perl/ThriftClient/client_test.pl Perl], [http://github.com/vicaya/hypertable/blob/master/src/py/ThriftClient/client_test.py Python] and [http://github.com/vicaya/hypertable/blob/master/src/rb/ThriftClient/client_test.rb Ruby].
+
 == Source Code ==
 
 || *Directory* || *Description* ||
