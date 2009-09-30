@@ -112,8 +112,8 @@ Application programs can access Hypertable through a client API that is provided
 
 The following two source files provide a good example of how you use the Hypertable Client API.  Together they illustrate how to load data into a table and query it.
 
-  * [http://www.hypertable.org/doxygen/apache__log__load_8cc-source.html apache_log_load.cc] - Loads one or more Apache log files into Hypertable
-  * [http://www.hypertable.org/doxygen/apache__log__query_8cc-source.html apache_log_query.cc] - Dumps a portion of the log table whose rows match a supplied prefix
+  * [http://www.hypertable.org/doxygen/apache__log__load_8cc_source.html apache_log_load.cc] - Loads one or more Apache log files into Hypertable
+  * [http://www.hypertable.org/doxygen/apache__log__query_8cc_source.html apache_log_query.cc] - Dumps a portion of the log table whose rows match a supplied prefix
 
 == Source Code ==
 
