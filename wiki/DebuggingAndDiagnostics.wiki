@@ -4,7 +4,7 @@
 
 Add your content here.
 
-== Oprofile ==
+== oprofile ==
 
 Here's how to get debugging symbols setup on CentOS 5.  First, figure out the exact kernel version that you are using.
 
