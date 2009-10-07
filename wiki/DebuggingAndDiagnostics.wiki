@@ -25,4 +25,4 @@ Then configure oprofile to point to your debug kernel image:
 
 {{{
 $ opcontrol --vmlinux=/usr/lib/debug/lib/modules/2.6.18-92.1.13.el5debug/vmlinux
-}}
+}}}
