@@ -5,14 +5,52 @@ First you need to install gcc and gmake.  Then untar the attached file and run t
 {{{
 #!/bin/bash
 
-# cmake
-wget http://www.cmake.org/files/v2.6/cmake-2.6.4.tar.gz
-tar -xzvf cmake-2.6.4.tar.gz 
-cd cmake-2.6.4
-patch -p0 < ../cmake-ncurses.patch
-./configure
-make; make install
-cd ..
+grep -i "OpenSolaris" /etc/release > /dev/null
+if [ $? == 0 ] ; then
+
+  # gcc
+  pkg install SUNWgcc
+
+  # gmake
+  pkg install SUNWgmake
+
+  # cmake
+  pkg install pkg:/SUNWcmake
+
+  # ncurses
+  pkg install SUNncurses
+
+  # readline
+  pfexec pkg set-authority -O http://pkg.opensolaris.org/pending/ pending
+  pfexec pkg install readline5
+
+  # libevent
+  pkg install SUNWlibevent
+
+  # java
+  pkg install java-dev
+
+else
+
+  # cmake
+  wget http://www.cmake.org/files/v2.6/cmake-2.6.4.tar.gz
+  tar -xzvf cmake-2.6.4.tar.gz 
+  cd cmake-2.6.4
+  patch -p0 < ../cmake-ncurses.patch
+  ./configure
+  make; make install
+  cd ..
+
+  # ant
+  wget http://datadispensary.com/apache/ant/binaries/apache-ant-1.7.1-bin.tar.gz
+  pushd .
+  cd /usr/local
+  tar xzvf /root/apache-ant-1.7.1-bin.tar.gz
+  popd
+
+  export PATH=/usr/local/apache-ant-1.7.1/bin:$PATH
+
+fi
 
 # boost
 wget http://downloads.sourceforge.net/boost/boost_1_40_0.tar.bz2
@@ -45,13 +83,6 @@ cd log4cpp-1.0
 gmake; gmake install
 cd ..
 
-# ant
-wget http://datadispensary.com/apache/ant/binaries/apache-ant-1.7.1-bin.tar.gz
-pushd .
-cd /usr/local
-tar xzvf /root/apache-ant-1.7.1-bin.tar.gz
-popd
-
 # Berkeley DB
 wget http://download.oracle.com/berkeley-db/db-4.7.25.tar.gz
 tar xzvf db-4.7.25.tar.gz
@@ -68,19 +99,15 @@ cd pkgconfig-0.18
 gmake; gmake install
 cd ..
 
-export PATH=/usr/local/apache-ant-1.7.1/bin:$PATH
-
 # Add /opt/gnuht/lib to dynamic linker path
 crle -u -l /lib:/usr/lib:/opt/local/lib:/usr/local/BerkeleyDB.4.7/lib
 
 # thrift
-wget http://www.hypertable.org/pub/thrift.tgz
-tar xzvf thrift.tgz
+wget http://www.hypertable.org/pub/thrift-r820857-solaris.tgz
+tar xzvf thrift-r820857-solaris.tgz
 cd thrift
-patch -p0 -i ../thrift-solaris.patch
-./bootstrap.sh
-PY_PREFIX=/opt/local ./configure --prefix=/usr/local
-LD_LIBRARY_PATH=/opt/local/lib gmake
+./configure --prefix=/usr/local
+gmake
 gmake install
 cd ..
 
