@@ -20,13 +20,13 @@ See `htbuild --help` for more options.
 == Redhat-based systems ==
 {{{
 cd <build-dir>
-<source-dir>/bin/src-utils/htpkg --srcdir ~/src/hypertable RPM
+<source-dir>/bin/src-utils/htpkg --srcdir <source-dir> RPM
 }}}
 
 == Debian-based systems ==
 {{{
 cd <build-dir>
-<source-dir>/bin/src-utils/htpkg --srcdir ~/src/hypertable DEB
+<source-dir>/bin/src-utils/htpkg --srcdir <source-dir> DEB
 }}}
 
 == Mac OSX ==
@@ -34,11 +34,11 @@ Before packaging, you must first install [http://developer.apple.com/technology/
 
 {{{
 cd <build-dir>
-<source-dir>/bin/src-utils/htpkg --srcdir ~/src/hypertable PackageMaker
+<source-dir>/bin/src-utils/htpkg --srcdir <source-dir> PackageMaker
 }}}
 
 == tar bzip2 archive ==
 {{{
 cd <build-dir>
-<source-dir>/bin/src-utils/htpkg --srcdir ~/src/hypertable TBZ2
+<source-dir>/bin/src-utils/htpkg --srcdir <source-dir> TBZ2
 }}}
