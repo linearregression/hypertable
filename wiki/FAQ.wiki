@@ -86,6 +86,24 @@ closed (0 bytes received so far) [receiver]
 *A:* This is because the default !MaxStartups value of `/etc/sshd_config` is
 too small.  Set the value of this parameter to a number that is at least as large as the number of nodes in your cluster.
 
+You may also see the following errors:
+
+{{{
+*** [err :: machine5] Host key verification failed.
+*** [err :: machine5] 
+*** [err :: machine5] rsync: connection unexpectedly closed (0 bytes received so far) [receiver]
+*** [err :: machine5] rsync error: error in rsync protocol data stream (code 12) at io.c(635) [receiver=3.0.2]
+}}}
+
+*A:* This is because the remote host (machine5) has SSH Host Key Protection enabled.  This can be fixed by logging into the source host from the remote host (machine5) and answer "yes" when you get the following prompt:
+
+{{{
+machine5$ ssh machine0
+The authenticity of host 'machine0 (8.17.172.215)' can't be established.
+RSA key fingerprint is 38:bf:44:b8:fb:82:43:4d:ff:49:72:d9:85:30:bc:7d.
+Are you sure you want to continue connecting (yes/no)? 
+}}}
+
 ==Why am I seeing "accept() failure: Too many open files" in the Master log file?==
 {{{
 1234563919 ERROR Hypertable.Master : (/usr/src/hypertable/src/cc/AsyncComm/IOHandlerAccept.cc:78) accept() failure: Too many open files
