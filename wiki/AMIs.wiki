@@ -2,5 +2,4 @@
 
 || *System* || *ID* || *Installed Software* ||
 || i386 CentOS 5.2 || ami-bea84bd7 || Boost 1.39, Hyperic SIGAR 1.6.3, BerkeleyDB 4.7.25, JDK 6 update 16, ant 1.7.1, tcpdump, tcptrace, netperf, Capistrano, dstat, oprofile, iozone ||
-|| x86_64 Ubuntu 8.04 || ami-8124c7e8 || Boost 1.34, 
-|| i386 CentOS 5.2 || ami-bea84bd7 || Boost 1.39, Hyperic SIGAR 1.6.3, BerkeleyDB 4.6, JDK 6 update 16, ant 1.7.0, tcpdump, tcptrace, netperf, Capistrano, dstat, oprofile, iozone ||
+|| x86_64 Ubuntu 8.04 || ami-8124c7e8 || Boost 1.39, Hyperic SIGAR 1.6.3, BerkeleyDB 4.6, JDK 6 update 16, ant 1.7.0, tcpdump, tcptrace, netperf, Capistrano, dstat, oprofile, iozone ||
