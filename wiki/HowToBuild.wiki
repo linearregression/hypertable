@@ -229,7 +229,16 @@ cd /usr/lib/python2.6 && sudo ln -s dist-packages site-packages
 
 == Mac OS X 10.6 Snow Leopard ==
 
-The description for OS X 10.5 should work for 10.6 equally well.
+Download Hyperic SIGAR from this page [http://sourceforge.net/project/showfiles.php?group_id=172552&package_id=197466&release_id=625208 Hyperic SIGAR] and install it
+{{{
+port install wget
+wget http://sourceforge.net/projects/sigar/files/sigar/1.6/hyperic-sigar-1.6.3.tar.gz/download
+tar -xzvf hyperic-sigar-1.6.3.tar.gz 
+cp hyperic-sigar-1.6.3/sigar-bin/lib/libsigar-universal64-macosx.dylib /opt/local/lib/libsigar-universal-macosx.dylib
+cp hyperic-sigar-1.6.3/sigar-bin/include/*.h /opt/local/include
+}}}
+
+Other than this, the description for OS X 10.5 should work for 10.6 equally well.
 
 == Mac OS X 10.5 Leopard ==
 
@@ -246,9 +255,9 @@ Download Hyperic SIGAR from this page [http://sourceforge.net/project/showfiles.
 {{{
 port install wget
 wget http://sourceforge.net/projects/sigar/files/sigar/1.6/hyperic-sigar-1.6.3.tar.gz/download
-tar -xzvf hyperic-sigar-1.6.2.tar.gz 
-cp hyperic-sigar-1.6.2/sigar-bin/lib/libsigar-universal-macosx.dylib /opt/local/lib
-cp hyperic-sigar-1.6.2/sigar-bin/include/*.h /opt/local/include
+tar -xzvf hyperic-sigar-1.6.3.tar.gz 
+cp hyperic-sigar-1.6.3/sigar-bin/lib/libsigar-universal-macosx.dylib /opt/local/lib
+cp hyperic-sigar-1.6.3/sigar-bin/include/*.h /opt/local/include
 }}}
 
 Install Thrift
