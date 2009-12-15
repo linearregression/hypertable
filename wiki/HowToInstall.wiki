@@ -13,7 +13,7 @@
     * ncurses dev lib (auto installed by installing the above)
 
     RECOMMENDED (but not required):
-    * [http://code.google.com/p/google-perftools/ tcmalloc]
+    * [http://code.google.com/p/google-perftools/ tcmalloc] (if building on 64-bit Mac OSX > 10.6.2 & tcmalloc versions <1.4.1 you may encounter this issue http://code.google.com/p/google-perftools/issues/detail?id=169 )
 
 3. Checkout the source code.
 {{{
