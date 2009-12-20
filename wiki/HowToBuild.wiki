@@ -10,13 +10,12 @@ _Basic Dependencies_
 {{{
 rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/x86_64/epel-release-5-3.noarch.rpm
 yum install gcc-c++ make cmake python-devel bzip2-devel zlib-devel expat-devel
-wget http://downloads.sourceforge.net/boost/boost_1_38_0.tar.bz2
-bzip2 -d boost_1_38_0.tar.bz2
-tar -xvf boost_1_38_0.tar
-cd boost_1_38_0
-./configure
-make
-make install
+wget http://downloads.sourceforge.net/boost/boost_1_40_0.tar.bz2
+bzip2 -d boost_1_40_0.tar.bz2 
+tar xvf boost_1_40_0.tar
+cd boost_1_40_0
+./bootstrap.sh --with-libraries=filesystem,iostreams,program_options,system,thread,graph,regex
+./bjam install
 cd /etc/yum.repos.d
 wget http://dries.eu/pub/dries-el.repo
 yum install log4cpp-devel git-core cronolog google-perftools-devel libevent-devel readline-devel ncurses-devel
@@ -69,13 +68,12 @@ _Basic Dependencies_
 {{{
 rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm
 yum install gcc-c++ make cmake python-devel bzip2-devel zlib-devel expat-devel
-wget http://downloads.sourceforge.net/boost/boost_1_39_0.tar.bz2
-bzip2 -d boost_1_39_0.tar.bz2
-tar -xvf boost_1_39_0.tar
-cd boost_1_39_0
-./bootstrap.sh 
-./bjam 
-./bjam install --prefix=/usr/local
+wget http://downloads.sourceforge.net/boost/boost_1_40_0.tar.bz2
+bzip2 -d boost_1_40_0.tar.bz2 
+tar xvf boost_1_40_0.tar
+cd boost_1_40_0
+./bootstrap.sh --with-libraries=filesystem,iostreams,program_options,system,thread,graph,regex
+./bjam install
 cd /etc/yum.repos.d
 wget http://dries.eu/pub/dries-el.repo
 yum install log4cpp-devel git-core cronolog google-perftools-devel libevent-devel readline-devel ncurses-devel
@@ -130,13 +128,12 @@ _Basic Dependencies_
 
 {{{
 yum install git gcc-c++ make cmake python-devel bzip2-devel zlib-devel expat-devel
-wget http://downloads.sourceforge.net/boost/boost_1_37_0.tar.bz2
-bzip2 -d boost_1_37_0.tar.bz2
-tar -xvf boost_1_37_0.tar
-cd boost_1_37_0
-./configure
-make
-make install
+wget http://downloads.sourceforge.net/boost/boost_1_40_0.tar.bz2
+bzip2 -d boost_1_40_0.tar.bz2 
+tar xvf boost_1_40_0.tar
+cd boost_1_40_0
+./bootstrap.sh --with-libraries=filesystem,iostreams,program_options,system,thread,graph,regex
+./bjam install
 wget http://dag.wieers.com/rpm/packages/log4cpp/log4cpp-1.0-1.el5.rf.i386.rpm
 rpm -i log4cpp-1.0-1.el5.rf.i386.rpm 
 wget http://dag.wieers.com/rpm/packages/log4cpp/log4cpp-devel-1.0-1.el5.rf.i386.rpm
