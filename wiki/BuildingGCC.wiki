@@ -1,0 +1,56 @@
+#summary How to Build gcc on Legacy Systems
+
+= Introduction =
+
+Older versions of gcc are unable to compile Hypertable.  We've had to build a new version of gcc on some older systems in order to be able to compile Hypertable.  Here are my notes on what I did to make that happen.
+
+I've had to build a new version of gcc on the following systems:
+
+  * Solaris Nevada snv_67 X86  (gcc 3.4.3)
+  * CentOS 3.8 (gcc 3.2.3)
+
+Here are my notes:
+
+{{{
+
+# gmp
+tar xzvf gmp-4.3.1.tar.gz
+cd gmp-4.3.1/
+ABI=32 ./configure --prefix=/opt/gnuht
+make; make install
+
+# mpfr
+tar xzvf mpfr-2.4.1.tar.gz
+cd mpfr-2.4.1
+./configure --with-gmp-build=/root/gmp-4.3.1 --prefix=/opt/gnuht
+make; make install
+
+# make
+tar xzvf make-3.81.tar.gz
+cd make-3.81
+./configure --prefix=/opt/gnuht
+make; make install
+
+# sed
+tar xzvf sed-4.2.tar.gz
+cd sed-4.2
+./configure --prefix=/opt/gnuht
+make; make install
+
+# install findutils
+tar xzvf findutils-4.4.2.tar.gz
+cd findutils-4.4.2
+./configure --prefix=/opt/gnuht
+make; make install
+
+# Add newly built binaries to build path
+export PATH=/opt/gnuht/bin
+
+# gcc
+tar xzvf gcc-4.4.1.tar.gz
+cd gcc-4.4.1/
+
+./configure --with-mpfr=/opt/gnuht --with-gmp=/opt/gnuht --prefix=/opt/gnuht
+make; make install
+
+}}}
