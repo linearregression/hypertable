@@ -64,7 +64,7 @@ wget ftp://mirrors.kernel.org/gnu/gcc/gcc-4.4.1/gcc-4.4.1.tar.gz
 tar xzvf gcc-4.4.1.tar.gz
 cd gcc-4.4.1/
 
-./configure --with-mpfr=/opt/gnu --with-gmp=/opt/gnu --prefix=/opt/gnu
+./configure --with-mpfr=/opt/gnu --with-gmp=/opt/gnu --prefix=/opt/gnu --enable-languages="c,c++"
 make; make install
 
 }}}
