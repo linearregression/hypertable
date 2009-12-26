@@ -120,6 +120,13 @@ make install
 /sbin/ldconfig
 }}}
 
+== CentOS 3.9 i386==
+
+{{{
+# install java
+
+}}}
+
 == Fedora Core 8 32-bit ==
 
 _EC2:  ami-5647a33f_
