@@ -138,6 +138,13 @@ mv ant ant.old
 ln -s apache-ant-1.7.1 ant
 rm -rf java/ant*
 cp apache-ant-1.7.1/lib/*.jar java
+# install cmake
+wget http://www.cmake.org/files/v2.6/cmake-2.6.4.tar.gz
+tar xzvf cmake-2.6.4.tar.gz
+cd cmake-2.6.4
+./configure
+gmake
+gmake install
 
 }}}
 
