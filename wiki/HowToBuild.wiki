@@ -124,6 +124,13 @@ make install
 
 {{{
 # install java
+cd /usr/share/
+~/jdk-6u17-linux-i586.bin
+update-alternatives --install /usr/bin/java java /usr/share/jdk1.6.0_17/bin/java 1
+update-alternatives --config java
+update-alternatives --install /usr/bin/javac javac /usr/share/jdk1.6.0_17/bin/javac 1
+update-alternatives --config javac
+
 
 }}}
 
