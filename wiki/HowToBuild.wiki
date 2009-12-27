@@ -122,6 +122,8 @@ make install
 
 == CentOS 3.9 i386==
 
+The first step required to build on this platform is to [build a new version of gcc http://code.google.com/p/hypertable/wiki/BuildingGCC].
+
 {{{
 # install java
 cd /usr/share/
