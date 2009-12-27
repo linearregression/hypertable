@@ -129,7 +129,7 @@ rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-3
 cd /etc/yum.repos.d
 wget http://dries.eu/pub/dries-el.repo
 yum update yum
-yum install python-devel zlib-devel expat-devel cronolog libevent-devel git
+yum install python-devel zlib-devel expat-devel cronolog libevent-devel git ruby-devel
 # install java
 cd /usr/share/
 ~/jdk-6u17-linux-i586.bin
@@ -175,6 +175,23 @@ tar xvf boost_1_40_0.tar
 cd boost_1_40_0
 ./bootstrap.sh --prefix=/opt/htdep --with-libraries=filesystem,iostreams,program_options,system,thread,graph,regex
 ./bjam install
+# build thrift into /opt/htdep
+wget http://www.hypertable.org/pub/thrift-0.2.0-incubating.tar.gz
+tar xzvf thrift-0.2.0-incubating.tar.gz
+cd thrift-0.2.0
+./configure --with-boost=/opt/htdep --prefix=/opt/htdep --with-ruby=no
+make install
+# install hyperic
+wget http://internap.dl.sourceforge.net/sourceforge/sigar/hyperic-sigar-1.6.3.tar.gz
+tar -xzvf hyperic-sigar-1.6.3.tar.gz
+cp hyperic-sigar-1.6.3/sigar-bin/include/*.h /usr/local/include
+cp hyperic-sigar-1.6.3/sigar-bin/lib/libsigar-x86-linux.so /usr/local/lib/
+# install BerkeleyDB
+wget http://download.oracle.com/berkeley-db/db-4.7.25.tar.gz
+tar -xzvf db-4.7.25.tar.gz
+cd db-4.7.25/build_unix/
+../dist/configure --enable-cxx --prefix=/opt/htdep
+make install
 }}}
 
 == Fedora Core 8 32-bit ==
