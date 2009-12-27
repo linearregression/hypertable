@@ -145,6 +145,14 @@ cd cmake-2.6.4
 ./configure
 gmake
 gmake install
+# install bash 3.2
+wget http://ftp.gnu.org/gnu/bash/bash-3.2.tar.gz
+tar xzvf bash-3.2.tar.gz
+cd bash-3.2
+./configure
+make; make install
+mv /bin/bash /bin/bash.old; cp bash /bin
+# Build gcc under /opt/gnu (see ...)
 
 }}}
 
