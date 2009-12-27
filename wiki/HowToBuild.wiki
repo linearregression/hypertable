@@ -154,7 +154,9 @@ cd bash-3.2
 ./configure
 make; make install
 mv /bin/bash /bin/bash.old; cp bash /bin
-# Build gcc under /opt/gnu (see ...)
+}}}
+The next step is to [http://code.google.com/p/hypertable/wiki/BuildingGCC build a newer version of GCC].
+{{{
 
 }}}
 
