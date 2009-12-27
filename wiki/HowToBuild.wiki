@@ -162,7 +162,19 @@ mv /bin/bash /bin/bash.old; cp bash /bin
 }}}
 The next step is to [http://code.google.com/p/hypertable/wiki/BuildingGCC build a newer version of GCC].
 {{{
-
+# Be sure the new gcc is in the path (should have been done in last step)
+export PATH=/opt/gnu/bin:$PATH
+export LD_LIBRARY_PATH=/opt/gnu/lib
+hash -r
+# Create directory to hold dependencies built with new compiler
+mkdir /opt/htdep
+# build boost into /opt/htdep
+wget http://downloads.sourceforge.net/boost/boost_1_40_0.tar.bz2
+bzip2 -d boost_1_40_0.tar.bz2 
+tar xvf boost_1_40_0.tar
+cd boost_1_40_0
+./bootstrap.sh --prefix=/opt/htdep --with-libraries=filesystem,iostreams,program_options,system,thread,graph,regex
+./bjam install
 }}}
 
 == Fedora Core 8 32-bit ==
