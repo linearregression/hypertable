@@ -260,6 +260,7 @@ Same with 8.10 32-bit, except you can optionally substitute libdb4.6++-dev with 
 cd /usr/lib/python2.6 && sudo ln -s dist-packages site-packages
 wget http://www.bzip.org/1.0.5/bzip2-1.0.5.tar.gz
 tar -xzf bzip2-1.0.5.tar.gz
+cd bzip2-1.0.5
 make
 make install
 ldconfig
