@@ -126,6 +126,8 @@ The first step required to build on this platform is to [http://code.google.com/
 
 {{{
 rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-3
+yum update yum
+yum install python-devel zlib-devel expat-devel
 # install java
 cd /usr/share/
 ~/jdk-6u17-linux-i586.bin
