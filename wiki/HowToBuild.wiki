@@ -122,7 +122,7 @@ make install
 
 == CentOS 3.9 i386==
 
-The first step required to build on this platform is to [build a new version of gcc http://code.google.com/p/hypertable/wiki/BuildingGCC].
+The first step required to build on this platform is to [http://code.google.com/p/hypertable/wiki/BuildingGCC build a newer version of GCC].
 
 {{{
 # install java
