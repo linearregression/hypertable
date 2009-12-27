@@ -192,6 +192,14 @@ tar -xzvf db-4.7.25.tar.gz
 cd db-4.7.25/build_unix/
 ../dist/configure --enable-cxx --prefix=/opt/htdep
 make install
+# install log4cpp
+# NOTE: I had to add #include "backward/auto_ptr.h" to BasicLayout.cpp and 
+#       had to cast the argument to std::abs((double)minWidth) PatternLayout.cpp to
+#       get it to compile.
+wget http://downloads.sourceforge.net/project/log4cpp/log4cpp-1.0.x%20%28current%29/log4cpp-1.0/log4cpp-1.0.tar.gz
+tar xzvf log4cpp-1.0.tar.gz
+cd log4cpp-1.0
+./configure --prefix=/opt/htdep
 }}}
 
 == Fedora Core 8 32-bit ==
