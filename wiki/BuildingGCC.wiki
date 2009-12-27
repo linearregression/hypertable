@@ -55,6 +55,7 @@ make; make install
 
 # Add newly built binaries to build path
 export PATH=/opt/gnu/bin:$PATH
+export LD_LIBRARY_PATH=/opt/gnu/lib
 
 # gcc
 #
