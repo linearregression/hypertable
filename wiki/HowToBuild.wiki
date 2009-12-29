@@ -142,6 +142,7 @@ wget http://www.apache.org/dist/ant/ant-current-bin.zip
 unzip ant-current-bin.zip
 mv ant ant.old
 ln -s apache-ant-1.7.1 ant
+cp ant/bin/ant /usr/bin
 rm -rf java/ant*
 cp apache-ant-1.7.1/lib/*.jar java
 # install git
