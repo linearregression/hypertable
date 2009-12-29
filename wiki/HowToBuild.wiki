@@ -129,7 +129,7 @@ rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-3
 cd /etc/yum.repos.d
 wget http://dries.eu/pub/dries-el.repo
 yum update yum
-yum install python-devel zlib-devel expat-devel cronolog libevent-devel git ruby-devel
+yum install python-devel zlib-devel expat-devel cronolog libevent-devel git ruby-devel openssl
 # install java
 cd /usr/share/
 ~/jdk-6u17-linux-i586.bin
@@ -145,6 +145,12 @@ mv ant ant.old
 ln -s apache-ant-1.7.1 ant
 rm -rf java/ant*
 cp apache-ant-1.7.1/lib/*.jar java
+# install git
+wget http://www.kernel.org/pub/software/scm/git/git-1.5.2.1.tar.gz
+tar xzvf git-1.5.2.1.tar.gz
+cd git-1.5.2.1
+make prefix=/usr all
+make prefix=/usr install
 # install cmake
 wget http://www.cmake.org/files/v2.6/cmake-2.6.4.tar.gz
 tar xzvf cmake-2.6.4.tar.gz
