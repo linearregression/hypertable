@@ -124,9 +124,9 @@ make install
 
 {{{
 rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-3
+yum update yum
 cd /etc/yum.repos.d
 wget http://dries.eu/pub/dries-el.repo
-yum update yum
 yum install python-devel zlib-devel expat-devel cronolog libevent-devel git ruby-devel openssl
 # install java
 cd /usr/share/
