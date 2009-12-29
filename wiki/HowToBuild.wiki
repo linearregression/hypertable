@@ -122,8 +122,6 @@ make install
 
 == CentOS 3.9 i386==
 
-The first step required to build on this platform is to [http://code.google.com/p/hypertable/wiki/BuildingGCC build a newer version of GCC].
-
 {{{
 rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-3
 cd /etc/yum.repos.d
