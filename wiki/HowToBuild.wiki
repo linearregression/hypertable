@@ -123,11 +123,12 @@ make install
 == CentOS 3.9 i386==
 
 {{{
+# STEP 1: Uncomment the [centosplus] section in /etc/yum.conf
 rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-3
-yum update yum
 cd /etc/yum.repos.d
 wget http://dries.eu/pub/dries-el.repo
-yum install python-devel zlib-devel expat-devel cronolog libevent-devel git ruby-devel openssl
+yum update
+yum install python-devel zlib-devel expat-devel cronolog libevent-devel ruby-devel openssl
 # install java
 cd /usr/share/
 ~/jdk-6u17-linux-i586.bin
