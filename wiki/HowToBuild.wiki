@@ -206,6 +206,9 @@ wget http://downloads.sourceforge.net/project/log4cpp/log4cpp-1.0.x%20%28current
 tar xzvf log4cpp-1.0.tar.gz
 cd log4cpp-1.0
 ./configure --prefix=/opt/htdep
+make install
+# Then run cmake as follows:
+cmake -DHT_DEPENDENCY_DIR=/opt/htdep ~/src/hypertable
 }}}
 
 == Fedora Core 8 32-bit ==
