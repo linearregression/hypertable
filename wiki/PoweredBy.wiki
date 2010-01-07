@@ -2,4 +2,5 @@
 
 This page contains a list of all the existing Hypertable deployments.
 
-|| Company || Deployment ||
+|| *Company* || *Deployment* ||
+|| Zvents || Historical page view graphing application; Changelog application; Revenue recognition system ||
