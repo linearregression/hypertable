@@ -4,5 +4,6 @@ This page contains a list of all the existing Hypertable deployments.
 
   * *Baidu* - log analytics 
   * *Endgame Systems* - system for monitoring activity on the Internet using active and passive reconnaissance techniques to correlate and produce actionable intelligence and mapping of malicious and compromised systems connected to the Internet.
+  * *Inepex* - a customizable, real-time LBS (Location Based Services) system for personal and commercial use (fleet management, mobile phone tracking, ERP connectivity etc.)
   * *Rediff* - e-mail classification
   * *Zvents* - historical page view graphing application; changelog application; revenue recognition system
