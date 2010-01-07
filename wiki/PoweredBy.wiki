@@ -2,5 +2,8 @@
 
 This page contains a list of all the existing Hypertable deployments.
 
-|| *Company* || *Deployment* ||
+|| *Company* || *Applications* ||
+|| Baidu || Log analytics ||
+|| Endgame Systems || Endgame Systems monitors activity on the Internet using active and passive reconnaissance techniques to correlate and produce actionable intelligence and mapping of malicious and compromised systems connected to the Internet. }}
+|| Rediff || e-mail classification ||
 || Zvents || Historical page view graphing application; Changelog application; Revenue recognition system ||
