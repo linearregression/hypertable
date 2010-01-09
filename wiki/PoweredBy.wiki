@@ -6,5 +6,5 @@ This page contains a list of all the existing Hypertable deployments.
   * [http://www.endgames.us/ Endgame Systems] - system for monitoring activity on the Internet using active and passive reconnaissance techniques to correlate and produce actionable intelligence and mapping of malicious and compromised systems connected to the Internet.
   * [http://site.inepexgps.com/ Inepex] - a customizable, real-time LBS (Location Based Services) system for personal and commercial use (fleet management, mobile phone tracking, ERP connectivity etc.)
   * *Rediff* - e-mail classification
-  * *University of Rousse, Bulgaria* - Master Course in Distributed Databases and DEHEMS project (Digital Environment for Home Energy Management System to implement time series database)
-  * *Zvents* - historical page view graphing application; changelog application; revenue recognition system
+  * [http://www.dehems.eu/living-labs University of Rousse, Bulgaria] - Master Course in Distributed Databases and DEHEMS project (Digital Environment for Home Energy Management System to implement time series database)
+  * [http://www.zvents.com/ Zvents] - historical page view graphing application; changelog application; revenue recognition system
