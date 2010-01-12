@@ -45,10 +45,9 @@ chmod 755 jdk-6u13-linux-i586-rpm.bin
 yum install ant automake libtool flex bison pkgconfig libevent-devel ruby-devel perl-Bit-Vector php
 wget http://dag.wieers.com/rpm/packages/perl-Class-Accessor/perl-Class-Accessor-0.31-1.el5.rf.noarch.rpm
 yum localinstall perl-Class-Accessor-0.31-1.el5.rf.noarch.rpm
-wget -O thrift.tgz http://tr.im/hu0b  (See hypertable README for location of working Thrift snapshot)
-tar -xzvf thrift.tgz
-cd thrift
-./bootstrap.sh
+wget http://www.hypertable.org/pub/thrift-0.2.0-incubating.tar.gz
+tar xzvf thrift-0.2.0-incubating.tar.gz
+cd thrift-0.2.0
 ./configure
 make
 make install
