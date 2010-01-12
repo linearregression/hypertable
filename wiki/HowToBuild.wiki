@@ -42,6 +42,12 @@ See this [http://wiki.apache.org/thrift/ThriftInstallation official thrift insta
 wget -O jdk-6u13-linux-i586-rpm.bin <really-long-url-from-sun>
 chmod 755 jdk-6u13-linux-i586-rpm.bin
 ./jdk-6u13-linux-i586-rpm.bin
+wget http://www.apache.org/dist/ant/ant-current-bin.zip
+unzip ant-current-bin.zip
+mv ant ant.old
+ln -s apache-ant-1.7.1 ant
+rm -rf java/ant*
+cp apache-ant-1.7.1/lib/*.jar java
 yum install ant automake libtool flex bison pkgconfig libevent-devel ruby-devel perl-Bit-Vector php
 wget http://dag.wieers.com/rpm/packages/perl-Class-Accessor/perl-Class-Accessor-0.31-1.el5.rf.noarch.rpm
 yum localinstall perl-Class-Accessor-0.31-1.el5.rf.noarch.rpm
