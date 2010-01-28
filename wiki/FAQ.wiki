@@ -2,9 +2,9 @@
 
 <wiki:toc/>
 
-==Loading hangs on HDFS==
+==LOAD DATA INFILE hangs when running Hypertable on HDFS==
 
-HDFS (as of version 0.20.0) can't handle too many repeated flush operations on files.  Each time the load client (e.g. LOAD DATA INFILE) sends over a batch of writes, it causes flush() to get called on the commit log.  This creates more successive flush() operations than HDFS can handle.  To get around this problem, we added a --no-log-sync option to the command interpreter.  This will prevent the commit log to get flushed on every write and will flush it only once at the end of loading the entire file.  Here's an example of how to invoke this option:
+HDFS (as of version 0.20.0) has difficulty handling too many repeated output stream sync operations, especially when running in an environment like EC2 which can experience network congestion.  Each time the load client (e.g. LOAD DATA INFILE) sends over a batch of writes, it causes sync() to get called on the commit log.  This can cause the system to invoke more sync() requests than HDFS can handle.  To get around this problem, we added a --no-log-sync option to the command interpreter.  This will prevent the commit log from getting flushed on every write and will cause it to flush only once at the end of loading the entire file.  Here's an example of how to invoke this option:
 
 {{{
 echo "LOAD DATA INFILE data.tsv INTO TABLE foo;" | /opt/hypertable/current/bin/ht shell --no-log-sync=true
