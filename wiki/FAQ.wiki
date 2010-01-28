@@ -2,6 +2,14 @@
 
 <wiki:toc/>
 
+==Loading hangs on HDFS==
+
+HDFS (as of version 0.20.0) can't handle too many repeated flush operations on files.  Each time the load client (e.g. LOAD DATA INFILE) sends over a batch of writes, it causes flush() to get called on the commit log.  This creates more successive flush() operations than HDFS can handle.  To get around this problem, we added a --no-log-sync option to the command interpreter.  This will prevent the commit log to get flushed on every write and will flush it only once at the end of loading the entire file.  Here's an example of how to invoke this option:
+
+{{{
+echo "LOAD DATA INFILE data.tsv INTO TABLE foo;" | /opt/hypertable/current/bin/ht shell --no-log-sync=true
+}}}
+
 ==Error mkdirs DFS directory /hypertable/servers/$IP_38060/log/user - DFS BROKER i/o error==
 
 Hypertable persists all of its state in the DFS under the directory `/hypertable`.  This directory needs to exist and be writeable by the Hypertable server processes.  To do this in HDFS, run the following commands in the same user account that was used to start the HDFS server processes:
