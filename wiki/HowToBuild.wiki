@@ -287,12 +287,20 @@ _Basic Dependencies_
 
 {{{
 apt-get update
-apt-get install g++ cmake libboost-dev liblog4cpp5-dev git-core cronolog libgoogle-perftools-dev libevent-dev zlib1g-dev libexpat1-dev libdb4.6++-dev libncurses-dev libreadline5-dev
+apt-get install g++ cmake libboost-dev liblog4cpp5-dev git-core cronolog libgoogle-perftools-dev libevent-dev zlib1g-dev libexpat1-dev libncurses-dev libreadline5-dev
 wget http://internap.dl.sourceforge.net/sourceforge/sigar/hyperic-sigar-1.6.3.tar.gz
 tar -xzvf hyperic-sigar-1.6.3.tar.gz
 cp hyperic-sigar-1.6.3/sigar-bin/include/*.h /usr/local/include
 cp hyperic-sigar-1.6.3/sigar-bin/lib/libsigar-x86-linux.so /usr/local/lib/
-ldconfig
+wget http://download.oracle.com/berkeley-db/db-4.8.26.tar.gz
+tar -xzvf db-4.8.26.tar.gz
+cd db-4.8.26/build_unix/
+../dist/configure --enable-cxx
+make
+make install
+sh -c "echo '/usr/local/lib' > /etc/ld.so.conf.d/local.conf"
+sh -c "echo '/usr/local/BerkeleyDB.4.8/lib' > /etc/ld.so.conf.d/BerkeleyDB.4.8.conf"
+/sbin/ldconfig
 }}}
 
 _Thrift Broker Dependencies_
