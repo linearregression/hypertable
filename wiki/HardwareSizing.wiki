@@ -26,11 +26,11 @@ At least two, ideally four.  The disk subsystem can be a limiting factor in the 
 
 = Example = 
 
-| *Component* | *Lower Price Limit* | *Upper Price Limit* |
-| 8GB RAM | $200 | $300 |
-| Intel Core 2 Quad or AMD Phenom X4 | $200 | $300 |
-| 4X 1-2TB SATA Drives | $400 | $1200 |
-| Total | $800 | $2400 |
+|| *Component* || *Lower Price Limit* || *Upper Price Limit* ||
+|| 8GB RAM || $200 || $300 ||
+|| Intel Core 2 Quad or AMD Phenom X4 || $200 || $300 ||
+|| 4X 1-2TB SATA Drives || $400 || $1200 ||
+|| Total || $800 || $2400 ||
 
 If you leave some memory slots open, that will give you a relatively inexpensive way to improve cluster performance.  We've seen up to 50% performance improvement for some workloads simply by doubling the RAM.
 
