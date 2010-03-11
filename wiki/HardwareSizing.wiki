@@ -8,7 +8,7 @@ This document is meant to be a guide to help people who are planning to purchase
 
 Memory is a big factor in determining overeall system performance.  It affects both load performance and query performance.
 
-From the loading perspective, having less memory causes the system to do more CellStore copmaction and merging.  This creates more load on the underlying DFS which in turn puts more load on the the disk subsystems and network (as 2 replicas are sent over the network).  It also creates more demand on the CPUs in the form of compression and decompression.
+From the loading perspective, having less memory causes the system to do more !CellStore copmaction and merging.  This creates more load on the underlying DFS which in turn puts more load on the the disk subsystems and network (as 2 replicas are sent over the network).  It also creates more demand on the CPUs in the form of compression and decompression.
 
 From the random read perspective, less memory means that less of the dataset can fit in memory, which means more of the queries will require disk i/o and decompression.
 
