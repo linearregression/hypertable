@@ -14,7 +14,8 @@ From the random read perspective, less memory means that less of the dataset can
 
 For situations with intense random read workloads, where you want to increase aggregate query throughput while minimizing latency, or for situations where you need to bulk load a tremendous amount of data into the system very quickly, use lots of memory.
 
-*NOTE: Use ECC memory only, Hypertable does not work on non-ECC memory*
+NOTE: It is *STRONGLY RECOMMENDED* that you use ECC memory only (see the following Hadoop mailing list post - [http://mail-archives.apache.org/mod_mbox/hadoop-core-dev/200705.mbox/<465C3065.9050501@dragonflymc.com> Checksum error during sorting in reducer])
+
 
 = CPU =
 
