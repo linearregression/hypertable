@@ -16,7 +16,7 @@ For situations with intense random read workloads, where you want to increase ag
 
 Use of non-ECC memory is STRONGLY DISCOURAGED.  It can lead to subtle program errors and permanent data corruption.  See the following Hadoop mailing list post for more information:
 
-[http://mail-archives.apache.org/mod_mbox/hadoop-core-dev/200705.mbox/<465C3065.9050501@dragonflymc.com> Re: [jira\] Commented: (HADOOP-573) Checksum error during sorting in reducer]
+[http://mail-archives.apache.org/mod_mbox/hadoop-core-dev/200705.mbox/<465C3065.9050501@dragonflymc.com> Re: [jira&#93; Commented: (HADOOP-573) Checksum error during sorting in reducer]
 
 
 = CPU =
