@@ -103,23 +103,23 @@ foo
 }}}
 {{{
 hypertable> insert into foo values("001", "c1", "totally"), ("000", "c1", "Hypertable"), ("001", "c2", "awesome"), ("000", "c2", "is");
-
-  Elapsed time:  0.02 s
-Avg value size:  6.50 bytes
-   Total cells:  4
-    Throughput:  207.66 cells/s
-       Resends:  0
+}}}
+{{{
+hypertable> select * from foo;
+000	c1	Hypertable
+000	c2	is
+001	c1	totally
+001	c2	awesome
+}}}
+{{{
+hypertable> drop table foo;
 }}}
 
-The C++ and [http://en.wikipedia.org/wiki/List_of_JVM_languages JVM languages] clients are usable without installing additional software, as the Thrift libraries for C++ and Java are bundled with the package. For [http://wiki.apache.org/thrift other Thrift supported languages], you'll need to install the Thrift package. Sample clients in  
-Java, Perl, PHP, Python and Ruby are included in the package under the /opt/hypertable/current/lib directory.
-
-Finally, to shut everything down, use the *stop-servers.sh* script:
+Finally, to shut everything down, use the stop-servers command:
 
 {{{
-/opt/hypertable/current/bin/stop-servers.sh
+/opt/hypertable/current/bin/ht stop-servers
 }}}
-
 
 ==Building From Source==
 
