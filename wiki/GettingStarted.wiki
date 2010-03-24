@@ -3,7 +3,7 @@
 
 ==Installing Hypertable via Binary Packages==
 
-Hypertable can be installed via [http://package.hypertable.org/ binary packages].  The packages will install Hypertable under a directory by the name of `/opt/hypertable/$VERSION` by default, and come bundled with nearly all of the dependent shared libraries.  The nice thing about this approach is that only two packages are required for linux, a 64-bit linux package and a 32-bit linux package.  The only requirement is that your system is built with glibc 2.4+ for stack smashing protection.  If you're stuck with older distributions with pre 2.4 glibc, you can build your own binary packages by following the instructions in [GettingStarted#Building_From_Source]
+Hypertable can be installed via [http://package.hypertable.org/ binary packages].  The packages will install Hypertable under a directory by the name of `/opt/hypertable/$VERSION` by default, and come bundled with nearly all of the dependent shared libraries.  The nice thing about this approach is that only two packages are required for linux, a 64-bit linux package and a 32-bit linux package.  The only requirement is that your system is built with glibc 2.4+ for stack smashing protection.  If you're stuck with older distributions with pre 2.4 glibc, you can build your own binary packages by following the instructions in [#Appendix_A._How_To_Package].
 
 Apprendix A: How To Packages.
 
@@ -85,3 +85,5 @@ Finally, to shut everything down, use the *stop-servers.sh* script:
 ==Building From Source==
 
 ==Deploying with Capistrano==
+
+==Appendix A. How To Package==
