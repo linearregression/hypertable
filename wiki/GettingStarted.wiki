@@ -3,9 +3,9 @@
 
 ==Installing Hypertable via Binary Packages==
 
-===How The Packages Work===
+===Packaging Basics===
 
-Hypertable can be installed via [http://package.hypertable.org/ binary packages].  The packages come bundled with nearly all of the dependent shared libraries.  The nice thing about this approach is that just two packages are required for linux, a 64-bit linux package and a 32-bit linux package.  The only requirement is that your system is built with glibc 2.4+ (released on March 6th 2006 and provides stack smashing protection).  If you're running an older distribution with pre 2.4 glibc, you can build your own binary packages by following the instructions in [#Appendix_A._How_To_Package].
+Hypertable can be installed via [http://package.hypertable.org/ binary packages].  The packages come bundled with nearly all of the dependent shared libraries.  The nice thing about this approach is that just two packages are required for linux, a 64-bit linux package and a 32-bit linux package.  The only requirement is that your system is built with glibc 2.4+ (released on March 6th 2006 and provides stack smashing protection).  If you're running an older distribution with pre 2.4 glibc, you can build your own binary packages by following the instructions in [#Appendix_B._How_To_Package].
 
 System packages (`*.rpm`, `*.deb` and `*.dmg`) can be installed by users with root access.  For users without root access, the compressed archive `*.tar.bz2` can be unpacked in any directory the user has write permission.
 
@@ -121,8 +121,41 @@ Finally, to shut everything down, use the stop-servers command:
 /opt/hypertable/current/bin/ht stop-servers
 }}}
 
-==Building From Source==
-
 ==Deploying with Capistrano==
 
-==Appendix A. How To Package==
+==Appendis A. Building From Source==
+
+===Download the source===
+
+You can either download a release source tar ball from the [http://hypertable.org/download.html download page) and unpack it in your source directory say ~/src:
+{{{
+cd ~/src
+tar zxvf hypertable-0.9.3.0-alpha-src.tar.gz
+}}}
+or from our git repository:
+{{{
+cd ~/src
+git clone git://scm.hypertable.org/pub/repos/hypertable.git
+}}}
+
+For the rest of the section, we assume that your hypertable source tree is `~/src/hypertable`
+
+===Install the development environment===
+
+Run the following script to setup up the dev environment with all of the dependent libraries:
+
+{{{
+~/src/hypertable/bin/src-utils/htbuild --install dev_env
+}}}
+
+If the above command does not work for your platform, you can setup the dev environment manually 
+
+it did not work for your platform, check out the
+    [HowToBuild](http://code.google.com/p/hypertable/wiki/HowToBuild)
+    wiki for various tips on building on various platforms.
+
+    Patches for htbuild to support your platforms are welcome :)
+
+
+
+==Appendix B. How To Package==
