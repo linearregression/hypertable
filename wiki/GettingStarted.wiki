@@ -224,6 +224,19 @@ $ bin/clean-database.sh
 
 Hypertable 
 
+{{{
+#!/usr/bin/env bash
+
+if [ $# -lt 1 ] ; then
+    echo "usage: $0 <tablename> [ <tablename> ... ]"
+    exit 0
+fi
+
+while [ $# -ge 1 ]; do
+    echo "DUMP TABLE '$1' INTO FILE '$1.gz';" | /opt/hypertable/current/bin/ht shell
+    shift
+done
+}}}
 
 ==Appendix A. Building from Source==
 
