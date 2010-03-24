@@ -152,10 +152,10 @@ If the above command does not work for your platform, you can setup the dev envi
 
 ===Configure the build===
 
-Assuming you want your build tree to be ~/build/hypertable
+Assuming you want your build tree to be ~/build/hypertable/debug
 {{{
-mkdir -p ~/build/hypertable
-cd ~/build/hypertable
+mkdir -p ~/build/hypertable/debug
+cd ~/build/hypertable/debug
 cmake ~/src/hypertable
 }}}
 By default, hypertable gets installed in `/opt/hypertable`. To install into your own install directory, say `$prefix`, you can use:
@@ -164,6 +164,8 @@ cmake -DCMAKE_INSTALL_PREFIX=$prefix ~/src/hypertable
 }}}
 By default the build is configured for debug. To make a release build for production/performance test/benchmark:
 {{{
+mkdir -p ~/build/hypertable/release
+cd ~/build/hypertable/release
 cmake -DCMAKE_BUILD_TYPE=Release ~/src/hypertable
 }}}
 To build shared libraries, e.g., for scripting language extensions:
