@@ -3,7 +3,7 @@
 
 ==Installing Hypertable via Binary Packages==
 
-Hypertable can be installed via [http://package.hypertable.org/ binary packages].  The packages will install Hypertable under a directory by the name of `/opt/hypertable/$VERSION` by default, and come bundled with nearly all of the dependent shared libraries.  The nice thing about this approach is that only two packages are required for linux, a 64-bit linux package and a 32-bit linux package.  The only requirement is that your system is built with glibc 2.4+ (released on March 6th 2006 and provides stack smashing protection).  If you're running an older distribution with pre 2.4 glibc, you can build your own binary packages by following the instructions in [#Appendix_A._How_To_Package].
+Hypertable can be installed via [http://package.hypertable.org/ binary packages].  The packages will install Hypertable under a directory by the name of `/opt/hypertable/$VERSION` by default, and come bundled with nearly all of the dependent shared libraries.  The nice thing about this approach is that just two packages are required for linux, a 64-bit linux package and a 32-bit linux package.  The only requirement is that your system is built with glibc 2.4+ (released on March 6th 2006 and provides stack smashing protection).  If you're running an older distribution with pre 2.4 glibc, you can build your own binary packages by following the instructions in [#Appendix_A._How_To_Package].
 
 System packages (`*.rpm`, `*.deb` and `*.dmg`) can be installed by users with root access.  For users without root access, the compressed archive `*.tar.bz2` can be unpacked in any directory the user has write permission.
 
@@ -22,6 +22,27 @@ tar jxvf <package>.tar.bz2
 Mac installation:
 
  Double-click the .dmg file and follow the directions
+
+The RPM, Debian, and Mac packages will install Hypertable under a directory by the name of `/opt/hypertable/$VERSION` by default.  If you don't have root access or cannot modify the /opt directory, use the .tar.bz2 archive to install Hypertable wherever you would like.
+
+The RPM and Debian packages will, as a post-install step, setup the installation to conform to the [http://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard Filesystem Hierarchy Standard].  This involves moving the configuration directory (conf) under `/etc` and creating the dynamic (or variable) output directories under `/var` and then setting up symlinks to point from the installation to these FHS-compliant system directories.  For example, here's what the installation directory looks like after installing from the RPM package:
+{{{
+[doug@mothercompiler ~]$ ls -l /opt/hypertable/0.9.3.0/
+total 16
+drwxr-xr-x 2 doug doug 4096 Mar 23 15:45 bin
+lrwxrwxrwx 1 doug doug   27 Mar 23 15:45 conf -> /etc/opt/hypertable/0.9.3.0
+drwxr-xr-x 5 doug doug 4096 Mar 23 15:45 examples
+lrwxrwxrwx 1 doug doug   30 Mar 23 15:45 fs -> /var/opt/hypertable/0.9.3.0/fs
+lrwxrwxrwx 1 doug doug   38 Mar 23 15:45 hyperspace -> /var/opt/hypertable/0.9.3.0/hyperspace
+drwxr-xr-x 9 doug doug 4096 Mar 23 15:45 include
+drwxr-xr-x 7 doug doug 4096 Mar 23 15:45 lib
+lrwxrwxrwx 1 doug doug   31 Mar 23 15:45 log -> /var/opt/hypertable/0.9.3.0/log
+lrwxrwxrwx 1 doug doug   31 Mar 23 15:45 run -> /var/opt/hypertable/0.9.3.0/run
+}}}
+
+sudo chown -R doug:users /opt/hypertable/0.9.3.0
+
+
 
 The binary packages create the `/opt/hypertable` and */var/opt/hypertable* directories.  
 After installation, make a symlink from */opt/hypertable/current* to your current version.
