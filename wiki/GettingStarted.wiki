@@ -93,20 +93,22 @@ list of shell meta commands.
 
 hypertable> 
 }}}
-
-Use Jruby to experiment with the Hypertable API (via !ThriftBroker)
 {{{
-$ CLASSPATH=/opt/hypertable/current/lib/java/hypertable-0.9.2.7.jar:/opt/hypertable/current/lib/java/log4j-1.2.13.jar:/opt/hypertable/current/lib/java/libthrift.jar jirb
-irb(main):001:0> require 'java'
-=> false
-irb(main):002:0> include_class 'org.hypertable.thrift.ThriftClient'
-=> ["org.hypertable.thrift.ThriftClient"]
-irb(main):003:0> client = ThriftClient.create("localhost", 38080)
-=> #<Java::OrgHypertableThrift::ThriftClient:0x180b22e @java_object=#<Java::JavaObject:0x89dd>>
-irb(main):004:0> client.hql_query("show tables").results.each {|t| puts t }
+hypertable> create table foo ( c1, c2 );
+}}}
+{{{
+hypertable> show tables;
 METADATA
-=> nil
-irb(main):005:0> 
+foo
+}}}
+{{{
+hypertable> insert into foo values("001", "c1", "totally"), ("000", "c1", "Hypertable"), ("001", "c2", "awesome"), ("000", "c2", "is");
+
+  Elapsed time:  0.02 s
+Avg value size:  6.50 bytes
+   Total cells:  4
+    Throughput:  207.66 cells/s
+       Resends:  0
 }}}
 
 The C++ and [http://en.wikipedia.org/wiki/List_of_JVM_languages JVM languages] clients are usable without installing additional software, as the Thrift libraries for C++ and Java are bundled with the package. For [http://wiki.apache.org/thrift other Thrift supported languages], you'll need to install the Thrift package. Sample clients in  
