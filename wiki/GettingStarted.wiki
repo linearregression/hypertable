@@ -49,6 +49,8 @@ The `.dmg` and `.tar.bz2` install do not setup the installation to be FHS-compli
 sudo /opt/hypertable/0.9.3.0/bin/fhsize.sh
 }}}
 
+This step is not strictly necessary, so if you'd like to keep the installation cleanly under `/opt/hypertable/$VERSION` don't run `fhsize.sh`
+
 ===Finalizing the Installation===
 
 After installation, make a symlink from `/opt/hypertable/current` to your current version.
