@@ -3,9 +3,7 @@
 
 ==Installing Hypertable via Binary Packages==
 
-Hypertable can be installed via [http://package.hypertable.org/ binary packages].  The packages will install Hypertable under a directory by the name of `/opt/hypertable/$VERSION` by default, and come bundled with nearly all of the dependent shared libraries.  The nice thing about this approach is that only two packages are required for linux, a 64-bit linux package and a 32-bit linux package.  The only requirement is that your system is built with glibc 2.4+ for stack smashing protection.  If you're stuck with older distributions with pre 2.4 glibc, you can build your own binary packages by following the instructions in [#Appendix_A._How_To_Package].
-
-Apprendix A: How To Packages.
+Hypertable can be installed via [http://package.hypertable.org/ binary packages].  The packages will install Hypertable under a directory by the name of `/opt/hypertable/$VERSION` by default, and come bundled with nearly all of the dependent shared libraries.  The nice thing about this approach is that only two packages are required for linux, a 64-bit linux package and a 32-bit linux package.  The only requirement is that your system is built with glibc 2.4+ (released on March 6th 2006 and provides stack smashing protection).  If you're running an older distribution with pre 2.4 glibc, you can build your own binary packages by following the instructions in [#Appendix_A._How_To_Package].
 
 System packages (`*.rpm`, `*.deb` and `*.dmg`) can be installed by users with root access.  For users without root access, the compressed archive `*.tar.bz2` can be unpacked in any directory the user has write permission.
 
@@ -22,7 +20,7 @@ Bzipped archive installation
 tar jxvf <package>.tar.bz2
 }}}
 
-The binary packages create the */opt/hypertable* and */var/opt/hypertable* directories.  
+The binary packages create the `/opt/hypertable` and */var/opt/hypertable* directories.  
 After installation, make a symlink from */opt/hypertable/current* to your current version.
 
 {{{
