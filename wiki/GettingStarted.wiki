@@ -123,6 +123,8 @@ Finally, to shut everything down, use the stop-servers command:
 
 ==Deploying with Capistrano==
 
+===Capistrano - A Tool for Executing Remote Commands in Parallel===
+
 The Hypertable distribution comes a number of scripts to start and stop the various servers that make up a Hypertable cluster.  You can use your own cluster management tool to launch these scripts and deploy new binaries.  However, if you're not already using a cluster management tool, we recommend [http://www.capify.org/ Capistrano].  The distribution comes with a Capistrano config file (Capfile.cluster) that makes deploying and launching Hypertable a breeze.
 
 Capistrano is a simple tool for automating the remote execution of tasks.  It uses ssh to do the remote execution.  To ease deployment, you should have password-less ssh access (e.g. public key) to all of the machines in your cluster.  Installing Capistrano is pretty simple.  On most systems you just need to execute the following command
@@ -217,6 +219,11 @@ Successfully started ThriftBroker
 $ bin/start-dfsbroker.sh hadoop
 $ bin/clean-database.sh
 }}}
+
+==Backing Up and Restoring Table Data==
+
+Hypertable 
+
 
 ==Appendix A. Building from Source==
 
