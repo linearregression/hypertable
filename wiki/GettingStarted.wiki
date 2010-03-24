@@ -25,7 +25,7 @@ Mac installation:
 
 The RPM, Debian, and Mac packages will install Hypertable under a directory by the name of `/opt/hypertable/$VERSION` by default.  If you don't have root access or cannot modify the /opt directory, use the .tar.bz2 archive to install Hypertable wherever you would like.
 
-The RPM and Debian packages will, as a post-install step, setup the installation to conform to the [http://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard Filesystem Hierarchy Standard].  This involves moving the configuration directory (conf) under `/etc` and creating the dynamic (or variable) output directories under `/var` and then setting up symlinks to point from the installation to these FHS-compliant system directories.  For example, here's what the installation directory looks like after installing from the RPM package:
+The RPM and Debian packages will, as a post-install step, setup the installation to conform to the [http://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard Filesystem Hierarchy Standard].  This involves moving the configuration directory under `/etc`,  creating the dynamic (or variable) output directories under `/var`, and then setting up symlinks to point from the installation to these FHS-compliant system directories.  For example, here's what the installation directory looks like after installing from the RPM package:
 {{{
 [doug@mothercompiler ~]$ ls -l /opt/hypertable/0.9.3.0/
 total 16
