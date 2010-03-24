@@ -192,29 +192,19 @@ This section describes how to build binary packages for Hypertable. Before build
 
 The rest of this section assumes that the source code is located in `~/src/hypertable` and Thrift was built in `/usr/src/thrift-0.2.0`
 
-== Using `htbuild` ==
-
-`htbuild` is a single self-contained script included in the source distribution (under bin/src-utils) that can build Hypertable binary package on freshly installed systems (currently only Fedora, CentOS and Ubuntu and Debian are tested) directly. One notable feature of htbuild is to build binary packages on Amazon EC2 (with ec2-api-tools installed) in one line like this:
-{{{
-~/src/hypertable/bin/src-utils/htbuild --ami <ami-of-ubuntu> DEB RPM TBZ2
-}}}
-The above line would build six packages (the complete hypertable package and the thrift broker only package for each type) on the EC2 instance out of the mainline/master branch of Hypertable, run the regressions and copy the packages back to the local machine.
-
-See `htbuild --help` for more options.
-
-== Redhat-based systems ==
+===Redhat-based systems===
 {{{
 cd <build-dir>
 ~/src/hypertable/bin/src-utils/htpkg --srcdir ~/src/hypertable --phpdir /usr/src/thrift-0.2.0/lib/php/src RPM
 }}}
 
-== Debian-based systems ==
+===Debian-based systems===
 {{{
 cd <build-dir>
 ~/src/hypertable/bin/src-utils/htpkg --srcdir ~/src/hypertable --phpdir /usr/src/thrift-0.2.0/lib/php/src DEB
 }}}
 
-== Mac OSX ==
+===Mac OSX===
 Before packaging, you must first install [http://developer.apple.com/technology/Xcode.html Xcode]
 
 {{{
@@ -222,7 +212,7 @@ cd <build-dir>
 ~/src/hypertable/bin/src-utils/htpkg --srcdir ~/src/hypertable --phpdir /usr/src/thrift-0.2.0/lib/php/src PackageMaker
 }}}
 
-== tar bzip2 archive ==
+===tar bzip2 archive===
 {{{
 cd <build-dir>
 ~/src/hypertable/bin/src-utils/htpkg --srcdir ~/src/hypertable --phpdir /usr/src/thrift-0.2.0/lib/php/src TBZ2
