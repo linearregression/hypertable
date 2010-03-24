@@ -1,4 +1,4 @@
-#summary Everything you Need to Know to get Up and Running with Hypertable
+#summary Everything You Need to Know to get Up and Running with Hypertable
 
 = Introduction =
 
