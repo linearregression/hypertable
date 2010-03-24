@@ -127,7 +127,7 @@ Finally, to shut everything down, use the stop-servers command:
 
 ===Download the source===
 
-You can either download a release source tar ball from the [http://hypertable.org/download.html download page) and unpack it in your source directory say ~/src:
+You can either download a release source tar ball from the [http://hypertable.org/download.html download page] and unpack it in your source directory say ~/src:
 {{{
 cd ~/src
 tar zxvf hypertable-0.9.3.0-alpha-src.tar.gz
