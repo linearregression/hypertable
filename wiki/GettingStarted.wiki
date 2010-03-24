@@ -123,7 +123,7 @@ Finally, to shut everything down, use the stop-servers command:
 
 ==Deploying with Capistrano==
 
-==Appendis A. Building From Source==
+==Appendix A. Building From Source==
 
 ===Download the source===
 
@@ -148,14 +148,37 @@ Run the following script to setup up the dev environment with all of the depende
 ~/src/hypertable/bin/src-utils/htbuild --install dev_env
 }}}
 
-If the above command does not work for your platform, you can setup the dev environment manually 
+If the above command does not work for your platform, you can setup the dev environment manually by following the steps shown for your platform in [http://code.google.com/p/hypertable/wiki/HowToBuild How to Build].
 
-it did not work for your platform, check out the
-    [HowToBuild](http://code.google.com/p/hypertable/wiki/HowToBuild)
-    wiki for various tips on building on various platforms.
+===Configure the build===
 
-    Patches for htbuild to support your platforms are welcome :)
+Assuming you want your build tree to be ~/build/hypertable
+{{{
+mkdir -p ~/build/hypertable
+cd ~/build/hypertable
+cmake ~/src/hypertable
+}}}
+By default, hypertable gets installed in `/opt/hypertable`. To install into your own install directory, say `$prefix`, you can use:
+{{{
+cmake -DCMAKE_INSTALL_PREFIX=$prefix ~/src/hypertable
+}}}
+By default the build is configured for debug. To make a release build for production/performance test/benchmark:
+{{{
+cmake -DCMAKE_BUILD_TYPE=Release ~/src/hypertable
+}}}
+To build shared libraries, e.g., for scripting language extensions:
+{{{
+cmake -DBUILD_SHARED_LIBS=ON ~/src/hypertable
+}}}
+Since PHP has no builtin package system, its thrift installation needs to be manually specified for ThriftBroker support:
+{{{
+cmake -DPHPTHRIFT_ROOT:STRING=/home/user/src/thrift/lib/php/src
+}}}
 
-
+===Build Hypertable binaries===
+{{{
+make
+make install
+}}}
 
 ==Appendix B. How To Package==
