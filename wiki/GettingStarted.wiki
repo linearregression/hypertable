@@ -147,7 +147,7 @@ Here's a brief description of each variable:
 || default_dfs || distributed file system you are running Hypertable on top of.  Valid values are "local", "hadoop", or "kfs" ||
 || default_config || the location of the default configuration file that you want to use. ||
 
-In addition to the above variables, you also need to define two roles, one for the machine that will run the master processes (e.g. Hypertable.Master and Hyperspace) and one for the machines that will run the !RangeServers.  You need to edit the following lines:
+In addition to the above variables, you also need to define three roles, one for the machine that will run the master processes, one for the machines that will run the Hyperspace replicas, and one for the machines that will run the !RangeServers.  You need to edit the following lines:
 {{{
 role :master, "motherlode001"
 role :hyperspace, "motherlode001", "motherlode002", "motherlode003"
