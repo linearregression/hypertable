@@ -19,6 +19,9 @@ Bzipped archive installation
 {{{
 tar jxvf <package>.tar.bz2
 }}}
+Mac installation:
+
+  just double-click the .dmg file and follow the directions
 
 The binary packages create the `/opt/hypertable` and */var/opt/hypertable* directories.  
 After installation, make a symlink from */opt/hypertable/current* to your current version.
