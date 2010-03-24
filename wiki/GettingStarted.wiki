@@ -3,7 +3,7 @@
 
 ==Installing Hypertable via Binary Packages==
 
-Hypertable can be installed via [http://package.hypertable.org/ binary packages].  The packages will install Hypertable under a directory by the name of `/opt/hypertable/$VERSION` by default, and they come bundled with nearly all of the dependent shared libraries.  The nice thing about this approach is that only two packages are required for linux, a 64-bit linux package and a 32-bit linux package.  
+Hypertable can be installed via [http://package.hypertable.org/ binary packages].  The packages will install Hypertable under a directory by the name of `/opt/hypertable/$VERSION` by default, and come bundled with nearly all of the dependent shared libraries.  The nice thing about this approach is that only two packages are required for linux, a 64-bit linux package and a 32-bit linux package.  
 
 , instead of a package for every Linux variant and version number in existence.
 
