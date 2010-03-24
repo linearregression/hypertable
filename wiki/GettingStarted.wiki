@@ -21,7 +21,7 @@ tar jxvf <package>.tar.bz2
 }}}
 Mac installation:
 
- Double-click the .dmg file and follow the directions
+ Double-click the .dmg file and follow the instructions
 
 The RPM, Debian, and Mac packages will install Hypertable under a directory by the name of `/opt/hypertable/$VERSION` by default.  If you don't have root access or cannot modify the `/opt` directory, use the `.tar.bz2` archive to install Hypertable wherever you would like.
 
