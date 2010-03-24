@@ -1,9 +1,11 @@
 #summary Everything You Need to Know to get Up and Running with Hypertable
 <wiki:toc/>
 
-==Installing Binaries==
+==Installing Hypertable via Binary Packages==
 
-Hypertable is available in the form of [http://package.hypertable.org/ binary packages], which can cut down significant amount of build time (including dependencies) if your platform is included (Linux (Intel/AMD x86 32 and 64-bit) and Mac OS X (Intel only) in the list.
+Hypertable can be installed via [http://package.hypertable.org/ binary packages].  The packages will install Hypertable under a directory by the name of `/opt/hypertable/$VERSION` by default and include nearly all of the dependent shared libraries.  The nice thing about this approach is that for LInux only two packages are necessary, a 64-bit Linux packages and a 32-bit Linux packages, instead of a package for every Linux variant and version number in existence.
+
+
 
 System packages (`*.rpm`, `*.deb` and `*.dmg`) can be installed by users with root access.  For users without root access, the compressed archive `*.tar.bz2` can be unpacked in any directory the user has write permission.
 
