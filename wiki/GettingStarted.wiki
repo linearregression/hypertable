@@ -137,6 +137,11 @@ Capistrano is a simple tool for automating the remote execution of tasks.  It us
 $ sudo gem update
 $ sudo gem install capistrano
 }}}
+After this installation step you should now have the `cap` program in your path:
+{{{
+$ cap --version
+Capistrano v2.5.8
+}}}
 
 ===Step 1. Install and Launch Hadoop===
 
@@ -151,7 +156,7 @@ The first step to getting up and running on a Hadoop Cluster is to install Hadoo
 
 ===Step 2. Edit Capistrano `Capfile`===
 
-Once you have Capistrano installed, copy the `conf/Capfile.cluster` that comes with the Hypertable distribution to your working directory (e.g. home directory), rename it to `Capfile`, and tailor it for your environment.  The Capistrano `cap` command reads a file named `Capfile` in the current working directory by default.  There are some variables that are set at the top that you need to modify for your particular environment.  The following shows the variables at the top of the Capfile that need modification:
+Once you have Capistrano installed, copy the `conf/Capfile.cluster` that comes with the Hypertable distribution to your working directory on `master` (e.g. home directory), rename it to `Capfile`, and tailor it for your environment.  The `cap` command reads the file `Capfile` in the current working directory by default.  There are some variables that are set at the top that you need to modify for your particular environment.  The following shows the variables at the top of the Capfile that need modification:
 {{{
 set :source_machine,     "master"
 set :install_dir,        "/opt/hypertable" 
