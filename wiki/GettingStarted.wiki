@@ -190,7 +190,7 @@ Here's a brief description of each role:
 
 ===Step 3. Install Hypertable===
 
-The next step is to install Hypertable on all of your machines.  If you're installing from the RPM or Debian packages, you will need to install the software on each of the machines (`master`, `hyperspace001`, `hyperspace002`, `hyperspace003`, `slave001`, `slave002`, `slave003`, `slave004`, `slave005`, `slave006`, `slave007`, `slave008`) according to [#Installing_Hypertable_via_Binary_Packages].
+The next step is to install Hypertable on all of your machines.  If you're installing from the RPM or Debian packages, you will need to install the software on each of the machines (`master`, `hyperspace001..hyperspace003`, `slave001..slave008`) according to [#Installing_Hypertable_via_Binary_Packages].
 
 If you've built the binaries from source code or you've installed with the `.tar.bz2` package (*not* using FHS-compliant directory layout) you can distribute the Hypertable installation with a single Capistrano command.  On `master` be sure Hypertable is installed in the location specified by the `install_dir` and `hypertable_version` Capfile variables (`/opt/hypertable/0.9.3.0` in this example).  Then distribute the installation with the following command:
 {{{
@@ -203,8 +203,8 @@ $ cap dist
 Configuring Hypertable is simple.  You just need to modify the default config file (`conf/hypertable.cfg`) and change the following properties:
 
 || Property || Description ||
-|| `HdfsBroker.fs.default.name` || Hadoop filesystem name (same as fs.default.name poperty in hdfs-site.xml) ||
-|| `Hyperspace.Replica.Host` || Name of host running Hyperspace replica ||
+|| `HdfsBroker.fs.default.name` || Hadoop filesystem name ||
+|| `Hyperspace.Replica.Host` || Name of host running Hyperspace replica (one line for each replica) ||
 || `Hypertable.Master.Host` || Name of host running Hypertable master ||
 
 See [http://www.hypertable.org/pub/hypertable-example-cfg.txt hypertable-example.cfg]
@@ -215,6 +215,34 @@ $ cap dist
 }}}
 (*NOTE:* You may have to increase the value of !MaxStartups in your `/etc/sshd_config` file if it is less than the number of nodes in your cluster)
 
+===Step 5. Synchronize Clocks===
+
+The system cannot operate correctly unless the clocks on all machines are synchronized.  Use the [http://www.ntp.org/ Network Time Protocol (ntp)] to ensure that the clocks get synchronized and remain in sync.  Run the 'date' command on all machines to make sure they are in sync.  The following Capistrano shell session show the output of a cluster with properly synchronized clocks.
+
+{{{
+cap> date
+[establishing connection(s) to master, hyperspace001, hyperspace002, hyperspace003, slave001, slave002, slave003, slave004, slave005, slave006, slave007, slave008]
+ ** [out :: master] Sat Jan  3 18:05:33 PST 2009
+ ** [out :: hyperspace001] Sat Jan  3 18:05:33 PST 2009
+ ** [out :: hyperspace002] Sat Jan  3 18:05:33 PST 2009
+ ** [out :: hyperspace003] Sat Jan  3 18:05:33 PST 2009
+ ** [out :: slave001] Sat Jan  3 18:05:33 PST 2009
+ ** [out :: slave002] Sat Jan  3 18:05:33 PST 2009
+ ** [out :: slave003] Sat Jan  3 18:05:33 PST 2009
+ ** [out :: slave004] Sat Jan  3 18:05:33 PST 2009
+ ** [out :: slave005] Sat Jan  3 18:05:33 PST 2009
+ ** [out :: slave007] Sat Jan  3 18:05:33 PST 2009
+ ** [out :: slave008] Sat Jan  3 18:05:33 PST 2009
+}}}
+
+===Step  6. Start Hypertable===
+
+Prior to launching, we should create the directory in which Hypertable will store data and make it readable and writable by the Hypertable processes.  If Hadoop and Hypertable are launched from the same user account, this step is not necessary.  The directory is `/hypertable` and can be setup as follows:
+
+{{{
+$ hadoop fs -mkdir /hypertable
+$ hadoop fs -chmod 777 /hypertable
+}}}
 
 To start all of the Hypertable servers ...
 {{{
@@ -233,38 +261,6 @@ If you want to launch the service using a different config file than the default
 $ cap -S config=/home/doug/conf/alternate.cfg dist
 $ cap -S config=/home/doug/conf/alternate.cfg start
 }}}
-
-===Step 5. Synchronize Clocks===
-
-The system cannot operate correctly unless the clocks on all machines are synchronized.  Use the [http://www.ntp.org/ Network Time Protocol (ntp)] to ensure that the clocks get synchronized and remain in sync.  Run the 'date' command on all machines to make sure they are in sync.  The following Capistrano shell session show the output of a cluster with properly synchronized clocks.
-
-{{{
-cap> date
-[establishing connection(s) to master, hyperspace001, hyperspace002, hyperspace003, motherlode000, motherlode001, motherlode002, motherlode003, motherlode004, motherlode005, motherlode006, motherlode007, motherlode008]
- ** [out :: master] Sat Jan  3 18:05:33 PST 2009
- ** [out :: hyperspace001] Sat Jan  3 18:05:33 PST 2009
- ** [out :: hyperspace002] Sat Jan  3 18:05:33 PST 2009
- ** [out :: hyperspace003] Sat Jan  3 18:05:33 PST 2009
- ** [out :: motherlode001] Sat Jan  3 18:05:33 PST 2009
- ** [out :: motherlode002] Sat Jan  3 18:05:33 PST 2009
- ** [out :: motherlode003] Sat Jan  3 18:05:33 PST 2009
- ** [out :: motherlode004] Sat Jan  3 18:05:33 PST 2009
- ** [out :: motherlode005] Sat Jan  3 18:05:33 PST 2009
- ** [out :: motherlode007] Sat Jan  3 18:05:33 PST 2009
- ** [out :: motherlode006] Sat Jan  3 18:05:33 PST 2009
- ** [out :: motherlode000] Sat Jan  3 18:05:33 PST 2009
- ** [out :: motherlode008] Sat Jan  3 18:05:33 PST 2009
-}}}
-
-===Step  6. Start Hypertable===
-
-Prior to launching, we should create the directory in which Hypertable will store data and make it readable and writable by the Hypertable processes.  If Hadoop and Hypertable are launched from the same user account, this step is not necessary.  The directory is `/hypertable` and can be setup as follows:
-
-{{{
-$ hadoop fs -mkdir /hypertable
-$ hadoop fs -chmod 777 /hypertable
-}}}
-
 
 === Launch Scripts ===
 The following list of scripts are launched by Capistrano, but they can also be run by hand.
