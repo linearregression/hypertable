@@ -93,17 +93,21 @@ list of shell meta commands.
 
 hypertable> 
 }}}
+Create a table named "foo"
 {{{
 hypertable> create table foo ( c1, c2 );
 }}}
+Show the tables.
 {{{
 hypertable> show tables;
 METADATA
 foo
 }}}
+Insert some data into table "foo".
 {{{
 hypertable> insert into foo values("001", "c1", "totally"), ("000", "c1", "Hypertable"), ("001", "c2", "awesome"), ("000", "c2", "is");
 }}}
+Select data from table "foo".
 {{{
 hypertable> select * from foo;
 000	c1	Hypertable
@@ -111,6 +115,7 @@ hypertable> select * from foo;
 001	c1	totally
 001	c2	awesome
 }}}
+Drop table "foo"
 {{{
 hypertable> drop table foo;
 }}}
@@ -151,7 +156,7 @@ Here's a brief description of each variable:
 
 || *variable* || *description* ||
 || source_machine || local machine from which you will build the binaries, distribute them to the other machines, and launch the service. ||
-|| install_dir || directory on the local machine (source_machine) where you have installed Hypertable.  It is also the directory on the remote machines where the installation will get rsync'ed to. ||
+|| install_dir || directory on source_machine where you have installed Hypertable.  It is also the directory on the remote machines where the installation will get rsync'ed to. ||
 || hypertable_version || version of Hypertable you are deploying ||
 || default_dfs || distributed file system you are running Hypertable on top of.  Valid values are "local", "hadoop", or "kfs" ||
 || default_config || the location of the default configuration file that you want to use. ||
@@ -164,8 +169,8 @@ role :slave,  "motherlode001", "motherlode002", "motherlode003", "motherlode004"
 }}}
 Here's a brief description of each role:
 
-|| role || description ||
-|| master || ||
+|| *role* || *description* ||
+|| master || This role is for a machine that will run a DFS broker and the Hypertable master process.  Ideally this machine is high quality and somewhat lightly loaded (e.g. not running a !RangeServer).  Typically you would have a high quality machine running the Hypertable master, a Hyperspace replica, and the HDFS !NameNode ||
 || hyperspace || ||
 || slave || Hypertable is designed to run on a filesystem like HDFS. ||
 
@@ -267,7 +272,6 @@ Successfully started ThriftBroker
 $ bin/start-dfsbroker.sh hadoop
 $ bin/clean-database.sh
 }}}
-
 
 
 ==Backing Up and Restoring Table Data==
