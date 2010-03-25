@@ -150,7 +150,7 @@ set :source_machine,     "master"
 set :install_dir,        "/opt/hypertable" 
 set :hypertable_version, "0.9.3.0"
 set :default_dfs,        "hadoop"
-set :default_config,     "/opt/hypertable/hypertable-cluster1.cfg"
+set :default_config,     "/opt/hypertable/hypertable-example.cfg"
 }}}
 Here's a brief description of each variable:
 
@@ -171,16 +171,16 @@ role :slave,  "slave001", "slave002", "slave003", "slave004", "slave005", "slave
 Here's a brief description of each role:
 
 || *role* || *description* ||
-|| master || This role is for the machine that will run the Hypertable master process as well as a DFS broker.  Ideally this machine is high quality and somewhat lightly loaded (e.g. not running a !RangeServer).  Typically you would have a high quality machine running the Hypertable master, a Hyperspace replica, and the HDFS !NameNode ||
-|| hyperspace || This role is for the machines that will run Hyperspace replicas.  There should be at least one machine defined for this role.  The machines that take on this role should be somewhat lightly loaded (e.g. not running a !RangeServer) ||
-|| slave || This role is for the machines that will run !RangeServers.  Hypertable is designed to run on a filesystem like HDFS.  In fact, the system works best from a performance standpoint when the !RangeServers are run on the same machines as the HDFS !DataNodes.  This role will also launch a DFS broker and a !ThriftBroker.  ||
+|| `master` || This role is for the machine that will run the Hypertable master process as well as a DFS broker.  Ideally this machine is high quality and somewhat lightly loaded (e.g. not running a !RangeServer).  Typically you would have a high quality machine running the Hypertable master, a Hyperspace replica, and the HDFS !NameNode ||
+|| `hyperspace` || This role is for the machines that will run Hyperspace replicas.  There should be at least one machine defined for this role.  The machines that take on this role should be somewhat lightly loaded (e.g. not running a !RangeServer) ||
+|| `slave` || This role is for the machines that will run !RangeServers.  Hypertable is designed to run on a filesystem like HDFS.  In fact, the system works best from a performance standpoint when the !RangeServers are run on the same machines as the HDFS !DataNodes.  This role will also launch a DFS broker and a !ThriftBroker.  ||
 *Table 2. Hypertable Capistrano Roles*
 
 ===Step 3. Install Hypertable===
 
-The next step is to install Hypertable on all of your machines.  If you're installing from the RPM or Debian packages, you will need to install the software on each of the machines (`master`, `hyperspaceNNN`, and `slaveNNN`) according to [#Installing_Hypertable_via_Binary_Packages].
+The next step is to install Hypertable on all of your machines.  If you're installing from the RPM or Debian packages, you will need to install the software on each of the machines (`master`, `hyperspace001 ... hyperspace003`, `slave001 ... slave008`) according to [#Installing_Hypertable_via_Binary_Packages].
 
-If you've built the binaries from source code or you've installed with the `.tar.bz2` package (*not* using FHS-compliant directory layout) you can distribute the Hypertable installation with a single Capistrano command.  Assuming that you've installed Hypertable on host `master` under the directory `install_dir/hypertable_version` (see *Table 1. Hypertable Capistrano Variables*), you can distribute the installation by simply invoking the following command:
+If you've built the binaries from source code or you've installed with the `.tar.bz2` package (*not* using FHS-compliant directory layout) you can distribute the Hypertable installation with a single Capistrano command.  On `master` be sure Hypertable is installed in the location specified by the `install_dir` and `hypertable_version` Capfile variables (`/opt/hypertable/0.9.3.0` in this example).  Then distribute the installation with the following command:
 {{{
 $ cap dist
 }}}
@@ -195,7 +195,7 @@ Configuring Hypertable is simple.  You just need to modify the default config fi
 || `Hyperspace.Replica.Host` || Name of host running Hyperspace replica ||
 || `Hypertable.Master.Host` || Name of host running Hypertable master ||
 
-See [http://www.hypertable.org/pub/hypertable-example-cfg.txt Example Hypertable Configuration]
+See [http://www.hypertable.org/pub/hypertable-example-cfg.txt `hypertable-example.cfg`]
 
 Once the configuration file is setup on `master` and located in the filename indicated by the `default_config` Capfile variable, then to push it out to the cluster, run the following command:
 {{{
