@@ -172,7 +172,7 @@ Here's a brief description of each role:
 || *role* || *description* ||
 || master || This role is for the machine that will run the Hypertable master process as well as a DFS broker.  Ideally this machine is high quality and somewhat lightly loaded (e.g. not running a !RangeServer).  Typically you would have a high quality machine running the Hypertable master, a Hyperspace replica, and the HDFS !NameNode ||
 || hyperspace || This role is for the machines that will run Hyperspace replicas.  There should be at least one machine defined for this role.  The machines that take on this role should be somewhat lightly loaded (e.g. not running a !RangeServer) ||
-|| slave || This role is for the machines that will run !RangeServers.  Hypertable is designed to run on a filesystem like HDFS.  In fact, the !RangeServers work best when run on the same machines as the HDFS !DataNodes.  This role will also launch a DFS broker and a !ThriftBroker.  ||
+|| slave || This role is for the machines that will run !RangeServers.  Hypertable is designed to run on a filesystem like HDFS.  In fact, the system works best from a performance standpoint when the !RangeServers are run on the same machines as the HDFS !DataNodes.  This role will also launch a DFS broker and a !ThriftBroker.  ||
 
 ===Step 3. Install and Configure Hypertable===
 
