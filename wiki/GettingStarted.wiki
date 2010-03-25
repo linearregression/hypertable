@@ -262,48 +262,6 @@ $ cap -S config=/home/doug/conf/alternate.cfg dist
 $ cap -S config=/home/doug/conf/alternate.cfg start
 }}}
 
-=== Launch Scripts ===
-The following list of scripts are launched by Capistrano, but they can also be run by hand.
-
-  * `start-dfsbroker.sh (local|hadoop|kfs|ceph) [<server-options>]`
-  
-  This script is used to launch the !DfsBroker.  It has one required argument which is the name of the DFS broker to launch.
-  * `start-hyperspace.sh [<server-options>]`
-  
-  This script is used to start Hyperspace.
-  * `start-master.sh [<server-options>]`
-  
-  This script is used to start the Hypertable master.
-  * `start-rangeserver.sh [<server-options>]`
-
-  This script is used to start the Hypertable range server.
-  * `start-thriftbroker.sh [<server-options>]`
-    
-  This script is used to start the Thrift broker.
-  * `start-all-servers.sh (local|hadoop|kfs|ceph) [<server-options>]`
-  
-  This script is a wrapper script that launches all of the services.  It is useful for launching the service on a single machine for testing.  For example:
-{{{
-$ bin/start-all-servers.sh local
-Successfully started DFSBroker (local)
-Successfully started Hyperspace
-Successfully started Hypertable.Master
-Successfully started Hypertable.RangeServer
-Successfully started ThriftBroker
-}}}
-  * `stop-servers.sh`
-
-  This stops all the Hypertable servers on the machine that it is run on.  Each of the servers will drop a .pid file containing the PID of the server process in the run/ directory of the installation.  This script just reads those .pid files and kills the processes.
-
-  * `clean-database.sh`
-
-  This script will remove all of the tables in the database and bring the system back to a "fresh" state.  For this script to work properly, the !DfsBroker must be running.  So for example, to clean a database running on top of Hadoop, you would issue the following commands:
-{{{
-$ bin/start-dfsbroker.sh hadoop
-$ bin/clean-database.sh
-}}}
-
-
 ==Backing Up and Restoring Table Data==
 
 Hypertable 
