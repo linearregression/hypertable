@@ -170,7 +170,9 @@ role :slave,  "motherlode001", "motherlode002", "motherlode003", "motherlode004"
 Here's a brief description of each role:
 
 || *role* || *description* ||
-|| master || This role is for a machine that will run a DFS broker and the Hypertable master process.  Ideally this machine is high quality and somewhat lightly loaded (e.g. not running a !RangeServer).  Typically you would have a high quality machine running the Hypertable master, a Hyperspace replica, and the HDFS !NameNode ||
+|| master || This role is for a machine that will run a DFS broker and the Hypertable
+master process.  Ideally this machine is high quality and somewhat lightly loaded (e.g. not running a !RangeServer).
+Typically you would have a high quality machine running the Hypertable master, a Hyperspace replica, and the HDFS !NameNode ||
 || hyperspace || ||
 || slave || Hypertable is designed to run on a filesystem like HDFS. ||
 
