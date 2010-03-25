@@ -123,18 +123,9 @@ Finally, to shut everything down, use the stop-servers command:
 
 ==Deploying on Hadoop Cluster==
 
-===Hadoop Installation===
-
-The first step to getting up and running on a Hadoop Cluster is to install Hadoop.  The process for doing this is outside the scope of this document.  See [http://wiki.apache.org/hadoop/GettingStartedWithHadoop Getting Started With Hadoop] for details.
-
-===Choosing Locations for the Hypertable Server Processes===
-
-Hypertable is designed to run on a filesystem like HDFS.  The Range
-
-
 ===Capistrano - A Tool for Automating Tasks or Remote Servers===
 
-The Hypertable distribution comes a number of scripts to start and stop the various servers that make up a Hypertable cluster.  You can use your own cluster management tool to launch these scripts and deploy new binaries.  However, if you're not already using a cluster management tool, we recommend [http://www.capify.org/ Capistrano].  The distribution comes with a Capistrano config file (Capfile.cluster) that makes deploying and launching Hypertable a breeze.
+The Hypertable distribution comes a number of scripts to start and stop the various servers that make up a Hypertable cluster.  You can use your own cluster management tool to launch these scripts and deploy new binaries.  However, if you're not already using a cluster management tool, we recommend [http://www.capify.org/ Capistrano].  The distribution comes with a Capistrano config file (`Capfile.cluster`) that makes deploying and launching Hypertable a breeze.
 
 Capistrano is a simple tool for automating the remote execution of tasks.  It uses ssh to do the remote execution.  To ease deployment, you should have password-less ssh access (e.g. public key) to all of the machines in your cluster.  Installing Capistrano is pretty simple.  On most systems you just need to execute the following command
 {{{
@@ -142,7 +133,19 @@ $ sudo gem update
 $ sudo gem install capistrano
 }}}
 
-Once you have Capistrano installed, you need to copy the Capfile.cluster that comes with the Hypertable distribution to Capfile and taylor it for your environment.  You can find the Capfile.cluster in the conf directory in the source tree. There are some variables that are set at the top that you need to modify for your particular environment.  The following shows the variables at the top of the Capfile that need modification:
+===Step 1. Install and Launch Hadoop===
+
+The first step to getting up and running on a Hadoop Cluster is to install Hadoop.  The process for doing this is outside the scope of this document.  See [http://wiki.apache.org/hadoop/GettingStartedWithHadoop Getting Started With Hadoop] for details.  The Hadoop cluster is typically administered from the machine that runs the NameNode.  For the remainder of this section, we'll assume it is called `master`.
+
+===Step 2. Choose Locations for the Hypertable Processes===
+
+Hypertable is designed to run on a filesystem like HDFS.
+
+The Range
+
+===Step 3. Edit Capistrano `Capfile`===
+
+Once you have Capistrano installed, you need to copy the Capfile.cluster that comes with the Hypertable distribution to Capfile and tailor it for your environment.  You can find the Capfile.cluster in the conf directory in the source tree. There are some variables that are set at the top that you need to modify for your particular environment.  The following shows the variables at the top of the Capfile that need modification:
 {{{
 set :source_machine,     "motherlode000"
 set :install_dir,        "/opt/hypertable" 
@@ -160,10 +163,13 @@ Here's a brief description of each variable:
 
 In addition to the above variables, you also need to define three roles, one for the machine that will run the master processes, one for the machines that will run the Hyperspace replicas, and one for the machines that will run the !RangeServers.  You need to edit the following lines:
 {{{
-role :master, "motherlode001"
-role :hyperspace, "motherlode001", "motherlode002", "motherlode003"
+role :master, "master"
+role :hyperspace, "hyperspace001", "hyperspace002", "hyperspace003"
 role :slave,  "motherlode001", "motherlode002", "motherlode003", "motherlode004", "motherlode005", "motherlode006", "motherlode007", "motherlode008"
 }}}
+
+===Install and Configure Hypertable===
+
 Once you've got the Capfile setup, put it in the directory where you will run the cap command from (I have it in my home directory).  Then, to distribute your installation, you simply execute the following
 {{{
 $ cap dist
