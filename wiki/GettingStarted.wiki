@@ -176,7 +176,7 @@ Here's a brief description of each role:
 || slave || This role is for the machines that will run !RangeServers.  Hypertable is designed to run on a filesystem like HDFS.  In fact, the system works best from a performance standpoint when the !RangeServers are run on the same machines as the HDFS !DataNodes.  This role will also launch a DFS broker and a !ThriftBroker.  ||
 *Table 2. Hypertable Capistrano Roles*
 
-===Step 3. Install and Configure Hypertable===
+===Step 3. Install Hypertable===
 
 The next step is to install Hypertable on all of your machines.  If you're installing from the RPM or Debian packages, you will need to install the software on each of the machines (`master`, `hyperspaceNNN`, and `slaveNNN`) according to [#Installing_Hypertable_via_Binary_Packages].
 
@@ -185,6 +185,24 @@ If you've built the binaries from source code or you've installed with the `.tar
 $ cap dist
 }}}
 (*NOTE:* You may have to increase the value of *!MaxStartups* in your `/etc/sshd_config` file if it is less than the number of nodes in your cluster)
+
+===Step 4. Configure Hypertable===
+
+Configuring Hypertable is simple.  You just need to modify the default config file (`conf/hypertable.cfg`) and change the following properties:
+
+|| Property || Description ||
+|| `HdfsBroker.fs.default.name` || Hadoop filesystem name (same as fs.default.name poperty in hdfs-site.xml) ||
+|| `Hyperspace.Replica.Host` || Name of host running Hyperspace replica ||
+|| `Hypertable.Master.Host` || Name of host running Hypertable master ||
+
+See [http://www.hypertable.org/pub/hypertable-example-cfg.txt Example Hypertable Configuration] for the complete example.
+
+Once the configuration file is 
+{{{
+$ cap dist
+}}}
+(*NOTE:* You may have to increase the value of *!MaxStartups* in your `/etc/sshd_config` file if it is less than the number of nodes in your cluster)
+
 
 To start all of the Hypertable servers ...
 {{{
@@ -204,7 +222,7 @@ $ cap -S config=/home/doug/conf/alternate.cfg dist
 $ cap -S config=/home/doug/conf/alternate.cfg start
 }}}
 
-===Step 4. Synchronize Clocks===
+===Step 5. Synchronize Clocks===
 
 The system cannot operate correctly unless the clocks on all machines are synchronized.  Use the [http://www.ntp.org/ Network Time Protocol (ntp)] to ensure that the clocks get synchronized and remain in sync.  Run the 'date' command on all machines to make sure they are in sync.  The following Capistrano shell session show the output of a cluster with properly synchronized clocks.
 
@@ -226,7 +244,7 @@ cap> date
  ** [out :: motherlode008] Sat Jan  3 18:05:33 PST 2009
 }}}
 
-===Step  5. Bring the System Up===
+===Step  6. Start Hypertable===
 
 Prior to launching, we should create the directory in which Hypertable will store data and make it readable and writable by the Hypertable processes.  If Hadoop and Hypertable are launched from the same user account, this step is not necessary.  The directory is `/hypertable` and can be setup as follows:
 
