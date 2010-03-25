@@ -180,7 +180,9 @@ Here's a brief description of each role:
 
 The next step is to install Hypertable on all of your machines.  If you're installing from the RPM or Debian packages, you will need to install the software on each of the machines (master, hyperspaceNNN, and slaveNNN) according to [#Installing_Hypertable_via_Binary_Packages].
 
-If you've built the binaries from source code or you've installed with the .tar.bz2 into `install_dir` (see *Table 1. Hypertable Capistrano Variables*) and have write permission in `install_dir` on all of the remote hosts, then you can distribute the installation from the master machine simply by issuing the following command:
+The other option, if you're not using the FHS-compliant directory layout,  is to use Capistrano to distribute the binaries from the `master` machine to all of the remote machines.  This 
+
+If you've built the binaries from source code or you've installed with the .tar.bz2 package (e.g. not using FHS-compliant directory layout) you can distribute the binaries with a single Capistrano command.  Assuming that you've installed Hypertable on `master` under the directory `install_dir/hypertable_version` (see Table 1. Hypertable Capistrano Variables), you can distributed the binaries easily by issuing the following command.  
 {{{
 $ cap dist
 }}}
