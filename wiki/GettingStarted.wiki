@@ -156,7 +156,7 @@ The first step to getting up and running on a Hadoop Cluster is to install Hadoo
 
 ===Step 2. Edit Capistrano `Capfile`===
 
-Once you have Capistrano installed, copy the `conf/Capfile.cluster` that comes with the Hypertable distribution to your working directory on `master` (e.g. home directory), rename it to `Capfile`, and tailor it for your environment.  The `cap` command reads the file `Capfile` in the current working directory by default.  There are some variables that are set at the top that you need to modify for your particular environment.  The following shows the variables at the top of the Capfile that need modification:
+Once you have Capistrano installed, copy the `conf/Capfile.cluster` that comes with the Hypertable distribution to your working directory (e.g. home directory) on `master`, rename it to `Capfile`, and tailor it for your environment.  The `cap` command reads the file `Capfile` in the current working directory by default.  There are some variables that are set at the top that you need to modify for your particular environment.  The following shows the variables at the top of the Capfile that need modification:
 {{{
 set :source_machine,     "master"
 set :install_dir,        "/opt/hypertable" 
@@ -167,14 +167,14 @@ set :default_config,     "/opt/hypertable/hypertable-example.cfg"
 Here's a brief description of each variable:
 
 || *variable* || *description* ||
-|| `source_machine` || local machine from which you will build the binaries, distribute them to the other machines, and launch the service. ||
-|| `install_dir` || directory on source_machine where you have installed Hypertable.  It is also the directory on the remote machines where the installation will get rsync'ed to. ||
+|| `source_machine` || machine from which you will build the binaries, distribute them to the other machines, and launch the service. ||
+|| `install_dir` || directory on `source_machine` where you have installed Hypertable.  It is also the directory on the remote machines where the installation will get rsync'ed to. ||
 || `hypertable_version` || version of Hypertable you are deploying ||
-|| `default_dfs` || distributed file system you are running Hypertable on top of.  Valid values are "local", "hadoop", or "kfs" ||
-|| `default_config` || the location of the default configuration file that you want to use. ||
+|| `default_dfs` || distributed file system you are running Hypertable on top of.  Valid values are "local", "hadoop", "kfs", or "ceph" ||
+|| `default_config` || location of the default configuration file that plan to use ||
 *Table 1. Hypertable Capistrano Variables*
 
-In addition to the above variables, you also need to define three roles, one for the machine that will run the master processes, one for the machines that will run the Hyperspace replicas, and one for the machines that will run the !RangeServers.  You need to edit the following lines:
+In addition to the above variables, you also need to define three roles, one for the machine that will run the master processes, one for the machines that will run the Hyperspace replicas, and one for the machines that will run the !RangeServers.  Edit the following lines:
 {{{
 role :master, "master"
 role :hyperspace, "hyperspace001", "hyperspace002", "hyperspace003"
