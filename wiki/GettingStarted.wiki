@@ -135,20 +135,21 @@ $ sudo gem install capistrano
 
 ===Step 1. Install and Launch Hadoop===
 
-The first step to getting up and running on a Hadoop Cluster is to install Hadoop.  The process for doing this is outside the scope of this document.  See [http://wiki.apache.org/hadoop/GettingStartedWithHadoop Getting Started With Hadoop] for details.  The Hadoop cluster is typically administered from the machine that runs the NameNode.  For the remainder of this section, we'll assume it is called `master`.
+The first step to getting up and running on a Hadoop Cluster is to install Hadoop.  The process for doing this is outside the scope of this document.  See [http://wiki.apache.org/hadoop/GettingStartedWithHadoop Getting Started With Hadoop] for details.  The Hadoop cluster is typically administered from the machine that runs the !NameNode.  For the remainder of this section, we'll assume it is called `master`.
 
 ===Step 2. Edit Capistrano `Capfile`===
 
-Once you have Capistrano installed, you need to copy the Capfile.cluster that comes with the Hypertable distribution to Capfile and tailor it for your environment.  You can find the Capfile.cluster in the conf directory in the source tree. There are some variables that are set at the top that you need to modify for your particular environment.  The following shows the variables at the top of the Capfile that need modification:
+Once you have Capistrano installed, copy the `conf/Capfile.cluster` that comes with the Hypertable distribution to your working directory (e.g. home directory) and rename it to `Capfile` and tailor it for your environment.  The Capistrano `cap` command reads a file named `Capfile` in the current working directory by default.  There are some variables that are set at the top that you need to modify for your particular environment.  The following shows the variables at the top of the Capfile that need modification:
 {{{
-set :source_machine,     "motherlode000"
+set :source_machine,     "master"
 set :install_dir,        "/opt/hypertable" 
 set :hypertable_version, "0.9.3.0"
 set :default_dfs,        "hadoop"
-set :default_config,     "/opt/hypertable/cluster1-standard.cfg"
+set :default_config,     "/opt/hypertable/hypertable-cluster1.cfg"
 }}}
 Here's a brief description of each variable:
 
+|| *variable* || *description* ||
 || source_machine || local machine from which you will build the binaries, distribute them to the other machines, and launch the service. ||
 || install_dir || directory on the local machine (source_machine) where you have installed Hypertable.  It is also the directory on the remote machines where the installation will get rsync'ed to. ||
 || hypertable_version || version of Hypertable you are deploying ||
@@ -161,8 +162,12 @@ role :master, "master"
 role :hyperspace, "hyperspace001", "hyperspace002", "hyperspace003"
 role :slave,  "motherlode001", "motherlode002", "motherlode003", "motherlode004", "motherlode005", "motherlode006", "motherlode007", "motherlode008"
 }}}
+Here's a brief description of each role:
 
-Hypertable is designed to run on a filesystem like HDFS.
+|| role || description ||
+|| master || ||
+|| hyperspace || ||
+|| slave || Hypertable is designed to run on a filesystem like HDFS. ||
 
 ===Step 3. Install and Configure Hypertable===
 
