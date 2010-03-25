@@ -184,7 +184,7 @@ If you've built the binaries from source code or you've installed with the `.tar
 {{{
 $ cap dist
 }}}
-(*NOTE:* You may have to increase the value of *!MaxStartups* in your `/etc/sshd_config` file if it is less than the number of nodes in your cluster)
+(*NOTE:* You may have to increase the value of !MaxStartups in your `/etc/sshd_config` file if it is less than the number of nodes in your cluster)
 
 ===Step 4. Configure Hypertable===
 
@@ -195,13 +195,13 @@ Configuring Hypertable is simple.  You just need to modify the default config fi
 || `Hyperspace.Replica.Host` || Name of host running Hyperspace replica ||
 || `Hypertable.Master.Host` || Name of host running Hypertable master ||
 
-See [http://www.hypertable.org/pub/hypertable-example-cfg.txt Example Hypertable Configuration] for the complete example.
+See [http://www.hypertable.org/pub/hypertable-example-cfg.txt Example Hypertable Configuration]
 
-Once the configuration file is 
+Once the configuration file is setup on `master` and located in the filename indicated by the `default_config` Capfile variable, then to push it out to the cluster, run the following command:
 {{{
 $ cap dist
 }}}
-(*NOTE:* You may have to increase the value of *!MaxStartups* in your `/etc/sshd_config` file if it is less than the number of nodes in your cluster)
+(*NOTE:* You may have to increase the value of !MaxStartups in your `/etc/sshd_config` file if it is less than the number of nodes in your cluster)
 
 
 To start all of the Hypertable servers ...
