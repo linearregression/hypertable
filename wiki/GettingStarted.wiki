@@ -237,14 +237,14 @@ cap> date
 
 ===Step  6. Launch===
 
-Launch Hadoop (hadoop/bin/start-all.sh) and make sure the system is up and running and out of "safemode":
+Launch Hadoop (`hadoop/bin/start-all.sh`) and make sure the system is up and running and out of "safemode":
 
 {{{
 $ hadoop dfsadmin -safemode get
 Safe mode is OFF
 }}}
 
-Then create the directory in which Hypertable will store data (`/hypertable`) and make it readable and writable by the Hypertable processes.  If Hadoop and Hypertable are launched from the same user account, this step is not necessary.
+Then create the HDFS directory in which Hypertable will store data (`/hypertable`) and make it readable and writable by the Hypertable processes.  If Hadoop and Hypertable are launched from the same user account, this step is not necessary.
 
 {{{
 $ hadoop fs -mkdir /hypertable
