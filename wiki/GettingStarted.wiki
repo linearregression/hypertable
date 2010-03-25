@@ -269,10 +269,11 @@ $ cap -S config=/home/doug/conf/alternate.cfg dist
 $ cap -S config=/home/doug/conf/alternate.cfg start
 }}}
 
-==Backing Up and Restoring Table Data==
+==Backing Up and Restoring Tables==
 
-Hypertable 
+Hypertable backup and restore are accomplished with the HQL commands DUMP TABLE and LOAD DATA INFILE.  It is possible to create backups with the SELECT command, but it is not recommended because it will output table data in sorted order.  When loading data with LOAD DATA INFILE that is in sorted order, only one RangeServer will be kept busy at a time receiving updates.  To combat this problem, the DUMP TABLE command was introduced which will output table data in random order.  Loading backups taken with the DUMP TABLE command is much more efficient since all of the participating RangeServers will be kept busy receiving updates during the restore.
 
+The following is a simple bash script to create table backups.
 {{{
 #!/usr/bin/env bash
 
