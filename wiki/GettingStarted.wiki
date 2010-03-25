@@ -144,7 +144,7 @@ The first step to getting up and running on a Hadoop Cluster is to install Hadoo
 
 ===Step 2. Edit Capistrano `Capfile`===
 
-Once you have Capistrano installed, copy the `conf/Capfile.cluster` that comes with the Hypertable distribution to your working directory (e.g. home directory) and rename it to `Capfile` and tailor it for your environment.  The Capistrano `cap` command reads a file named `Capfile` in the current working directory by default.  There are some variables that are set at the top that you need to modify for your particular environment.  The following shows the variables at the top of the Capfile that need modification:
+Once you have Capistrano installed, copy the `conf/Capfile.cluster` that comes with the Hypertable distribution to your working directory (e.g. home directory), rename it to `Capfile`, and tailor it for your environment.  The Capistrano `cap` command reads a file named `Capfile` in the current working directory by default.  There are some variables that are set at the top that you need to modify for your particular environment.  The following shows the variables at the top of the Capfile that need modification:
 {{{
 set :source_machine,     "master"
 set :install_dir,        "/opt/hypertable" 
@@ -165,7 +165,7 @@ In addition to the above variables, you also need to define three roles, one for
 {{{
 role :master, "master"
 role :hyperspace, "hyperspace001", "hyperspace002", "hyperspace003"
-role :slave,  "motherlode001", "motherlode002", "motherlode003", "motherlode004", "motherlode005", "motherlode006", "motherlode007", "motherlode008"
+role :slave,  "slave001", "slave002", "slave003", "slave004", "slave005", "slave006", "slave007", "slave008"
 }}}
 Here's a brief description of each role:
 
@@ -176,7 +176,7 @@ Here's a brief description of each role:
 
 ===Step 3. Install and Configure Hypertable===
 
-Once you've got the Capfile setup, put it in the directory where you will run the cap command from (I have it in my home directory).  Then, to distribute your installation, you simply execute the following
+The next step is to install Hypertable on all of your machines.  If you're installing from the RPM or Debian packages, you will need to install the software on each of the machines (master, hyperspaceNNN, and slaveNNN) according to [#Installing_Hypertable_via_Binary_Packages].  If you've built the binaries from source code or you've installed with the .tar.bz2 into install_dir (see Table 1 above) and have write permission in install_dir on all of the remote hosts, then you can distribute the installation from the master machine simply by issuing the following command:
 {{{
 $ cap dist
 }}}
