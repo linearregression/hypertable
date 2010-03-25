@@ -140,7 +140,14 @@ $ sudo gem install capistrano
 
 ===Step 1. Install and Launch Hadoop===
 
-The first step to getting up and running on a Hadoop Cluster is to install Hadoop.  The process for doing this is outside the scope of this document.  See [http://wiki.apache.org/hadoop/GettingStartedWithHadoop Getting Started With Hadoop] for details.  The Hadoop cluster is typically administered from the machine that runs the !NameNode.  For the remainder of this section, we'll assume it is called `master`.
+The first step to getting up and running on a Hadoop Cluster is to install Hadoop.  The process for doing this is outside the scope of this document.  See [http://wiki.apache.org/hadoop/GettingStartedWithHadoop Getting Started With Hadoop] for details.  The Hadoop cluster is typically administered from the machine that runs the !NameNode.  For the remainder of this section, we'll assume it is called `master` and the `fs.default.name` property in the Hadoop configuration is setup as follows:
+
+{{{
+<property>
+  <name>fs.default.name</name>
+  <value>hdfs://master:9000</value>
+</property>
+}}}
 
 ===Step 2. Edit Capistrano `Capfile`===
 
