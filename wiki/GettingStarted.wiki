@@ -155,11 +155,12 @@ set :default_config,     "/opt/hypertable/hypertable-cluster1.cfg"
 Here's a brief description of each variable:
 
 || *variable* || *description* ||
-|| source_machine || local machine from which you will build the binaries, distribute them to the other machines, and launch the service. ||
-|| install_dir || directory on source_machine where you have installed Hypertable.  It is also the directory on the remote machines where the installation will get rsync'ed to. ||
-|| hypertable_version || version of Hypertable you are deploying ||
-|| default_dfs || distributed file system you are running Hypertable on top of.  Valid values are "local", "hadoop", or "kfs" ||
-|| default_config || the location of the default configuration file that you want to use. ||
+|| `source_machine` || local machine from which you will build the binaries, distribute them to the other machines, and launch the service. ||
+|| `install_dir` || directory on source_machine where you have installed Hypertable.  It is also the directory on the remote machines where the installation will get rsync'ed to. ||
+|| `hypertable_version` || version of Hypertable you are deploying ||
+|| `default_dfs` || distributed file system you are running Hypertable on top of.  Valid values are "local", "hadoop", or "kfs" ||
+|| `default_config` || the location of the default configuration file that you want to use. ||
+*Table 1. Hypertable Capistrano Variables*
 
 In addition to the above variables, you also need to define three roles, one for the machine that will run the master processes, one for the machines that will run the Hyperspace replicas, and one for the machines that will run the !RangeServers.  You need to edit the following lines:
 {{{
@@ -173,10 +174,13 @@ Here's a brief description of each role:
 || master || This role is for the machine that will run the Hypertable master process as well as a DFS broker.  Ideally this machine is high quality and somewhat lightly loaded (e.g. not running a !RangeServer).  Typically you would have a high quality machine running the Hypertable master, a Hyperspace replica, and the HDFS !NameNode ||
 || hyperspace || This role is for the machines that will run Hyperspace replicas.  There should be at least one machine defined for this role.  The machines that take on this role should be somewhat lightly loaded (e.g. not running a !RangeServer) ||
 || slave || This role is for the machines that will run !RangeServers.  Hypertable is designed to run on a filesystem like HDFS.  In fact, the system works best from a performance standpoint when the !RangeServers are run on the same machines as the HDFS !DataNodes.  This role will also launch a DFS broker and a !ThriftBroker.  ||
+*Table 2. Hypertable Capistrano Roles*
 
 ===Step 3. Install and Configure Hypertable===
 
-The next step is to install Hypertable on all of your machines.  If you're installing from the RPM or Debian packages, you will need to install the software on each of the machines (master, hyperspaceNNN, and slaveNNN) according to [#Installing_Hypertable_via_Binary_Packages].  If you've built the binaries from source code or you've installed with the .tar.bz2 into install_dir (see Table 1 above) and have write permission in install_dir on all of the remote hosts, then you can distribute the installation from the master machine simply by issuing the following command:
+The next step is to install Hypertable on all of your machines.  If you're installing from the RPM or Debian packages, you will need to install the software on each of the machines (master, hyperspaceNNN, and slaveNNN) according to [#Installing_Hypertable_via_Binary_Packages].
+
+If you've built the binaries from source code or you've installed with the .tar.bz2 into `install_dir` (see *Table 1. Hypertable Capistrano Variables*) and have write permission in `install_dir` on all of the remote hosts, then you can distribute the installation from the master machine simply by issuing the following command:
 {{{
 $ cap dist
 }}}
