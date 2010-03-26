@@ -307,13 +307,27 @@ done
 
 == HQL Tutorial ==
 
-This tutorial shows you how to insert a search engine query log into Hypertable, using different primary keys.  You'll need to download the data from [http://hypertable.googlecode.com/files/query-log.tsv.gz]:
+=== Introduction ===
+
+This tutorial shows you how to import a search engine query log into Hypertable, storing the data into tables with different primary keys, and how to issue queries against the tables.  You'll need to download the data from [http://hypertable.googlecode.com/files/query-log.tsv.gz]:
 
 {{{
 $ mkdir -p hql_tutorial
 $ cd hql_tutorial
 $ wget http://hypertable.googlecode.com/files/query-log.tsv.gz
 }}}
+
+The next step is to make sure Hypertable is properly installed (see [#Installing_Hypertable_via_Binary_Packages]) and then launch the service.  The following terminal session illustrates how to launch a local instance of Hypertable:
+{{{
+$ /opt/hypertable/current/bin/start-all-servers.sh local
+DFS broker: available file descriptors: 256
+Started DFS Broker (local)
+Started Hyperspace
+Started Hypertable.Master
+Started Hypertable.RangeServer
+Started ThriftBroker
+}}}
+
 
  
 ==Appendix A. Building from Source==
