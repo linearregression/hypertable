@@ -543,7 +543,7 @@ Avg value size:  18.11 bytes
 
 ===SELECT===
 
-Let's start by examining the `query-log-by-userid` table.  To select all of the data for user ID 003269359 we need to use the _starts with_ operator =^.  Remember that the row key is the concatenation of the user ID and the timestamp why we need to use the _starts with_ operator.
+Let's start by examining the `query-log-by-userid` table.  To select all of the data for user ID 003269359 we need to use the _*starts with*_ operator =^.  Remember that the row key is the concatenation of the user ID and the timestamp which is why we need to use the _*starts with*_ operator.
 {{{
 hypertable> select * from 'query-log-by-userid' where row =^ '003269359';
 003269359 2008-11-13 04:36:34	Query	binibining pilipinas 2008 winners
@@ -577,7 +577,7 @@ Avg value size:  19.24 bytes
     Throughput:  40651.35 cells/s
 }}}
 
-The result set was fairly large (352 cells), so let's now try selecting just the queries that were issued by the user with ID 003269359 during the hour of 5am.  To do this we need to add a TIMESTAMP predicate.  Each cell has a timestamp stored with it and the TIMESTAMP predicate can be used to filter the results.
+The result set was fairly large (352 cells), so let's now try selecting just the queries that were issued by the user with ID 003269359 during the hour of 5am.  To do this we need to add a TIMESTAMP predicate.  Each cell has an internal timestamp and the TIMESTAMP predicate can be used to filter the results based on this timestamp.
 
 {{{
 hypertable> select * from 'query-log-by-userid' where row =^ '003269359' AND "2008-11-13 05:00:00" <= TIMESTAMP < "2008-11-13 06:00:00";
@@ -626,10 +626,25 @@ Avg value size:  18.50 bytes
     Throughput:  53651.27 cells/s
 }}}
 
+Keep in mind that the internal cell timestamp is different than the one embedded in the row key.  In this example, they both represent the same time.  By specifying the TIMESTAMP_COLUMN option to LOAD DATA INFILE, we extracted the QueryTime field to be used as the internal cell timestamp.  If we hadn't supplied that option, the system would have auto-assigned a timestamp.  To display the internal cell timestamp, add the DISPLAY_TIMESTAMPS option:
 
-Keep in mind that each cell has an associated timestamp which was extracted from the load file with the TIMESTAMP_COLUMN option to LOAD DATA INFILE.  
+{{{
+hypertable> select * from 'query-log-by-userid' limit 5 DISPLAY_TIMESTAMPS;
+2008-11-13 10:30:46.000000000	000000036 2008-11-13 10:30:46	Query	helena ga
+2008-11-13 10:31:34.000000000	000000036 2008-11-13 10:31:34	Query	helena ga
+2008-11-13 10:45:23.000000000	000000036 2008-11-13 10:45:23	Query	checeron s
+2008-11-13 10:46:07.000000000	000000036 2008-11-13 10:46:07	Query	cheveron gas station
+2008-11-13 10:46:34.000000000	000000036 2008-11-13 10:46:34	Query	cheveron gas station richmond virginia
 
-There is no index for the cell timestamps, so if we didn't include the `row =^` expression in our predicate, it would do a full table scan.  This is why we imported the data into two tables.  The `query-log-by-timestamp` table prefixes the row key with the timestamp so that we can do efficient time
+  Elapsed time:  0.00 s
+Avg value size:  17.20 bytes
+  Avg key size:  30.00 bytes
+    Throughput:  207563.76 bytes/s
+   Total cells:  5
+    Throughput:  4397.54 cells/s
+}}}
+
+There is no index for the internal cell timestamps, so if we don't include a `row =^` expression in our predicate, it would do a full table scan.  This is why we imported the data into two tables.  The `query-log-by-timestamp` table prefixes the row key with the timestamp so that we can do efficient time
 
 ==Appendix A. Building from Source==
 
