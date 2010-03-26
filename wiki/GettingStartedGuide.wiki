@@ -1,0 +1,598 @@
+#summary Everything You Need to Know to get Up and Running with Hypertable
+<wiki:toc/>
+
+==Installing Hypertable via Binary Packages==
+
+===Package Installation===
+
+Hypertable can be installed via [http://package.hypertable.org/ binary packages].  The packages come bundled with nearly all of the dependent shared libraries.  The nice thing about this approach is that just two packages are required for linux, a 64-bit linux package and a 32-bit linux package.  The only requirement is that your system is built with glibc 2.4+ (released on March 6th 2006 and provides stack smashing protection).  If you're running an older distribution with pre 2.4 glibc, you can build your own binary packages by following the instructions in [#Appendix_B._How_To_Package].
+
+System packages (`*.rpm`, `*.deb` and `*.dmg`) can be installed by users with root access.  For users without root access, the compressed archive `*.tar.bz2` can be unpacked in any directory the user has write permission.
+
+RPM installation
+{{{
+rpm -i <package>.rpm
+}}}
+Debian installation
+{{{
+dpkg --install <package>.deb
+}}}
+Bzipped archive installation
+{{{
+tar jxvf <package>.tar.bz2
+}}}
+Mac installation:
+
+ Double-click the `.dmg` file and follow the instructions
+
+The RPM, Debian, and Mac packages will install Hypertable under a directory by the name of `/opt/hypertable/$VERSION` by default.  If you don't have root access or cannot modify the `/opt` directory, use the `.tar.bz2` archive to install Hypertable wherever you would like.
+
+===Filesystem Hierarchy Standard===
+
+The RPM and Debian packages will, as a post-install step, setup the installation to conform to the [http://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard Filesystem Hierarchy Standard].  This involves moving the configuration directory under `/etc`,  creating the dynamic (or variable) output directories under `/var`, and then setting up symlinks to point from the installation to these FHS-compliant system directories.  For example, here's what the installation directory looks like after installing from the RPM package:
+{{{
+[doug@mothercompiler ~]$ ls -l /opt/hypertable/0.9.3.0/
+total 16
+drwxr-xr-x 2 doug doug 4096 Mar 23 15:45 bin
+lrwxrwxrwx 1 doug doug   27 Mar 23 15:45 conf -> /etc/opt/hypertable/0.9.3.0
+drwxr-xr-x 5 doug doug 4096 Mar 23 15:45 examples
+lrwxrwxrwx 1 doug doug   30 Mar 23 15:45 fs -> /var/opt/hypertable/0.9.3.0/fs
+lrwxrwxrwx 1 doug doug   38 Mar 23 15:45 hyperspace -> /var/opt/hypertable/0.9.3.0/hyperspace
+drwxr-xr-x 9 doug doug 4096 Mar 23 15:45 include
+drwxr-xr-x 7 doug doug 4096 Mar 23 15:45 lib
+lrwxrwxrwx 1 doug doug   31 Mar 23 15:45 log -> /var/opt/hypertable/0.9.3.0/log
+lrwxrwxrwx 1 doug doug   31 Mar 23 15:45 run -> /var/opt/hypertable/0.9.3.0/run
+}}}
+
+The `.dmg` and `.tar.bz2` install do not setup the installation to be FHS-compliant.  You can do this manually by running the `fhsize.sh` script.
+{{{
+sudo /opt/hypertable/0.9.3.0/bin/fhsize.sh
+}}}
+
+This step is *not* strictly necessary, so if you'd like to keep the installation cleanly under `/opt/hypertable/$VERSION` don't run `fhsize.sh`
+
+===Post-Installation Steps===
+
+After installation, make a symlink from `/opt/hypertable/current` to your current version.
+
+{{{
+cd /opt/hypertable
+sudo ln -s 0.9.3.0 current
+}}}
+
+If you plan to run Hypertable as a user other than root, you will need to change the ownership of the installation files to the user that you will be running the software as.
+{{{
+sudo chown -R doug:users /opt/hypertable/0.9.3.0
+sudo chown -R doug:users /etc/opt/hypertable/0.9.3.0
+sudo chown -R doug:users /var/opt/hypertable/0.9.3.0
+}}}
+
+===Verify Installation===
+
+Start the hypertable servers (in local/single node mode)
+{{{
+/opt/hypertable/current/bin/ht start all-servers local
+DFS broker: available file descriptors: 1024
+Started DFS Broker (local)
+Started Hyperspace
+Started Hypertable.Master
+Started Hypertable.RangeServer
+Started ThriftBroker
+}}}
+
+Use the Hypertable shell for experiments.  For an introduction to the commands available, see [HQLTutorial].
+
+{{{
+/opt/hypertable/current/bin/ht shell
+
+Welcome to the hypertable command interpreter.
+For information about Hypertable, visit http://www.hypertable.org/
+
+Type 'help' for a list of commands, or 'help shell' for a
+list of shell meta commands.
+
+hypertable> 
+}}}
+Create a table named "foo"
+{{{
+hypertable> create table foo ( c1, c2 );
+}}}
+Show the tables.
+{{{
+hypertable> show tables;
+METADATA
+foo
+}}}
+Insert some data into table "foo".
+{{{
+hypertable> insert into foo values("001", "c1", "totally"), ("000", "c1", "Hypertable"), ("001", "c2", "awesome"), ("000", "c2", "is");
+}}}
+Select data from table "foo".
+{{{
+hypertable> select * from foo;
+000	c1	Hypertable
+000	c2	is
+001	c1	totally
+001	c2	awesome
+}}}
+Drop table "foo"
+{{{
+hypertable> drop table foo;
+}}}
+
+Finally, to shut everything down, use the stop-servers command:
+
+{{{
+/opt/hypertable/current/bin/ht stop-servers
+}}}
+
+==Deploying on Hadoop Cluster==
+
+===Capistrano - A Tool for Automating Tasks on Remote Servers===
+
+The Hypertable distribution comes a number of scripts to start and stop the various servers that make up a Hypertable cluster.  You can use your own cluster management tool to launch these scripts and deploy new binaries.  However, if you're not already using a cluster management tool, we recommend [http://www.capify.org/ Capistrano].  The distribution comes with a Capistrano config file (`Capfile.cluster`) that makes deploying and launching Hypertable a breeze.
+
+Capistrano is a simple tool for automating the remote execution of tasks.  It uses ssh to do the remote execution.  To ease deployment, you should have password-less ssh access (e.g. public key) to all of the machines in your cluster.  Installing Capistrano is pretty simple.  On most systems you just need to execute the following command
+{{{
+$ sudo gem update
+$ sudo gem install capistrano
+}}}
+After this installation step you should now have the `cap` program in your path:
+{{{
+$ cap --version
+Capistrano v2.5.8
+}}}
+
+===Step 1. Install Hadoop===
+
+The first step to getting up and running on a Hadoop Cluster is to install Hadoop.  The process for doing this is outside the scope of this document.  See [http://wiki.apache.org/hadoop/GettingStartedWithHadoop Getting Started With Hadoop] for details.  The Hadoop cluster is typically administered from the machine that runs the !NameNode.  For the remainder of this section, we'll assume it is called `master` and the `fs.default.name` property in the Hadoop configuration is setup as follows:
+
+{{{
+<property>
+  <name>fs.default.name</name>
+  <value>hdfs://master:9000</value>
+</property>
+}}}
+
+===Step 2. Edit Capistrano `Capfile`===
+
+Once you have Capistrano installed, copy the `conf/Capfile.cluster` that comes with the Hypertable distribution to your working directory (e.g. home directory) on `master`, rename it to `Capfile`, and tailor it for your environment.  The `cap` command reads the file `Capfile` in the current working directory by default.  There are some variables that are set at the top that you need to modify for your particular environment.  The following shows the variables at the top of the Capfile that need modification:
+{{{
+set :source_machine,     "master"
+set :install_dir,        "/opt/hypertable" 
+set :hypertable_version, "0.9.3.0"
+set :default_dfs,        "hadoop"
+set :default_config,     "/opt/hypertable/hypertable-example.cfg"
+}}}
+Here's a brief description of each variable:
+
+|| *variable* || *description* ||
+|| `source_machine` || machine from which you will build the binaries, distribute them to the other machines, and launch the service. ||
+|| `install_dir` || directory on `source_machine` where you have installed Hypertable.  It is also the directory on the remote machines where the installation will get rsync'ed to. ||
+|| `hypertable_version` || version of Hypertable you are deploying ||
+|| `default_dfs` || distributed file system you are running Hypertable on top of.  Valid values are "local", "hadoop", "kfs", or "ceph" ||
+|| `default_config` || location of the default configuration file that plan to use ||
+*Table 1. Hypertable Capistrano Variables*
+
+In addition to the above variables, you also need to define three roles, one for the machine that will run the master processes, one for the machines that will run the Hyperspace replicas, and one for the machines that will run the !RangeServers.  Edit the following lines:
+{{{
+role :master, "master"
+role :hyperspace, "hyperspace001", "hyperspace002", "hyperspace003"
+role :slave,  "slave001", "slave002", "slave003", "slave004", "slave005", "slave006", "slave007", "slave008"
+}}}
+Here's a brief description of each role:
+
+|| *role* || *description* ||
+|| `master` || This role is for the machine that will run the Hypertable master process as well as a DFS broker.  Ideally this machine is high quality and somewhat lightly loaded (e.g. not running a !RangeServer).  Typically you would have a high quality machine running the Hypertable master, a Hyperspace replica, and the HDFS !NameNode ||
+|| `hyperspace` || This role is for the machines that will run Hyperspace replicas.  There should be at least one machine defined for this role.  The machines that take on this role should be somewhat lightly loaded (e.g. not running a !RangeServer) ||
+|| `slave` || This role is for the machines that will run !RangeServers.  Hypertable is designed to run on a filesystem like HDFS.  In fact, the system works best from a performance standpoint when the !RangeServers are run on the same machines as the HDFS !DataNodes.  This role will also launch a DFS broker and a !ThriftBroker.  ||
+*Table 2. Hypertable Capistrano Roles*
+
+===Step 3. Install Hypertable===
+
+The next step is to install Hypertable on all of your machines.  If you're installing from the RPM or Debian packages, you will need to install the software on each of the machines (`master`, `hyperspace001..hyperspace003`, `slave001..slave008`) according to [#Installing_Hypertable_via_Binary_Packages].
+
+If you've built the binaries from source code or you've installed with the `.tar.bz2` package (*not* using FHS-compliant directory layout) you can distribute the Hypertable installation with a single Capistrano command.  On `master` be sure Hypertable is installed in the location specified by the `install_dir` and `hypertable_version` Capfile variables (`/opt/hypertable/0.9.3.0` in this example).  Then distribute the installation with the following command:
+{{{
+$ cap dist
+}}}
+(*NOTE:* You may have to increase the value of !MaxStartups in your `/etc/sshd_config` file if it is less than the number of nodes in your cluster)
+
+===Step 4. Configure Hypertable===
+
+Configuring Hypertable is straightforward.  You just need to copy the default config file (`conf/hypertable.cfg`) and change the following properties:
+
+|| Property || Description ||
+|| `HdfsBroker.fs.default.name` || Hadoop filesystem name ||
+|| `Hyperspace.Replica.Host` || Name of host running Hyperspace replica (one line for each replica) ||
+|| `Hypertable.Master.Host` || Name of host running Hypertable master ||
+
+See [http://www.hypertable.org/pub/hypertable-example-cfg.txt hypertable-example.cfg]
+
+Once the configuration file is setup on `master` and located in the filename indicated by the `default_config` Capfile variable, then to push it out to the cluster, run the following command:
+{{{
+$ cap dist
+}}}
+(*NOTE:* You may have to increase the value of !MaxStartups in your `/etc/sshd_config` file if it is less than the number of nodes in your cluster)
+
+===Step 5. Synchronize Clocks===
+
+The system cannot operate correctly unless the clocks on all machines are synchronized.  Use the [http://www.ntp.org/ Network Time Protocol (ntp)] to ensure that the clocks get synchronized and remain in sync.  Run the 'date' command on all machines to make sure they are in sync.  The following Capistrano shell session show the output of a cluster with properly synchronized clocks.
+
+{{{
+cap> date
+[establishing connection(s) to master, hyperspace001, hyperspace002, hyperspace003, slave001, slave002, slave003, slave004, slave005, slave006, slave007, slave008]
+ ** [out :: master] Sat Jan  3 18:05:33 PST 2009
+ ** [out :: hyperspace001] Sat Jan  3 18:05:33 PST 2009
+ ** [out :: hyperspace002] Sat Jan  3 18:05:33 PST 2009
+ ** [out :: hyperspace003] Sat Jan  3 18:05:33 PST 2009
+ ** [out :: slave001] Sat Jan  3 18:05:33 PST 2009
+ ** [out :: slave002] Sat Jan  3 18:05:33 PST 2009
+ ** [out :: slave003] Sat Jan  3 18:05:33 PST 2009
+ ** [out :: slave004] Sat Jan  3 18:05:33 PST 2009
+ ** [out :: slave005] Sat Jan  3 18:05:33 PST 2009
+ ** [out :: slave007] Sat Jan  3 18:05:33 PST 2009
+ ** [out :: slave008] Sat Jan  3 18:05:33 PST 2009
+}}}
+
+===Step  6. Launch===
+
+Launch Hadoop (`hadoop/bin/start-all.sh`) and make sure the system is up and running and out of "safemode":
+
+{{{
+$ hadoop dfsadmin -safemode get
+Safe mode is OFF
+}}}
+
+Then create the HDFS directory in which Hypertable will store data (`/hypertable`) and make it readable and writable by the Hypertable processes.  If Hadoop and Hypertable are launched from the same user account, this step is not necessary.
+
+{{{
+$ hadoop fs -mkdir /hypertable
+$ hadoop fs -chmod 777 /hypertable
+}}}
+
+To start all of the Hypertable servers ...
+{{{
+$ cap start
+}}}
+And to stop the service, shutting down all servers ...
+{{{
+$ cap stop
+}}}
+If you want to wipe your database clean, removing all tables ...
+{{{
+$ cap cleandb
+}}}
+If you want to launch the service using a different config file than the default (e.g. /home/doug/conf/alternate.cfg) ...
+{{{
+$ cap -S config=/home/doug/conf/alternate.cfg dist
+$ cap -S config=/home/doug/conf/alternate.cfg start
+}}}
+
+==Backing Up and Restoring Tables==
+
+Hypertable backup and restore are accomplished with the HQL commands DUMP TABLE and LOAD DATA INFILE.  It is possible to create backups with the SELECT command, but it is not recommended because it will output table data in sorted order.  When loading data with LOAD DATA INFILE that is in sorted order, only one !RangeServer will be kept busy at a time.  To combat this problem, the DUMP TABLE command was introduced which will output table data in random order.  Loading backups taken with the DUMP TABLE command is much more efficient since all of the participating !RangeServers will be kept busy.
+
+===backup.sh===
+{{{
+#!/usr/bin/env bash
+
+if [ $# -lt 1 ] ; then
+    echo "usage: $0 <tablename> [ <tablename> ... ]"
+    exit 0
+fi
+
+while [ $# -ge 1 ]; do
+    echo "Backing up '$1' ..."
+    echo "DUMP TABLE '$1' INTO FILE '$1.gz';" | /opt/hypertable/current/bin/ht shell
+    shift
+done
+}}}
+===restore.sh===
+{{{
+#!/usr/bin/env bash
+
+if [ $# -lt 1 ] ; then
+    echo "usage: $0 <backup-file> [ <backup-file> ... ]"
+    exit 0
+fi
+
+while [ $# -ge 1 ]; do
+    table=`basename $1 | cut -f1 -d'.'`
+    echo "Restoring '$table' ..."
+    echo "LOAD DATA INFILE '$1' INTO TABLE '$table';" | /opt/hypertable/current/bin/ht shell
+    shift
+done
+}}}
+
+== HQL Tutorial ==
+
+=== Introduction ===
+
+This tutorial shows you how to import a search engine query log into Hypertable, storing the data into tables with different primary keys, and how to issue queries against the tables.  You'll need to download the data from [http://hypertable.googlecode.com/files/query-log.tsv.gz]:
+
+{{{
+$ mkdir -p hql_tutorial
+$ cd hql_tutorial
+$ wget http://hypertable.googlecode.com/files/query-log.tsv.gz
+}}}
+
+The next step is to make sure Hypertable is properly installed (see [#Installing_Hypertable_via_Binary_Packages]) and then launch the service.  The following terminal session illustrates how to launch a local instance of Hypertable:
+{{{
+$ /opt/hypertable/current/bin/start-all-servers.sh local
+DFS broker: available file descriptors: 256
+Started DFS Broker (local)
+Started Hyperspace
+Started Hypertable.Master
+Started Hypertable.RangeServer
+Started ThriftBroker
+}}}
+
+Now fire up an interactive session:
+
+{{{
+$ /opt/hypertable/current/bin/ht shell
+
+Welcome to the hypertable command interpreter.
+For information about Hypertable, visit http://www.hypertable.org/
+
+Type 'help' for a list of commands, or 'help shell' for a
+list of shell meta commands.
+
+hypertable> 
+}}}
+
+Get help:
+{{{
+hypertable> help
+
+EXISTS TABLE ....... Check if table exists
+CREATE TABLE ....... Creates a table
+DELETE ............. Deletes all or part of a row from a table
+DESCRIBE TABLE ..... Displays a table's schema
+DROP TABLE ......... Removes a table
+DUMP TABLE ......... Create efficient backup file
+ALTER TABLE ........ Add/remove column family from existing table
+INSERT ............. Inserts data into a table
+LOAD DATA INFILE ... Loads data from a TSV input file into a table
+SELECT ............. Selects (and display) cells from a table
+SHOW CREATE TABLE .. Displays CREATE TABLE command used to create table
+SHOW TABLES ........ Displays the list of tables
+SHUTDOWN ........... Shuts servers down gracefully
+
+Statements must be terminated with ';'.  For more information on
+a specific statement, type 'help <statement>', where <statement> is from
+the preceeding list.
+
+}}}
+
+===CREATE TABLE===
+
+In this tutorial we will be loading data into, and querying data from, two separate tables.  The first table, `query-log-by-anonid`, will be indexed by the fields AnonID+!QueryTime and the second table, `query-log-by-timestamp`, will be indexed by the fields !QueryTime+AnonID.  Notice that any identifier that contains non-alphanumeric characters (e.g. '-') must be surrounded by quotes.
+
+{{{
+hypertable> CREATE TABLE "query-log-by-anonid" (
+Query,
+ItemRank,
+ClickURL
+);
+
+  Elapsed time:  3.95 s
+
+hypertable> CREATE TABLE "query-log-by-timestamp" (
+Query,
+ItemRank,
+ClickURL
+);
+
+  Elapsed time:  3.95 s
+
+}}}
+
+===SHOW TABLES===
+
+Show all of the tables that exist in the system:
+{{{
+hypertable> show tables;
+METADATA
+query-log-by-anonid
+query-log-by-timestamp
+
+  Elapsed time:  1.91 s
+
+}}}
+
+=== SHOW CREATE TABLE ===
+
+Now, issue the SHOW CREATE TABLE command to make sure you got everything right. We didn't have to include the field called 'row' because we'll use that in our LOAD DATA INFILE command later:
+
+{{{
+hypertable> show create table 'query-log-by-anonid';
+
+CREATE TABLE query-log-by-anonid (
+  Query,
+  ItemRank,
+  ClickURL,
+  ACCESS GROUP default (Query, ItemRank, ClickURL)
+)
+
+
+  Elapsed time:  2.20 s
+
+}}}
+And, notice that, by default, a single ACCESS GROUP is created.  Access groups are a way to physically group columns together on disk.  See the [http://www.hypertable.org/hql/create-table.html CREATE TABLE] documentation for a more detailed description of access groups.
+
+===LOAD DATA INFILE===
+
+Now, let's load some data using the MySQL-like TAB delimited format (TSV). For that, we assume you have the example data in the file `query-log.tsv.gz`. This file includes an initial header line indicating the format of each line in the file by listing tab delimited column names:
+
+{{{
+#QueryTime      AnonID  Query   ItemRank        ClickURL
+2006-03-01 00:01:03     3001225 hairball medicine               
+2006-03-01 00:01:04     3613173 batman signal images    12      http://www3.flickr.com
+2006-03-01 00:01:04     3613173 batman signal images    14      http://www.superherostuff.com
+2006-03-01 00:01:04     3613173 batman signal images    18      http://www.icomania.com
+2006-03-01 00:01:04     3613173 batman signal images    18      http://www.icomania.com
+2006-03-01 00:01:04     3613173 batman signal images    22      http://www.bookmunch.co.uk
+2006-03-01 00:01:05     50588   redirect.virtumundo.com         
+2006-03-01 00:01:05     978804  navyfcu.orghb           
+2006-03-01 00:01:07     2057661 desmoinesregister               
+2006-03-01 00:01:08     1127071 guardianship    8       http://adopting.adoption.com
+...
+}}}
+
+Now let's load the data file `query-log.tsv.gz` into the table `query-log-by-anonid`.  The row key is formulated by zero-padding the AnonID field out to nine digits and concatenating the !QueryTime field.  The !QueryTime field is used as the cell timestamp.
+
+{{{
+hypertable> LOAD DATA INFILE ROW_KEY_COLUMN="%09AnonID"+QueryTime TIMESTAMP_COLUMN=QueryTime "query-log.tsv.gz" INTO TABLE 'query-log-by-anonid';
+
+Loading 7,524,712 bytes of input data...
+
+0%   10   20   30   40   50   60   70   80   90   100%
+|----|----|----|----|----|----|----|----|----|----|
+***************************************************
+Load complete.
+
+  Elapsed time:  9.84 s
+Avg value size:  15.42 bytes
+  Avg key size:  29.00 bytes
+    Throughput:  4478149.39 bytes/s (764375.74 bytes/s)
+   Total cells:  992525
+    Throughput:  100822.73 cells/s
+       Resends:  0
+
+}}}
+
+Now let's load the data file `query-log.tsv.gz` into the table `query-log-by-timestamp`.  The row key is formulated by concatenating the !QueryTime field with the nine digit, zero-padded AnonID field.  The !QueryTime field is used as the cell timestamp.
+
+{{{
+hypertable> LOAD DATA INFILE ROW_KEY_COLUMN=QueryTime+"%09AnonID" TIMESTAMP_COLUMN=QueryTime "query-log.tsv.gz" INTO TABLE 'query-log-by-timestamp';
+
+Loading 7,524,712 bytes of input data...
+
+0%   10   20   30   40   50   60   70   80   90   100%
+|----|----|----|----|----|----|----|----|----|----|
+***************************************************
+Load complete.
+
+  Elapsed time:  10.18 s
+Avg value size:  15.42 bytes
+  Avg key size:  29.00 bytes
+    Throughput:  4330913.20 bytes/s (739243.98 bytes/s)
+   Total cells:  992525
+    Throughput:  97507.80 cells/s
+       Resends:  0
+}}}
+
+===SELECT===
+
+In the examples that follow I'm using the options spec DISPLAY_TIMESTAMPS at the end of each select but that's entirely optional and you can omit them from most of the examples (except where you want to see them in the output) -- here's a minimal SELECT:
+
+{{{
+ypertable> select * from 'query-log-by-anonid' limit 4 DISPLAY_TIMESTAMPS;
+2006-03-01 10:30:46.000000000	000000036 2006-03-01 10:30:46	Query	helena ga
+2006-03-01 10:31:34.000000000	000000036 2006-03-01 10:31:34	Query	helena ga
+2006-03-01 10:45:23.000000000	000000036 2006-03-01 10:45:23	Query	checeron s
+2006-03-01 10:46:07.000000000	000000036 2006-03-01 10:46:07	Query	cheveron gas station
+
+  Elapsed time:  0.00 s
+Avg value size:  12.00 bytes
+  Avg key size:  30.00 bytes
+    Throughput:  145580.59 bytes/s
+   Total cells:  4
+    Throughput:  3466.20 cells/s
+}}}
+==Appendix A. Building from Source==
+
+===Download the source===
+
+You can either download a release source tar ball from the [http://hypertable.org/download.html download page] and unpack it in your source directory say ~/src:
+{{{
+cd ~/src
+tar zxvf hypertable-0.9.3.0-alpha-src.tar.gz
+}}}
+or from our git repository:
+{{{
+cd ~/src
+git clone git://scm.hypertable.org/pub/repos/hypertable.git
+}}}
+
+For the rest of the section, we assume that your hypertable source tree is `~/src/hypertable`
+
+===Install the development environment===
+
+Run the following script to setup up the dev environment with all of the dependent libraries:
+
+{{{
+~/src/hypertable/bin/src-utils/htbuild --install dev_env
+}}}
+
+If the above command does not work for your platform, you can setup the dev environment manually by following the steps shown for your platform in [http://code.google.com/p/hypertable/wiki/HowToBuild How to Build].
+
+===Configure the build===
+
+Assuming you want your build tree to be ~/build/hypertable/debug
+{{{
+mkdir -p ~/build/hypertable/debug
+cd ~/build/hypertable/debug
+cmake ~/src/hypertable
+}}}
+By default, hypertable gets installed in `/opt/hypertable`. To install into your own install directory, say `$prefix`, you can use:
+{{{
+cmake -DCMAKE_INSTALL_PREFIX=$prefix ~/src/hypertable
+}}}
+By default the build is configured for debug. To make a release build for production/performance test/benchmark:
+{{{
+mkdir -p ~/build/hypertable/release
+cd ~/build/hypertable/release
+cmake -DCMAKE_BUILD_TYPE=Release ~/src/hypertable
+}}}
+To build shared libraries, e.g., for scripting language extensions:
+{{{
+cmake -DBUILD_SHARED_LIBS=ON ~/src/hypertable
+}}}
+Since PHP has no builtin package system, its thrift installation needs to be manually specified for !ThriftBroker support:
+{{{
+cmake -DPHPTHRIFT_ROOT:STRING=/home/user/src/thrift/lib/php/src
+}}}
+
+===Build Hypertable binaries===
+{{{
+make
+make install
+}}}
+
+==Appendix B. How To Package==
+
+This section describes how to build binary packages for Hypertable. Before building packages, the following steps must be performed.
+
+  * Install all of the Hypertable dependencies (see  [#Appendix_A._Building_from_Source]).
+  * Build the software
+
+The rest of this section assumes that the source code is located in `~/src/hypertable` and Thrift was built in `/usr/src/thrift-0.2.0`
+
+===Redhat-based systems===
+{{{
+cd <build-dir>
+~/src/hypertable/bin/src-utils/htpkg --srcdir ~/src/hypertable --phpdir /usr/src/thrift-0.2.0/lib/php/src RPM
+}}}
+
+===Debian-based systems===
+{{{
+cd <build-dir>
+~/src/hypertable/bin/src-utils/htpkg --srcdir ~/src/hypertable --phpdir /usr/src/thrift-0.2.0/lib/php/src DEB
+}}}
+
+===Mac OSX===
+Before packaging, you must first install [http://developer.apple.com/technology/Xcode.html Xcode]
+
+{{{
+cd <build-dir>
+~/src/hypertable/bin/src-utils/htpkg --srcdir ~/src/hypertable --phpdir /usr/src/thrift-0.2.0/lib/php/src PackageMaker
+}}}
+
+===tar bzip2 archive===
+{{{
+cd <build-dir>
+~/src/hypertable/bin/src-utils/htpkg --srcdir ~/src/hypertable --phpdir /usr/src/thrift-0.2.0/lib/php/src TBZ2
+}}}
