@@ -284,6 +284,7 @@ if [ $# -lt 1 ] ; then
 fi
 
 while [ $# -ge 1 ]; do
+    echo "Backing up '$1' ..."
     echo "DUMP TABLE '$1' INTO FILE '$1.gz';" | /opt/hypertable/current/bin/ht shell
     shift
 done
