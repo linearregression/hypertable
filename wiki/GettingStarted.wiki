@@ -422,6 +422,24 @@ CREATE TABLE query-log-by-anonid (
 }}}
 And, notice that, by default, a single ACCESS GROUP is created.  Access groups are a way to physically group columns together on disk.  See the [http://www.hypertable.org/hql/create-table.html CREATE TABLE] documentation for a more detailed description of access groups.
 
+===LOAD DATA INFILE===
+
+Now, let's load some data using the MySQL-like TAB delimited format (TSV). For that, we assume you have the example data in the file `query-log.tsv.gz`. This format includes a single header line that indicates the format of each line in the file by listing the column names delimited by tabs:
+
+{{{
+#QueryTime      AnonID  Query   ItemRank        ClickURL
+2006-03-01 00:01:03     3001225 hairball medicine               
+2006-03-01 00:01:04     3613173 batman signal images    12      http://www3.flickr.com
+2006-03-01 00:01:04     3613173 batman signal images    14      http://www.superherostuff.com
+2006-03-01 00:01:04     3613173 batman signal images    18      http://www.icomania.com
+2006-03-01 00:01:04     3613173 batman signal images    18      http://www.icomania.com
+2006-03-01 00:01:04     3613173 batman signal images    22      http://www.bookmunch.co.uk
+2006-03-01 00:01:05     50588   redirect.virtumundo.com         
+2006-03-01 00:01:05     978804  navyfcu.orghb           
+2006-03-01 00:01:07     2057661 desmoinesregister               
+...
+}}}
+
 ==Appendix A. Building from Source==
 
 ===Download the source===
