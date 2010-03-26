@@ -1,5 +1,4 @@
 #summary Getting started with Hypertable in 5 minutes
-#labels Featured
 
 = Introduction =
 
@@ -80,4 +79,3 @@ Finally, to shut everything down, use the *stop-servers.sh* script:
 {{{
 /opt/hypertable/current/bin/stop-servers.sh
 }}}
-
