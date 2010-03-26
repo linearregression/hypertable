@@ -390,6 +390,8 @@ ClickURL
 
 }}}
 
+See the [http://www.hypertable.org/hql/create-table.html HQL Documentation for CREATE TABLE] for complete syntax.
+
 ===SHOW TABLES===
 
 Show all of the tables that exist in the system:
@@ -540,6 +542,8 @@ Avg value size:  18.11 bytes
    Total cells:  19
     Throughput:  5969.21 cells/s
 }}}
+
+See the [http://www.hypertable.org/hql/load-data-infile.html HQL Documentation for LOAD DATA INFILE] for complete syntax.
 
 ===SELECT===
 
@@ -733,6 +737,8 @@ Avg value size:  15.71 bytes
     Throughput:  6673.51 cells/s
 }}}
 
+See the [http://www.hypertable.org/hql/select.html HQL Documentation for SELECT] for complete syntax.
+
 ===ALTER TABLE===
 
 The ALTER TABLE command can be used to add remove columns from a table (for complete documentation see [http://www.hypertable.org/hql/alter-table.html HQL Documentation for ALTER TABLE]).  The following command will add a 'Notes' column in a new access group called 'extra' and will drop column 'ItemRank'.
@@ -777,6 +783,8 @@ Avg value size:  25.92 bytes
    Total cells:  13
     Throughput:  12310.61 cells/s
 }}}
+
+See [http://www.hypertable.org/hql/alter-table.html HQL Documentation for ALTER TABLE] for complete syntax.
 
 ===INSERT & DELETE===
 
