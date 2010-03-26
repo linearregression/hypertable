@@ -543,22 +543,94 @@ Avg value size:  18.11 bytes
 
 ===SELECT===
 
-In the examples that follow I'm using the options spec DISPLAY_TIMESTAMPS at the end of each select but that's entirely optional and you can omit them from most of the examples (except where you want to see them in the output) -- here's a minimal SELECT:
+Let's start by examining the `query-log-by-userid` table.  To select all of the data for user ID 003269359 we need to use the _starts with_ operator =^.  Remember that the row key is the concatenation of the user ID and the timestamp why we need to use the _starts with_ operator.
+{{{
+hypertable> select * from 'query-log-by-userid' where row =^ '003269359';
+003269359 2008-11-13 04:36:34	Query	binibining pilipinas 2008 winners
+003269359 2008-11-13 04:36:34	ItemRank	5
+003269359 2008-11-13 04:36:34	ClickURL	http://www.missosology.org
+003269359 2008-11-13 04:37:34	Query	pawee's kiss and tell
+003269359 2008-11-13 04:37:34	Query	pawee's kiss and tell
+003269359 2008-11-13 04:37:34	ItemRank	3
+003269359 2008-11-13 04:37:34	ItemRank	3
+003269359 2008-11-13 04:37:34	ClickURL	http://www.missosology.org
+003269359 2008-11-13 04:37:34	ClickURL	http://www.missosology.org
+003269359 2008-11-13 05:07:10	Query	rn jobs in 91405
+...
+003269359 2008-11-13 09:42:49	Query	wound ostomy rn training
+003269359 2008-11-13 09:42:49	ItemRank	11
+003269359 2008-11-13 09:42:49	ClickURL	http://www.wocn.org
+003269359 2008-11-13 09:46:50	Query	pych nurse in encino tarzana hospital
+003269359 2008-11-13 09:47:18	Query	encino tarzana hospital
+003269359 2008-11-13 09:47:18	ItemRank	2
+003269359 2008-11-13 09:47:18	ClickURL	http://www.encino-tarzana.com
+003269359 2008-11-13 09:52:42	Query	encino tarzana hospital
+003269359 2008-11-13 09:53:08	Query	alhambra hospital
+003269359 2008-11-13 09:53:08	ItemRank	1
+003269359 2008-11-13 09:53:08	ClickURL	http://www.alhambrahospital.com
+
+  Elapsed time:  0.01 s
+Avg value size:  19.24 bytes
+  Avg key size:  30.00 bytes
+    Throughput:  2001847.79 bytes/s
+   Total cells:  352
+    Throughput:  40651.35 cells/s
+}}}
+
+The result set was fairly large (352 cells), so let's now try selecting just the queries that were issued by the user with ID 003269359 during the hour of 5am.  To do this we need to add a TIMESTAMP predicate.  Each cell has a timestamp stored with it and the TIMESTAMP predicate can be used to filter the results.
 
 {{{
-ypertable> select * from 'query-log-by-anonid' limit 4 DISPLAY_TIMESTAMPS;
-2006-03-01 10:30:46.000000000	000000036 2006-03-01 10:30:46	Query	helena ga
-2006-03-01 10:31:34.000000000	000000036 2006-03-01 10:31:34	Query	helena ga
-2006-03-01 10:45:23.000000000	000000036 2006-03-01 10:45:23	Query	checeron s
-2006-03-01 10:46:07.000000000	000000036 2006-03-01 10:46:07	Query	cheveron gas station
+hypertable> select * from 'query-log-by-userid' where row =^ '003269359' AND "2008-11-13 05:00:00" <= TIMESTAMP < "2008-11-13 06:00:00";
+003269359 2008-11-13 05:07:10	Query	rn jobs in 91405
+003269359 2008-11-13 05:07:10	Query	rn jobs in 91405
+003269359 2008-11-13 05:07:10	ItemRank	9
+003269359 2008-11-13 05:07:10	ItemRank	8
+003269359 2008-11-13 05:07:10	ClickURL	http://91405.jobs.com
+003269359 2008-11-13 05:07:10	ClickURL	http://www.hospitalsoup.com
+003269359 2008-11-13 05:20:22	Query	rn jobs in 91405
+003269359 2008-11-13 05:20:22	ItemRank	16
+003269359 2008-11-13 05:20:22	ClickURL	http://www.careerbuilder.com
+003269359 2008-11-13 05:34:02	Query	usc university hospital
+003269359 2008-11-13 05:34:02	ItemRank	1
+003269359 2008-11-13 05:34:02	ClickURL	http://www.uscuh.com
+003269359 2008-11-13 05:37:01	Query	rn jobs in san fernando valley
+003269359 2008-11-13 05:37:01	Query	rn jobs in san fernando valley
+003269359 2008-11-13 05:37:01	Query	rn jobs in san fernando valley
+003269359 2008-11-13 05:37:01	ItemRank	7
+003269359 2008-11-13 05:37:01	ItemRank	4
+003269359 2008-11-13 05:37:01	ItemRank	3
+003269359 2008-11-13 05:37:01	ClickURL	http://www.medhunters.com
+003269359 2008-11-13 05:37:01	ClickURL	http://san.fernando.valley.registered.nurse.to.72k.san.fernando.ca.job.hireability.com
+003269359 2008-11-13 05:37:01	ClickURL	http://www.resumes2work.com
+003269359 2008-11-13 05:46:22	Query	northridge hospital
+003269359 2008-11-13 05:46:22	Query	northridge hospital
+003269359 2008-11-13 05:46:22	ItemRank	2
+003269359 2008-11-13 05:46:22	ItemRank	1
+003269359 2008-11-13 05:46:22	ClickURL	http://northridgehospital.org
+003269359 2008-11-13 05:46:22	ClickURL	http://www.chwhealth.com
+003269359 2008-11-13 05:53:34	Query	valley presbyterian hospital
+003269359 2008-11-13 05:53:34	ItemRank	4
+003269359 2008-11-13 05:53:34	ClickURL	http://www.hospital-data.com
+003269359 2008-11-13 05:55:36	Query	valley presbyterian hospital website
+003269359 2008-11-13 05:55:36	ItemRank	1
+003269359 2008-11-13 05:55:36	ClickURL	http://www.valleypres.org
+003269359 2008-11-13 05:59:24	Query	mission community hospital
+003269359 2008-11-13 05:59:24	ItemRank	1
+003269359 2008-11-13 05:59:24	ClickURL	http://www.mchonline.org
 
   Elapsed time:  0.00 s
-Avg value size:  12.00 bytes
+Avg value size:  18.50 bytes
   Avg key size:  30.00 bytes
-    Throughput:  145580.59 bytes/s
-   Total cells:  4
-    Throughput:  3466.20 cells/s
+    Throughput:  2602086.44 bytes/s
+   Total cells:  36
+    Throughput:  53651.27 cells/s
 }}}
+
+
+Keep in mind that each cell has an associated timestamp which was extracted from the load file with the TIMESTAMP_COLUMN option to LOAD DATA INFILE.  
+
+There is no index for the cell timestamps, so if we didn't include the `row =^` expression in our predicate, it would do a full table scan.  This is why we imported the data into two tables.  The `query-log-by-timestamp` table prefixes the row key with the timestamp so that we can do efficient time
+
 ==Appendix A. Building from Source==
 
 ===Download the source===
