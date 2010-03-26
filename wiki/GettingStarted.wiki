@@ -328,7 +328,42 @@ Started Hypertable.RangeServer
 Started ThriftBroker
 }}}
 
+Now fire up an interactive session:
 
+{{{
+$ /opt/hypertable/current/bin/ht shell
+
+Welcome to the hypertable command interpreter.
+For information about Hypertable, visit http://www.hypertable.org/
+
+Type 'help' for a list of commands, or 'help shell' for a
+list of shell meta commands.
+
+hypertable> 
+}}}
+
+Get help:
+{{{
+hypertable> help
+
+EXISTS TABLE ....... Check if table exists
+CREATE TABLE ....... Creates a table
+DELETE ............. Deletes all or part of a row from a table
+DESCRIBE TABLE ..... Displays a table's schema
+DROP TABLE ......... Removes a table
+DUMP TABLE ......... Create efficient backup file
+ALTER TABLE ........ Add/remove column family from existing table
+INSERT ............. Inserts data into a table
+LOAD DATA INFILE ... Loads data from a TSV input file into a table
+SELECT ............. Selects (and display) cells from a table
+SHOW CREATE TABLE .. Displays CREATE TABLE command used to create table
+SHOW TABLES ........ Displays the list of tables
+SHUTDOWN ........... Shuts servers down gracefully
+
+Statements must be terminated with ';'.  For more information on
+a specific statement, type 'help <statement>', where <statement> is from
+the preceeding list.
+}}}
  
 ==Appendix A. Building from Source==
 
