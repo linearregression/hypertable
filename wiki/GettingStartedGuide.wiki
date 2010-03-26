@@ -428,17 +428,20 @@ And, notice that, by default, a single ACCESS GROUP is created.  Access groups a
 Now, let's load some data using the MySQL-like TAB delimited format (TSV). For that, we assume you have the example data in the file `query-log.tsv.gz`. This file includes an initial header line indicating the format of each line in the file by listing tab delimited column names:
 
 {{{
+$ gzcat query-log.tsv.gz
 #QueryTime      UserID  Query   ItemRank        ClickURL
-2006-03-01 00:01:03     3001225 hairball medicine               
-2006-03-01 00:01:04     3613173 batman signal images    12      http://www3.flickr.com
-2006-03-01 00:01:04     3613173 batman signal images    14      http://www.superherostuff.com
-2006-03-01 00:01:04     3613173 batman signal images    18      http://www.icomania.com
-2006-03-01 00:01:04     3613173 batman signal images    18      http://www.icomania.com
-2006-03-01 00:01:04     3613173 batman signal images    22      http://www.bookmunch.co.uk
-2006-03-01 00:01:05     50588   redirect.virtumundo.com         
-2006-03-01 00:01:05     978804  navyfcu.orghb           
-2006-03-01 00:01:07     2057661 desmoinesregister               
-2006-03-01 00:01:08     1127071 guardianship    8       http://adopting.adoption.com
+2008-11-13 00:01:30     2289203 kitchen counter in new orleans  10      http://www.era.com
+2008-11-13 00:01:30     2289203 kitchen counter in new orleans  4       http://www.superpages.com
+2008-11-13 00:01:30     2289203 kitchen counter in new orleans  5       http://www.superpages.com
+2008-11-13 00:01:31     1958633 beads amethyst gemstone 1       http://www.gemsbiz.com
+2008-11-13 00:01:31     3496052 chat            
+2008-11-13 00:01:33     892003  photo example quarter doubled die coin  5       http://www.coinresource.com
+2008-11-13 00:01:33     892003  photo example quarter doubled die coin  5       http://www.coinresource.com
+2008-11-13 00:01:35     2251112 radio stations in buffalo       1       http://www.ontheradio.net
+2008-11-13 00:01:37     1274922 fafsa renewal   1       http://www.fafsa.ed.gov
+2008-11-13 00:01:37     1274922 fafsa renewal   1       http://www.fafsa.ed.gov
+2008-11-13 00:01:37     441978  find phone numbers      1       http://www.anywho.com
+2008-11-13 00:01:37     441978  find phone numbers      3       http://www.411.com
 ...
 }}}
 
