@@ -441,7 +441,7 @@ Now, let's load some data using the MySQL-like TAB delimited format (TSV). For t
 ...
 }}}
 
-Now let's
+Now let's load some data into table query-log-by-anonid:
 
 {{{
 hypertable> LOAD DATA INFILE ROW_KEY_COLUMN="%09AnonID"+QueryTime TIMESTAMP_COLUMN=QueryTime "query-log.tsv.gz" INTO TABLE 'query-log-by-anonid';
@@ -461,6 +461,27 @@ Avg value size:  15.42 bytes
     Throughput:  100822.73 cells/s
        Resends:  0
 
+}}}
+
+This command loads the data in `query-log.tsv.gz` into the table `query-log-by-anonid`, formulating the row key by zero-padding the AnonID field out to 9 digits and concatenating the query time.
+
+{{{
+hypertable> LOAD DATA INFILE ROW_KEY_COLUMN=QueryTime+"%09AnonID" TIMESTAMP_COLUMN=QueryTime "query-log.tsv.gz" INTO TABLE 'query-log-by-timestamp';
+
+Loading 7,524,712 bytes of input data...
+
+0%   10   20   30   40   50   60   70   80   90   100%
+|----|----|----|----|----|----|----|----|----|----|
+***************************************************
+Load complete.
+
+  Elapsed time:  10.18 s
+Avg value size:  15.42 bytes
+  Avg key size:  29.00 bytes
+    Throughput:  4330913.20 bytes/s (739243.98 bytes/s)
+   Total cells:  992525
+    Throughput:  97507.80 cells/s
+       Resends:  0
 }}}
 
 ==Appendix A. Building from Source==
