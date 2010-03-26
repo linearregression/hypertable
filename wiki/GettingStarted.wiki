@@ -364,6 +364,29 @@ Statements must be terminated with ';'.  For more information on
 a specific statement, type 'help <statement>', where <statement> is from
 the preceeding list.
 }}}
+
+===CREATE TABLE===
+
+In this tutorial we will be loading data into, and querying data from, two separate tables.  The first table will be indexed by AnonID+QueryTime and the second table will be indexed by QueryTime+AnonID.
+
+{{{
+hypertable> CREATE TABLE "query-log-by-anonid" (
+Query,
+ItemRank,
+ClickURL
+);
+
+  Elapsed time:  3.95 s
+
+hypertable> CREATE TABLE "query-log-by-timestamp" (
+Query,
+ItemRank,
+ClickURL
+);
+
+  Elapsed time:  3.95 s
+}}}
+
  
 ==Appendix A. Building from Source==
 
