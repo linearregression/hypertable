@@ -626,7 +626,7 @@ Avg value size:  18.50 bytes
     Throughput:  53651.27 cells/s
 }}}
 
-Keep in mind that the internal cell timestamp is different than the one embedded in the row key.  In this example, they both represent the same time.  By specifying the TIMESTAMP_COLUMN option to LOAD DATA INFILE, we extracted the QueryTime field to be used as the internal cell timestamp.  If we hadn't supplied that option, the system would have auto-assigned a timestamp.  To display the internal cell timestamp, add the DISPLAY_TIMESTAMPS option:
+Keep in mind that the internal cell timestamp is different than the one embedded in the row key.  In this example, they both represent the same time.  By specifying the TIMESTAMP_COLUMN option to LOAD DATA INFILE, we extracted the !QueryTime field to be used as the internal cell timestamp.  If we hadn't supplied that option, the system would have auto-assigned a timestamp.  To display the internal cell timestamp, add the DISPLAY_TIMESTAMPS option:
 
 {{{
 hypertable> select * from 'query-log-by-userid' limit 5 DISPLAY_TIMESTAMPS;
@@ -644,7 +644,7 @@ Avg value size:  17.20 bytes
     Throughput:  4397.54 cells/s
 }}}
 
-There is no index for the internal cell timestamps, so if we don't include a `row =^` expression in our predicate, the system will do a full table scan.  This is why we imported the data into two tables.  The `query-log-by-timestamp` table includes the timestamp in the row key as a prefix.  This allows us to efficiently do time range queries.
+There is no index for the internal cell timestamps, so if we don't include a `row =^` expression in our predicate, the system will do a full table scan.  This is why we imported the data into a second table `query-log-by-timestamp`.  This table includes the timestamp as the row key prefix which allows us to efficiently query data over a time interval.
 
 The following query selects all query log data for November 14th, 2008:
 
