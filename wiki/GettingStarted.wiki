@@ -368,7 +368,7 @@ the preceeding list.
 
 ===CREATE TABLE===
 
-In this tutorial we will be loading data into, and querying data from, two separate tables.  The first table will be indexed by AnonID+!QueryTime and the second table will be indexed by !QueryTime+AnonID.  Notice that any identifier that contains non-alphanumeric characters (e.g. '-') must be surrounded by quotes.
+In this tutorial we will be loading data into, and querying data from, two separate tables.  The first table, `query-log-by-anonid`, will be indexed by the fields AnonID+!QueryTime and the second table, `query-log-by-timestamp`, will be indexed by the fields !QueryTime+AnonID.  Notice that any identifier that contains non-alphanumeric characters (e.g. '-') must be surrounded by quotes.
 
 {{{
 hypertable> CREATE TABLE "query-log-by-anonid" (
@@ -391,6 +391,7 @@ ClickURL
 
 ===SHOW TABLES===
 
+Show all of the tables that exist in the system:
 {{{
 hypertable> show tables;
 METADATA
