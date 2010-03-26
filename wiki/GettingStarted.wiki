@@ -441,7 +441,7 @@ Now, let's load some data using the MySQL-like TAB delimited format (TSV). For t
 ...
 }}}
 
-Now let's load some data into table query-log-by-anonid:
+Now let's load the data file `query-log.tsv.gz` into the table `query-log-by-anonid`.  The row key is formulated by zero-padding the AnonID field out to nine digits and concatenating the !QueryTime field.
 
 {{{
 hypertable> LOAD DATA INFILE ROW_KEY_COLUMN="%09AnonID"+QueryTime TIMESTAMP_COLUMN=QueryTime "query-log.tsv.gz" INTO TABLE 'query-log-by-anonid';
@@ -463,7 +463,7 @@ Avg value size:  15.42 bytes
 
 }}}
 
-This command loads the data in `query-log.tsv.gz` into the table `query-log-by-anonid`, formulating the row key by zero-padding the AnonID field out to 9 digits and concatenating the query time.
+Now let's load the data file `query-log.tsv.gz` into the table `query-log-by-timestamp`.  The row key is formulated by concatenating the !QueryTime field with the nine digit, zero-padded AnonID field.
 
 {{{
 hypertable> LOAD DATA INFILE ROW_KEY_COLUMN=QueryTime+"%09AnonID" TIMESTAMP_COLUMN=QueryTime "query-log.tsv.gz" INTO TABLE 'query-log-by-timestamp';
