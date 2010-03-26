@@ -1,5 +1,4 @@
 #summary How to Deploy Hypertable
-#labels Featured
 <wiki:toc/>
 
 == Introduction ==
