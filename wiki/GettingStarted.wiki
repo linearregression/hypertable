@@ -201,7 +201,7 @@ $ cap dist
 
 ===Step 4. Configure Hypertable===
 
-Configuring Hypertable is simple.  You just need to modify the default config file (`conf/hypertable.cfg`) and change the following properties:
+Configuring Hypertable is straightforward.  You just need to copy the default config file (`conf/hypertable.cfg`) and change the following properties:
 
 || Property || Description ||
 || `HdfsBroker.fs.default.name` || Hadoop filesystem name ||
