@@ -741,7 +741,7 @@ See the [http://www.hypertable.org/hql/select.html HQL Documentation: SELECT] fo
 
 ===ALTER TABLE===
 
-The ALTER TABLE command can be used to add remove columns from a table (for complete documentation see [http://www.hypertable.org/hql/alter-table.html HQL Documentation for ALTER TABLE]).  The following command will add a 'Notes' column in a new access group called 'extra' and will drop column 'ItemRank'.
+The ALTER TABLE command can be used to add remove columns from a table.  The following command will add a 'Notes' column in a new access group called 'extra' and will drop column '!ItemRank'.
 {{{
 hypertable> ALTER TABLE 'query-log-by-timestamp' ADD(Notes, ACCESS GROUP extra(Notes)) DROP(ItemRank);
 
