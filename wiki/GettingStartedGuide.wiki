@@ -778,6 +778,9 @@ Avg value size:  25.92 bytes
     Throughput:  12310.61 cells/s
 }}}
 
+===INSERT & DELETE===
+
+
 ==Appendix A. Building from Source==
 
 ===Download the source===
