@@ -644,7 +644,94 @@ Avg value size:  17.20 bytes
     Throughput:  4397.54 cells/s
 }}}
 
-There is no index for the internal cell timestamps, so if we don't include a `row =^` expression in our predicate, it would do a full table scan.  This is why we imported the data into two tables.  The `query-log-by-timestamp` table prefixes the row key with the timestamp so that we can do efficient time
+There is no index for the internal cell timestamps, so if we don't include a `row =^` expression in our predicate, the system will do a full table scan.  This is why we imported the data into two tables.  The `query-log-by-timestamp` table includes the timestamp in the row key as a prefix.  This allows us to efficiently do time range queries.
+
+The following query selects all query log data for November 14th, 2008:
+
+{{{
+hypertable> select * from 'query-log-by-timestamp' WHERE ROW =^ '2008-11-14';
+2008-11-14 00:00:00 001040178	Query	noodle tools
+2008-11-14 00:00:00 001040178	ItemRank	1
+2008-11-14 00:00:00 001040178	ClickURL	http://www.noodletools.com
+2008-11-14 00:00:01 000264655	Query	games.myspace.com
+2008-11-14 00:00:01 000264655	ItemRank	1
+2008-11-14 00:00:01 000264655	ClickURL	http://games.myspace.com
+2008-11-14 00:00:01 000527424	Query	franklinville schools new jersey
+2008-11-14 00:00:01 000527424	ItemRank	1
+2008-11-14 00:00:01 000527424	ClickURL	http://www.greatschools.net
+2008-11-14 00:00:01 000632400	Query	lack of eye contact symptom of...
+...
+2008-11-14 06:02:33 003676354	Query	baby 20showers
+2008-11-14 06:02:35 003378030	Query	task and responsibility matrix
+2008-11-14 06:02:35 003378030	ItemRank	2
+2008-11-14 06:02:35 003378030	ClickURL	http://im.ncsu.edu
+2008-11-14 06:02:36 004578101	Query	jcpenneys
+2008-11-14 06:02:37 005120734	Query	ebay
+2008-11-14 06:02:40 000957500	Query	buccal fat size of ping pong ball
+
+  Elapsed time:  2.37 s
+Avg value size:  15.36 bytes
+  Avg key size:  30.00 bytes
+    Throughput:  1709616.45 bytes/s
+   Total cells:  89412
+    Throughput:  37689.18 cells/s
+}}}
+And to select all query log data for November 14th, 2008 during the hour of 3am:
+{{{
+hypertable> select * from 'query-log-by-timestamp' WHERE ROW =^ '2008-11-14 03';
+2008-11-14 03:00:00 002512415	Query	ny times
+2008-11-14 03:00:00 002512415	ItemRank	1
+2008-11-14 03:00:00 002512415	ClickURL	http://www.nytimes.com
+2008-11-14 03:00:00 005294906	Query	kickmeto.fosi
+2008-11-14 03:00:00 005459226	Query	www.dickdyertoyota.com
+2008-11-14 03:00:02 000637292	Query	days of our lives
+2008-11-14 03:00:02 000637292	ItemRank	3
+2008-11-14 03:00:02 000637292	ClickURL	http://www.nbc.com
+2008-11-14 03:00:03 002675105	Query	ghetto superstar lyrics
+...
+2008-11-14 03:59:52 002874080	ClickURL	http://www.paintball-discounters.com
+2008-11-14 03:59:53 004292772	Query	drop down menu
+2008-11-14 03:59:55 005656539	Query	to buy indian hair to make wigs in new york
+2008-11-14 03:59:55 005656539	ItemRank	1
+2008-11-14 03:59:55 005656539	ClickURL	http://query.nytimes.com
+2008-11-14 03:59:58 004318586	Query	myspace .com
+
+  Elapsed time:  0.17 s
+Avg value size:  15.37 bytes
+  Avg key size:  30.00 bytes
+    Throughput:  2267099.06 bytes/s
+   Total cells:  8305
+    Throughput:  49967.51 cells/s
+}}}
+And finally, to select all query log data for November 14th, 2008 during the minute of 3:45am:
+{{{
+hypertable> select * from 'query-log-by-timestamp' WHERE ROW =^ '2008-11-14 03:45';
+2008-11-14 03:45:00 003895650	Query	ks lottery.
+2008-11-14 03:45:00 003895650	ItemRank	2
+2008-11-14 03:45:00 003895650	ClickURL	http://www.lotterypost.com
+2008-11-14 03:45:00 005036796	Query	www.glasgowdailytimes 10-20-2005
+2008-11-14 03:45:01 002863052	Query	map quest
+2008-11-14 03:45:01 005514285	Query	john bermeo
+2008-11-14 03:45:02 002394176	Query	www.eggseye.com
+2008-11-14 03:45:02 003454227	Query	hawaiian weddig band
+2008-11-14 03:45:03 001006089	Query	brokers hiring loan officers in indiana
+2008-11-14 03:45:06 000844720	Query	latest design microsoft freeware
+...
+2008-11-14 03:45:55 003920469	ItemRank	3
+2008-11-14 03:45:55 003920469	ClickURL	http://www.pennyblood.com
+2008-11-14 03:45:56 002729906	Query	tryaold
+2008-11-14 03:45:56 003919348	Query	feathered draped fox fur mandalas
+2008-11-14 03:45:56 003919348	ItemRank	8
+2008-11-14 03:45:56 003919348	ClickURL	http://www.greatdreams.com
+2008-11-14 03:45:56 004803968	Query	-
+
+  Elapsed time:  0.02 s
+Avg value size:  15.71 bytes
+  Avg key size:  30.00 bytes
+    Throughput:  305030.80 bytes/s
+   Total cells:  130
+    Throughput:  6673.51 cells/s
+}}}
 
 ==Appendix A. Building from Source==
 
