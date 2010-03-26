@@ -369,10 +369,10 @@ the preceeding list.
 
 ===CREATE TABLE===
 
-In this tutorial we will be loading data into, and querying data from, two separate tables.  The first table, `query-log-by-anonid`, will be indexed by the fields AnonID+!QueryTime and the second table, `query-log-by-timestamp`, will be indexed by the fields !QueryTime+AnonID.  Notice that any identifier that contains non-alphanumeric characters (e.g. '-') must be surrounded by quotes.
+In this tutorial we will be loading data into, and querying data from, two separate tables.  The first table, `query-log-by-userid`, will be indexed by the fields UserID+!QueryTime and the second table, `query-log-by-timestamp`, will be indexed by the fields !QueryTime+UserID.  Notice that any identifier that contains non-alphanumeric characters (e.g. '-') must be surrounded by quotes.
 
 {{{
-hypertable> CREATE TABLE "query-log-by-anonid" (
+hypertable> CREATE TABLE "query-log-by-userid" (
 Query,
 ItemRank,
 ClickURL
@@ -396,7 +396,7 @@ Show all of the tables that exist in the system:
 {{{
 hypertable> show tables;
 METADATA
-query-log-by-anonid
+query-log-by-userid
 query-log-by-timestamp
 
   Elapsed time:  1.91 s
@@ -408,9 +408,9 @@ query-log-by-timestamp
 Now, issue the SHOW CREATE TABLE command to make sure you got everything right. We didn't have to include the field called 'row' because we'll use that in our LOAD DATA INFILE command later:
 
 {{{
-hypertable> show create table 'query-log-by-anonid';
+hypertable> show create table 'query-log-by-userid';
 
-CREATE TABLE query-log-by-anonid (
+CREATE TABLE query-log-by-userid (
   Query,
   ItemRank,
   ClickURL,
@@ -428,7 +428,7 @@ And, notice that, by default, a single ACCESS GROUP is created.  Access groups a
 Now, let's load some data using the MySQL-like TAB delimited format (TSV). For that, we assume you have the example data in the file `query-log.tsv.gz`. This file includes an initial header line indicating the format of each line in the file by listing tab delimited column names:
 
 {{{
-#QueryTime      AnonID  Query   ItemRank        ClickURL
+#QueryTime      UserID  Query   ItemRank        ClickURL
 2006-03-01 00:01:03     3001225 hairball medicine               
 2006-03-01 00:01:04     3613173 batman signal images    12      http://www3.flickr.com
 2006-03-01 00:01:04     3613173 batman signal images    14      http://www.superherostuff.com
@@ -442,10 +442,10 @@ Now, let's load some data using the MySQL-like TAB delimited format (TSV). For t
 ...
 }}}
 
-Now let's load the data file `query-log.tsv.gz` into the table `query-log-by-anonid`.  The row key is formulated by zero-padding the AnonID field out to nine digits and concatenating the !QueryTime field.  The !QueryTime field is used as the cell timestamp.
+Now let's load the data file `query-log.tsv.gz` into the table `query-log-by-userid`.  The row key is formulated by zero-padding the UserID field out to nine digits and concatenating the !QueryTime field.  The !QueryTime field is used as the cell timestamp.
 
 {{{
-hypertable> LOAD DATA INFILE ROW_KEY_COLUMN="%09AnonID"+QueryTime TIMESTAMP_COLUMN=QueryTime "query-log.tsv.gz" INTO TABLE 'query-log-by-anonid';
+hypertable> LOAD DATA INFILE ROW_KEY_COLUMN="%09UserID"+QueryTime TIMESTAMP_COLUMN=QueryTime "query-log.tsv.gz" INTO TABLE 'query-log-by-anonid';
 
 Loading 7,524,712 bytes of input data...
 
@@ -464,10 +464,10 @@ Avg value size:  15.42 bytes
 
 }}}
 
-Now let's load the data file `query-log.tsv.gz` into the table `query-log-by-timestamp`.  The row key is formulated by concatenating the !QueryTime field with the nine digit, zero-padded AnonID field.  The !QueryTime field is used as the cell timestamp.
+Now let's load the data file `query-log.tsv.gz` into the table `query-log-by-timestamp`.  The row key is formulated by concatenating the !QueryTime field with the nine digit, zero-padded UserID field.  The !QueryTime field is used as the cell timestamp.
 
 {{{
-hypertable> LOAD DATA INFILE ROW_KEY_COLUMN=QueryTime+"%09AnonID" TIMESTAMP_COLUMN=QueryTime "query-log.tsv.gz" INTO TABLE 'query-log-by-timestamp';
+hypertable> LOAD DATA INFILE ROW_KEY_COLUMN=QueryTime+"%09UserID" TIMESTAMP_COLUMN=QueryTime "query-log.tsv.gz" INTO TABLE 'query-log-by-timestamp';
 
 Loading 7,524,712 bytes of input data...
 
