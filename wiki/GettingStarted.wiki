@@ -441,7 +441,7 @@ Now, let's load some data using the MySQL-like TAB delimited format (TSV). For t
 ...
 }}}
 
-Now let's load the data file `query-log.tsv.gz` into the table `query-log-by-anonid`.  The row key is formulated by zero-padding the AnonID field out to nine digits and concatenating the !QueryTime field.
+Now let's load the data file `query-log.tsv.gz` into the table `query-log-by-anonid`.  The row key is formulated by zero-padding the AnonID field out to nine digits and concatenating the !QueryTime field.  The !QueryTime field is used as the cell timestamp.
 
 {{{
 hypertable> LOAD DATA INFILE ROW_KEY_COLUMN="%09AnonID"+QueryTime TIMESTAMP_COLUMN=QueryTime "query-log.tsv.gz" INTO TABLE 'query-log-by-anonid';
@@ -463,7 +463,7 @@ Avg value size:  15.42 bytes
 
 }}}
 
-Now let's load the data file `query-log.tsv.gz` into the table `query-log-by-timestamp`.  The row key is formulated by concatenating the !QueryTime field with the nine digit, zero-padded AnonID field.
+Now let's load the data file `query-log.tsv.gz` into the table `query-log-by-timestamp`.  The row key is formulated by concatenating the !QueryTime field with the nine digit, zero-padded AnonID field.  The !QueryTime field is used as the cell timestamp.
 
 {{{
 hypertable> LOAD DATA INFILE ROW_KEY_COLUMN=QueryTime+"%09AnonID" TIMESTAMP_COLUMN=QueryTime "query-log.tsv.gz" INTO TABLE 'query-log-by-timestamp';
@@ -484,6 +484,24 @@ Avg value size:  15.42 bytes
        Resends:  0
 }}}
 
+===SELECT===
+
+In the examples that follow I'm using the options spec DISPLAY_TIMESTAMPS at the end of each select but that's entirely optional and you can omit them from most of the examples (except where you want to see them in the output) -- here's a minimal SELECT:
+
+{{{
+ypertable> select * from 'query-log-by-anonid' limit 4 DISPLAY_TIMESTAMPS;
+2006-03-01 10:30:46.000000000	000000036 2006-03-01 10:30:46	Query	helena ga
+2006-03-01 10:31:34.000000000	000000036 2006-03-01 10:31:34	Query	helena ga
+2006-03-01 10:45:23.000000000	000000036 2006-03-01 10:45:23	Query	checeron s
+2006-03-01 10:46:07.000000000	000000036 2006-03-01 10:46:07	Query	cheveron gas station
+
+  Elapsed time:  0.00 s
+Avg value size:  12.00 bytes
+  Avg key size:  30.00 bytes
+    Throughput:  145580.59 bytes/s
+   Total cells:  4
+    Throughput:  3466.20 cells/s
+}}}
 ==Appendix A. Building from Source==
 
 ===Download the source===
