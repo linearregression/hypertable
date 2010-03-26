@@ -445,7 +445,7 @@ $ gzcat query-log.tsv.gz
 ...
 }}}
 
-Now let's load the data file `query-log.tsv.gz` into the table `query-log-by-userid`.  The row key is formulated by zero-padding the UserID field out to nine digits and concatenating the !QueryTime field.  The !QueryTime field is used as the cell timestamp.
+Now let's load the data file `query-log.tsv.gz` into the table `query-log-by-userid`.  The row key is formulated by zero-padding the UserID field out to nine digits and concatenating the !QueryTime field.  The !QueryTime field is used as the internal cell timestamp.
 
 {{{
 hypertable> LOAD DATA INFILE ROW_KEY_COLUMN="%09UserID"+QueryTime TIMESTAMP_COLUMN=QueryTime "query-log.tsv.gz" INTO TABLE 'query-log-by-userid';
@@ -490,7 +490,7 @@ Avg value size:  18.08 bytes
     Throughput:  12738.85 cells/s
 }}}
 
-Now let's load the data file `query-log.tsv.gz` into the table `query-log-by-timestamp`.  The row key is formulated by concatenating the !QueryTime field with the nine digit, zero-padded UserID field.  The !QueryTime field is used as the cell timestamp.
+Now let's load the data file `query-log.tsv.gz` into the table `query-log-by-timestamp`.  The row key is formulated by concatenating the !QueryTime field with the nine digit, zero-padded UserID field.  The !QueryTime field is used as the internal cell timestamp.
 
 {{{
 hypertable> LOAD DATA INFILE ROW_KEY_COLUMN=QueryTime+"%09UserID" TIMESTAMP_COLUMN=QueryTime "query-log.tsv.gz" INTO TABLE 'query-log-by-timestamp';
@@ -731,6 +731,51 @@ Avg value size:  15.71 bytes
     Throughput:  305030.80 bytes/s
    Total cells:  130
     Throughput:  6673.51 cells/s
+}}}
+
+===ALTER TABLE===
+
+The ALTER TABLE command can be used to add remove columns from a table (for complete documentation see [http://www.hypertable.org/hql/alter-table.html HQL Documentation for ALTER TABLE]).  The following command will add a 'Notes' column in a new access group called 'extra' and will drop column 'ItemRank'.
+{{{
+hypertable> ALTER TABLE 'query-log-by-timestamp' ADD(Notes, ACCESS GROUP extra(Notes)) DROP(ItemRank);
+
+  Elapsed time:  3.25 s
+}}}
+To verify the change, issue the SHOW CREATE TABLE command:
+{{{
+hypertable> show create table 'query-log-by-timestamp';
+
+CREATE TABLE query-log-by-timestamp (
+  Query,
+  ClickURL,
+  Notes,
+  ACCESS GROUP default (Query, ClickURL),
+  ACCESS GROUP extra (Notes)
+)
+}}}
+And to verify that the column no longer exists, issue the same SELECT statement we issued above (NOTE: the data for the column still exists in the filesystem, it will get lazily garbage collected).
+{{{
+hypertable> select * from 'query-log-by-timestamp' limit 4;
+2008-11-13 00:01:30 002289203	Query	kitchen counter in new orleans
+2008-11-13 00:01:30 002289203	Query	kitchen counter in new orleans
+2008-11-13 00:01:30 002289203	Query	kitchen counter in new orleans
+2008-11-13 00:01:30 002289203	ClickURL	http://www.superpages.com
+2008-11-13 00:01:30 002289203	ClickURL	http://www.superpages.com
+2008-11-13 00:01:30 002289203	ClickURL	http://www.era.com
+2008-11-13 00:01:31 001958633	Query	beads amethyst gemstone
+2008-11-13 00:01:31 001958633	ClickURL	http://www.gemsbiz.com
+2008-11-13 00:01:31 003496052	Query	chat
+2008-11-13 00:01:33 000892003	Query	photo example quarter doubled die coin
+2008-11-13 00:01:33 000892003	Query	photo example quarter doubled die coin
+2008-11-13 00:01:33 000892003	ClickURL	http://www.coinresource.com
+2008-11-13 00:01:33 000892003	ClickURL	http://www.coinresource.com
+
+  Elapsed time:  0.00 s
+Avg value size:  25.92 bytes
+  Avg key size:  30.00 bytes
+    Throughput:  688446.97 bytes/s
+   Total cells:  13
+    Throughput:  12310.61 cells/s
 }}}
 
 ==Appendix A. Building from Source==
