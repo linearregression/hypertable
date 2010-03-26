@@ -422,7 +422,6 @@ CREATE TABLE query-log-by-anonid (
 }}
 And, notice that, by default, a single ACCESS GROUP is created.  Access groups are a way to physically group columns together on disk.  See the [http://www.hypertable.org/hql/create-table.html CREATE TABLE] documentation for a more detailed description of access groups.
 
- 
 ==Appendix A. Building from Source==
 
 ===Download the source===
