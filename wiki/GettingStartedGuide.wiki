@@ -390,7 +390,7 @@ ClickURL
 
 }}}
 
-See the [http://www.hypertable.org/hql/create-table.html HQL Documentation for CREATE TABLE] for complete syntax.
+See the [http://www.hypertable.org/hql/create-table.html HQL Documentation: CREATE TABLE] for complete syntax.
 
 ===SHOW TABLES===
 
@@ -543,7 +543,7 @@ Avg value size:  18.11 bytes
     Throughput:  5969.21 cells/s
 }}}
 
-See the [http://www.hypertable.org/hql/load-data-infile.html HQL Documentation for LOAD DATA INFILE] for complete syntax.
+See the [http://www.hypertable.org/hql/load-data-infile.html HQL Documentation: LOAD DATA INFILE] for complete syntax.
 
 ===SELECT===
 
@@ -737,7 +737,7 @@ Avg value size:  15.71 bytes
     Throughput:  6673.51 cells/s
 }}}
 
-See the [http://www.hypertable.org/hql/select.html HQL Documentation for SELECT] for complete syntax.
+See the [http://www.hypertable.org/hql/select.html HQL Documentation: SELECT] for complete syntax.
 
 ===ALTER TABLE===
 
@@ -784,7 +784,7 @@ Avg value size:  25.92 bytes
     Throughput:  12310.61 cells/s
 }}}
 
-See [http://www.hypertable.org/hql/alter-table.html HQL Documentation for ALTER TABLE] for complete syntax.
+See [http://www.hypertable.org/hql/alter-table.html HQL Documentation: ALTER TABLE] for complete syntax.
 
 ===INSERT & DELETE===
 
