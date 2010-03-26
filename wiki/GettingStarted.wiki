@@ -363,11 +363,12 @@ SHUTDOWN ........... Shuts servers down gracefully
 Statements must be terminated with ';'.  For more information on
 a specific statement, type 'help <statement>', where <statement> is from
 the preceeding list.
+
 }}}
 
 ===CREATE TABLE===
 
-In this tutorial we will be loading data into, and querying data from, two separate tables.  The first table will be indexed by AnonID+QueryTime and the second table will be indexed by QueryTime+AnonID.
+In this tutorial we will be loading data into, and querying data from, two separate tables.  The first table will be indexed by AnonID+!QueryTime and the second table will be indexed by !QueryTime+AnonID.  Notice that any identifier that contains non-alphanumeric characters (e.g. '-') must be surrounded by quotes.
 
 {{{
 hypertable> CREATE TABLE "query-log-by-anonid" (
@@ -385,8 +386,20 @@ ClickURL
 );
 
   Elapsed time:  3.95 s
+
 }}}
 
+===SHOW TABLES===
+
+{{{
+hypertable> show tables;
+METADATA
+query-log-by-anonid
+query-log-by-timestamp
+
+  Elapsed time:  1.91 s
+
+}}}
  
 ==Appendix A. Building from Source==
 
