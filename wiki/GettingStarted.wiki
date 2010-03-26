@@ -401,6 +401,27 @@ query-log-by-timestamp
   Elapsed time:  1.91 s
 
 }}}
+
+=== SHOW CREATE TABLE ===
+
+Now, issue the SHOW CREATE TABLE command to make sure you got everything right. We didn't have to include the field called 'row' because we'll use that in our LOAD DATA INFILE command later:
+
+{{{
+hypertable> show create table 'query-log-by-anonid';
+
+CREATE TABLE query-log-by-anonid (
+  Query,
+  ItemRank,
+  ClickURL,
+  ACCESS GROUP default (Query, ItemRank, ClickURL)
+)
+
+
+  Elapsed time:  2.20 s
+
+}}
+And, notice that, by default, a single ACCESS GROUP is created.  Access groups are a way to physically group columns together on disk.  See the [http://www.hypertable.org/hql/create-table.html CREATE TABLE] documentation for a more detailed description of access groups.
+
  
 ==Appendix A. Building from Source==
 
