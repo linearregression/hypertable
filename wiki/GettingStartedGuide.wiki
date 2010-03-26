@@ -1,4 +1,5 @@
 #summary Everything You Need to Know to get Up and Running with Hypertable
+#labels Featured
 <wiki:toc/>
 
 ==Installing Hypertable via Binary Packages==
