@@ -305,6 +305,17 @@ while [ $# -ge 1 ]; do
 done
 }}}
 
+== HQL Tutorial ==
+
+This tutorial shows you how to insert a search engine query log into Hypertable, using different primary keys.  You'll need to download the data from [http://hypertable.googlecode.com/files/query-log.tsv.gz]:
+
+{{{
+$ mkdir -p hql_tutorial
+$ cd hql_tutorial
+$ wget http://hypertable.googlecode.com/files/query-log.tsv.gz
+}}}
+
+ 
 ==Appendix A. Building from Source==
 
 ===Download the source===
