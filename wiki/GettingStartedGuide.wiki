@@ -822,7 +822,59 @@ Avg value size:  16.38 bytes
    Total cells:  13
     Throughput:  3498.39 cells/s
 }}}
+Now try deleting one of the notes we just added
+{{{
+hypertable> delete Notes from QueryLogByUserID where ROW ="000019058 2008-11-13 07:24:43";
 
+  Elapsed time:  0.00 s
+   Total cells:  1
+    Throughput:  256.41 cells/s
+       Resends:  0
+}}}
+And verify that the cell was, indeed, deleted:
+{{{
+hypertable> select * from QueryLogByUserID where row =^ '000019058';
+000019058 2008-11-13 07:24:43	Query	tigers
+000019058 2008-11-13 07:57:16	Query	bell peppers
+000019058 2008-11-13 07:57:16	Notes	food
+000019058 2008-11-13 07:58:24	Query	bell peppers
+000019058 2008-11-13 07:58:24	ClickURL	http://agalternatives.aers.psu.edu
+000019058 2008-11-13 07:59:36	Query	growing bell peppers
+000019058 2008-11-13 07:59:36	Query	growing bell peppers
+000019058 2008-11-13 07:59:36	ClickURL	http://www.farm-garden.com
+000019058 2008-11-13 07:59:36	ClickURL	http://www.organicgardentips.com
+000019058 2008-11-13 07:59:36	Notes	gardening
+000019058 2008-11-13 12:31:02	Query	tracfone
+000019058 2008-11-13 12:31:02	ClickURL	http://www.tracfone.com
+
+  Elapsed time:  0.00 s
+Avg value size:  16.38 bytes
+  Avg key size:  30.00 bytes
+    Throughput:  162271.26 bytes/s
+   Total cells:  12
+    Throughput:  3498.39 cells/s
+}}}
+
+See the [http://www.hypertable.org/hql/insert.html HQL Documentation: INSERT] and the [http://www.hypertable.org/hql/delete.html HQL Documentation: DELETE] for complete syntax.
+
+===DROP TABLE===
+
+The DROP TABLE command is used to remove tables from the system.  The IF EXISTS option prevents the system from throwing an error if the table does not exist:
+{{{
+hypertable> drop table IF EXISTS foo;
+
+  Elapsed time:  0.34 s
+}}}
+Let's remove one of the example tables:
+{{{
+hypertable> drop table QueryLogByUserID;
+
+  Elapsed time:  2.46 s
+}}}
+And show tables to see that the table was removed:
+{{{
+
+}}}
 
 ==Appendix A. Building from Source==
 
