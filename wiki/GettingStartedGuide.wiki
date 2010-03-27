@@ -873,7 +873,11 @@ hypertable> drop table QueryLogByUserID;
 }}}
 And show tables to see that the table was removed:
 {{{
+hypertable> show tables;
+METADATA
+QueryLogByTimestamp
 
+  Elapsed time:  1.88 s
 }}}
 
 ==Appendix A. Building from Source==
