@@ -471,25 +471,25 @@ Avg value size:  15.42 bytes
 A quick inspection of the table shows:
 {{{
 hypertable> select * from QueryLogByUserID limit 8;
-000000036 2008-11-13 10:30:46   Query helena ga
-000000036 2008-11-13 10:31:34   Query helena ga
-000000036 2008-11-13 10:45:23   Query checeron s
-000000036 2008-11-13 10:46:07                   Query cheveron gas station
-000000036 2008-11-13 10:46:34                   Query cheveron gas station richmond virginia
-000000036 2008-11-13 10:48:56                   Query cheveron glenside road richmond virginia
-000000036 2008-11-13 10:49:05                   Query chevron glenside road richmond virginia
-000000036 2008-11-13 10:49:05                   ItemRank      1
-000000036 2008-11-13 10:49:05                   ClickURL      http://yp.yahoo.com
-000000053 2008-11-13 15:18:21                   Query         mapquest
-000000053 2008-11-13 15:18:21                   ItemRank      1
-000000053 2008-11-13 15:18:21                   ClickURL      http://www.mapquest.com
+000000036 2008-11-13 10:30:46	Query	helena ga
+000000036 2008-11-13 10:31:34	Query	helena ga
+000000036 2008-11-13 10:45:23	Query	checeron s
+000000036 2008-11-13 10:46:07	Query	cheveron gas station
+000000036 2008-11-13 10:46:34	Query	cheveron gas station richmond virginia
+000000036 2008-11-13 10:48:56	Query	cheveron glenside road richmond virginia
+000000036 2008-11-13 10:49:05	Query	chevron glenside road richmond virginia
+000000036 2008-11-13 10:49:05	ItemRank	1
+000000036 2008-11-13 10:49:05	ClickURL	http://yp.yahoo.com
+000000053 2008-11-13 15:18:21	Query	mapquest
+000000053 2008-11-13 15:18:21	ItemRank	1
+000000053 2008-11-13 15:18:21	ClickURL	http://www.mapquest.com
 
-  Elapsed time:  0.00 s
+  Elapsed time:  0.01 s
 Avg value size:  18.08 bytes
   Avg key size:  30.00 bytes
-    Throughput:  612526.54 bytes/s
+    Throughput:  43501.21 bytes/s
    Total cells:  12
-    Throughput:  12738.85 cells/s
+    Throughput:  904.70 cells/s
 }}}
 
 Now let's load the data file `query-log.tsv.gz` into the table `QueryLogByTimestamp`.  The row key is formulated by concatenating the !QueryTime field with the nine digit, zero-padded UserID field.  The !QueryTime field is used as the internal cell timestamp.
@@ -761,33 +761,61 @@ CREATE TABLE QueryLogByUserID (
 }}}
 And to verify that the column no longer exists, issue the same SELECT statement we issued above (NOTE: the data for the column still exists in the filesystem, it will get lazily garbage collected).
 {{{
-hypertable> select * from QueryLogByTimestamp limit 4;
-2008-11-13 00:01:30 002289203                      Query kitchen counter in new orleans
-2008-11-13 00:01:30 002289203                      Query kitchen counter in new orleans
-2008-11-13 00:01:30 002289203                      Query kitchen counter in new orleans
-2008-11-13 00:01:30 002289203                      ClickURL      http://www.superpages.com
-2008-11-13 00:01:30 002289203                      ClickURL      http://www.superpages.com
-2008-11-13 00:01:30 002289203                      ClickURL      http://www.era.com
-2008-11-13 00:01:31 001958633                      Query         beads amethyst gemstone
-2008-11-13 00:01:31 001958633                      ClickURL      http://www.gemsbiz.com
-2008-11-13 00:01:31 003496052                      Query         chat
-2008-11-13 00:01:33 000892003                      Query         photo example quarter doubled die coin
-2008-11-13 00:01:33 000892003                      Query         photo example quarter doubled die coin
-2008-11-13 00:01:33 000892003                      ClickURL      http://www.coinresource.com
-2008-11-13 00:01:33 000892003                      ClickURL      http://www.coinresource.com
+hypertable> select * from QueryLogByUserID limit 8;
+000000036 2008-11-13 10:30:46	Query	helena ga
+000000036 2008-11-13 10:31:34	Query	helena ga
+000000036 2008-11-13 10:45:23	Query	checeron s
+000000036 2008-11-13 10:46:07	Query	cheveron gas station
+000000036 2008-11-13 10:46:34	Query	cheveron gas station richmond virginia
+000000036 2008-11-13 10:48:56	Query	cheveron glenside road richmond virginia
+000000036 2008-11-13 10:49:05	Query	chevron glenside road richmond virginia
+000000036 2008-11-13 10:49:05	ClickURL	http://yp.yahoo.com
+000000053 2008-11-13 15:18:21	Query	mapquest
+000000053 2008-11-13 15:18:21	ClickURL	http://www.mapquest.com
 
   Elapsed time:  0.00 s
-Avg value size:  25.92 bytes
+Avg value size:  21.50 bytes
   Avg key size:  30.00 bytes
-    Throughput:  688446.97 bytes/s
-   Total cells:  13
-    Throughput:  12310.61 cells/s
+    Throughput:  140595.14 bytes/s
+   Total cells:  10
+    Throughput:  2730.00 cells/s
 }}}
 
 See [http://www.hypertable.org/hql/alter-table.html HQL Documentation: ALTER TABLE] for complete syntax.
 
 ===INSERT & DELETE===
 
+Now let's augment the `QueryLogByUserID` table by adding some information in the Notes column for a few of the queries:
+{{{
+hypertable> INSERT INTO QueryLogByUserID VALUES
+("000019058 2008-11-13 07:24:43", "Notes", "animals"),
+("000019058 2008-11-13 07:57:16", "Notes", "food"),
+("000019058 2008-11-13 07:59:36", "Notes", "gardening");
+}}}
+Notice the new data by querying the affected row:
+{{{
+hypertable> select * from QueryLogByUserID where row =^ '000019058';
+000019058 2008-11-13 07:24:43	Query	tigers
+000019058 2008-11-13 07:24:43	Notes	animals
+000019058 2008-11-13 07:57:16	Query	bell peppers
+000019058 2008-11-13 07:57:16	Notes	food
+000019058 2008-11-13 07:58:24	Query	bell peppers
+000019058 2008-11-13 07:58:24	ClickURL	http://agalternatives.aers.psu.edu
+000019058 2008-11-13 07:59:36	Query	growing bell peppers
+000019058 2008-11-13 07:59:36	Query	growing bell peppers
+000019058 2008-11-13 07:59:36	ClickURL	http://www.farm-garden.com
+000019058 2008-11-13 07:59:36	ClickURL	http://www.organicgardentips.com
+000019058 2008-11-13 07:59:36	Notes	gardening
+000019058 2008-11-13 12:31:02	Query	tracfone
+000019058 2008-11-13 12:31:02	ClickURL	http://www.tracfone.com
+
+  Elapsed time:  0.00 s
+Avg value size:  16.38 bytes
+  Avg key size:  30.00 bytes
+    Throughput:  162271.26 bytes/s
+   Total cells:  13
+    Throughput:  3498.39 cells/s
+}}}
 
 ==Appendix A. Building from Source==
 
