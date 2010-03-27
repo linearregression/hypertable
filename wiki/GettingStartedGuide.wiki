@@ -471,9 +471,9 @@ Avg value size:  15.42 bytes
 A quick inspection of the table shows:
 {{{
 hypertable> select * from QueryLogByUserID limit 8;
-000000036 2008-11-13 10:30:46                   Query helena ga
-000000036 2008-11-13 10:31:34                   Query helena ga
-000000036 2008-11-13 10:45:23                   Query checeron s
+000000036 2008-11-13 10:30:46   Query helena ga
+000000036 2008-11-13 10:31:34   Query helena ga
+000000036 2008-11-13 10:45:23   Query checeron s
 000000036 2008-11-13 10:46:07                   Query cheveron gas station
 000000036 2008-11-13 10:46:34                   Query cheveron gas station richmond virginia
 000000036 2008-11-13 10:48:56                   Query cheveron glenside road richmond virginia
@@ -515,25 +515,25 @@ Avg value size:  15.42 bytes
 And a quick inspection of the table shows:
 {{{
 hypertable> select * from QueryLogByTimestamp limit 4;
-2008-11-13 00:01:30 002289203                      Query kitchen counter in new orleans
-2008-11-13 00:01:30 002289203                      Query kitchen counter in new orleans
-2008-11-13 00:01:30 002289203                      Query kitchen counter in new orleans
-2008-11-13 00:01:30 002289203                      ItemRank      5
-2008-11-13 00:01:30 002289203                      ItemRank      4
-2008-11-13 00:01:30 002289203                      ItemRank      10
-2008-11-13 00:01:30 002289203                      ClickURL      http://www.superpages.com
-2008-11-13 00:01:30 002289203                      ClickURL      http://www.superpages.com
-2008-11-13 00:01:30 002289203                      ClickURL      http://www.era.com
-2008-11-13 00:01:31 001958633                      Query         beads amethyst gemstone
-2008-11-13 00:01:31 001958633                      ItemRank      1
-2008-11-13 00:01:31 001958633                      ClickURL      http://www.gemsbiz.com
-2008-11-13 00:01:31 003496052                      Query         chat
-2008-11-13 00:01:33 000892003                      Query         photo example quarter doubled die coin
-2008-11-13 00:01:33 000892003                      Query         photo example quarter doubled die coin
-2008-11-13 00:01:33 000892003                      ItemRank      5
-2008-11-13 00:01:33 000892003                      ItemRank      5
-2008-11-13 00:01:33 000892003                      ClickURL      http://www.coinresource.com
-2008-11-13 00:01:33 000892003                      ClickURL      http://www.coinresource.com
+2008-11-13 00:01:30 002289203	Query	kitchen counter in new orleans
+2008-11-13 00:01:30 002289203	Query	kitchen counter in new orleans
+2008-11-13 00:01:30 002289203	Query	kitchen counter in new orleans
+2008-11-13 00:01:30 002289203	ItemRank	5
+2008-11-13 00:01:30 002289203	ItemRank	4
+2008-11-13 00:01:30 002289203	ItemRank	10
+2008-11-13 00:01:30 002289203	ClickURL	http://www.superpages.com
+2008-11-13 00:01:30 002289203	ClickURL	http://www.superpages.com
+2008-11-13 00:01:30 002289203	ClickURL	http://www.era.com
+2008-11-13 00:01:31 001958633	Query	beads amethyst gemstone
+2008-11-13 00:01:31 001958633	ItemRank	1
+2008-11-13 00:01:31 001958633	ClickURL	http://www.gemsbiz.com
+2008-11-13 00:01:31 003496052	Query	chat
+2008-11-13 00:01:33 000892003	Query	photo example quarter doubled die coin
+2008-11-13 00:01:33 000892003	Query	photo example quarter doubled die coin
+2008-11-13 00:01:33 000892003	ItemRank	5
+2008-11-13 00:01:33 000892003	ItemRank	5
+2008-11-13 00:01:33 000892003	ClickURL	http://www.coinresource.com
+2008-11-13 00:01:33 000892003	ClickURL	http://www.coinresource.com
 
   Elapsed time:  0.00 s
 Avg value size:  18.11 bytes
@@ -550,28 +550,28 @@ See the [http://www.hypertable.org/hql/load-data-infile.html HQL Documentation: 
 Let's start by examining the `QueryLogByUserID` table.  To select all of the data for user ID 003269359 we need to use the _*starts with*_ operator =^.  Remember that the row key is the concatenation of the user ID and the timestamp which is why we need to use the _*starts with*_ operator.
 {{{
 hypertable> select * from QueryLogByUserID where row =^ '003269359';
-003269359 2008-11-13 04:36:34                   Query binibining pilipinas 2008 winners
-003269359 2008-11-13 04:36:34                   ItemRank         5
-003269359 2008-11-13 04:36:34                   ClickURL         http://www.missosology.org
-003269359 2008-11-13 04:37:34                   Query            pawee's kiss and tell
-003269359 2008-11-13 04:37:34                   Query            pawee's kiss and tell
-003269359 2008-11-13 04:37:34                   ItemRank         3
-003269359 2008-11-13 04:37:34                   ItemRank         3
-003269359 2008-11-13 04:37:34                   ClickURL         http://www.missosology.org
-003269359 2008-11-13 04:37:34                   ClickURL         http://www.missosology.org
-003269359 2008-11-13 05:07:10                   Query            rn jobs in 91405
+003269359 2008-11-13 04:36:34	Query	binibining pilipinas 2008 winners
+003269359 2008-11-13 04:36:34	ItemRank	5
+003269359 2008-11-13 04:36:34	ClickURL	http://www.missosology.org
+003269359 2008-11-13 04:37:34	Query	pawee's kiss and tell
+003269359 2008-11-13 04:37:34	Query	pawee's kiss and tell
+003269359 2008-11-13 04:37:34	ItemRank	3
+003269359 2008-11-13 04:37:34	ItemRank	3
+003269359 2008-11-13 04:37:34	ClickURL	http://www.missosology.org
+003269359 2008-11-13 04:37:34	ClickURL	http://www.missosology.org
+003269359 2008-11-13 05:07:10	Query	rn jobs in 91405
 ...
-003269359 2008-11-13 09:42:49   Query   wound ostomy rn training
-003269359 2008-11-13 09:42:49   ItemRank      11
-003269359 2008-11-13 09:42:49   ClickURL      http://www.wocn.org
-003269359 2008-11-13 09:46:50   Query         pych nurse in encino tarzana hospital
-003269359 2008-11-13 09:47:18   Query         encino tarzana hospital
-003269359 2008-11-13 09:47:18   ItemRank      2
-003269359 2008-11-13 09:47:18   ClickURL      http://www.encino-tarzana.com
-003269359 2008-11-13 09:52:42   Query         encino tarzana hospital
-003269359 2008-11-13 09:53:08   Query         alhambra hospital
-003269359 2008-11-13 09:53:08   ItemRank      1
-003269359 2008-11-13 09:53:08   ClickURL      http://www.alhambrahospital.com
+003269359 2008-11-13 09:42:49	Query	wound ostomy rn training
+003269359 2008-11-13 09:42:49	ItemRank	11
+003269359 2008-11-13 09:42:49	ClickURL	http://www.wocn.org
+003269359 2008-11-13 09:46:50	Query	pych nurse in encino tarzana hospital
+003269359 2008-11-13 09:47:18	Query	encino tarzana hospital
+003269359 2008-11-13 09:47:18	ItemRank	2
+003269359 2008-11-13 09:47:18	ClickURL	http://www.encino-tarzana.com
+003269359 2008-11-13 09:52:42	Query	encino tarzana hospital
+003269359 2008-11-13 09:53:08	Query	alhambra hospital
+003269359 2008-11-13 09:53:08	ItemRank	1
+003269359 2008-11-13 09:53:08	ClickURL	http://www.alhambrahospital.com
 
   Elapsed time:  0.01 s
 Avg value size:  19.24 bytes
@@ -585,42 +585,42 @@ The result set was fairly large (352 cells), so let's now try selecting just the
 
 {{{
 hypertable> select * from QueryLogByUserID where row =^ '003269359' AND "2008-11-13 05:00:00" <= TIMESTAMP < "2008-11-13 06:00:00";
-003269359 2008-11-13 05:07:10                   Query rn jobs in 91405
-003269359 2008-11-13 05:07:10                   Query rn jobs in 91405
-003269359 2008-11-13 05:07:10                   ItemRank 9
-003269359 2008-11-13 05:07:10                   ItemRank 8
-003269359 2008-11-13 05:07:10                   ClickURL http://91405.jobs.com
-003269359 2008-11-13 05:07:10                   ClickURL http://www.hospitalsoup.com
-003269359 2008-11-13 05:20:22                   Query    rn jobs in 91405
-003269359 2008-11-13 05:20:22                   ItemRank 16
-003269359 2008-11-13 05:20:22                   ClickURL http://www.careerbuilder.com
-003269359 2008-11-13 05:34:02                   Query    usc university hospital
-003269359 2008-11-13 05:34:02                   ItemRank 1
-003269359 2008-11-13 05:34:02                   ClickURL http://www.uscuh.com
-003269359 2008-11-13 05:37:01                   Query    rn jobs in san fernando valley
-003269359 2008-11-13 05:37:01                   Query    rn jobs in san fernando valley
-003269359 2008-11-13 05:37:01                   Query    rn jobs in san fernando valley
-003269359 2008-11-13 05:37:01                   ItemRank 7
-003269359 2008-11-13 05:37:01                   ItemRank 4
-003269359 2008-11-13 05:37:01                   ItemRank 3
-003269359 2008-11-13 05:37:01                   ClickURL http://www.medhunters.com
-003269359 2008-11-13 05:37:01                   ClickURL http://san.fernando.valley.registered.nurse.to.72k.san.fernando.ca.job.hireability.com
-003269359 2008-11-13 05:37:01                   ClickURL http://www.resumes2work.com
-003269359 2008-11-13 05:46:22                   Query    northridge hospital
-003269359 2008-11-13 05:46:22                   Query    northridge hospital
-003269359 2008-11-13 05:46:22                   ItemRank 2
-003269359 2008-11-13 05:46:22                   ItemRank 1
-003269359 2008-11-13 05:46:22                   ClickURL http://northridgehospital.org
-003269359 2008-11-13 05:46:22                   ClickURL http://www.chwhealth.com
-003269359 2008-11-13 05:53:34                   Query    valley presbyterian hospital
-003269359 2008-11-13 05:53:34                   ItemRank 4
-003269359 2008-11-13 05:53:34                   ClickURL http://www.hospital-data.com
-003269359 2008-11-13 05:55:36                   Query    valley presbyterian hospital website
-003269359 2008-11-13 05:55:36                   ItemRank 1
-003269359 2008-11-13 05:55:36                   ClickURL http://www.valleypres.org
-003269359 2008-11-13 05:59:24                   Query    mission community hospital
-003269359 2008-11-13 05:59:24                   ItemRank 1
-003269359 2008-11-13 05:59:24                   ClickURL http://www.mchonline.org
+003269359 2008-11-13 05:07:10	Query	rn jobs in 91405
+003269359 2008-11-13 05:07:10	Query	rn jobs in 91405
+003269359 2008-11-13 05:07:10	ItemRank	9
+003269359 2008-11-13 05:07:10	ItemRank	8
+003269359 2008-11-13 05:07:10	ClickURL	http://91405.jobs.com
+003269359 2008-11-13 05:07:10	ClickURL	http://www.hospitalsoup.com
+003269359 2008-11-13 05:20:22	Query	rn jobs in 91405
+003269359 2008-11-13 05:20:22	ItemRank	16
+003269359 2008-11-13 05:20:22	ClickURL	http://www.careerbuilder.com
+003269359 2008-11-13 05:34:02	Query	usc university hospital
+003269359 2008-11-13 05:34:02	ItemRank	1
+003269359 2008-11-13 05:34:02	ClickURL	http://www.uscuh.com
+003269359 2008-11-13 05:37:01	Query	rn jobs in san fernando valley
+003269359 2008-11-13 05:37:01	Query	rn jobs in san fernando valley
+003269359 2008-11-13 05:37:01	Query	rn jobs in san fernando valley
+003269359 2008-11-13 05:37:01	ItemRank	7
+003269359 2008-11-13 05:37:01	ItemRank	4
+003269359 2008-11-13 05:37:01	ItemRank	3
+003269359 2008-11-13 05:37:01	ClickURL	http://www.medhunters.com
+003269359 2008-11-13 05:37:01	ClickURL	http://san.fernando.valley.registered.nurse.to.72k.san.fernando.ca.job.hireability.com
+003269359 2008-11-13 05:37:01	ClickURL	http://www.resumes2work.com
+003269359 2008-11-13 05:46:22	Query	northridge hospital
+003269359 2008-11-13 05:46:22	Query	northridge hospital
+003269359 2008-11-13 05:46:22	ItemRank	2
+003269359 2008-11-13 05:46:22	ItemRank	1
+003269359 2008-11-13 05:46:22	ClickURL	http://northridgehospital.org
+003269359 2008-11-13 05:46:22	ClickURL	http://www.chwhealth.com
+003269359 2008-11-13 05:53:34	Query	valley presbyterian hospital
+003269359 2008-11-13 05:53:34	ItemRank	4
+003269359 2008-11-13 05:53:34	ClickURL	http://www.hospital-data.com
+003269359 2008-11-13 05:55:36	Query	valley presbyterian hospital website
+003269359 2008-11-13 05:55:36	ItemRank	1
+003269359 2008-11-13 05:55:36	ClickURL	http://www.valleypres.org
+003269359 2008-11-13 05:59:24	Query	mission community hospital
+003269359 2008-11-13 05:59:24	ItemRank	1
+003269359 2008-11-13 05:59:24	ClickURL	http://www.mchonline.org
 
   Elapsed time:  0.00 s
 Avg value size:  18.50 bytes
@@ -634,11 +634,11 @@ Keep in mind that the internal cell timestamp is different than the one embedded
 
 {{{
 hypertable> select * from QueryLogByUserID limit 5 DISPLAY_TIMESTAMPS;
-2008-11-13 10:30:46.000000000                   000000036 2008-11-13 10:30:46   Query   helena ga
-2008-11-13 10:31:34.000000000                   000000036 2008-11-13 10:31:34   Query   helena ga
-2008-11-13 10:45:23.000000000                   000000036 2008-11-13 10:45:23   Query   checeron s
-2008-11-13 10:46:07.000000000                   000000036 2008-11-13 10:46:07   Query   cheveron gas station
-2008-11-13 10:46:34.000000000                   000000036 2008-11-13 10:46:34   Query   cheveron gas station richmond virginia
+2008-11-13 10:30:46.000000000	000000036 2008-11-13 10:30:46	Query	helena ga
+2008-11-13 10:31:34.000000000	000000036 2008-11-13 10:31:34	Query	helena ga
+2008-11-13 10:45:23.000000000	000000036 2008-11-13 10:45:23	Query	checeron s
+2008-11-13 10:46:07.000000000	000000036 2008-11-13 10:46:07	Query	cheveron gas station
+2008-11-13 10:46:34.000000000	000000036 2008-11-13 10:46:34	Query	cheveron gas station richmond virginia
 
   Elapsed time:  0.00 s
 Avg value size:  17.20 bytes
@@ -654,24 +654,24 @@ The following query selects all query log data for November 14th, 2008:
 
 {{{
 hypertable> select * from QueryLogByTimestamp WHERE ROW =^ '2008-11-14';
-2008-11-14 00:00:00 001040178                      Query noodle tools
-2008-11-14 00:00:00 001040178                      ItemRank     1
-2008-11-14 00:00:00 001040178                      ClickURL     http://www.noodletools.com
-2008-11-14 00:00:01 000264655                      Query        games.myspace.com
-2008-11-14 00:00:01 000264655                      ItemRank     1
-2008-11-14 00:00:01 000264655                      ClickURL     http://games.myspace.com
-2008-11-14 00:00:01 000527424                      Query        franklinville schools new jersey
-2008-11-14 00:00:01 000527424                      ItemRank     1
-2008-11-14 00:00:01 000527424                      ClickURL     http://www.greatschools.net
-2008-11-14 00:00:01 000632400                      Query        lack of eye contact symptom of...
+2008-11-14 00:00:00 001040178	Query	noodle tools
+2008-11-14 00:00:00 001040178	ItemRank	1
+2008-11-14 00:00:00 001040178	ClickURL	http://www.noodletools.com
+2008-11-14 00:00:01 000264655	Query	games.myspace.com
+2008-11-14 00:00:01 000264655	ItemRank	1
+2008-11-14 00:00:01 000264655	ClickURL	http://games.myspace.com
+2008-11-14 00:00:01 000527424	Query	franklinville schools new jersey
+2008-11-14 00:00:01 000527424	ItemRank	1
+2008-11-14 00:00:01 000527424	ClickURL	http://www.greatschools.net
+2008-11-14 00:00:01 000632400	Query	lack of eye contact symptom of...
 ...
-2008-11-14 06:02:33 003676354   Query   baby 20showers
-2008-11-14 06:02:35 003378030   Query   task and responsibility matrix
-2008-11-14 06:02:35 003378030   ItemRank     2
-2008-11-14 06:02:35 003378030   ClickURL     http://im.ncsu.edu
-2008-11-14 06:02:36 004578101   Query        jcpenneys
-2008-11-14 06:02:37 005120734   Query        ebay
-2008-11-14 06:02:40 000957500   Query        buccal fat size of ping pong ball
+2008-11-14 06:02:33 003676354	Query	baby 20showers
+2008-11-14 06:02:35 003378030	Query	task and responsibility matrix
+2008-11-14 06:02:35 003378030	ItemRank	2
+2008-11-14 06:02:35 003378030	ClickURL	http://im.ncsu.edu
+2008-11-14 06:02:36 004578101	Query	jcpenneys
+2008-11-14 06:02:37 005120734	Query	ebay
+2008-11-14 06:02:40 000957500	Query	buccal fat size of ping pong ball
 
   Elapsed time:  2.37 s
 Avg value size:  15.36 bytes
@@ -683,22 +683,22 @@ Avg value size:  15.36 bytes
 And to select all query log data for November 14th, 2008 during the hour of 3am:
 {{{
 hypertable> select * from QueryLogByTimestamp WHERE ROW =^ '2008-11-14 03';
-2008-11-14 03:00:00 002512415                      Query ny times
-2008-11-14 03:00:00 002512415                      ItemRank 1
-2008-11-14 03:00:00 002512415                      ClickURL http://www.nytimes.com
-2008-11-14 03:00:00 005294906                      Query    kickmeto.fosi
-2008-11-14 03:00:00 005459226                      Query    www.dickdyertoyota.com
-2008-11-14 03:00:02 000637292                      Query    days of our lives
-2008-11-14 03:00:02 000637292                      ItemRank 3
-2008-11-14 03:00:02 000637292                      ClickURL http://www.nbc.com
-2008-11-14 03:00:03 002675105                      Query    ghetto superstar lyrics
+2008-11-14 03:00:00 002512415	Query	ny times
+2008-11-14 03:00:00 002512415	ItemRank	1
+2008-11-14 03:00:00 002512415	ClickURL	http://www.nytimes.com
+2008-11-14 03:00:00 005294906	Query	kickmeto.fosi
+2008-11-14 03:00:00 005459226	Query	www.dickdyertoyota.com
+2008-11-14 03:00:02 000637292	Query	days of our lives
+2008-11-14 03:00:02 000637292	ItemRank	3
+2008-11-14 03:00:02 000637292	ClickURL	http://www.nbc.com
+2008-11-14 03:00:03 002675105	Query	ghetto superstar lyrics
 ...
-2008-11-14 03:59:52 002874080   ClickURL        http://www.paintball-discounters.com
-2008-11-14 03:59:53 004292772   Query           drop down menu
-2008-11-14 03:59:55 005656539   Query           to buy indian hair to make wigs in new york
-2008-11-14 03:59:55 005656539   ItemRank        1
-2008-11-14 03:59:55 005656539   ClickURL        http://query.nytimes.com
-2008-11-14 03:59:58 004318586   Query           myspace .com
+2008-11-14 03:59:52 002874080	ClickURL	http://www.paintball-discounters.com
+2008-11-14 03:59:53 004292772	Query	drop down menu
+2008-11-14 03:59:55 005656539	Query	to buy indian hair to make wigs in new york
+2008-11-14 03:59:55 005656539	ItemRank	1
+2008-11-14 03:59:55 005656539	ClickURL	http://query.nytimes.com
+2008-11-14 03:59:58 004318586	Query	myspace .com
 
   Elapsed time:  0.17 s
 Avg value size:  15.37 bytes
@@ -710,24 +710,24 @@ Avg value size:  15.37 bytes
 And finally, to select all query log data for November 14th, 2008 during the minute of 3:45am:
 {{{
 hypertable> select * from QueryLogByTimestamp WHERE ROW =^ '2008-11-14 03:45';
-2008-11-14 03:45:00 003895650                      Query ks lottery.
-2008-11-14 03:45:00 003895650                      ItemRank 2
-2008-11-14 03:45:00 003895650                      ClickURL http://www.lotterypost.com
-2008-11-14 03:45:00 005036796                      Query    www.glasgowdailytimes 10-20-2005
-2008-11-14 03:45:01 002863052                      Query    map quest
-2008-11-14 03:45:01 005514285                      Query    john bermeo
-2008-11-14 03:45:02 002394176                      Query    www.eggseye.com
-2008-11-14 03:45:02 003454227                      Query    hawaiian weddig band
-2008-11-14 03:45:03 001006089                      Query    brokers hiring loan officers in indiana
-2008-11-14 03:45:06 000844720                      Query    latest design microsoft freeware
+2008-11-14 03:45:00 003895650	Query	ks lottery.
+2008-11-14 03:45:00 003895650	ItemRank	2
+2008-11-14 03:45:00 003895650	ClickURL	http://www.lotterypost.com
+2008-11-14 03:45:00 005036796	Query	www.glasgowdailytimes 10-20-2005
+2008-11-14 03:45:01 002863052	Query	map quest
+2008-11-14 03:45:01 005514285	Query	john bermeo
+2008-11-14 03:45:02 002394176	Query	www.eggseye.com
+2008-11-14 03:45:02 003454227	Query	hawaiian weddig band
+2008-11-14 03:45:03 001006089	Query	brokers hiring loan officers in indiana
+2008-11-14 03:45:06 000844720	Query	latest design microsoft freeware
 ...
-2008-11-14 03:45:55 003920469   ItemRank        3
-2008-11-14 03:45:55 003920469   ClickURL        http://www.pennyblood.com
-2008-11-14 03:45:56 002729906   Query           tryaold
-2008-11-14 03:45:56 003919348   Query           feathered draped fox fur mandalas
-2008-11-14 03:45:56 003919348   ItemRank        8
-2008-11-14 03:45:56 003919348   ClickURL        http://www.greatdreams.com
-2008-11-14 03:45:56 004803968   Query           -
+2008-11-14 03:45:55 003920469	ItemRank	3
+2008-11-14 03:45:55 003920469	ClickURL	http://www.pennyblood.com
+2008-11-14 03:45:56 002729906	Query	tryaold
+2008-11-14 03:45:56 003919348	Query	feathered draped fox fur mandalas
+2008-11-14 03:45:56 003919348	ItemRank	8
+2008-11-14 03:45:56 003919348	ClickURL	http://www.greatdreams.com
+2008-11-14 03:45:56 004803968	Query	-
 
   Elapsed time:  0.02 s
 Avg value size:  15.71 bytes
@@ -743,15 +743,15 @@ See the [http://www.hypertable.org/hql/select.html HQL Documentation: SELECT] fo
 
 The ALTER TABLE command can be used to add remove columns from a table.  The following command will add a 'Notes' column in a new access group called 'extra' and will drop column '!ItemRank'.
 {{{
-hypertable> ALTER TABLE QueryLogByTimestamp ADD(Notes, ACCESS GROUP extra(Notes)) DROP(ItemRank);
+hypertable> ALTER TABLE QueryLogByUserID ADD(Notes, ACCESS GROUP extra(Notes)) DROP(ItemRank);
 
   Elapsed time:  3.25 s
 }}}
 To verify the change, issue the SHOW CREATE TABLE command:
 {{{
-hypertable> show create table QueryLogByTimestamp;
+hypertable> show create table QueryLogByUserID;
 
-CREATE TABLE QueryLogByTimestamp (
+CREATE TABLE QueryLogByUserID (
   Query,
   ClickURL,
   Notes,
