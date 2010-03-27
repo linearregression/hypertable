@@ -791,6 +791,12 @@ hypertable> INSERT INTO QueryLogByUserID VALUES
 ("000019058 2008-11-13 07:24:43", "Notes", "animals"),
 ("000019058 2008-11-13 07:57:16", "Notes", "food"),
 ("000019058 2008-11-13 07:59:36", "Notes", "gardening");
+
+  Elapsed time:  0.01 s
+Avg value size:  6.67 bytes
+   Total cells:  3
+    Throughput:  298.36 cells/s
+       Resends:  0
 }}}
 Notice the new data by querying the affected row:
 {{{
@@ -816,6 +822,7 @@ Avg value size:  16.38 bytes
    Total cells:  13
     Throughput:  3498.39 cells/s
 }}}
+
 
 ==Appendix A. Building from Source==
 
