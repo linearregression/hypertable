@@ -1,4 +1,4 @@
-#summary This page describes the procedure for recovering from Hyperspace master failure in a distributed Hyperspace setup.
+#summary How to Recover from Hyperspace master failure in a distributed Hyperspace setup.
 
 Say you have three Hyperspace replicas running on {{{host[1-3].somedomain.com}}} respectively and the master replica which was running on {{{host2}}} fails:
 
