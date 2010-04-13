@@ -225,3 +225,13 @@ cap> date
  ** [out :: motherlode000] Sat Jan  3 18:05:33 PST 2009
  ** [out :: motherlode008] Sat Jan  3 18:05:33 PST 2009
 }}}
+
+==Hypertable is using the wrong network interface==
+
+Hypertable, by default, uses the machine's primary network interface.  However, there are situations where the primary interface should not be used.  For example, servers in Rackspace cloud (mosso.com) have two interfaces eth0 with public IP address and eth1 with private IP address (10.x.x.x).  eth0 is the primary, but eth1 is preferred because the private network is twice as fast and traffic is not counted by billing system.
+
+To configure Hypertable to use the interface eth1, add the following line to the config file:
+
+{{{
+Hypertable.Network.Interface=eth1
+}}}
