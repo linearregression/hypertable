@@ -226,7 +226,7 @@ cap> date
  ** [out :: motherlode008] Sat Jan  3 18:05:33 PST 2009
 }}}
 
-==How do I make Hypertable use a different network interface (eth1 instead of eth0)?==
+==How do I make Hypertable use a different network interface (eth1 instead of eth0) ?==
 
 Hypertable, by default, uses the machine's primary network interface.  However, there are situations where the primary interface should not be used.  For example, servers in Rackspace cloud (mosso.com) have two interfaces eth0 with public IP address and eth1 with private IP address (10.x.x.x).  eth0 is the primary, but eth1 is preferred because the private network is twice as fast and traffic is not counted by billing system.
 
