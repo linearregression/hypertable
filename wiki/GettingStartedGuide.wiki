@@ -36,11 +36,6 @@ The binary packages will install Hypertable entirely under /opt/hypertable.  The
 [root@domU-12-31-39-0E-10-51 release]# /opt/hypertable/0.9.3.1/bin/fhsize.sh 
 Setting up /var/hypertable
 Setting up /etc/hypertable
-
-To run Hypertable under user <username>, do something like the following:
-sudo chown -R <username> /var/hypertable /etc/hypertable
-
-For log rotation, install cronolog and (re)start Hypertable.
 }}}
 
 The nice thing about FHS-izing your installations is that the directories containing the config files and log archives carry over from one version to the next.  So if you upgrade Hypertable, it will use the same config file in `/etc/opt/hypertable`.  Otherwise, you need to copy the config file from your old install to the new one each time you upgrade.  One thing to note, when `fhsize.sh` is run for the first time, it will copy the contents of the `conf/` directory from the binary package to `/etc/opt/hypertable`.  When `fhsize.sh` is run subsequently, it will detect the existence of files in `/etc/opt/hypertable` and will leave them intact.  Here's what the installation directory looks like after installing from a binary packages and running `fhsize.sh`:
