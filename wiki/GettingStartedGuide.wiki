@@ -59,14 +59,14 @@ After installation, make a symlink from `/opt/hypertable/current` to your curren
 
 {{{
 cd /opt/hypertable
-sudo ln -s 0.9.3.1 current
+ln -s 0.9.3.1 current
 }}}
 
 If you plan to run Hypertable as a user other than root, you will need to change the ownership of the installation files to the user that you will be running the software as.
 {{{
-sudo chown -R doug:users /opt/hypertable/0.9.3.1
-sudo chown -R doug:users /etc/opt/hypertable/0.9.3.1
-sudo chown -R doug:users /var/opt/hypertable/0.9.3.1
+chown -R doug:users /opt/hypertable/0.9.3.1
+chown -R doug:users /etc/opt/hypertable
+chown -R doug:users /var/opt/hypertable
 }}}
 
 ===Verify Installation===
