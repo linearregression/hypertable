@@ -30,7 +30,7 @@ The RPM, Debian, and Mac packages will install Hypertable under a directory by t
 
 ===Filesystem Hierarchy Standard===
 
-The binary packages will install Hypertable entirely under /opt/hypertable<version>.  The [http://www.pathname.com/fhs/pub/fhs-2.3.html Filesystem Hierarchy Standard] states that host-specific configuration files for add-on application software packages should reside under `/etc/opt` and that variable data of the packages (log files, etc.) in `/opt` should reside under `/var/opt`.  Hypertable ships with a script that will modify an installation to conform to the Filesystem Hierachy Standard.  The script is called `fhsize.sh` and should be run from within the installation.  For example:
+The binary packages will install Hypertable entirely under /opt/hypertable/$VERSION.  The [http://www.pathname.com/fhs/pub/fhs-2.3.html Filesystem Hierarchy Standard] states that host-specific configuration files for add-on application software packages should reside under `/etc/opt` and that variable data of the packages (log files, etc.) in `/opt` should reside under `/var/opt`.  Hypertable ships with a script that will modify an installation to conform to the Filesystem Hierachy Standard.  The script is called `fhsize.sh` and should be run from within the installation.  For example:
 
 {{{
 [root@domU-12-31-39-0E-10-51 release]# /opt/hypertable/0.9.3.1/bin/fhsize.sh 
@@ -59,14 +59,14 @@ After installation, make a symlink from `/opt/hypertable/current` to your curren
 
 {{{
 cd /opt/hypertable
-sudo ln -s 0.9.3.0 current
+sudo ln -s 0.9.3.1 current
 }}}
 
 If you plan to run Hypertable as a user other than root, you will need to change the ownership of the installation files to the user that you will be running the software as.
 {{{
-sudo chown -R doug:users /opt/hypertable/0.9.3.0
-sudo chown -R doug:users /etc/opt/hypertable/0.9.3.0
-sudo chown -R doug:users /var/opt/hypertable/0.9.3.0
+sudo chown -R doug:users /opt/hypertable/0.9.3.1
+sudo chown -R doug:users /etc/opt/hypertable/0.9.3.1
+sudo chown -R doug:users /var/opt/hypertable/0.9.3.1
 }}}
 
 ===Verify Installation===
