@@ -18,6 +18,8 @@ This will be the last alpha release before going into beta.  The set of features
 
 ==0.9.5.0 "beta" (July 31st 2010)==
 
+At this point, the software will be feature complete with respect to 1.0.  The only changes that will go into the software between this release and 1.0 will be bug fixes, documentation improvements, and possibly some usability features that are discovered during the beta period and deemed to be very important.  The following list highlights some of the features that will be added in this release.  See [http://code.google.com/p/hypertable/issues/list?can=2&q=milestone%3DRelease0.9.5.0 Milestone Release 0.9.5.0] for the complete list.
+
   * Manual failover - REBALANCE command
   * Add automatic merging compactions for TTL and REVS garbage collection
   * Atomic Counter
@@ -26,4 +28,8 @@ This will be the last alpha release before going into beta.  The set of features
 
 ==1.0 (September 15th 2010)==
 
+This will be the first major release that marks the end of the beta period.  It will represent a fully functional Bigtable impelmentation, minus automatic failover.
+
 ==2.0 (December 31st 2010)==
+
+This release will add automatic failover of the !RangeServers, the Master, and the master Hyperspace replica
