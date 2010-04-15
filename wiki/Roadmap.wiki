@@ -1,8 +1,8 @@
-#summary Hypertable Development Roadmap
+#summary Development Roadmap / Release Schedule
 
-==0.9.4.0 "alpha"==
+==0.9.4.0 "alpha" (June 15th 2010)==
 
-Release Date: June 15h 2010
+This will be the last alpha release before going into beta.  The set of features chosen for this release are the features that create file format and API incompatibilities.  The goal is to have this be the last incompatible pre-1.0 release.  The following list highlights some of the features that will be added in this release.  See [http://code.google.com/p/hypertable/issues/list?can=2&q=milestone%3DRelease0.9.4.0 Milestone Release 0.9.4.0] for the complete list.
 
   * Monitoring interface
   * Tablespace, dataspace, namespace
@@ -16,7 +16,7 @@ Release Date: June 15h 2010
   * Hive Integration
   * Rename columns and alter column definition
 
-==0.9.5.0 "beta"==
+==0.9.5.0 "beta" (July 31st 2010)==
 
   * Manual failover - REBALANCE command
   * Add automatic merging compactions for TTL and REVS garbage collection
@@ -24,11 +24,6 @@ Release Date: June 15h 2010
   * Regular expression filtering for row keys, column qualifiers, and values
   * COMPACT command for performing manual compactions
 
-==1.0 ==
+==1.0 (September 15th 2010)==
 
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+==2.0 (December 31st 2010)==
