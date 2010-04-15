@@ -1,12 +1,13 @@
-#summary Development Roadmap
+#summary Hypertable Development Roadmap
 
 ==0.9.4.0 "alpha"==
+
+Release Date: June 15h 2010
 
   * Monitoring interface
   * Tablespace, dataspace, namespace
   * Add prefix-compression to !CellStore blocks
   * Key compressing !CellCache
-  * !CellStoreV3
   * Table RENAME
   * Table paths in DFS should contain ID, no name
   * Query Slicing (LIMIT 101,200)
@@ -17,10 +18,13 @@
 
 ==0.9.5.0 "beta"==
 
-= Introduction =
+  * Manual failover - REBALANCE command
+  * Add automatic merging compactions for TTL and REVS garbage collection
+  * Atomic Counter
+  * Regular expression filtering for row keys, column qualifiers, and values
+  * COMPACT command for performing manual compactions
 
-Add your content here.
-
+==1.0 ==
 
 = Details =
 
