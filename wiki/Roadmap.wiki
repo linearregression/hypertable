@@ -1,0 +1,28 @@
+#summary Development Roadmap
+
+==0.9.4.0 "beta"==
+
+  * Monitoring interface
+  * Tablespace, dataspace, namespace
+  * Add prefix-compression to CellStore blocks
+  * Key compressing CellCache
+  * CellStoreV3
+  * Table RENAME
+  * Table paths in DFS should contain ID, no name
+  * Query Slicing (LIMIT 101,200)
+  * Django Backend for Hypertable
+  * Parallel LOAD DATA INFILE .tsv loading
+  * Hive Integration
+  * Rename columns and alter column definition
+
+= Introduction =
+
+Add your content here.
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
