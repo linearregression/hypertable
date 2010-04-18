@@ -338,6 +338,17 @@ ldconfig
 
 == Mac OS X 10.6 Snow Leopard ==
 
+Install Thrift
+{{{
+port install p5-bit-vector p5-class-accessor
+wget http://www.hypertable.org/pub/thrift.tgz
+tar -zxf thrift.tgz
+cd thrift-0.2.0
+./configure --with-libevent=/opt/local --with-boost=/opt/local
+make
+make install # as root or in su/sudo shell
+}}}
+
 Download Hyperic SIGAR from this page [http://sourceforge.net/project/showfiles.php?group_id=172552&package_id=197466&release_id=625208 Hyperic SIGAR] and install it
 {{{
 port install wget
@@ -347,7 +358,7 @@ cp hyperic-sigar-1.6.3/sigar-bin/lib/libsigar-universal64-macosx.dylib /opt/loca
 cp hyperic-sigar-1.6.3/sigar-bin/include/*.h /opt/local/include
 }}}
 
-Other than this, the description for OS X 10.5 should work for 10.6 equally well.
+Other than this, the description for OS X 10.5 should work for 10.6 equally well. 
 
 == Mac OS X 10.5 Leopard ==
 
@@ -374,7 +385,7 @@ Install Thrift
 port install p5-bit-vector p5-class-accessor
 wget http://www.hypertable.org/pub/thrift.tgz
 tar -zxf thrift.tgz
-cd thrift
+cd thrift-0.2.0
 cp /opt/local/share/aclocal/pkg.m4 aclocal
 ./bootstrap.sh
 ./configure --with-libevent=/opt/local --with-boost=/opt/local
@@ -384,7 +395,12 @@ make install # as root or in su/sudo shell
 
 Install BerkeleyDB
 {{{
-port install db47
+wget http://download.oracle.com/berkeley-db/db-4.8.26.tar.gz
+tar -xzvf db-4.8.26.tar.gz
+cd db-4.8.26/build_unix/
+../dist/configure --enable-cxx
+make
+make install
 }}}
 
 Install git
@@ -414,7 +430,8 @@ git clone git://scm.hypertable.org/pub/repos/hypertable.git
 mkdir -p ../build/hypertable
 cd ../build/hypertable
 cmake -DPHPTHRIFT_ROOT=$HOME/thrift/lib/php/src ~/src/hypertable
-make
+make -j 3 # speed up build. number of cpus + 1
+# as root or in su/sudo shell
 make install
 make alltests
 }}}
