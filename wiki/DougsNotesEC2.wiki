@@ -103,3 +103,14 @@ Here's a simple and easy to setup tool for working with s3:
 
 [http://www.timkay.com/aws/ aws tool]
 
+Here's how to copy a file to s3:
+
+{{{
+./aws put hypertable-users/foo/bar.tar.bz2 bar.tar.bz2
+}}}
+
+and here's how to copy a file from s3:
+
+{{{
+./aws get hypertable-users/foo/bar.tar.bz2 .
+}}}
