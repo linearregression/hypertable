@@ -96,3 +96,10 @@ $ ec2-modify-image-attribute ami-5c56b135 --launch-permission -a all
 
 == Latest AMI ==
 ami-2f40a646
+
+== S3 ==
+
+Here's a simple and easy to setup tool for working with s3:
+
+[http://www.timkay.com/aws/ aws tool]
+
