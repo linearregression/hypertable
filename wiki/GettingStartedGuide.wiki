@@ -82,7 +82,7 @@ Started Hypertable.RangeServer
 Started ThriftBroker
 }}}
 
-Use the Hypertable shell for experiments.  For an introduction to the commands available, see [HQLTutorial].
+Use the Hypertable shell for experiments.  For an introduction to the commands available, see [#HQL_Tutorial].
 
 {{{
 /opt/hypertable/current/bin/ht shell
