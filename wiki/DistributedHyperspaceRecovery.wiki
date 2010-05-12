@@ -24,3 +24,23 @@ In case you want to just restart with the 2 remaining Hyperspace replicas:
   # Modify the Capfile list of hyperspace servers by removing {{{host2}}} (and master server in case {{{host2}}} was the Hypertable master as well).
   # Run {{{cap dist}}} to distribute the new config file through the cluster
   # Run {{{cap start}}}
+
+The following is an example of the Hypersapce part of the config file for a 3 node Hyperspace setup:
+{{{
+...
+# Hyperspace
+Hyperspace.Replica.Host=mothercompiler
+Hyperspace.Replica.Host=motherlode000
+Hyperspace.Replica.Host=motherlode001
+Hyperspace.Replica.Port=38040
+Hyperspace.Replica.Dir=hyperspace
+Hyperspace.Replica.Workers=20
+...
+}}}
+
+The corresponding section of the Capfile looks like:
+{{{
+...
+role :hyperspace, "mothercompiler","motherlode000", "motherlode001"
+...
+}}}
