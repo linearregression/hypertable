@@ -358,6 +358,11 @@ cp hyperic-sigar-1.6.3/sigar-bin/lib/libsigar-universal64-macosx.dylib /opt/loca
 cp hyperic-sigar-1.6.3/sigar-bin/include/*.h /opt/local/include
 }}}
 
+Install RRDtool
+{{{
+sudo port install rrdtool
+}}}
+
 Other than this, the description for OS X 10.5 should work for 10.6 equally well. 
 
 == Mac OS X 10.5 Leopard ==
@@ -412,6 +417,12 @@ Install cmake
 
 {{{
 port install cmake
+}}}
+
+
+Install RRDtool
+{{{
+sudo port install rrdtool
 }}}
 
 Upgrade to Java 1.6 by downloading it [http://developer.apple.com/java/download/ here] and installing it by double-clicking on the installer.  Then open the Java Preferences App and change the preferred version to Java 1.6
