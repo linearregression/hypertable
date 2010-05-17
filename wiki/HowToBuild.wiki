@@ -9,7 +9,7 @@ _Basic Dependencies_
 
 {{{
 rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/x86_64/epel-release-5-3.noarch.rpm
-yum install gcc-c++ make cmake python-devel bzip2-devel zlib-devel expat-devel
+yum install gcc-c++ make cmake python-devel bzip2-devel zlib-devel expat-devel rrdtool rrdtool-devel
 wget http://downloads.sourceforge.net/boost/boost_1_40_0.tar.bz2
 bzip2 -d boost_1_40_0.tar.bz2 
 tar xvf boost_1_40_0.tar
@@ -73,7 +73,7 @@ _Basic Dependencies_
 
 {{{
 rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm
-yum install gcc-c++ make cmake python-devel bzip2-devel zlib-devel expat-devel
+yum install gcc-c++ make cmake python-devel bzip2-devel zlib-devel expat-devel rrdtool rrdtool-devel
 wget http://downloads.sourceforge.net/boost/boost_1_40_0.tar.bz2
 bzip2 -d boost_1_40_0.tar.bz2 
 tar xvf boost_1_40_0.tar
@@ -134,7 +134,7 @@ rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-3
 cd /etc/yum.repos.d
 wget http://dries.eu/pub/dries-el.repo
 yum update
-yum install python-devel zlib-devel expat-devel cronolog libevent-devel ruby-devel openssl
+yum install python-devel zlib-devel expat-devel cronolog libevent-devel ruby-devel openssl  rrdtool rrdtool-devel
 # install java
 cd /usr/share/
 ~/jdk-6u17-linux-i586.bin
@@ -226,7 +226,7 @@ _EC2:  ami-5647a33f_
 _Basic Dependencies_
 
 {{{
-yum install git gcc-c++ make cmake python-devel bzip2-devel zlib-devel expat-devel
+yum install git gcc-c++ make cmake python-devel bzip2-devel zlib-devel expat-devel rrdtool rrdtool-devel
 wget http://downloads.sourceforge.net/boost/boost_1_40_0.tar.bz2
 bzip2 -d boost_1_40_0.tar.bz2 
 tar xvf boost_1_40_0.tar
