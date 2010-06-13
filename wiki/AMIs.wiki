@@ -2,7 +2,7 @@
 
 || *Architectue System Version* || *Machine Image Identifier* || *Login* || *Installed Software* ||
 || i386 CentOS 5.4 || `ami-893bd4e0` || root || Boost 1.40, Hyperic SIGAR 1.6.3, BerkeleyDB 4.8, KFS 0.4, Ceph 0.19, JDK 6 update 17, ant 1.8.0, tcpdump, tcptrace, netperf, Capistrano, dstat, oprofile, iozone, gdb ||
-|| i386 Ubuntu 8.04 || `ami-2f2ec046` ||  ubuntu || Boost 1.40, Hyperic SIGAR 1.6.3, BerkeleyDB 4.8, KFS 0.4, Ceph 0.19, JDK 6 update 17, ant 1.7.0, Google perftools 1.5, tcpdump, tcptrace, dstat, oprofile ||
+|| i386 Ubuntu 8.04 || `ami-b8f911d1` ||  ubuntu || Boost 1.40, Hyperic SIGAR 1.6.3, BerkeleyDB 4.8, KFS 0.5, Ceph 0.20.2, JDK 6 update 17, ant 1.7.0, Google perftools 1.5, tcpdump, tcptrace, netperf, dstat, oprofile, iozone, gdb ||
 || x86_64 CentOS 5.4 || `ami-953bd4fc` || root || Boost 1.40, Hyperic SIGAR 1.6.3, BerkeleyDB 4.8, KFS 0.4, Ceph 0.19, JDK 6 update 17, ant 1.8.0, tcpdump, tcptrace, netperf, Capistrano, dstat, oprofile, iozone, gdb ||
 || x86_64 Ubuntu 8.04 || `ami-e6e50d8f` ||  root || Boost 1.40, Hyperic SIGAR 1.6.3, BerkeleyDB 4.8, KFS 0.5, Ceph 0.20.2, JDK 6 update 17, ant 1.7.0, Google perftools 1.5, tcpdump, tcptrace, netperf, dstat, oprofile, iozone ||
 
