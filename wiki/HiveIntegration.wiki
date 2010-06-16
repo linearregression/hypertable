@@ -131,8 +131,7 @@ OK
 {"":"4 My only address place"}
 Time taken: 21.671 seconds 
 }}}
-  # Now we can inspect the contents of the table in Hypertable via the HT shell. 
-  Note that when you query the table from Hive you only see the most recent value of a cell so, you will not see the the cell "`1	address:home	1 Home St`" listed below.
+  # Now we can inspect the contents of the table in Hypertable via the HT shell. Note that when you query the table from Hive you only see the most recent value of a cell so, you will not see the the cell "`1	address:home	1 Home St`" listed below.
 {{{
 hypertable> select * from HiveTest;
 1	address:home	1 New Home Avenue
@@ -145,7 +144,7 @@ hypertable> select * from HiveTest;
 3	address:restaurant	3 Hole in the wall 
 3	address:restaurant	3 Bar Ct
 4	address	4 My only address place
-7	address:dev house	7 Hacker way
+7	address:dev house	7 Hacker way 
 }}}
   # Finally to drop the table from the Hive metastore (note it still exists as far as Hypertable is concerned):
 {{{
