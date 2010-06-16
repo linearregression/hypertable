@@ -75,7 +75,7 @@ OK
 4	{"":"4 My only address place"}
 Time taken: 22.111 seconds
 }}} 
-  # Writing to Hypertable via Hive: Download this data file [kv_ht.txt]
+  # Writing to Hypertable via Hive: Download this data file [http://hypertable.googlecode.com/files/kv_ht.txt kv_ht.txt]
 {{{
 hive> CREATE TABLE ht_pokes(uid INT, addr_type STRING, addr_val STRING); 
 OK 
