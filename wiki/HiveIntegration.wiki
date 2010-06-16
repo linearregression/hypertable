@@ -8,7 +8,7 @@ It is recommended that users read the
 
 
 = Example =
-For the purpose of this example we'll assume Hypertable, Hadoop and Hive are installed under $HT_HOME, $HADOOP_HOME, $HIVE_HOME respectively.
+For the purpose of this example we'll assume Hypertable, Hadoop and Hive are installed under $HT_HOME, $HADOOP_HOME, $HIVE_HOME respectively. (Hypertable and Hive commands listed below are included in the Hypertable source code under the examples dir along with the sample data file)
 
 The storage handler is included in the `$HT_HOME/lib/java/hypertable-*.jar` file. 
 Lets look at running the Hypertable storage handler via the Hive CLI. In order to do this you must do the following:
