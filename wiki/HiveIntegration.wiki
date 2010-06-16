@@ -129,7 +129,7 @@ OK
 {"dentist":"1 DDS Avenue","nyc":"2 Foo Way"}
 {"home":"3 Home Ct","la":"3 LA shack","restaurant":"3 Hole in the wall "}
 {"":"4 My only address place"}
-Time taken: 21.671 seconds
+Time taken: 21.671 seconds 
 }}}
   # Now we can inspect the contents of the table in Hypertable via the HT shell. 
   Note that when you query the table from Hive you only see the most recent value of a cell so, you will not see the the cell "`1	address:home	1 Home St`" listed below.
