@@ -7,7 +7,7 @@ It is recommended that users read the
 [http://wiki.apache.org/hadoop/Hive/StorageHandlers Hive Storage Handler wiki] to understand the capabilities of the Hypertable storage handler. Currently the Hypertable storage handler only supports external, non-native tables.
 
 
-= Usage =
+= Example =
 For the purpose of this example we'll assume Hypertable, Hadoop and Hive are installed under $HT_HOME, $HADOOP_HOME, $HIVE_HOME respectively.
 
 The storage handler is included in the `$HT_HOME/lib/java/hypertable-*.jar` file. 
