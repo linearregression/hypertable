@@ -22,7 +22,7 @@ Here is an example of a Hive CLI session which uses the Hypertable storage handl
 {{{
 > $HT_HOME/bin/ht shell
 
-hypertable> CREATE TABLE HiveTest(cf1);
+hypertable> CREATE TABLE HiveTest('address');
 
   Elapsed time:  0.88 s
 
@@ -152,6 +152,13 @@ hive> drop table ht_table;
 OK
 Time taken: 3.485 seconds
 }}}
+
+= Limitations =
+  * Currently column families in Hypertable map to a column of type MAP<String, ?> in Hive. A single Hypertable column family can have an arbitrary number of qualified columns, each corresponding to a single key in the Hive MAP data type. Further, the key in the Hive map type must currently be of type string, but the value can be of any type.   
+  * There is currently no way to map a qualified Hypertable column (col family + qualifier) to a Hive column.
+  * The first column of the Hive row is implicitly the key of the Hypertable row.
+  * For all but the first Hive column, there must be a corresponding entry in the comma-delimited `hypertable.columns.mapping` string. For a Hive table with n columns, the string should have n-1 entries. Whitespace should not be used in between entries since these will be interperted as part of the column name, which is not what you want. 
+  * There is currently no way to access multiple versions of the same Hypertable cell. Hive can only access the latest version of a cell.
 
 = Acknowledgements =
 We'd like to thank John Sichi for his help and suggestions in developing the Hypertable Storage Handler for Hive.
