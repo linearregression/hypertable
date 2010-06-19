@@ -146,7 +146,7 @@ hypertable> select * from HiveTest;
 4	address	4 My only address place
 7	address:dev house	7 Hacker way 
 }}}
-  # Finally to drop the table from the Hive metastore & from Hypertable:
+  # Finally to drop the table from the Hive metastore (note that the table still exists as far as Hypertable is concerned):
 {{{
 hive> drop table ht_table;
 OK
@@ -154,7 +154,7 @@ Time taken: 3.485 seconds
 }}}
 
 = Limitations =
-  * Currently you can't create a Hypertable Table via the Storage Handler. You have to create the table via the regular Hypertable client interfaces (ThriftBroker/C++ client/HT shell etc.). 
+  * Currently the StorageHandler can only create external Hive tables. This means Hive won't handle meta operations like create/drop so you will have to create and drop table via the usual Hypertable interfaces.
   * Currently column families in Hypertable map to a column of type MAP<String, ?> in Hive. A single Hypertable column family can have an arbitrary number of qualified columns, each corresponding to a single key in the Hive MAP data type. Further, the key in the Hive map type must currently be of type string, but the value can be of any type.   
   * There is currently no way to map a qualified Hypertable column (col family + qualifier) to a Hive column.
   * The first column of the Hive row is implicitly the key of the Hypertable row.
