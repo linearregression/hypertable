@@ -2,6 +2,6 @@
 
 == Release 0.9.x alpha ==
 || *Deficiency* || *Status* ||
-|| Master does not recover !RangeServers || Currently, if a !RangeServer machine dies for whatever reason, it needs to be manually restarted. No data loss should occur. If a machine needs to be replaced, it needs to come back with the same IP address as the original range server.  This will be fixed by beta, where we'll have automatic recovery coordinated by  master. ||
+|| Master does not recover !RangeServers || Currently, if a !RangeServer machine dies for whatever reason, it needs to be manually restarted. No data loss should occur. ||
 || Master does no load balancing || This will be added in the 1.0 release ||
 || The Master is single server || The current plan is to allow for hot standbys that monitor the master's lock in Hyperspace and grab it when it becomes available and take over.  This is implemented, but has not been tried or tested. ||
