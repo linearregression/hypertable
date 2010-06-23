@@ -1063,3 +1063,11 @@ cd <build-dir>
 cd <build-dir>
 ~/src/hypertable/bin/src-utils/htpkg --srcdir ~/src/hypertable --phpdir /usr/src/thrift-0.2.0/lib/php/src TBZ2
 }}}
+
+==Appendix C. Config File Properties==
+
+The Hypertable configuration file supports many properties that control the operation of the servers.  To get a description of the currently supported properties and their default values, issue the following command:
+
+{{{
+$ /opt/hypertable/current/bin/ht Hypertable.RangeServer --help-config
+}}}
