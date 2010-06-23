@@ -1,4 +1,4 @@
-#summary Everything You Need to Know to get Up and Running with Hypertable
+#summary The Hypertable Scalable Database Manual
 <wiki:toc/>
 
 ==Installing Hypertable via Binary Packages==
