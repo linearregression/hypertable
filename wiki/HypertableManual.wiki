@@ -127,11 +127,11 @@ Finally, to shut everything down, use the stop-servers command:
 /opt/hypertable/current/bin/ht stop-servers
 }}}
 
-==Deploying on Hadoop Cluster==
+==Deploying on a Cluster==
 
 ===Capistrano - A Tool for Automating Tasks on Remote Servers===
 
-The Hypertable distribution comes a number of scripts to start and stop the various servers that make up a Hypertable cluster.  You can use your own cluster management tool to launch these scripts and deploy new binaries.  However, if you're not already using a cluster management tool, we recommend [http://www.capify.org/ Capistrano].  The distribution comes with a Capistrano config file (`Capfile.cluster`) that makes deploying and launching Hypertable a breeze.
+The Hypertable distribution comes a number of scripts to start and stop the various servers that make up a Hypertable cluster.  You can use your own cluster management tool to launch these scripts and deploy new binaries.  However, if you're not already using a cluster management tool, we recommend [http://www.capify.org/ Capistrano].  The distribution comes with a Capistrano config file (`conf/Capfile.cluster`) that makes deploying and launching Hypertable a breeze.
 
 Capistrano is a simple tool for automating the remote execution of tasks.  It uses ssh to do the remote execution.  To ease deployment, you should have password-less ssh access (e.g. public key) to all of the machines in your cluster.  Installing Capistrano is pretty simple.  On most systems you just need to execute the following command
 {{{
@@ -144,24 +144,13 @@ $ cap --version
 Capistrano v2.5.8
 }}}
 
-===Step 1. Install Hadoop===
+===Step 1. Edit Capistrano `Capfile`===
 
-The first step to getting up and running on a Hadoop Cluster is to install Hadoop.  The process for doing this is outside the scope of this document.  See [http://wiki.apache.org/hadoop/GettingStartedWithHadoop Getting Started With Hadoop] for details.  The Hadoop cluster is typically administered from the machine that runs the !NameNode.  For the remainder of this section, we'll assume it is called `master` and the `fs.default.name` property in the Hadoop configuration is setup as follows:
-
+Once you have Capistrano installed, copy the `conf/Capfile.cluster` that comes with the Hypertable distribution to your working directory (e.g. home directory) on `admin1`, rename it to `Capfile`, and tailor it for your environment.  The `cap` command reads the file `Capfile` in the current working directory by default.  There are some variables that are set at the top that you need to modify for your particular environment.  The following shows the variables at the top of the Capfile that need modification:
 {{{
-<property>
-  <name>fs.default.name</name>
-  <value>hdfs://master:9000</value>
-</property>
-}}}
-
-===Step 2. Edit Capistrano `Capfile`===
-
-Once you have Capistrano installed, copy the `conf/Capfile.cluster` that comes with the Hypertable distribution to your working directory (e.g. home directory) on `master`, rename it to `Capfile`, and tailor it for your environment.  The `cap` command reads the file `Capfile` in the current working directory by default.  There are some variables that are set at the top that you need to modify for your particular environment.  The following shows the variables at the top of the Capfile that need modification:
-{{{
-set :source_machine,     "master"
+set :source_machine,     "admin"
 set :install_dir,        "/opt/hypertable" 
-set :hypertable_version, "0.9.3.0"
+set :hypertable_version, "0.9.3.3"
 set :default_dfs,        "hadoop"
 set :default_config,     "/opt/hypertable/hypertable-example.cfg"
 }}}
@@ -177,44 +166,87 @@ Here's a brief description of each variable:
 
 In addition to the above variables, you also need to define three roles, one for the machine that will run the master processes, one for the machines that will run the Hyperspace replicas, and one for the machines that will run the !RangeServers.  Edit the following lines:
 {{{
+role :source, "admin1"
 role :master, "master"
 role :hyperspace, "hyperspace001", "hyperspace002", "hyperspace003"
 role :slave,  "slave001", "slave002", "slave003", "slave004", "slave005", "slave006", "slave007", "slave008"
+role :localhost, "admin1"
+role :thriftbroker
+role :spare
 }}}
 Here's a brief description of each role:
 
 || *role* || *description* ||
+|| `source` || This role is for the machine you will be distributing the binaries from, `admin` in this example ||
 || `master` || This role is for the machine that will run the Hypertable master process as well as a DFS broker.  Ideally this machine is high quality and somewhat lightly loaded (e.g. not running a !RangeServer).  Typically you would have a high quality machine running the Hypertable master, a Hyperspace replica, and the HDFS !NameNode ||
 || `hyperspace` || This role is for the machines that will run Hyperspace replicas.  There should be at least one machine defined for this role.  The machines that take on this role should be somewhat lightly loaded (e.g. not running a !RangeServer) ||
-|| `slave` || This role is for the machines that will run !RangeServers.  Hypertable is designed to run on a filesystem like HDFS.  In fact, the system works best from a performance standpoint when the !RangeServers are run on the same machines as the HDFS !DataNodes.  This role will also launch a DFS broker and a !ThriftBroker.  ||
+|| `slave` || This role is for the machines that will run !RangeServers.  Hypertable is designed to run on a 
+filesystem like HDFS.  In fact, the system works best from a performance standpoint when the !RangeServers are run on the same machines as the HDFS !DataNodes.  This role will also launch a DFS broker and a !ThriftBroker.  ||
+|| `localhost` || This should be the name of the machine that you're administering the cluster from, `admin1` in this example ||
+|| `thriftbroker` || This role is for machines that will just be running the ThriftBroker (e.g. web servers) ||
+|| `spare` || This role is for machines that will act as standbys.  They will be kept current with the latest binaries ||
 *Table 2. Hypertable Capistrano Roles*
 
-===Step 3. Install Hypertable===
+===Step 2. Install Hypertable on the Source machine===
 
-The next step is to install Hypertable on all of your machines.  If you're installing from the RPM or Debian packages, you will need to install the software on each of the machines (`master`, `hyperspace001..hyperspace003`, `slave001..slave008`) according to [#Installing_Hypertable_via_Binary_Packages].
+The next step is to install Hypertable on the source machine, `admin1` in this example.  On `admin1` be sure Hypertable is installed in the location specified by the `install_dir` variable at the top of the Capfile and that the `hypertable_version` variable at the top of the Capfile matches the version you are installing (`/opt/hypertable` and `0.9.3.3` in this example).
 
-If you've built the binaries from source code or you've installed with the `.tar.bz2` package (*not* using FHS-compliant directory layout) you can distribute the Hypertable installation with a single Capistrano command.  On `master` be sure Hypertable is installed in the location specified by the `install_dir` and `hypertable_version` Capfile variables (`/opt/hypertable/0.9.3.0` in this example).  Then distribute the installation with the following command:
-{{{
-$ cap dist
-}}}
-(*NOTE:* You may have to increase the value of !MaxStartups in your `/etc/sshd_config` file if it is less than the number of nodes in your cluster)
+See [#Installing_Hypertable_via_Binary_Packages] for instructions on how to install from binary packages.  Instructions for building from source can be found in the README.md file in the toplevel source directory and [http://code.google.com/p/hypertable/wiki/HowToBuild How To Build] shows how to setup the dependencies for each platform.
 
-===Step 4. Configure Hypertable===
+===Step 3. Configure Hypertable===
 
 Configuring Hypertable is straightforward.  You just need to copy the default config file (`conf/hypertable.cfg`) and change the following properties:
 
 || Property || Description ||
-|| `HdfsBroker.fs.default.name` || Hadoop filesystem name ||
+|| `HdfsBroker.fs.default.name` || Hadoop ONLY: Hadoop filesystem name ||
+|| `Kfs.MetaServer.Name` || KFS ONLY: KFS metaserver machine name ||
+|| `Kfs.MetaServer.Port` || KFS ONLY: KFS metaserver port ||
+|| `CephBroker.MonAddr` || Ceph ONLY: Ceph monitor machine address ||
 || `Hyperspace.Replica.Host` || Name of host running Hyperspace replica (one line for each replica) ||
 || `Hypertable.Master.Host` || Name of host running Hypertable master ||
 
 See [http://www.hypertable.org/pub/hypertable-example-cfg.txt hypertable-example.cfg]
 
-Once the configuration file is setup on `master` and located in the filename indicated by the `default_config` Capfile variable, then to push it out to the cluster, run the following command:
+Once you've edited the configuration file for your cluster on `admin1`, be sure the _absolute_ pathname referenced in the `default_config` Capfile variable points to this file.
+
+===Step 4. Distribute the installation===
+
+To distribute this installation to all of the machines in your cluster, the account from which you're administering Hypertable from will have to have read+write access to the directory specified by the `install_dir` variable at the top of the Capfile ("/opt/hypertable" in this example).  You can verify this with the following commands (issued in the directory containing the Capfile):
+
+{{{
+$ cap shell
+cap> touch /opt/hypertable/foo
+cap> rm -f /opt/hypertable/foo
+}}}
+
+(*NOTE:* You may have to increase the value of !MaxStartups in your `/etc/sshd_config` file if it is less than the number of nodes in your cluster)
+
+Once you've verified that the installation directory is writable, you can distribute the installation (and make it the current) with the following commands:
+
 {{{
 $ cap dist
+$ cap set_current
 }}}
-(*NOTE:* You may have to increase the value of !MaxStartups in your `/etc/sshd_config` file if it is less than the number of nodes in your cluster)
+
+*FHS-izing Your Installation*
+
+To FHS-ize your installation, you should make sure the following directories exist on all of the machines in your cluster and that the account from which you are administering Hypertable from has read+write access.
+
+  * /etc/opt/hypertable
+  * /var/opt/hypertable
+
+Once you've verified that these directories are setup properly, you can FHS-ize the installation with a single Capistrano command:
+
+{{{
+$ cap fhsize
+}}}
+
+This command will perform the following steps:
+
+  * rsync the installation to all machines
+  * invoke the fhsize.sh script on all machines
+  * copy the config file on the source machine into the conf/ directory in the installation
+  * rsync the installation to push the config file out to /etc/opt/hypertable on all machines
 
 ===Step 5. Synchronize Clocks===
 
@@ -236,9 +268,24 @@ cap> date
  ** [out :: slave008] Sat Jan  3 18:05:33 PST 2009
 }}}
 
-===Step  6. Launch===
+==Up and Running with HDFS==
 
-Launch Hadoop (`hadoop/bin/start-all.sh`) and make sure the system is up and running and out of "safemode":
+===Step 1. Install Hadoop===
+
+The first step to getting up and running on a Hadoop Cluster is to install Hadoop.  The process for doing this is outside the scope of this document.  See [http://wiki.apache.org/hadoop/GettingStartedWithHadoop Getting Started With Hadoop] for details.  The Hadoop cluster is typically administered from the machine that runs the !NameNode.  For the remainder of this section, we'll assume it is called `admin1` and the `fs.default.name` property in the Hadoop configuration is setup as follows:
+
+{{{
+<property>
+  <name>fs.default.name</name>
+  <value>hdfs://admin1:9000</value>
+</property>
+}}}
+
+Be sure this property matches the `HdfsBroker.fs.default.name` property in the Hypertable config file.
+
+===Step  2. Start HDFS===
+
+Launch Hadoop (`hadoop/bin/start-all.sh` or `hadoop/bin/start-dfs.sh`) and make sure the system is up and running and out of "safemode":
 
 {{{
 $ hadoop dfsadmin -safemode get
@@ -252,7 +299,9 @@ $ hadoop fs -mkdir /hypertable
 $ hadoop fs -chmod 777 /hypertable
 }}}
 
-To start all of the Hypertable servers ...
+==Starting and Stopping Hypertable==
+
+The following commands should be run from the directory containing the Capfile.  To start all of the Hypertable servers ...
 {{{
 $ cap start
 }}}
