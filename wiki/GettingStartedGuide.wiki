@@ -30,12 +30,12 @@ The RPM, Debian, and Mac packages will install Hypertable under a directory by t
 
 ===Filesystem Hierarchy Standard===
 
-The binary packages will install Hypertable entirely under /opt/hypertable/$VERSION.  The [http://www.pathname.com/fhs/pub/fhs-2.3.html Filesystem Hierarchy Standard] states that host-specific configuration files for add-on application software packages should reside under `/etc/opt` and that variable data of the packages (log files, etc.) in `/opt` should reside under `/var/opt`.  Hypertable ships with a script that will modify an installation to conform to the Filesystem Hierachy Standard.  The script is called `fhsize.sh` and should be run from within the installation.  For example:
+The binary packages will install Hypertable entirely under /opt/hypertable/$VERSION.  The [http://www.pathname.com/fhs/pub/fhs-2.3.html Filesystem Hierarchy Standard] states that host-specific configuration files for add-on application software packages should reside under `/etc/opt` and that variable data of the packages (log files, etc.) should reside under `/var/opt`.  Hypertable ships with a script that will modify an installation to conform to the Filesystem Hierachy Standard.  The script is called `fhsize.sh` and should be run from within the installation.  For example:
 
 {{{
 [root@domU-12-31-39-0E-10-51 release]# /opt/hypertable/0.9.3.1/bin/fhsize.sh 
-Setting up /var/hypertable
-Setting up /etc/hypertable
+Setting up /var/opt/hypertable
+Setting up /etc/opt/hypertable
 }}}
 
 The nice thing about FHS-izing your installations is that the directories containing the config files and log archives carry over from one version to the next.  So if you upgrade Hypertable, it will use the same config file in `/etc/opt/hypertable`.  Otherwise, you need to copy the config file from your old install to the new one each time you upgrade.  One thing to note, when `fhsize.sh` is run for the first time, it will copy the contents of the `conf/` directory from the binary package to `/etc/opt/hypertable`.  When `fhsize.sh` is run subsequently, it will detect the existence of files in `/etc/opt/hypertable` and will leave them intact.  Here's what the installation directory looks like after installing from a binary packages and running `fhsize.sh`:
