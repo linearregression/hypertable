@@ -319,6 +319,43 @@ $ cap -S config=/home/doug/conf/alternate.cfg dist
 $ cap -S config=/home/doug/conf/alternate.cfg start
 }}}
 
+==Upgrading your Installation==
+
+===Format Compatible Upgrade===
+
+If you're upgrading to a new release of Hypertable and you're sure that both versions are format compatible, upgrading is quick and painless.  First install the new release on the source machine (`source_machine` variable at top of Capfile).  Then modify the `hypertable_version` variable in the Capfile to reference the _new_ release version.  Once you've done that, you can upgrade with the following Capistrano command:
+
+{{{
+$ cap upgrade
+}}}
+
+This command performs the following actions:
+
+  # Stops the service
+  # Copies the config into the new installation on `source_machine`
+  # rsyncs the installation to all machines in the cluster
+  # Copies the hyperspace/ directory from the old installation (referenced from the current symlink) into the new installation on all hyperspace machines
+  # Copies the run/ directory from the old installation (referenced from the current symlink) into the new installation on all slave machines
+  # Sets the `current` symlink on all machines to point to the new installation
+
+If you're using an FHS-ized installation, you'll need to run the following Capistrano command after the upgrade.
+
+{{{
+$ cap fhsize
+}}}
+
+You can then bring the service back up with `cap start`
+
+===Format Incompatible Upgrade===
+
+If the new release you are installing is incompatible with the old release, you will need to backup and restore all of your tables.  See the following section on how to backup and restore tables.  Here's the basic upgrade sequence:
+
+  # Backup all of the tables you want to keep
+  # Install the new release (see [#Installing_Hypertable_via_Binary_Packages] and )
+  # Restore your tables
+
+You can then bring the service back up with `cap start`
+
 ==Backing Up and Restoring Tables==
 
 Hypertable backup and restore are accomplished with the HQL commands DUMP TABLE and LOAD DATA INFILE.  It is possible to create backups with the SELECT command, but it is not recommended because it will output table data in sorted order.  When loading data with LOAD DATA INFILE that is in sorted order, only one !RangeServer will be kept busy at a time.  To combat this problem, the DUMP TABLE command was introduced which will output table data in random order.  Loading backups taken with the DUMP TABLE command is much more efficient since all of the participating !RangeServers will be kept busy.
@@ -334,6 +371,8 @@ fi
 
 while [ $# -ge 1 ]; do
     echo "Backing up '$1' ..."
+    echo "SHOW CREATE TABLE '$1';" | /opt/hypertable/current/bin/ht shell --silent > create-table-$1.hql
+    echo ";" >> create-table-$1.hql
     echo "DUMP TABLE '$1' INTO FILE '$1.gz';" | /opt/hypertable/current/bin/ht shell
     shift
 done
@@ -350,6 +389,7 @@ fi
 while [ $# -ge 1 ]; do
     table=`basename $1 | cut -f1 -d'.'`
     echo "Restoring '$table' ..."
+    cat create-table-$1.hql | /opt/hypertable/current/bin/ht shell
     echo "LOAD DATA INFILE '$1' INTO TABLE '$table';" | /opt/hypertable/current/bin/ht shell
     shift
 done
