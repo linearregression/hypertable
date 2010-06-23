@@ -12,7 +12,7 @@ For the purpose of this example we'll assume Hypertable, Hadoop and Hive are ins
 
 The storage handler is included in the `$HT_HOME/lib/java/hypertable-*.jar` file. 
 Lets look at running the Hypertable storage handler via the Hive CLI. In order to do this you must do the following:
-  # Have a ThriftBroker running locally which is connected to your Hypertable cluster.
+  # Have a !ThriftBroker running locally which is connected to your Hypertable cluster.
   # Modify the HADOOP_CLASSPATH in your hadoop-env.sh to include the Thrift jar required by Hypertable. You probably have to restart Hadoop Mapreduce for this to take effect. For example:
     * Edit $HADOOP_HOME/conf/hadoop-env.sh: `export HADOOP_CLASSPATH=/opt/hypertable/current/lib/java/libthrift-0.3.0.jar:${HADOOP_CLASSPATH}`
     * `$HADOOP_HOME/bin/stop-mapred.sh; $HADOOP_HOME/bin/start-mapred.sh`
@@ -154,7 +154,7 @@ Time taken: 3.485 seconds
 }}}
 
 = Limitations =
-  * Currently the StorageHandler can only create external Hive tables. This means Hive won't handle meta operations like create/drop so you will have to create and drop table via the usual Hypertable interfaces.
+  * Currently the !StorageHandler can only create external Hive tables. This means Hive won't handle meta operations like create/drop so you will have to create and drop table via the usual Hypertable interfaces.
   * Currently column families in Hypertable map to a column of type MAP<String, ?> in Hive. A single Hypertable column family can have an arbitrary number of qualified columns, each corresponding to a single key in the Hive MAP data type. Further, the key in the Hive map type must currently be of type string, but the value can be of any type.   
   * There is currently no way to map a qualified Hypertable column (col family + qualifier) to a Hive column.
   * The first column of the Hive row is implicitly the key of the Hypertable row.
