@@ -4,7 +4,6 @@ The example shown here is to upgrade from 0.9.0.0-alpha to 0.9.0.1-alpha. Adapt 
   # Prepare for next release
     * Update the `CHANGES` file with the list of changes for the release
     * Modify the `CMakeLists.txt` file to include the new version number
-    * If there were any Java code changes, build and check in new hypertable .jar files and delete the old ones.  If no java code changes, rename `lib/hypertable-$VERSION.jar` and `lib/hypertable-$VERSION-examples.jar` to reflect the new release version
     * Update version number in `conf/Capfile.*`
     * Run `make doc` and try to eliminate doxygen warnings
     * Update README to point to new thrift, if needed
