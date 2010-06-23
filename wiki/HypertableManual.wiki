@@ -350,8 +350,8 @@ You can then bring the service back up with `cap start`
 
 If the new release you are installing is incompatible with the old release, you will need to backup and restore all of your tables.  See the following section on how to backup and restore tables.  Here's the basic upgrade sequence:
 
-  # Backup all of the tables you want to keep
-  # Install the new release (see [#Installing_Hypertable_via_Binary_Packages] and )
+  # Backup your tables
+  # Install the new release (see [#Installing_Hypertable_via_Binary_Packages] and [#Deploying_on_a_Cluster])
   # Restore your tables
 
 You can then bring the service back up with `cap start`
