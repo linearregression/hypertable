@@ -53,9 +53,9 @@ cp apache-ant-1.7.1/lib/*.jar java
 yum install ant automake libtool flex bison pkgconfig libevent-devel ruby-devel perl-Bit-Vector php
 wget http://dag.wieers.com/rpm/packages/perl-Class-Accessor/perl-Class-Accessor-0.31-1.el5.rf.noarch.rpm
 yum localinstall perl-Class-Accessor-0.31-1.el5.rf.noarch.rpm
-wget http://www.hypertable.org/pub/thrift-0.2.0-incubating.tar.gz
-tar xzvf thrift-0.2.0-incubating.tar.gz
-cd thrift-0.2.0
+wget http://www.hypertable.org/pub/thrift.tgz
+tar xzvf thrift.tgz
+cd thrift-0.3.0
 ./configure
 make
 make install
@@ -288,7 +288,7 @@ _Basic Dependencies_
 {{{
 apt-get update
 apt-get install g++ cmake libboost-dev liblog4cpp5-dev git-core cronolog libgoogle-perftools-dev libevent-dev zlib1g-dev libexpat1-dev libncurses-dev libreadline5-dev
-apt-get rrdtool librrd2-dev
+apt-get install rrdtool librrd2-dev
 wget http://internap.dl.sourceforge.net/sourceforge/sigar/hyperic-sigar-1.6.3.tar.gz
 tar -xzvf hyperic-sigar-1.6.3.tar.gz
 cp hyperic-sigar-1.6.3/sigar-bin/include/*.h /usr/local/include
