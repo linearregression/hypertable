@@ -67,13 +67,14 @@ make install
 == CentOS 5.2 32-bit ==
 
 _June 28, 2010_
+
 _Base AMI:  ami-1500e67c_
 
 _Basic Dependencies_
 
 {{{
 rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm
-yum install gcc-c++ make cmake python-devel bzip2-devel zlib-devel expat-devel rrdtool rrdtool-devel
+yum install gcc-c++ make cmake python-devel bzip2-devel zlib-devel expat-devel rrdtool rrdtool-devel ruby ruby-devel ruby-ext
 wget http://downloads.sourceforge.net/boost/boost_1_40_0.tar.bz2
 bzip2 -d boost_1_40_0.tar.bz2 
 tar xvf boost_1_40_0.tar
@@ -82,7 +83,7 @@ cd boost_1_40_0
 ./bjam install
 cd /etc/yum.repos.d
 wget http://dries.eu/pub/dries-el.repo
-yum install log4cpp-devel git-core cronolog google-perftools-devel libevent-devel readline-devel ncurses-devel
+yum install log4cpp-devel git-core cronolog google-perftools-devel libevent-devel readline-devel ncurses-devel xml-commons-apis freetype-devel
 wget http://internap.dl.sourceforge.net/sourceforge/sigar/hyperic-sigar-1.6.3.tar.gz
 tar -xzvf hyperic-sigar-1.6.3.tar.gz
 cp hyperic-sigar-1.6.3/sigar-bin/include/*.h /usr/local/include
@@ -93,6 +94,14 @@ cd db-4.8.26/build_unix/
 ../dist/configure --enable-cxx
 make
 make install
+yum install openssl openssl-devel libedit-devel xfsprogs-devel
+cd ~; wget http://ceph.newdream.net/download/ceph-0.20.2.tar.gz
+tar xzvf ceph-0.20.2.tar.gz
+./configure; make; make install
+cd ~; wget http://downloads.sourceforge.net/project/kosmosfs/kosmosfs/kfs-0.5/kfs-0.5.tar.gz
+tar xzvf kfs-0.5.tar.gz
+...
+gem install capistrano
 sh -c "echo '/usr/local/lib' > /etc/ld.so.conf.d/local.conf"
 sh -c "echo '/usr/local/BerkeleyDB.4.8/lib' > /etc/ld.so.conf.d/BerkeleyDB.4.8.conf"
 /sbin/ldconfig
