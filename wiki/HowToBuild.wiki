@@ -18,7 +18,7 @@ cd boost_1_43_0
 ./bjam install
 cd /etc/yum.repos.d
 wget http://dries.eu/pub/dries-el.repo
-yum install log4cpp-devel git-core cronolog google-perftools-devel libevent-devel readline-devel ncurses-devel
+yum install log4cpp-devel git-core cronolog google-perftools-devel libevent-devel readline-devel ncurses-devel xml-commons-apis freetype-devel
 wget http://internap.dl.sourceforge.net/sourceforge/sigar/hyperic-sigar-1.6.3.tar.gz
 tar -xzvf hyperic-sigar-1.6.3.tar.gz
 cp hyperic-sigar-1.6.3/sigar-bin/include/*.h /usr/local/include
@@ -46,10 +46,10 @@ cd /usr/share
 wget http://www.apache.org/dist/ant/ant-current-bin.zip
 unzip ant-current-bin.zip
 mv ant ant.old
-ln -s apache-ant-1.7.1 ant
+ln -s apache-ant-1.8.1 ant
 cp ant/bin/ant /usr/bin
 rm -rf java/ant*
-cp apache-ant-1.7.1/lib/*.jar java
+cp apache-ant-1.8.1/lib/*.jar java
 yum install ant automake libtool flex bison pkgconfig libevent-devel ruby-devel perl-Bit-Vector php
 wget http://dag.wieers.com/rpm/packages/perl-Class-Accessor/perl-Class-Accessor-0.31-1.el5.rf.noarch.rpm
 yum localinstall perl-Class-Accessor-0.31-1.el5.rf.noarch.rpm
