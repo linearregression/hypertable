@@ -9,7 +9,7 @@ _Basic Dependencies_
 
 {{{
 rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/x86_64/epel-release-5-3.noarch.rpm
-yum install gcc-c++ make cmake python-devel bzip2-devel zlib-devel expat-devel rrdtool rrdtool-devel
+yum install gcc-c++ make cmake python-devel bzip2-devel zlib-devel expat-devel rrdtool rrdtool-devel ruby ruby-devel ruby-ext
 wget http://downloads.sourceforge.net/boost/boost_1_43_0.tar.bz2
 bzip2 -d boost_1_43_0.tar.bz2 
 tar xvf boost_1_43_0.tar
@@ -29,6 +29,14 @@ cd db-4.8.26/build_unix/
 ../dist/configure --enable-cxx
 make
 make install
+yum install openssl openssl-devel libedit-devel xfsprogs-devel
+cd ~; wget http://ceph.newdream.net/download/ceph-0.20.2.tar.gz
+tar xzvf ceph-0.20.2.tar.gz
+./configure; make; make install
+cd ~; wget http://downloads.sourceforge.net/project/kosmosfs/kosmosfs/kfs-0.5/kfs-0.5.tar.gz
+tar xzvf kfs-0.5.tar.gz
+...
+gem install capistrano
 sh -c "echo '/usr/local/lib' > /etc/ld.so.conf.d/local.conf"
 sh -c "echo '/usr/local/BerkeleyDB.4.8/lib' > /etc/ld.so.conf.d/BerkeleyDB.4.8.conf"
 /sbin/ldconfig
