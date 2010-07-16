@@ -1,4 +1,5 @@
 #summary The Hypertable Scalable Database Manual
+#labels Featured
 <wiki:toc/>
 
 ==Installing Hypertable via Binary Packages==
