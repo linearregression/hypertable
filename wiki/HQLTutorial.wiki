@@ -29,7 +29,7 @@ Successfully started Hypertable.RangeServer
 Now, fire up an interactive session:
 
 {{{
-codeslinger:~/hypertable> bin/hypertable
+codeslinger:~/hypertable> bin/ht hypertable
 Welcome to the HQL command interpreter.
 
 Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
@@ -224,7 +224,7 @@ key2    tcf2
 
 You can run:
 {{{
-/bin/hypertable < LdiStdin.hql
+/bin/ht hypertable < LdiStdin.hql
 }}}
 
 On inspecting the contents of the table you should see:
@@ -458,7 +458,7 @@ Successfully started Hypertable.RangeServer
 You can fire up an interactive session and use the `source` command:
 
 {{{
-tinweasel:~/hypertable>  bin/hypertable 
+tinweasel:~/hypertable>  bin/ht hypertable 
 Welcome to the HQL command interpreter.
 
 Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
@@ -491,7 +491,7 @@ Successfully started Hyperspace
 Successfully started Hypertable.Master
 Successfully started Hypertable.RangeServer
 
-tinweasel:~/hypertable>  bin/hypertable --batch < examples/hql_tutorial/Pages-create.hql 
+tinweasel:~/hypertable>  bin/ht hypertable --batch < examples/hql_tutorial/Pages-create.hql 
 CREATE TABLE Pages (
 date,
 "refer-url",
