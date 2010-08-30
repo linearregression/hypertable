@@ -1,0 +1,36 @@
+#summary List of API changes made in 0.9.4.0
+
+
+===1. Thrift API===
+
+We've introduced namespaces, so you need to first open a namespace.  If you aren't using namespaces, you can just open up the root namespace as follows:
+
+ns = client.open_namespace("/");
+
+Then you pass the namespace object as the first argument to all the Thrift methods:
+
+res = client.hql_query(ns, "create table thrift_test ( col )");
+client.put_cell(ns, "thrift_test", mutate_spec, cell);
+
+===2. HQL Changes===
+
+We moved the table options in the CREATE TABLE statement from the beginning of the statement to the end to be consistent with the way MySQL does it:
+
+old:
+CREATE TABLE [table_options] <name> ( ... )
+
+new:
+CREATE TABLE <name> ( ... ) [table_options]
+
+
+= Introduction =
+
+Add your content here.
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
