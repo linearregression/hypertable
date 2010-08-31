@@ -7,6 +7,7 @@ The example shown here is to upgrade from 0.9.0.0-alpha to 0.9.0.1-alpha. Adapt 
     * Update version number in `conf/Capfile.*`
     * Run `make doc` and try to eliminate doxygen warnings
     * Update README to point to new thrift, if needed
+    * Modify `bin/upgrade-ok.sh` if necessary
   # Test all changes in the 'next' branch
     * First get all changes into 'next'
     * Make sure the version number is correct (e.g. 0.9.0.1 here) in the top-level CMakeLists.txt
