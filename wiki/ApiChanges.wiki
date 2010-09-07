@@ -4,10 +4,10 @@
 
 We've introduced namespaces, so you need to first open a namespace and pass the namespace object down into all of the APIs.  See the following list of Thrift Client examples to get an idea of how to use namespaces in various languages.
 
-  [http://www.hypertable.org/pub/code-examples/client_test.java.txt Thrift Client Example - Java]
-  [http://www.hypertable.org/pub/code-examples/client_test.pl.txt Thrift Client Example - Perl]
-  [http://www.hypertable.org/pub/code-examples/client_test.pl.txt Thrift Client Example - Python]
-  [http://www.hypertable.org/pub/code-examples/client_test.pl.txt Thrift Client Example - Ruby]
+  * [http://www.hypertable.org/pub/code-examples/client_test.java.txt Thrift Client Example - Java]
+  * [http://www.hypertable.org/pub/code-examples/client_test.pl.txt Thrift Client Example - Perl]
+  * [http://www.hypertable.org/pub/code-examples/client_test.pl.txt Thrift Client Example - Python]
+  * [http://www.hypertable.org/pub/code-examples/client_test.pl.txt Thrift Client Example - Ruby]
 
 ===2. Thrift API:  put -> offer===
 
@@ -18,7 +18,7 @@ The API methods beginning with `put_` have been renamed to `offer_` to emphasize
 We moved the table options in the CREATE TABLE statement from the beginning of the statement to the end to be consistent with the way MySQL does it:
 
 old:
-CREATE TABLE [table_options] `<`name`>` ( ... )
+CREATE TABLE `[`table_options`]` `<`name`>` ( ... )
 
 new:
-CREATE TABLE `<`name`>` ( ... ) [table_options]
+CREATE TABLE `<`name`>` ( ... ) `[`table_options`]`
