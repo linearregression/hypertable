@@ -40,36 +40,30 @@ hypertable>
 Start with a simple 'help':
 
 {{{
-hypertable> help
 
-For information about Hypertable, visit http://www.hypertable.org/
+hypertable> help;
 
-Interpreter Commands
---------------------
-?          (\?) Synonym for `help'.
-clear      (\c) Clear command.
-exit       (\q) Exit hypertable. Same as quit.
-print      (\p) Print current command.
-quit       (\q) Quit hypertable.
-source <f> (.)  Execute all HQL commands in file <f>.
-system     (\!) Execute a system shell command.
-
-HQL Statements
---------------
+USE ................ Sets the current namespace
+CREATE NAMESPACE ... Creates a new namespace
+DROP NAMESPACE ..... Removes a namespace
+EXISTS TABLE ....... Check if table exists
 CREATE TABLE ....... Creates a table
 DELETE ............. Deletes all or part of a row from a table
 DESCRIBE TABLE ..... Displays a table's schema
 DROP TABLE ......... Removes a table
+RENAME TABLE ....... Renames a table
+DUMP TABLE ......... Create efficient backup file
 ALTER TABLE ........ Add/remove column family from existing table
 INSERT ............. Inserts data into a table
 LOAD DATA INFILE ... Loads data from a TSV input file into a table
 SELECT ............. Selects (and display) cells from a table
 SHOW CREATE TABLE .. Displays CREATE TABLE command used to create table
-SHOW TABLES ........ Displays the list of tables
+SHOW TABLES ........ Displays only the list of tables in the current namespace
+GET LISTING ........ Displays the list of tables and namespace in the current namespace
 SHUTDOWN ........... Shuts servers down gracefully
 
-Statements must be terminated with ';' to execute.  For more information on
-a specific statement, type 'help <statement>', where <statement> is one from
+Statements must be terminated with ';'.  For more information on
+a specific statement, type 'help <statement>', where <statement> is from
 the preceeding list.
 
 }}}
@@ -80,9 +74,22 @@ For this example we're working with a simplified access log that contains four c
 
 The file is under `examples/hql_tutorial/access.tsv` and you'll need to unzip it first if it's still compressed. _NOTE: `LOAD DATA INFILE` will a compressed file option soon._
 
-==CREATE TABLE==
+==USE==
+First, we need to open a namespace within which we will operate on tables. A Hypertable namespace is roughly analogous to a "database" in a system like MySQL. One difference is that a namespace can contain other namespaces in addition to tables. To start using the root namespace:
+{{{
+hypertable> use "/";
+}}}
 
-First, we need to create a table to hold the data from our simplified access log -- we'll call it `Pages`:
+==CREATE NAMESPACE==
+
+To create a new namespace and use it:
+{{{
+hypertable> create namespace "Tutorial";
+hypertable> use Tutorial;
+}}}
+
+==CREATE TABLE==
+Now that we have created and opened the "Tutorial" namespace we can create a table within it. To create a table to hold the data from our simplified access log -- we'll call it `Pages`:
 
 {{{
 hypertable> create table Pages ( date, "refer-url", "http-code");
@@ -432,14 +439,29 @@ Now, we want to get rid of our table so we'll use DROP TABLE to do that -- first
 
 {{{
 hypertable> show tables;
-METADATA
 PAGES
 hypertable> drop table Pages;
 hypertable> show tables;
-METADATA
 }}}
 
 The name of the table is case insensitive. 
+
+==GET LISTING & DROP NAMESPACE==
+Now, if you want to get rid of the Tutorial namespace and verify that you have:
+
+{{{
+hypertable> use "/";
+hypertable> get listing;
+Tutorial	(namespace)
+sys	(namespace)
+hypertable> drop namespace Tutorial;
+hypertable> get listing;
+sys	(namespace)
+}}}
+
+The "sys" namespace is used by the Hypertable system and should not be used to contain user tables.
+
+Note that a namespace must be empty (ie must not contain any sub-namespaces or tables) before you can drop it. In this case since we had already dropped the "Pages" table, we could go ahead and drop the "Tutorial" namespace.
 
 ==BATCH MODE AND SOURCE==
 
@@ -522,7 +544,8 @@ You can examine the file in `examples/hql_tutorial/Pages-create.hql` to verify t
 
 {{{
 
-tinweasel:~/hypertable>  cat examples/hql_tutorial/Pages-create.hql 
+tinweasel:~/hypertable>  cat examples/hql_tutorial/Pages-create.hql
+USE "/"; 
 CREATE TABLE Pages (
        date,
        "refer-url",
