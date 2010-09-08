@@ -95,6 +95,11 @@ list of shell meta commands.
 
 hypertable> 
 }}}
+Create and use a namespace called "bar"
+{{{
+hypertable> create namespace bar;
+hypertable> use bar;
+}}}
 Create a table named "foo"
 {{{
 hypertable> create table foo ( c1, c2 );
@@ -102,7 +107,6 @@ hypertable> create table foo ( c1, c2 );
 Show the tables.
 {{{
 hypertable> show tables;
-METADATA
 foo
 }}}
 Insert some data into table "foo".
@@ -121,7 +125,11 @@ Drop table "foo"
 {{{
 hypertable> drop table foo;
 }}}
-
+Drop namespace "bar"
+{{{
+hypertable> use "/";
+hypertable> drop namespace bar;
+}}}
 Finally, to shut everything down, use the stop-servers command:
 
 {{{
@@ -369,16 +377,19 @@ Hypertable backup and restore are accomplished with the HQL commands DUMP TABLE 
 {{{
 #!/usr/bin/env bash
 
-if [ $# -lt 1 ] ; then
-    echo "usage: $0 <tablename> [ <tablename> ... ]"
+if [ $# -lt 2 ] ; then
+    echo "usage: $0 <namespace> <tablename> [ <tablename> ... ]"
     exit 0
 fi
 
+namespace=$1
+shift
 while [ $# -ge 1 ]; do
-    echo "Backing up '$1' ..."
-    echo "SHOW CREATE TABLE '$1';" | /opt/hypertable/current/bin/ht shell --silent > create-table-$1.hql
+    echo "Backing up '${namespace}/$1' ..."
+    echo "USE '${namespace}';" > create-table-$1.hql
+    echo "USE '${namespace}'; SHOW CREATE TABLE '$1';" | /opt/hypertable/current/bin/ht shell --silent >> create-table-$1.hql
     echo ";" >> create-table-$1.hql
-    echo "DUMP TABLE '$1' INTO FILE '$1.gz';" | /opt/hypertable/current/bin/ht shell
+    echo "USE '${namespace}'; DUMP TABLE '$1' INTO FILE '$1.gz';" | /opt/hypertable/current/bin/ht shell
     shift
 done
 }}}
@@ -386,16 +397,19 @@ done
 {{{
 #!/usr/bin/env bash
 
-if [ $# -lt 1 ] ; then
-    echo "usage: $0 <backup-file> [ <backup-file> ... ]"
+if [ $# -lt 2 ] ; then
+    echo "usage: $0 <namespace> <backup-file> [ <backup-file> ... ]"
     exit 0
 fi
 
+namespace=$1
+shift
+
 while [ $# -ge 1 ]; do
     table=`basename $1 | cut -f1 -d'.'`
-    echo "Restoring '$table' ..."
+    echo "Restoring '${namespace}/${table}' ..."
     cat create-table-$1.hql | /opt/hypertable/current/bin/ht shell
-    echo "LOAD DATA INFILE '$1' INTO TABLE '$table';" | /opt/hypertable/current/bin/ht shell
+    echo "USE '${namespace}'; LOAD DATA INFILE '$1' INTO TABLE '$table';" | /opt/hypertable/current/bin/ht shell
     shift
 done
 }}}
