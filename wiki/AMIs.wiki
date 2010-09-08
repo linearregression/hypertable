@@ -3,7 +3,7 @@
 || *Architectue System Version* || *Machine Image Identifier* || *Installed Software* ||
 || i386 CentOS 5.2 || `ami-b8b742d1` || Boost 1.43, Hyperic SIGAR 1.6.3, BerkeleyDB 4.8, KFS 0.5, Ceph 0.21.2, JDK 6 update 21, ant 1.8.0, tcpdump, tcptrace, netperf, Capistrano, dstat, oprofile, iozone, gdb, rrdtool, Hadoop CDH3, Hadoop 0.21 ||
 || x86_64 CentOS 5.2 || `x` || Boost 1.43, Hyperic SIGAR 1.6.3, BerkeleyDB 4.8, KFS 0.5, Ceph 0.21.2, JDK 6 update 21, ant 1.8.1, tcpdump, tcptrace, netperf, dstat, oprofile, iozone, gdb, rrdtool, Hadoop CDH3, Hadoop 0.21 ||
-|| i386 Ubuntu 8.04 || `x` || Boost 1.40, Hyperic SIGAR 1.6.3, BerkeleyDB 4.8, KFS 0.5, Ceph 0.20.2, JDK 6 update 21, ant 1.7.1, Google perftools 1.5, tcpdump, tcptrace, netperf, dstat, oprofile, iozone, gdb, rrdtool, Hadoop CDH3, Hadoop 0.21 ||
+|| i386 Ubuntu 8.10 || `x` || Boost 1.40, Hyperic SIGAR 1.6.3, BerkeleyDB 4.8, KFS 0.5, Ceph 0.20.2, JDK 6 update 21, ant 1.7.1, Google perftools 1.5, tcpdump, tcptrace, netperf, dstat, oprofile, iozone, gdb, rrdtool, Hadoop CDH3, Hadoop 0.21 ||
 
 _Older AMIs:_
 || i386 CentOS 5.2 || `ami-d09378b9` || Boost 1.43, Hyperic SIGAR 1.6.3, BerkeleyDB 4.8, KFS 0.5, Ceph 0.20.2, JDK 6 update 17, ant 1.8.0, tcpdump, tcptrace, netperf, Capistrano, dstat, oprofile, iozone, gdb ||
