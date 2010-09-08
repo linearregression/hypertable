@@ -13,7 +13,16 @@ We've introduced namespaces, so you need to first open a namespace and pass the 
 
 The API methods beginning with `put_` have been renamed to `offer_` to emphasize the fact that the method returns before the operation completes and the application does not know whether or not the operation was successful.
 
-===2. HQL Changes===
+===3. Thrift API:  get_schema -> get_schema_str===
+
+The ThriftClient API method `get_schema` has changed semantics.  It now returns a schema object.  The new method `get_schema_str` will return the schema in string form.  The following are the new method signatures:
+
+{{
+  string get_schema_str(1:Namespace ns, 2:string table_name) throws (1:ClientException e)
+  Schema get_schema(1:Namespace ns, 2:string table_name) throws (1:ClientException e)
+}}
+
+===4. HQL Changes===
 
 We moved the table options in the CREATE TABLE statement from the beginning of the statement to the end to be consistent with the way MySQL does it:
 
