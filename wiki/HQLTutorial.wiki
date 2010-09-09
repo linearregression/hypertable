@@ -75,7 +75,7 @@ For this example we're working with a simplified access log that contains four c
 The file is under `examples/hql_tutorial/access.tsv` and you'll need to unzip it first if it's still compressed. _NOTE: `LOAD DATA INFILE` will a compressed file option soon._
 
 ==USE==
-First, we need to open a namespace within which we will operate on tables. A Hypertable namespace is roughly analogous to a "database" in a system like MySQL. One difference is that a namespace can contain other namespaces in addition to tables. To start using the root namespace:
+First, we need to open a namespace within which we will operate on tables. A Hypertable namespace is roughly analogous to a "database" in a system like MySQL. A major is that a namespace can contain other namespaces in addition to tables. To start using the root namespace:
 {{{
 hypertable> use "/";
 }}}
@@ -447,7 +447,7 @@ hypertable> show tables;
 The name of the table is case insensitive. 
 
 ==GET LISTING & DROP NAMESPACE==
-Now, if you want to get rid of the Tutorial namespace and verify that you have:
+Now, we want to get rid of the "Tutorial" namespace and verify that we have:
 
 {{{
 hypertable> use "/";
