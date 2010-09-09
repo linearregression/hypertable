@@ -1033,7 +1033,7 @@ The "sys" namespace is used by the Hypertable system and should not be used to c
 
 Note that a namespace must be empty (ie must not contain any sub-namespaces or tables) before you can drop it. In this case since we had already dropped the "Pages" table, we could go ahead and drop the "Tutorial" namespace.
 
-==!MapReduce Tutorial==
+==Hadoop !MapReduce Tutorial==
 
 In this section, we'll show you how to run a Hadoop !MapReduce program that reads *from* and writes *to* a table in Hypertable.  The program we'll be using is `WikipediaWordCount.java` which can be found in the  `examples/java/org/hypertable/examples/hadoop/mapreduce` directory of the source archive.  It is also compiled into the `hadoop-*-examples.jar` file, contained in the binary packages.  The following is a link to the code:
 
