@@ -1085,7 +1085,7 @@ Addington, Buckinghamshire	username	Roleplayer
 Addington, Buckinghamshire	article	{{infobox UK place \n|country = England\n|latitude=51.95095\n|longitude=-0.92177\n|official_name= Addington\n| population = 145 ...
 }}}
 
-Now run the WikipediaWordCount MapReduce program:
+Now run the !WikipediaWordCount !MapReduce program:
 
 {{{
 /opt/hadoop/current/bin/hadoop jar /opt/hypertable/current/lib/java/hypertable-0.9.4.0-examples.jar org.hypertable.examples.WikipediaWordCount -Dmapred.local.dir="/mnt/hadoop/mapred/local" --columns=article
