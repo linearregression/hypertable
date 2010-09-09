@@ -453,20 +453,25 @@ hypertable>
 
 Get help:
 {{{
-hypertable> help
+hypertable> help;
 
+USE ................ Sets the current namespace
+CREATE NAMESPACE ... Creates a new namespace
+DROP NAMESPACE ..... Removes a namespace
 EXISTS TABLE ....... Check if table exists
 CREATE TABLE ....... Creates a table
 DELETE ............. Deletes all or part of a row from a table
 DESCRIBE TABLE ..... Displays a table's schema
 DROP TABLE ......... Removes a table
+RENAME TABLE ....... Renames a table
 DUMP TABLE ......... Create efficient backup file
 ALTER TABLE ........ Add/remove column family from existing table
 INSERT ............. Inserts data into a table
 LOAD DATA INFILE ... Loads data from a TSV input file into a table
 SELECT ............. Selects (and display) cells from a table
 SHOW CREATE TABLE .. Displays CREATE TABLE command used to create table
-SHOW TABLES ........ Displays the list of tables
+SHOW TABLES ........ Displays only the list of tables in the current namespace
+GET LISTING ........ Displays the list of tables and namespace in the current namespace
 SHUTDOWN ........... Shuts servers down gracefully
 
 Statements must be terminated with ';'.  For more information on
@@ -475,9 +480,21 @@ the preceeding list.
 
 }}}
 
-===CREATE TABLE===
+==USE==
+First, we need to open a namespace within which we will operate on tables. A Hypertable namespace is roughly analogous to a "database" in a system like MySQL. A major difference is that a namespace can contain other namespaces in addition to tables. To start using the root namespace:
+{{{
+hypertable> use "/";
+}}}
 
-In this tutorial we will be loading data into, and querying data from, two separate tables.  The first table, `QueryLogByUserID`, will be indexed by the fields UserID+!QueryTime and the second table, `QueryLogByTimestamp`, will be indexed by the fields !QueryTime+UserID.  Notice that any identifier that contains non-alphanumeric characters (e.g. '-') must be surrounded by quotes.
+==CREATE NAMESPACE==
+
+To create a new namespace and use it:
+{{{
+hypertable> create namespace "Tutorial";
+hypertable> use Tutorial;
+}}}
+===CREATE TABLE===
+Now that we have created and opened the "Tutorial" namespace we can create tables within it. In this tutorial we will be loading data into, and querying data from, two separate tables.  The first table, `QueryLogByUserID`, will be indexed by the fields UserID+!QueryTime and the second table, `QueryLogByTimestamp`, will be indexed by the fields !QueryTime+UserID.  Notice that any identifier that contains non-alphanumeric characters (e.g. '-') must be surrounded by quotes.
 
 {{{
 hypertable> CREATE TABLE QueryLogByUserID (
@@ -502,10 +519,9 @@ See the [http://www.hypertable.org/hql/create-table.html HQL Documentation: CREA
 
 ===SHOW TABLES===
 
-Show all of the tables that exist in the system:
+Show all of the tables that exist in the current namespace:
 {{{
 hypertable> show tables;
-METADATA
 QueryLogByUserID
 QueryLogByTimestamp
 
@@ -987,6 +1003,36 @@ QueryLogByTimestamp
 
   Elapsed time:  1.88 s
 }}}
+
+
+==GET LISTING & DROP NAMESPACE==
+Now, we want to get rid of the "Tutorial" namespace and verify that we have:
+
+{{{
+hypertable> use "/";
+
+  Elapsed time:  0.00 s
+hypertable> get listing;
+Tutorial	(namespace)
+sys	(namespace)
+
+  Elapsed time:  0.41 s
+hypertable> drop namespace Tutorial;
+
+  Elapsed time:  2.04 s
+hypertable> drop namespace Tutorial;
+
+  Elapsed time:  2.04 s
+hypertable> get listing;
+sys	(namespace)
+
+  Elapsed time:  0.52 s
+}}}
+
+The "sys" namespace is used by the Hypertable system and should not be used to contain user tables.
+
+Note that a namespace must be empty (ie must not contain any sub-namespaces or tables) before you can drop it. In this case since we had already dropped the "Pages" table, we could go ahead and drop the "Tutorial" namespace.
+
 
 ==Appendix A. Building from Source==
 
