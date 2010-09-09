@@ -1184,7 +1184,14 @@ fi
 exit 0
 }}}
 
-Run the Hadoop streaming job as follows:
+Use the following HQL command to load the Wikipedia sample dump into the _wikipedia_ table.  Notice the `NO_ESCAPE` option.  This option is necessary for Hadoop Streaming, since each key/value pair must occupy a single line.  The `NO_ESCAPE` option prevents the loader from un-escaping characters in the `tsv` input.
+
+{{{
+USE "/";
+load data infile NO_ESCAPE 'wikipedia-sample.tsv' into table wikipedia;
+}}}
+
+And then run the Hadoop streaming job as follows:
 
 {{{
 /opt/hadoop/current/bin/hadoop jar /opt/hadoop/current/contrib/streaming/hadoop-streaming-0.20.2+320.jar \
@@ -1193,6 +1200,8 @@ Run the Hadoop streaming job as follows:
     -Dhypertable.mapreduce.output.table=wikipedia \
     -mapper "/home/doug/tokenize-article.sh" \
     -reducer "/home/doug/reduce-word-counts.sh" \
+    -file "/home/doug/tokenize-article.sh" \
+    -file "/home/doug/reduce-word-counts.sh" \ 
     -inputformat org.hypertable.hadoop.mapred.TextTableInputFormat \
     -outputformat org.hypertable.hadoop.mapred.TextTableOutputFormat \
     -input wikipedia -output wikipedia
