@@ -1033,6 +1033,15 @@ The "sys" namespace is used by the Hypertable system and should not be used to c
 
 Note that a namespace must be empty (ie must not contain any sub-namespaces or tables) before you can drop it. In this case since we had already dropped the "Pages" table, we could go ahead and drop the "Tutorial" namespace.
 
+==MapReduce Tutorial==
+
+In this section, we'll show you how to run a Hadoop MapReduce program that reads _from_ and writes _to_ a table in Hypertable.  The program that we'll be using is `WikipediaWordCount.java` which can be found in the  `examples/java/org/hypertable/examples/hadoop/mapreduce` directory of the source archive.  It is also compiled into the `hadoop-*-examples.jar` file that is contained in the binary packages.  The following is a link to the code:
+
+[http://www.hypertable.org/pub/WikipediaWordCount.java.txt WikipediaWordCount.java]
+
+This program assumes there exists a table called _wikipedia_ that has been loaded with a Wikipedia dump.  It reads the _article_ column, tokenizes it, and populates the _word_ column of the same table.  Each unique word in the article turns into a qualified column and the value is the number of times the word appears in the article.
+
+
 ==Appendix A. Monitoring UI==
 
 Hypertable provides a Monitoring UI server which can be used to monitor the state and load on the RangeServers. The Monitoring UI is written in Ruby and uses the Ruby RRDTool bindings. The Monitoring server is meant to be run on the Hypertable Master server. To install the Ruby RRDTool bindings, you will need to:
