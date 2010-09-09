@@ -1141,6 +1141,8 @@ Addington, Buckinghamshire	word:Census	1
 [...]
 }}}
 
+==Hadoop !MapReduce Streaming Tutorial==
+
 ==Appendix A. Monitoring UI==
 
 Hypertable provides a Monitoring UI server which can be used to monitor the state and load on the !RangeServers. The Monitoring UI is written in Ruby and uses the Ruby RRDTool bindings. The Monitoring server is meant to be run on the Hypertable Master server. To install the Ruby RRDTool bindings, you will need to:
