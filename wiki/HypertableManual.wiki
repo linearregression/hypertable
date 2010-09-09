@@ -1041,10 +1041,21 @@ In this section, we'll show you how to run a Hadoop !MapReduce program that read
 
 This program assumes there exists a table called _wikipedia_ that has been loaded with a Wikipedia dump.  It reads the _article_ column, tokenizes it, and populates the _word_ column of the same table.  Each unique word in the article turns into a qualified column and the value is the number of times the word appears in the article.
 
+The first step is to get Hadoop up and running and then launch Hypertable on top of Hadoop.  This can be done through Capistrano as described in [#Installing_Hypertable_via_Binary_Packages]
+
+The first step is to download the Wikipedia sample dump.  This dump has been converted into `.tsv` format that is digestible by LOAD DATA INFILE.
+
+{{{
+wget https://s3.amazonaws.com/hypertable-data/wikipedia-sample.tsv.bz2
+bzip2 -d wikipedia-sample.tsv.bz2
+}}}
+
+
+
 
 ==Appendix A. Monitoring UI==
 
-Hypertable provides a Monitoring UI server which can be used to monitor the state and load on the RangeServers. The Monitoring UI is written in Ruby and uses the Ruby RRDTool bindings. The Monitoring server is meant to be run on the Hypertable Master server. To install the Ruby RRDTool bindings, you will need to:
+Hypertable provides a Monitoring UI server which can be used to monitor the state and load on the !RangeServers. The Monitoring UI is written in Ruby and uses the Ruby RRDTool bindings. The Monitoring server is meant to be run on the Hypertable Master server. To install the Ruby RRDTool bindings, you will need to:
   # [http://oss.oetiker.ch/rrdtool/pub/?M=D Download the RRDTool source], and untarzip. Say the source is in the dir $RRDTOOL_SRC  
   # cd $RRDTOOL_SRC/bindings/ruby
   # Follow the instructions in the README. You might have to tweak the location of the RRDTool libraries in extconf.rb for your system. For example you might have to change it to something like: 
