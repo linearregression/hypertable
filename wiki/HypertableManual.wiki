@@ -480,13 +480,13 @@ the preceeding list.
 
 }}}
 
-==USE==
+===USE===
 First, we need to open a namespace within which we will operate on tables. A Hypertable namespace is roughly analogous to a "database" in a system like MySQL. A major difference is that a namespace can contain other namespaces in addition to tables. To start using the root namespace:
 {{{
 hypertable> use "/";
 }}}
 
-==CREATE NAMESPACE==
+===CREATE NAMESPACE===
 
 To create a new namespace and use it:
 {{{
@@ -1005,7 +1005,7 @@ QueryLogByTimestamp
 }}}
 
 
-==GET LISTING & DROP NAMESPACE==
+===GET LISTING & DROP NAMESPACE===
 Now, we want to get rid of the "Tutorial" namespace and verify that we have:
 
 {{{
