@@ -1143,6 +1143,175 @@ Addington, Buckinghamshire	word:Census	1
 
 ==Hadoop !MapReduce Streaming Tutorial==
 
+In this section, we'll show you how to run a Hadoop !MapReduce job using the Hadoop Streaming interface.  Like the previous example, this one reads *from* and writes *to* a table in Hypertable, but uses a Bash script as the mapper and a Bash script as the reducer.  The mapper script (`tokenize-article.sh`) and the reducer script (`reduce-word-counts.sh`) are show below
+
+===Mapper script (`tokenize-article.sh`)===
+
+{{{
+#!/usr/bin/env bash
+
+IFS="	"
+read name column article
+
+while [ $? == 0 ] ; do
+
+  if [ "$column" == "article" ] ; then
+
+    # Strip punctuation
+    stripped_article=`echo $article | awk 'BEGIN { FS="\t" } { print $NF }' | tr "\!\"#\$&'()*+,-./:;<=>?@[\\\\]^_\{|}~" " " | tr -s " "` ;
+
+    # Split article into words
+    echo $stripped_article | awk -v name="$name" 'BEGIN { article=name; FS=" "; } { for (i=1; i<=NF; i++) printf "%s\tword:%s\t1\n", article, $i; }' ;
+
+  fi
+
+  # Read another line
+  read name column article
+
+done
+
+exit 0
+}}}
+
+===Reducer script (`reduce-word-counts.sh`)===
+{{{
+#!/usr/bin/env bash
+
+last_article=
+last_word=
+let total=0
+
+IFS="	"
+read article word count
+
+while [ $? == 0 ] ; do
+    if [ "$article" == "$last_article" ] && [ "$word" == "$last_word" ] ; then
+        let total=$count+total
+    else
+        if [ "$last_word" != "" ]; then
+            echo "$last_article	$last_word	$total"
+        fi
+        let total=$count
+        last_word=$word
+        last_article=$article
+    fi
+    read article word count
+done
+
+if [ $total -ge 0 ] ; then
+    echo "$last_article	$last_word	$total"
+fi
+
+exit 0
+}}}
+
+
+  The program we'll be using is `WikipediaWordCount.java` which can be found in the  `examples/java/org/hypertable/examples/hadoop/mapreduce` directory of the source archive.  It is also compiled into the `hadoop-*-examples.jar` file, contained in the binary packages.  The following is a link to the code:
+
+[http://www.hypertable.org/pub/code-examples/WikipediaWordCount.java.txt WikipediaWordCount.java]
+
+This program assumes there exists a table called _wikipedia_ that has been loaded with a Wikipedia dump.  It reads the _article_ column, tokenizes it, and populates the _word_ column of the same table.  Each unique word in the article turns into a qualified column and the value is the number of times the word appears in the article.
+
+The first step is to get Hadoop up and running.  After that, Hypertable needs to be launched on top of Hadoop, which can be done through Capistrano as described in [#Up_and_Running_with_HDFS], or if just running a local instance of Hadoop, can be launched with:
+
+{{{
+/opt/hypertable/current/bin/ht start-all-servers hadoop
+}}}
+
+Download and uncompress the Wikipedia sample dump.  This dump has been converted into `.tsv` format, digestible by LOAD DATA INFILE.
+
+{{{
+wget https://s3.amazonaws.com/hypertable-data/wikipedia-sample.tsv.bz2
+bzip2 -d wikipedia-sample.tsv.bz2
+}}}
+
+Create the _wikipedia_ table by executing the following commands in the hypertable shell:
+
+{{{
+USE "/";
+DROP TABLE IF EXISTS wikipedia;
+CREATE TABLE wikipedia (
+       title,
+       id,
+       username,
+       article,
+       word
+);
+}}}
+
+Then load the Wikipedia sample dump into the _wikipedia_ table:
+
+{{{
+USE "/";
+load data infile 'wikipedia-sample.tsv' into table wikipedia;
+}}}
+
+To get an idea of what the data looks like, try the following select:
+
+{{{
+hypertable> select * from wikipedia where row =^ "Addington";
+Addington, Buckinghamshire	title	Addington, Buckinghamshire
+Addington, Buckinghamshire	id	377201
+Addington, Buckinghamshire	username	Roleplayer
+Addington, Buckinghamshire	article	{{infobox UK place \n|country = England\n|latitude=51.95095\n|longitude=-0.92177\n|official_name= Addington\n| population = 145 ...
+}}}
+
+Now run the !WikipediaWordCount !MapReduce program:
+
+{{{
+/opt/hadoop/current/bin/hadoop jar /opt/hypertable/current/lib/java/hypertable-0.9.4.0-examples.jar org.hypertable.examples.WikipediaWordCount -Dmapred.local.dir="/mnt/hadoop/mapred/local" --columns=article
+}}}
+
+To verify that it worked, try selecting for the the _word_column:
+
+{{{
+hypertable> select word from wikipedia where row =^ "Addington";
+Addington, Buckinghamshire	word:0	4
+Addington, Buckinghamshire	word:01296	1
+Addington, Buckinghamshire	word:1	4
+Addington, Buckinghamshire	word:1001x1003x1004	1
+Addington, Buckinghamshire	word:1086	1
+Addington, Buckinghamshire	word:1216594238312	1
+Addington, Buckinghamshire	word:145	2
+Addington, Buckinghamshire	word:15	1
+Addington, Buckinghamshire	word:16	1
+Addington, Buckinghamshire	word:1666	1
+Addington, Buckinghamshire	word:1940	1
+Addington, Buckinghamshire	word:1945	1
+Addington, Buckinghamshire	word:19th	1
+Addington, Buckinghamshire	word:2	1
+Addington, Buckinghamshire	word:2001	2
+Addington, Buckinghamshire	word:2005	1
+Addington, Buckinghamshire	word:3	2
+Addington, Buckinghamshire	word:424507	1
+Addington, Buckinghamshire	word:5	1
+Addington, Buckinghamshire	word:51	1
+Addington, Buckinghamshire	word:7	1
+Addington, Buckinghamshire	word:779	1
+Addington, Buckinghamshire	word:792007	1
+Addington, Buckinghamshire	word:92177	1
+Addington, Buckinghamshire	word:95095	1
+Addington, Buckinghamshire	word:9550883	1
+Addington, Buckinghamshire	word:A	1
+Addington, Buckinghamshire	word:Abbey	1
+Addington, Buckinghamshire	word:Abbotts	1
+Addington, Buckinghamshire	word:According	1
+Addington, Buckinghamshire	word:Addington	6
+Addington, Buckinghamshire	word:Adstock	1
+Addington, Buckinghamshire	word:Aston	1
+Addington, Buckinghamshire	word:Aylesbury	3
+Addington, Buckinghamshire	word:BUCKINGHAM	1
+Addington, Buckinghamshire	word:Bayeux	2
+Addington, Buckinghamshire	word:Bene	1
+Addington, Buckinghamshire	word:Bishop	1
+Addington, Buckinghamshire	word:Book	2
+Addington, Buckinghamshire	word:Buckingham	3
+Addington, Buckinghamshire	word:Buckinghamshire	10
+Addington, Buckinghamshire	word:Category	3
+Addington, Buckinghamshire	word:Census	1
+[...]
+}}}
+
 ==Appendix A. Monitoring UI==
 
 Hypertable provides a Monitoring UI server which can be used to monitor the state and load on the !RangeServers. The Monitoring UI is written in Ruby and uses the Ruby RRDTool bindings. The Monitoring server is meant to be run on the Hypertable Master server. To install the Ruby RRDTool bindings, you will need to:
