@@ -50,7 +50,7 @@ Avg value size:  11.50 bytes
   # Create Hive table and query via Hive QL:
 {{{
 > $HIVE_HOME/bin/hive --auxpath $HT_HOME/lib/java/hypertable-0.9.3.2.jar,$HT_HOME/lib/java/libthrift-0.3.0.jar
-hive> CREATE EXTERNAL TABLE ht_table(key INT, value MAP<STRING, STRING>) STORED BY 'org.hypertable.hadoop.hive.HTStorageHandler' with SERDEPROPERTIES ("hypertable.columns.mapping" = "address:") TBLPROPERTIES ("hypertable.table.name"="HiveTest");
+hive> CREATE EXTERNAL TABLE ht_table(key INT, value MAP<STRING, STRING>) STORED BY 'org.hypertable.hadoop.hive.HTStorageHandler' with SERDEPROPERTIES ("hypertable.columns.mapping" = "address:") TBLPROPERTIES ("hypertable.table.name"="HiveTest", "hypertable.table.namespace"="/");
 OK
 Time taken: 4.335 seconds
 hive> SELECT * FROM ht_table;
