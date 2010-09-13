@@ -35,12 +35,36 @@ The !ThriftClient API method `get_schema` has changed semantics.  It now returns
   Schema get_schema(1:Namespace ns, 2:string table_name) throws (1:ClientException e)
 }}}
 
-===5. HQL Changes===
+===5. HQL:  Namespaces===
+
+All table create, query, and modify operations now happen relative to a namespace.  There is now a CREATE NAMESPACE command that allows you to create a namespace.  Namespaces can be nested.  There is a default toplevel namespace called "/".  To operate in the toplevel namespace execute the following command first:
+
+{{{
+USE "/";
+}}}
+
+Or if you would prefer to move your tables into a namespace, create it first:
+
+{{{
+CREATE NAMESPACE "/foo";
+}}}
+
+And then add the following command to the top of your scripts:
+
+{{{
+USE "/foo";
+}}}
+
+===6. HQL:  CREATE TABLE option placement===
 
 We moved the table options in the CREATE TABLE statement from the beginning of the statement to the end to be consistent with the way MySQL does it:
 
 old:
-CREATE TABLE `[`table_options`]` `<`name`>` ( ... )
+{{{
+CREATE TABLE [table_options] <name> ( ... )
+}}}
 
 new:
-CREATE TABLE `<`name`>` ( ... ) `[`table_options`]`
+{{{
+CREATE TABLE <name> ( ... ) [table_options]
+}}}
