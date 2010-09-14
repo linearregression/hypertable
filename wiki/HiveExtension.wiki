@@ -14,7 +14,7 @@ The storage handler is included in the `$HT_HOME/lib/java/hypertable-*.jar` file
 Lets look at running the Hypertable storage handler via the Hive CLI. In order to do this you must do the following:
   # Have a !ThriftBroker running locally which is connected to your Hypertable cluster.
   # Modify the HADOOP_CLASSPATH in your hadoop-env.sh to include the Thrift jar required by Hypertable. You probably have to restart Hadoop Mapreduce for this to take effect. For example:
-    * Edit $HADOOP_HOME/conf/hadoop-env.sh: `export HADOOP_CLASSPATH=/opt/hypertable/current/lib/java/libthrift-0.3.0.jar:${HADOOP_CLASSPATH}`
+    * Edit $HADOOP_HOME/conf/hadoop-env.sh: `export HADOOP_CLASSPATH=/opt/hypertable/current/lib/java/libthrift-0.4.0.jar:${HADOOP_CLASSPATH}`
     * `$HADOOP_HOME/bin/stop-mapred.sh; $HADOOP_HOME/bin/start-mapred.sh`
 
 Here is an example of a Hive CLI session which uses the Hypertable storage handler:
@@ -49,7 +49,7 @@ Avg value size:  11.50 bytes
 }}}
   # Create Hive table and query via Hive QL:
 {{{
-> $HIVE_HOME/bin/hive --auxpath $HT_HOME/lib/java/hypertable-0.9.3.2.jar,$HT_HOME/lib/java/libthrift-0.3.0.jar
+> $HIVE_HOME/bin/hive --auxpath $HT_HOME/lib/java/hypertable-0.9.4.0.jar,$HT_HOME/lib/java/libthrift-0.4.0.jar
 hive> CREATE EXTERNAL TABLE ht_table(key INT, value MAP<STRING, STRING>) STORED BY 'org.hypertable.hadoop.hive.HTStorageHandler' with SERDEPROPERTIES ("hypertable.columns.mapping" = "address:") TBLPROPERTIES ("hypertable.table.name"="HiveTest", "hypertable.table.namespace"="/");
 OK
 Time taken: 4.335 seconds
