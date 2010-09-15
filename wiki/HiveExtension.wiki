@@ -6,6 +6,7 @@ This page describes the Hypertable Hive integration. [http://hadoop.apache.org/h
 It is recommended that users read the 
 [http://wiki.apache.org/hadoop/Hive/StorageHandlers Hive Storage Handler wiki] to understand the capabilities of Hive extensions via storage handlers. Currently the Hypertable storage handler only supports external, non-native tables.
 
+Note: The 0.9.4.0 release has a bug in the Hive extension. Patched jars can be downloaded [http://hypertable.org/pub/hypertable-0.9.4.0-jars.tgz here]. Download and copy the jars to ${HT_HOME}/lib/java. 
 
 = Example =
 For the purpose of this example we'll assume Hypertable, Hadoop and Hive are installed under $HT_HOME, $HADOOP_HOME, $HIVE_HOME respectively. (Hypertable and Hive commands listed below are included in the Hypertable source code under the examples dir along with the sample data file)
