@@ -1212,7 +1212,7 @@ And then run the Hadoop streaming job as follows:
 Hypertable provides a Monitoring UI server which can be used to monitor the state and load on the !RangeServers. The Monitoring UI is written in Ruby and uses the Ruby RRDTool bindings. The Monitoring server is meant to be run on the Hypertable Master server. To install the Ruby RRDTool bindings, you will need to:
   # Install reqd Ruby gems: 
      {{{
-     gem install sinatra rack yaml json titleize
+     gem install sinatra rack thin json titleize
      }}}
   # [http://oss.oetiker.ch/rrdtool/pub/?M=D Download the RRDTool source], and untarzip. Say the source is in the dir $RRDTOOL_SRC  
   # cd $RRDTOOL_SRC/bindings/ruby
