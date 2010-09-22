@@ -6,8 +6,8 @@ We've introduced namespaces, so you need to first open a namespace and pass the 
 
   * [http://www.hypertable.org/pub/code-examples/client_test.java.txt Thrift Client Example - Java]
   * [http://www.hypertable.org/pub/code-examples/client_test.pl.txt Thrift Client Example - Perl]
-  * [http://www.hypertable.org/pub/code-examples/client_test.pl.txt Thrift Client Example - Python]
-  * [http://www.hypertable.org/pub/code-examples/client_test.pl.txt Thrift Client Example - Ruby]
+  * [http://www.hypertable.org/pub/code-examples/client_test.py.txt Thrift Client Example - Python]
+  * [http://www.hypertable.org/pub/code-examples/client_test.rb.txt Thrift Client Example - Ruby]
 
 ===2. Thrift API:  put -> offer===
 
