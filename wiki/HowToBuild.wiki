@@ -80,6 +80,14 @@ wget wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.4.tar.gz
 tar xzvf rrdtool-1.4.4.tar.gz
 cd rrdtool-1.4.4
 CPPFLAGS="-I/usr/include/cairo -I/usr/include/pango-1.0" ./configure --prefix=/usr/local
+make
+make install
+cd bindings/ruby
+# modify the dir_config line in extconf.rb to:
+# dir_config("rrd","../../src","/usr/include/lib")
+make
+make install
+ldconfig
 }}}
 
 
