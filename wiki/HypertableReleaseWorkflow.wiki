@@ -29,17 +29,26 @@ git push # optionally with an origin name
 git push --tags # optionally with an origin name
 }}}
   # Build the binary packages
-    * Build them using the AMIs
+    * Build them using the [http://code.google.com/p/hypertable/wiki/AMIs Hypertable Build AMIs].
+    * Build a release version of the binaries
+{{{
+cd ~/build/hypertable/release
+cmake -DPHPTHRIFT_ROOT=/usr/src/thrift-0.4.0/lib/php/src -DCMAKE_BUILD_TYPE=Release ~/src/hypertable
+make install
+}}}
     * Build the .rpm and .tar.bz on the CentOS 5.2 machines:
 {{{
+cd ~/build/hypertable/release
 ~/src/hypertable/bin/src-utils/htpkg --srcdir ~/src/hypertable --phpdir /usr/src/thrift-0.4.0/lib/php/src RPM TBZ2
 }}}
     * Build the .deb on the Ubuntu machines:
 {{{
+cd ~/build/hypertable/release
 ~/src/hypertable/bin/src-utils/htpkg --srcdir ~/src/hypertable --phpdir /usr/src/thrift-0.4.0/lib/php/src DEB
 }}}
     * Build the .dmg on a new mac:
 {{{
+cd ~/build/hypertable/release
 ~/src/hypertable/bin/src-utils/htpkg --srcdir ~/src/hypertable --phpdir /usr/src/thrift-0.4.0/lib/php/src PackageMaker
 }}}
     * Create a release directory scm.hypertable.org:/pub/download/0.9.0.1  and copy the binary packages into this directory
