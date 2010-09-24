@@ -5,7 +5,7 @@
 
 _EC2:  ami-ccb35ea5_
 
-_Basic Dependencies_
+===Basic Dependencies===
 
 {{{
 rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/x86_64/epel-release-5-3.noarch.rpm
@@ -42,7 +42,7 @@ sh -c "echo '/usr/local/BerkeleyDB.4.8/lib' > /etc/ld.so.conf.d/BerkeleyDB.4.8.c
 /sbin/ldconfig
 }}}
 
-_Thrift Broker Dependencies_
+===Thrift Broker Dependencies===
 
 See this [http://wiki.apache.org/thrift/ThriftInstallation official thrift installation wiki page] for up-to-date installation instructions.  Fetch JDK rpm from [http://java.sun.com/javase/downloads/index.jsp Sun JAVA Download] page
 
@@ -99,7 +99,7 @@ _June 28, 2010_
 
 _Base AMI:  ami-1500e67c_
 
-_Basic Dependencies_
+===Basic Dependencies===
 
 {{{
 rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm
@@ -136,7 +136,7 @@ sh -c "echo '/usr/local/BerkeleyDB.4.8/lib' > /etc/ld.so.conf.d/BerkeleyDB.4.8.c
 /sbin/ldconfig
 }}}
 
-_Thrift Broker Dependencies_
+===Thrift Broker Dependencies===
 
 See this [http://wiki.apache.org/thrift/ThriftInstallation official thrift installation wiki page] for up-to-date installation instructions.  Fetch JDK rpm from [http://java.sun.com/javase/downloads/index.jsp Sun JAVA Download] page
 
@@ -163,7 +163,7 @@ make install
 /sbin/ldconfig
 }}}
 
-_Monitoring_
+===Monitoring===
 
 {{{
 cd ~
@@ -282,7 +282,7 @@ cmake -DHT_DEPENDENCY_DIR=/opt/htdep ~/src/hypertable
 
 _EC2:  ami-5647a33f_
 
-_Basic Dependencies_
+===Basic Dependencies===
 
 {{{
 yum install git gcc-c++ make cmake python-devel bzip2-devel zlib-devel expat-devel rrdtool rrdtool-devel
@@ -305,7 +305,7 @@ sh -c "echo '/usr/local/lib' > /etc/ld.so.conf.d/local.conf"
 /sbin/ldconfig
 }}}
 
-_Thrift Broker Dependencies_
+===Thrift Broker Dependencies===
 
 See this [http://wiki.apache.org/thrift/ThriftInstallation official thrift installation wiki page] for up-to-date installation instructions.  Fetch JDK rpm from [http://java.sun.com/javase/downloads/index.jsp Sun JAVA Download] page
 
@@ -342,7 +342,7 @@ emerge --sync
 
 _EC2: ami-5c709435_
 
-_Basic Dependencies_
+===Basic Dependencies===
 
 {{{
 apt-get update
@@ -362,7 +362,7 @@ sh -c "echo '/usr/local/BerkeleyDB.4.8/lib' > /etc/ld.so.conf.d/BerkeleyDB.4.8.c
 /sbin/ldconfig
 }}}
 
-_Thrift Broker Dependencies_
+===Thrift Broker Dependencies===
 
 See this [http://wiki.apache.org/thrift/ThriftInstallation official thrift installation wiki page] for up-to-date installation instructions.
 
@@ -381,7 +381,7 @@ make install
 ldconfig
 }}}
 
-_Monitoring_
+===Monitoring===
 
 {{{
 apt-get remove rubygems
