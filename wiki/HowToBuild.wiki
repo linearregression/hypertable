@@ -85,7 +85,8 @@ make
 make install
 cd bindings/ruby
 # modify the dir_config line in extconf.rb to:
-# dir_config("rrd","../../src","/usr/include/lib")
+# dir_config("rrd","../../src","/usr/local/lib")
+ruby extconf.rb
 make
 make install
 ldconfig
@@ -177,7 +178,8 @@ make
 make install
 cd bindings/ruby
 # modify the dir_config line in extconf.rb to:
-# dir_config("rrd","../../src","/usr/include/lib")
+# dir_config("rrd","../../src","/usr/local/lib")
+ruby extconf.rb
 make
 make install
 ldconfig
