@@ -77,7 +77,6 @@ cd ~
 gem install sinatra rack thin json titleize
 yum remove rrdtool rrdtool-devel
 yum install cairo cairo-devel pango pango-devel glib2 glib2-devel libxml2 libxml2-devel
-rm -rf /usr/lib/librrd*
 wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.4.tar.gz
 tar xzvf rrdtool-1.4.4.tar.gz
 cd rrdtool-1.4.4
@@ -394,6 +393,7 @@ cd ~
 ln /usr/bin/gem1.8 /usr/bin/gem
 gem install sinatra rack thin json titleize
 apt-get install libcairo2-dev libpango1.0-dev libxml2-dev
+rm -rf /usr/lib/librrd*
 wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.4.tar.gz
 tar xzvf rrdtool-1.4.4.tar.gz
 cd rrdtool-1.4.4
