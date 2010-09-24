@@ -77,7 +77,8 @@ cd ~
 gem install sinatra rack thin json titleize
 yum remove rrdtool rrdtool-devel
 yum install cairo cairo-devel pango pango-devel glib2 glib2-devel libxml2 libxml2-devel
-wget wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.4.tar.gz
+rm -rf /usr/lib/librrd*
+wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.4.tar.gz
 tar xzvf rrdtool-1.4.4.tar.gz
 cd rrdtool-1.4.4
 CPPFLAGS="-I/usr/include/cairo -I/usr/include/pango-1.0" ./configure --prefix=/usr/local
@@ -170,7 +171,7 @@ cd ~
 gem install sinatra rack thin json titleize
 yum remove rrdtool rrdtool-devel
 yum install cairo cairo-devel pango pango-devel glib2 glib2-devel libxml2 libxml2-devel
-wget wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.4.tar.gz
+wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.4.tar.gz
 tar xzvf rrdtool-1.4.4.tar.gz
 cd rrdtool-1.4.4
 ./configure --prefix=/usr/local
@@ -392,6 +393,20 @@ ruby setup.rb
 cd ~
 ln /usr/bin/gem1.8 /usr/bin/gem
 gem install sinatra rack thin json titleize
+apt-get install libcairo2-dev libpango1.0-dev libxml2-dev
+wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.4.tar.gz
+tar xzvf rrdtool-1.4.4.tar.gz
+cd rrdtool-1.4.4
+./configure --prefix=/usr/local
+make
+make install
+cd bindings/ruby
+# modify the dir_config line in extconf.rb to:
+# dir_config("rrd","../../src","/usr/local/lib")
+ruby extconf.rb
+make
+make install
+ldconfig
 }}}
 
 
