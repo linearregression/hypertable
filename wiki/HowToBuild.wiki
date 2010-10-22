@@ -359,6 +359,15 @@ cd db-4.8.26/build_unix/
 make
 make install
 sh -c "echo '/usr/local/BerkeleyDB.4.8/lib' > /etc/ld.so.conf.d/BerkeleyDB.4.8.conf"
+apt-get install libedit-dev xfslibs-dev
+wget http://ceph.newdream.net/download/ceph-0.22.tar.gz
+tar xzvf ceph-0.22.tar.gz 
+cd ceph-0.22
+./configure 
+make; make install
+cd ~; wget http://downloads.sourceforge.net/project/kosmosfs/kosmosfs/kfs-0.5/kfs-0.5.tar.gz
+tar xzvf kfs-0.5.tar.gz
+...
 /sbin/ldconfig
 }}}
 
