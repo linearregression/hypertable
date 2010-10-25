@@ -154,11 +154,15 @@ OK
 Time taken: 3.485 seconds
 }}}
 
-= Limitations =
+
+== Unimplemented features ==
+  * Currently column families in Hypertable map to a column of type MAP<String, ?> in Hive. A single Hypertable column family can have an arbitrary number of qualified columns, each corresponding to a single key in the Hive MAP data type. Further, the key in the Hive map type must currently be of type string, but the value can be of any type. This restriction needs to be eliminated.
+  * The first column of the Hive row is implicitly the key of the Hypertable row. Ideally any arbitrary column should be allowed to be mapped to the HT row key.
   * Currently the !StorageHandler can only create external Hive tables. This means Hive won't handle meta operations like create/drop so you will have to create and drop table via the usual Hypertable interfaces.
-  * Currently column families in Hypertable map to a column of type MAP<String, ?> in Hive. A single Hypertable column family can have an arbitrary number of qualified columns, each corresponding to a single key in the Hive MAP data type. Further, the key in the Hive map type must currently be of type string, but the value can be of any type.   
-  * There is currently no way to map a qualified Hypertable column (col family + qualifier) to a Hive column.
-  * The first column of the Hive row is implicitly the key of the Hypertable row.
+  * There is currently no way to map a qualified Hypertable column (col family + qualifier) to a Hive column. This will be added after the HT query API adds the ability to filter by qualifier.
+  * Add regex filtering capability.
+
+= Limitations =
   * For all but the first Hive column, there must be a corresponding entry in the comma-delimited `hypertable.columns.mapping` string. For a Hive table with n columns, the string should have n-1 entries. Whitespace should not be used in between entries since these will be interperted as part of the column name, which is not what you want. 
   * There is currently no way to access multiple versions of the same Hypertable cell. Hive can only access the latest version of a cell.
 
