@@ -33,7 +33,13 @@ git push --tags # optionally with an origin name
     * Build a release version of the binaries
 {{{
 cd ~/build/hypertable/release
-cmake -DPHPTHRIFT_ROOT=/usr/src/thrift-0.4.0/lib/php/src -DCMAKE_BUILD_TYPE=Release ~/src/hypertable
+cmake -DPHPTHRIFT_ROOT=/usr/src/thrift/lib/php/src -DCMAKE_BUILD_TYPE=Release ~/src/hypertable
+make install
+}}}
+    * Hack to force dependent libs to get copied into installation (see issue 524)
+{{{
+cd ~/build/hypertable/release
+touch ~/src/hypertable/CMakeLists.txt
 make install
 }}}
     * Build the `.rpm` and `.tar.bz` on the CentOS 5.2 machines:
