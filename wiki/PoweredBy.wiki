@@ -2,6 +2,7 @@
 
 This page contains a list of all the existing Hypertable deployments.
 
+  * [http://appscale.cs.ucsb.edu AppScale] - an open-source implementation of the Google App Engine cloud computing interface
   * [http://www.baidu.com/ Baidu] - log analytics 
   * [http://www.endgames.us/ Endgame Systems] - system for monitoring activity on the Internet using active and passive reconnaissance techniques to correlate and produce actionable intelligence and mapping of malicious and compromised systems connected to the Internet.
   *  [http://www.lnl.infn.it/~epics/ EPICS - Laboratori Nazionali di Legnaro] Experimental Physics and Industrial Control System.  Provides an architecture for control system software to be constructed as a scalable, distributed database of control components.  Located in Padova, Italy
