@@ -36,7 +36,7 @@ cd ~/build/hypertable/release
 cmake -DPHPTHRIFT_ROOT=/usr/src/thrift/lib/php/src -DCMAKE_BUILD_TYPE=Release ~/src/hypertable
 make install
 }}}
-    * Hack to force dependent libs to get copied into installation (see issue 524)
+    * Hack to force dependent libs to get copied into installation (see issue 529)
 {{{
 cd ~/build/hypertable/release
 touch ~/src/hypertable/CMakeLists.txt
