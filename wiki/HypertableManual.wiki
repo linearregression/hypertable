@@ -1033,6 +1033,17 @@ The "sys" namespace is used by the Hypertable system and should not be used to c
 
 Note that a namespace must be empty (ie must not contain any sub-namespaces or tables) before you can drop it. In this case since we had already dropped the "Pages" table, we could go ahead and drop the "Tutorial" namespace.
 
+== Atomic Counters ==
+
+Column families can optionally act as atomic counters by supplying the `COUNTER` option in the column specification of the `CREATE TABLE` command.  Counter columns are accessed using the same methods as other columns. However, to modify the counter, the value must be formatted specially, as described in the following table.
+
+|| *Value Format* || *Description* ||
+|| `['+'] n` || Increment the counter by n ||
+|| `'-' n` || Decrement the counter by n ||
+|| `'=' n` || Reset the counter to n ||
+
+
+
 ==Hadoop !MapReduce Tutorial==
 
 In this section, we'll walk you through two Hadoop MapReduce examples, one using Java MapReduce and the other using Hadoop streaming.  Both examples do the same thing and illustrate how to run MapReduce jobs that read from and write to a table in Hypertable.
