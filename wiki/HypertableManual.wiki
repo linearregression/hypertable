@@ -1268,8 +1268,7 @@ Hypertable provides a Monitoring UI server which can be used to monitor the stat
      {{{
      gem install sinatra rack thin json titleize
      }}}
-     The monitoring app requires the rack gem to be installed. There is a known bug when using rack 1.2.1 with ruby 1.8.5. You can use ("ruby -v"  and "gem list --local rack" to check if you are using this combination). To get around it, you can either upgrade ruby to 1.8.7 or downgrade rack to 1.1.0.
-
+     The monitoring app requires the rack gem to be installed. There is a known bug when using rack 1.2.1 with ruby 1.8.5. You can use ("ruby -v"  and "gem list --local rack" to check if you are using this combination). To get around it, you can either upgrade ruby to 1.8.7 or downgrade rack to 1.1.0. Heres an example which shows [http://blog.carbonfive.com/2010/03/ruby-on-rails/how-to-install-rails-on-centos-5-4 how to upgrade to ruby 1.8.7 on Centos5].
   # Install RRDTool. On Linux systems you should be able to run something like "yum install rrdtool" or "apt-get rrdtool". If using a Mac and MacPorts you can do "port install rrdtool". If you're unable to install via your package manager then download the source and build. 
 
 To install the Ruby RRDTool bindings, you will need to:
