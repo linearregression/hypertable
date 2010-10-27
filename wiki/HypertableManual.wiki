@@ -1042,11 +1042,54 @@ Column families can optionally act as atomic counters by supplying the `COUNTER`
 || `'-' n` || Decrement the counter by n ||
 || `'=' n` || Reset the counter to n ||
 
+=== Example ===
 
+In this example we create a table of counters called `counts` that contains a single column family `url` that acts as an atomic counter for urls.  By convention, the row key is the URL with the domain name reversed (so that URLs from the same domain sort next to each other) and the column qualifier is the hour in which the "hit" occurred.  The table is created with the following HQL:
+
+{{{
+use "/";
+create table counts (
+       url COUNTER,
+);
+}}}
+
+Let's say we've accumulated url "hit" occurrences in the following `.tsv` file:
+
+{{{
+#row	column	value
+org.hypertable.www/	url:2010-10-26_09	+1
+org.hypertable.www/	url:2010-10-26_09	+1
+org.hypertable.www/download.html	url:2010-10-26_09	+1
+org.hypertable.www/documentation.html	url:2010-10-26_09	+1
+org.hypertable.www/download.html	url:2010-10-26_09	+1
+org.hypertable.www/about.html	url:2010-10-26_09	+1
+org.hypertable.www/	url:2010-10-26_09	+1
+org.hypertable.www/	url:2010-10-26_10	+1
+org.hypertable.www/about.html	url:2010-10-26_10	+1
+org.hypertable.www/	url:2010-10-26_10	+1
+org.hypertable.www/download.html	url:2010-10-26_10	+1
+org.hypertable.www/download.html	url:2010-10-26_10	+1
+org.hypertable.www/documentation.html	url:2010-10-26_10	+1
+org.hypertable.www/	url:2010-10-26_10	+1
+}}}
+
+If we were to load this file with LOAD DATA INFILE into the `counts` table, a subsequent select would yield the following output:
+
+{{{
+hypertable> select * from counts;
+org.hypertable.www/	url:2010-10-26_09	3
+org.hypertable.www/	url:2010-10-26_10	3
+org.hypertable.www/about.html	url:2010-10-26_09	1
+org.hypertable.www/about.html	url:2010-10-26_10	1
+org.hypertable.www/documentation.html	url:2010-10-26_09	1
+org.hypertable.www/documentation.html	url:2010-10-26_10	1
+org.hypertable.www/download.html	url:2010-10-26_09	2
+org.hypertable.www/download.html	url:2010-10-26_10	2
+}}}
 
 ==Hadoop !MapReduce Tutorial==
 
-In this section, we'll walk you through two Hadoop MapReduce examples, one using Java MapReduce and the other using Hadoop streaming.  Both examples do the same thing and illustrate how to run MapReduce jobs that read from and write to a table in Hypertable.
+In this section, we'll walk you through two Hadoop !MapReduce examples, one using Java !MapReduce and the other using Hadoop streaming.  Both examples do the same thing and illustrate how to run !MapReduce jobs that read from and write to a table in Hypertable.
 
 ===Setup===
 
