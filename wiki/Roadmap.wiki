@@ -1,35 +1,25 @@
 #summary Development Roadmap / Release Schedule
 
-==0.9.4.0 "alpha" (June 15th 2010)==
+==0.9.4.3 "alpha" (November 12th 2010)==
 
-This will be the last alpha release before going into beta.  The set of features chosen for this release are the features that create file format and API incompatibilities.  The goal is to have this be the last incompatible pre-1.0 release.  The following list highlights some of the features that will be added in this release.  See [http://code.google.com/p/hypertable/issues/list?can=2&q=milestone%3DRelease0.9.4.0 Milestone Release 0.9.4.0] for the complete list.
+  * Group Commit
+  * Regular expression filtering on ROW, COLUMN FAMILY, and VALUE
+  * Improved Hive integration
 
-  * Monitoring interface
-  * Tablespace, dataspace, namespace
-  * Add prefix-compression to !CellStore blocks
-  * Key compressing !CellCache
-  * Table RENAME
-  * Table paths in DFS should contain ID, no name
-  * Query Slicing (LIMIT 101,200)
-  * Django Backend for Hypertable
-  * Parallel LOAD DATA INFILE .tsv loading
-  * Hive Integration
-  * Rename columns and alter column definition
+==0.9.5.0 "alpha" (December 31st 2010)==
 
-==0.9.5.0 "beta" (July 31st 2010)==
+  * Automatic range balancing with the addition of new nodes
+  * Asynchronous Client interface
 
-At this point, the software will be feature complete with respect to 1.0.  The only changes that will go into the software between this release and 1.0 will be bug fixes, documentation improvements, and possibly some usability features that are discovered during the beta period and deemed to be very important.  The following list highlights some of the features that will be added in this release.  See [http://code.google.com/p/hypertable/issues/list?can=2&q=milestone%3DRelease0.9.5.0 Milestone Release 0.9.5.0] for the complete list.
+==0.9.6.0 "beta" (April 30th 2011)==
 
-  * Manual failover - REBALANCE command
-  * Add automatic merging compactions for TTL and REVS garbage collection
-  * Atomic Counter
-  * Regular expression filtering for row keys, column qualifiers, and values
+  * Automatic RangeServer failover
+  * Automatic Master failover
   * COMPACT command for performing manual compactions
+  * Secondary Indexes
 
-==1.0 (September 15th 2010)==
+At this point, the software will be feature complete with respect to 1.0.  The only changes that will go into the software between this release and 1.0 will be bug fixes, documentation improvements, and possibly some usability features that are discovered during the beta period and deemed to be very important.
 
-This will be the first major release that marks the end of the beta period.  It will represent a fully functional Bigtable impelmentation, minus automatic failover.
+==1.0 (June 30th 2011)==
 
-==2.0 (December 31st 2010)==
-
-This release will add automatic failover of the !RangeServers, the Master, and the master Hyperspace replica
+This will be the first major release that marks the end of the beta period.  It will represent a fully functional Bigtable impelmentation.
