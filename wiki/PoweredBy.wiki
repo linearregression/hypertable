@@ -6,7 +6,7 @@ This page contains a list of all the existing Hypertable deployments.
   * [http://www.baidu.com/ Baidu] - log analytics 
   * [http://www.endgames.us/ Endgame Systems] - system for monitoring activity on the Internet using active and passive reconnaissance techniques to correlate and produce actionable intelligence and mapping of malicious and compromised systems connected to the Internet.
   *  [http://www.lnl.infn.it/~epics/ EPICS - Laboratori Nazionali di Legnaro] Experimental Physics and Industrial Control System.  Provides an architecture for control system software to be constructed as a scalable, distributed database of control components.  Located in Padova, Italy
-  * [http://github.com/AwesomeStanly/HyperTableBrowse Hypertable Browser] HyperTable Browser is the cocoa client application to key-value storage HyperTable
+  * [http://github.com/AwesomeStanly/HyperTableBrowse Hypertable Browser] Hypertable Browser is the cocoa client application to key-value storage Hypertable
   * [http://site.inepexgps.com/ Inepex] - a customizable, real-time LBS (Location Based Services) system for personal and commercial use (fleet management, mobile phone tracking, ERP connectivity etc.)
   * [http://www.rediff.com/ Rediff] - e-mail classification
   * [http://www.dehems.eu/living-labs University of Rousse, Bulgaria] - Master Course in Distributed Databases and DEHEMS project (Digital Environment for Home Energy Management System to implement time series database)
