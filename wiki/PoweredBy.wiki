@@ -9,5 +9,6 @@ This page contains a list of all the existing Hypertable deployments.
   * [http://github.com/AwesomeStanly/HyperTableBrowse Hypertable Browser] Hypertable Browser is the cocoa client application to key-value storage Hypertable
   * [http://site.inepexgps.com/ Inepex] - a customizable, real-time LBS (Location Based Services) system for personal and commercial use (fleet management, mobile phone tracking, ERP connectivity etc.)
   * [http://www.rediff.com/ Rediff] - e-mail classification
+  * [http://www.tribalytic.com/ Tribalytic] - Tribalytic is a market research tool that delivers instant insight into your brand and campaign by analysing Twitter data
   * [http://www.dehems.eu/living-labs University of Rousse, Bulgaria] - Master Course in Distributed Databases and DEHEMS project (Digital Environment for Home Energy Management System to implement time series database)
   * [http://www.zvents.com/ Zvents] - historical page view graphing application; changelog application; revenue recognition system
