@@ -406,7 +406,9 @@ ruby setup.rb
 cd ~
 ln /usr/bin/gem1.8 /usr/bin/gem
 gem install sinatra rack thin json titleize
-apt-get install libcairo2-dev libpango1.0-dev libxml2-dev
+apt-get install libcairo2-dev libpango1.0-dev libxml2-dev libart-2.0-2
+cd /usr/lib
+ln -s -f libart_lgpl_2.so.2 libart_lgpl_2.so
 rm -rf /usr/lib/librrd*
 wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.4.tar.gz
 tar xzvf rrdtool-1.4.4.tar.gz
