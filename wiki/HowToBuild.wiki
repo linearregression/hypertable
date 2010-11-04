@@ -397,6 +397,7 @@ ldconfig
 ===Monitoring===
 
 {{{
+apt-get install ruby ruby-dev
 apt-get remove rubygems
 wget http://rubyforge.org/frs/download.php/70696/rubygems-1.3.7.tgz
 tar xzvf rubygems-1.3.7.tgz 
