@@ -19,7 +19,7 @@ cd boost_1_43_0
 cd /etc/yum.repos.d
 wget http://dries.eu/pub/dries-el.repo
 yum install log4cpp-devel git-core cronolog google-perftools-devel libevent-devel readline-devel ncurses-devel xml-commons-apis freetype-devel libpng-devel libart_lgpl-devel
-wget http://internap.dl.sourceforge.net/sourceforge/sigar/hyperic-sigar-1.6.3.tar.gz
+wget http://www.hypertable.org/pub/hyperic-sigar-1.6.3.tar.gz
 tar -xzvf hyperic-sigar-1.6.3.tar.gz
 cp hyperic-sigar-1.6.3/sigar-bin/include/*.h /usr/local/include
 cp hyperic-sigar-1.6.3/sigar-bin/lib/libsigar-amd64-linux.so /usr/local/lib
@@ -113,7 +113,7 @@ cd boost_1_40_0
 cd /etc/yum.repos.d
 wget http://dries.eu/pub/dries-el.repo
 yum install log4cpp-devel git-core cronolog google-perftools-devel libevent-devel readline-devel ncurses-devel xml-commons-apis freetype-devel libpng-devel libart_lgpl-devel
-wget http://internap.dl.sourceforge.net/sourceforge/sigar/hyperic-sigar-1.6.3.tar.gz
+wget http://www.hypertable.org/pub/hyperic-sigar-1.6.3.tar.gz
 tar -xzvf hyperic-sigar-1.6.3.tar.gz
 cp hyperic-sigar-1.6.3/sigar-bin/include/*.h /usr/local/include
 cp hyperic-sigar-1.6.3/sigar-bin/lib/libsigar-x86-linux.so /usr/local/lib/
@@ -253,7 +253,7 @@ cd thrift-0.2.0
 ./configure --with-boost=/opt/htdep --prefix=/opt/htdep --with-ruby=no
 make install
 # install hyperic
-wget http://internap.dl.sourceforge.net/sourceforge/sigar/hyperic-sigar-1.6.3.tar.gz
+wget http://www.hypertable.org/pub/hyperic-sigar-1.6.3.tar.gz
 tar -xzvf hyperic-sigar-1.6.3.tar.gz
 cp hyperic-sigar-1.6.3/sigar-bin/include/*.h /usr/local/include
 cp hyperic-sigar-1.6.3/sigar-bin/lib/libsigar-x86-linux.so /usr/local/lib/
@@ -297,10 +297,10 @@ rpm -i log4cpp-1.0-1.el5.rf.i386.rpm
 wget http://dag.wieers.com/rpm/packages/log4cpp/log4cpp-devel-1.0-1.el5.rf.i386.rpm
 rpm -i log4cpp-devel-1.0-1.el5.rf.i386.rpm 
 yum install cronolog google-perftools-devel libevent-devel readline-devel ncurses-devel db4-devel
-wget http://internap.dl.sourceforge.net/sourceforge/sigar/hyperic-sigar-1.6.0.tar.gz
-tar -xzvf hyperic-sigar-1.6.0.tar.gz
-cp hyperic-sigar-1.6.0/sigar-bin/include/*.h /usr/local/include
-cp hyperic-sigar-1.6.0/sigar-bin/lib/libsigar-x86-linux.so /usr/local/lib/
+wget http://www.hypertable.org/pub/hyperic-sigar-1.6.3.tar.gz
+tar -xzvf hyperic-sigar-1.6.3.tar.gz
+cp hyperic-sigar-1.6.3/sigar-bin/include/*.h /usr/local/include
+cp hyperic-sigar-1.6.3/sigar-bin/lib/libsigar-x86-linux.so /usr/local/lib/
 sh -c "echo '/usr/local/lib' > /etc/ld.so.conf.d/local.conf"
 /sbin/ldconfig
 }}}
