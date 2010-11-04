@@ -314,10 +314,9 @@ wget -O jdk-6u12-linux-i586-rpm.bin <really-long-url-from-sun>
 chmod 755 jdk-6u12-linux-i586-rpm.bin
 ./jdk-6u12-linux-i586-rpm.bin
 yum install ant automake libtool flex bison pkgconfig libevent-devel ruby-devel perl-Bit-Vector perl-devel php php-devel
-wget -O thrift.tgz http://tr.im/hu0b  (See hypertable README for location of working Thrift snapshot)
+wget http://www.hypertable.org/pub/thrift.tgz
 tar -xzvf thrift.tgz
 cd thrift
-./bootstrap.sh
 ./configure
 make
 make install
@@ -386,10 +385,9 @@ apt-get install ant autoconf automake libtool bison flex pkg-config php5 php5-de
 # cpan> quit
 ln -f -s /bin/bash /bin/sh
 apt-get install php5 php5-dev
-wget http://hypertable.org/pub/thrift.tgz  (See hypertable README for location of working Thrift snapshot)
+wget http://hypertable.org/pub/thrift.tgz
 tar -xzvf thrift.tgz
 cd thrift
-./bootstrap.sh
 ./configure
 make
 make install
@@ -493,9 +491,7 @@ Install Thrift
 port install p5-bit-vector p5-class-accessor
 wget http://www.hypertable.org/pub/thrift.tgz
 tar -zxf thrift.tgz
-cd thrift-0.2.0
-cp /opt/local/share/aclocal/pkg.m4 aclocal
-./bootstrap.sh
+cd thrift-0.5.0
 ./configure --with-libevent=/opt/local --with-boost=/opt/local
 make
 make install # as root or in su/sudo shell
