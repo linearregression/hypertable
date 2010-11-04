@@ -385,6 +385,7 @@ apt-get install ant autoconf automake libtool bison flex pkg-config php5 php5-de
 # cpan> install Class::Accessor
 # cpan> quit
 ln -f -s /bin/bash /bin/sh
+apt-get install php5 php5-dev
 wget http://hypertable.org/pub/thrift.tgz  (See hypertable README for location of working Thrift snapshot)
 tar -xzvf thrift.tgz
 cd thrift
