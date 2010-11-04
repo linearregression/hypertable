@@ -22,6 +22,9 @@ Here is an example of a Hive CLI session which uses the Hypertable storage handl
   # Create table and insert some values via the Hypertable shell:
 {{{
 > $HT_HOME/bin/ht shell
+hypertable> use "/";
+
+  Elapsed time:  0.30 s
 
 hypertable> CREATE TABLE HiveTest('address');
 
