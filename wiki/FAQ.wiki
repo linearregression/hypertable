@@ -10,6 +10,10 @@ HDFS (as of version 0.20.0) has difficulty handling too many repeated output str
 echo "LOAD DATA INFILE data.tsv INTO TABLE foo;" | /opt/hypertable/current/bin/ht shell --no-log-sync=true
 }}}
 
+==System hangs on Ubuntu 10.04.1==
+
+There appears to be a bug in the kernel (2.6.32-308) for this release of Ubuntu.  The processes seem to lose `epoll` notifications.  We've seen the problem on other kernels (e.g. 2.6.29) as well.  Try running an older version of Ubuntu.  If you experience this problem with other kernel versions, please report to the [http://groups.google.com/group/hypertable-dev mailing list].
+
 ==Error mkdirs DFS directory /hypertable/servers/$IP_38060/log/user - DFS BROKER i/o error==
 
 Hypertable persists all of its state in the DFS under the directory `/hypertable`.  This directory needs to exist and be writeable by the Hypertable server processes.  To do this in HDFS, run the following commands in the same user account that was used to start the HDFS server processes:
