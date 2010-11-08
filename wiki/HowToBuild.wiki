@@ -30,8 +30,8 @@ cd db-4.8.26/build_unix/
 make
 make install
 yum install openssl openssl-devel libedit-devel xfsprogs-devel
-cd ~; wget http://ceph.newdream.net/download/ceph-0.20.2.tar.gz
-tar xzvf ceph-0.20.2.tar.gz
+cd ~; wget http://ceph.newdream.net/download/ceph-0.22.2.tar.gz
+tar xzvf ceph-0.22.2.tar.gz
 ./configure; make; make install
 cd ~; wget http://downloads.sourceforge.net/project/kosmosfs/kosmosfs/kfs-0.5/kfs-0.5.tar.gz
 tar xzvf kfs-0.5.tar.gz
