@@ -358,6 +358,10 @@ cd db-4.8.26/build_unix/
 make
 make install
 sh -c "echo '/usr/local/BerkeleyDB.4.8/lib' > /etc/ld.so.conf.d/BerkeleyDB.4.8.conf"
+cd ~; wget http://www.hypertable.org/pub/re2.tgz
+tar xzvf re2.tgz
+cd re2
+make; make install;
 apt-get install libedit-dev xfslibs-dev
 wget http://ceph.newdream.net/download/ceph-0.22.tar.gz
 tar xzvf ceph-0.22.tar.gz 
