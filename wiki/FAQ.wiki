@@ -12,7 +12,7 @@ echo "LOAD DATA INFILE data.tsv INTO TABLE foo;" | /opt/hypertable/current/bin/h
 
 ==System hangs on Ubuntu 10.04.1==
 
-There appears to be a bug in the kernel (2.6.32-308) for this release of Ubuntu.  The processes seem to lose `epoll` notifications.  This problem was [http://www.mail-archive.com/common-user@hadoop.apache.org/msg05557.html reported on the Hadoop mailing list] as well.  Try running an older version of Ubuntu.  If you experience this problem with other kernel versions, please report to the [http://groups.google.com/group/hypertable-dev mailing list].
+There appears to be a bug in the kernel (2.6.32-308) for this release of Ubuntu.  The processes seem to lose `epoll` notifications.  This problem was [http://www.mail-archive.com/common-user@hadoop.apache.org/msg05557.html reported on the Hadoop mailing list] as well.  Try running an older version of Ubuntu.  If you experience this problem with other kernel versions, please report to the [http://groups.google.com/group/hypertable-dev mailing list].  The recommended OS for Hypertable is CentOS/RedHat 5.
 
 ==Error mkdirs DFS directory /hypertable/servers/$IP_38060/log/user - DFS BROKER i/o error==
 
