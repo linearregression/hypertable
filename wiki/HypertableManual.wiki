@@ -1089,7 +1089,7 @@ org.hypertable.www/download.html	url:2010-10-26_10	2
 
 ==Group Commit (better concurrent update handling)==
 
-Updates are carried out by the RangeServers through the following steps:
+Updates are carried out by the !RangeServers through the following steps:
 
   # Write the update to the commit log (in the DFS)
   # Sync the commit log (in the DFS)
@@ -1098,7 +1098,7 @@ Updates are carried out by the RangeServers through the following steps:
 Under high concurrency, step #2 can become a bottleneck.  Distributed filesystems such as HDFS can typically handle a small number of sync operations per second.  The Group Commit feature solves this problem by delaying updates, grouping them together, and carrying them out in a batch on some regular interval.
 
 A table can be configured to use group commit by supplying the `GROUP_COMMIT_INTERVAL` option in the `CREATE TABLE` statement.  The `GROUP_COMMIT_INTERVAL` option tells the system that updates to this table should be carried out with group commit and also specifies the commit interval in milliseconds. The interval is
-constrained by the value of the config property `Hypertable.RangeServer.CommitInterval`, which acts as a lower bound and defaults to 50ms. The value specified for `GROUP_COMMIT_INTERVAL` will get rounded up to the nearest multiple of this property value.  The following is an example `CREATE TABLE` statement that creates a table 'counts' set up	for group commit operation.
+constrained by the value of the config property `Hypertable.RangeServer.CommitInterval`, which acts as a lower bound (default is 50ms).  The value specified for `GROUP_COMMIT_INTERVAL` will get rounded up to the nearest multiple of this property value.  The following is an example `CREATE TABLE` statement that creates a table _counts_ set up for group commit operation.
 {{{
 CREATE TABLE counts (
   url,
