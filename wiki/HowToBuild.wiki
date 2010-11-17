@@ -29,6 +29,13 @@ cd db-4.8.26/build_unix/
 ../dist/configure --enable-cxx
 make
 make install
+wget http://hypertable.org/pub/re2.tgz
+tar -zxvf re2.tgz
+cd re2
+make
+make test
+make install
+make testinstall
 yum install openssl openssl-devel libedit-devel xfsprogs-devel
 cd ~; wget http://ceph.newdream.net/download/ceph-0.22.2.tar.gz
 tar xzvf ceph-0.22.2.tar.gz
@@ -123,6 +130,13 @@ cd db-4.8.26/build_unix/
 ../dist/configure --enable-cxx
 make
 make install
+wget http://hypertable.org/pub/re2.tgz
+tar -zxvf re2.tgz
+cd re2
+make
+make test
+make install
+make testinstall
 yum install openssl openssl-devel libedit-devel xfsprogs-devel
 cd ~; wget http://ceph.newdream.net/download/ceph-0.20.2.tar.gz
 tar xzvf ceph-0.20.2.tar.gz
@@ -252,6 +266,14 @@ tar xzvf thrift-0.2.0-incubating.tar.gz
 cd thrift-0.2.0
 ./configure --with-boost=/opt/htdep --prefix=/opt/htdep --with-ruby=no
 make install
+# install re2
+wget http://hypertable.org/pub/re2.tgz
+tar -zxvf re2.tgz
+cd re2
+make
+make test
+make install
+make testinstall
 # install hyperic
 wget http://www.hypertable.org/pub/hyperic-sigar-1.6.3.tar.gz
 tar -xzvf hyperic-sigar-1.6.3.tar.gz
@@ -297,6 +319,13 @@ rpm -i log4cpp-1.0-1.el5.rf.i386.rpm
 wget http://dag.wieers.com/rpm/packages/log4cpp/log4cpp-devel-1.0-1.el5.rf.i386.rpm
 rpm -i log4cpp-devel-1.0-1.el5.rf.i386.rpm 
 yum install cronolog google-perftools-devel libevent-devel readline-devel ncurses-devel db4-devel
+wget http://hypertable.org/pub/re2.tgz
+tar -zxvf re2.tgz
+cd re2
+make
+make test
+make install
+make testinstall
 wget http://www.hypertable.org/pub/hyperic-sigar-1.6.3.tar.gz
 tar -xzvf hyperic-sigar-1.6.3.tar.gz
 cp hyperic-sigar-1.6.3/sigar-bin/include/*.h /usr/local/include
@@ -362,6 +391,13 @@ cd ~; wget http://www.hypertable.org/pub/re2.tgz
 tar xzvf re2.tgz
 cd re2
 make; make install;
+wget http://hypertable.org/pub/re2.tgz
+tar -zxvf re2.tgz
+cd re2
+make
+make test
+make install
+make testinstall
 apt-get install libedit-dev xfslibs-dev
 wget http://ceph.newdream.net/download/ceph-0.22.tar.gz
 tar xzvf ceph-0.22.tar.gz 
@@ -491,6 +527,17 @@ wget http://sourceforge.net/projects/sigar/files/sigar/1.6/hyperic-sigar-1.6.3.t
 tar -xzvf hyperic-sigar-1.6.3.tar.gz 
 cp hyperic-sigar-1.6.3/sigar-bin/lib/libsigar-universal-macosx.dylib /opt/local/lib
 cp hyperic-sigar-1.6.3/sigar-bin/include/*.h /opt/local/include
+}}}
+
+Download and install RE2
+{{{
+wget http://hypertable.org/pub/re2.tgz
+tar -zxvf re2.tgz
+cd re2
+make
+make test
+make install
+make testinstall
 }}}
 
 Install Thrift
