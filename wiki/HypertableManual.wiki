@@ -1033,6 +1033,57 @@ The "sys" namespace is used by the Hypertable system and should not be used to c
 
 Note that a namespace must be empty (ie must not contain any sub-namespaces or tables) before you can drop it. In this case since we had already dropped the "Pages" table, we could go ahead and drop the "Tutorial" namespace.
 
+== Regular Expression Filtering ==
+
+Hypertable supports filtering of data  using regular expression matching on the rowkey, column qualifiers and value.
+Hypertable uses [http://code.google.com/p/re2/ RE2] for regular expression matching, the complete supported syntax can be found [http://code.google.com/p/re2/wiki/Syntax here].
+
+=== Example ===
+
+In this example we'll use a DMOZ dataset which contains title, description a a bunch of topic tags for a set of URLs. The domain components of the URL have been reversed so that URLs from the same domain sort together. In the schema, the rowkey is a URL and the title, description and topic are column families. Heres a small sample from the dataset:
+{{{
+com.awn.www     Title   Animation World Network
+com.awn.www     Description     Provides information resources to the international animation community. Features include searchable database archives, monthly magazine, web animation guide, the Animation Village, discussion forums and other useful resources.
+com.awn.www     Topic:Arts      
+com.awn.www     Topic:Animation 
+}}}
+
+Download the dataset, which is in the `.tsv.gz` format which can be directly loaded into Hypertable without unzipping:
+{{{
+wget https://s3.amazonaws.com/hypertable-data/dmoz.tsv.gz
+}}}
+
+Create the _dmoz_ table via the hypertable shell:
+{{{
+USE "/";
+CREATE TABLE dmoz(Description, Title, Topic, ACCESS GROUP topic(Topic));
+LOAD DATA INFILE "dmoz.tsv.gz" INTO TABLE dmoz;
+}}}
+
+In the following queries we limit the number of rows returned to 2 for brevity. Suppose you want a subset of the URLs from the domain `inria.fr` where the first component of the domain doesn't start with `a`, you could run:
+{{{
+SELECT Title FROM dmoz WHERE ROW REGEXP "fr\.inria\.[^a]" LIMIT 2 REVS=1 KEYS_ONLY;
+
+fr.inria.caml
+fr.inria.caml/pub/docs/oreilly-book
+}}}
+
+To look at all topics which start with `write` (case insensitive):
+{{{
+SELECT Topic:/(?i)^write/ FROM dmoz LIMIT 2;
+
+13.141.244.204/writ_den	Topic:Writers_Resources	
+ac.sms.www/clubpage.asp?club=CL001003004000301311	Topic:Writers_Resources	
+}}}
+
+The next example shows how to query for data where the description contains the word `game` followed by either `foosball` or `halo`:
+{{{
+SELECT CELLS Description FROM dmoz WHERE VALUE REGEXP "(?i:game.*(foosball|halo)\s)" LIMIT 2 REVS=1;
+
+com.armchairempire.www/Previews/PCGames/planetside.htm	Description	Preview by Mr. Nash. "So, on the one side the game is sounding pretty snazzy, on the other it sounds sort of like Halo at its core."
+com.digitaldestroyers.www	Description	Video game fans in Spartanburg, South Carolina who like to get together and compete for bragging rights. Also compete with other Halo / Xbox fan clubs.
+}}}
+
 == Atomic Counters ==
 
 Column families can optionally act as atomic counters by supplying the `COUNTER` option in the column specification of the `CREATE TABLE` command.  Counter columns are accessed using the same methods as other columns. However, to modify the counter, the value must be formatted specially, as described in the following table.
