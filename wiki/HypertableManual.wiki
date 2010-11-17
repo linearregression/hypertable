@@ -1040,7 +1040,7 @@ Hypertable uses [http://code.google.com/p/re2/ RE2] for regular expression match
 
 === Example ===
 
-In this example we'll use a DMOZ dataset which contains title, description a a bunch of topic tags for a set of URLs. The domain components of the URL have been reversed so that URLs from the same domain sort together. In the schema, the rowkey is a URL and the title, description and topic are column families. Heres a small sample from the dataset:
+In this example we'll use a DMOZ dataset which contains title, description and a bunch of topic tags for a set of URLs. The domain components of the URL have been reversed so that URLs from the same domain sort together. In the schema, the rowkey is a URL and the title, description and topic are column families. Heres a small sample from the dataset:
 {{{
 com.awn.www     Title   Animation World Network
 com.awn.www     Description     Provides information resources to the international animation community. Features include searchable database archives, monthly magazine, web animation guide, the Animation Village, discussion forums and other useful resources.
