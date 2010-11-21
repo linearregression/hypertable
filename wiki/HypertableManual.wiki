@@ -1174,11 +1174,11 @@ The first step is to get Hadoop up and running.  After that, Hypertable needs to
 /opt/hypertable/current/bin/ht start-all-servers hadoop
 }}}
 
-Download and uncompress the Wikipedia sample dump.  This dump has been converted into `.tsv` format, digestible by LOAD DATA INFILE.
+Download and uncompress the Wikipedia dump.  This dump has been converted into `.tsv` format, digestible by LOAD DATA INFILE.
 
 {{{
-wget https://s3.amazonaws.com/hypertable-data/wikipedia-sample.tsv.bz2
-bzip2 -d wikipedia-sample.tsv.bz2
+wget https://s3.amazonaws.com/hypertable-data/wikipedia.tsv.bz2
+bzip2 -d wikipedia.tsv.bz2
 }}}
 
 Create the _wikipedia_ table by executing the following commands in the hypertable shell:
@@ -1201,11 +1201,11 @@ In this example, we'll be running the `WikipediaWordCount.java` program which ca
 
 [http://www.hypertable.org/pub/code-examples/WikipediaWordCount.java.txt WikipediaWordCount.java]
 
-Use the following command to load the Wikipedia sample dump into the _wikipedia_ table:
+Use the following command to load the Wikipedia dump into the _wikipedia_ table:
 
 {{{
 USE "/";
-load data infile 'wikipedia-sample.tsv' into table wikipedia;
+load data infile 'wikipedia.tsv' into table wikipedia;
 }}}
 
 To get an idea of what the data looks like, try the following select:
@@ -1222,7 +1222,7 @@ Now run the !WikipediaWordCount !MapReduce program:
 
 {{{
 /opt/hadoop/current/bin/hadoop jar \
-    /opt/hypertable/current/lib/java/hypertable-0.9.4.0-examples.jar \  
+    /opt/hypertable/current/lib/java/hypertable-0.9.4.3-examples.jar \  
     org.hypertable.examples.WikipediaWordCount \
     -Dmapred.local.dir="/mnt/hadoop/mapred/local" \
     --columns=article
