@@ -1,13 +1,13 @@
 #summary How to Launch Hypertable in Amazon's EC2 with EBS Volumes with Mesos
 <wiki:toc/>
 
-== Introduction ==
+= Introduction =
 
 [http://http://mesos.berkeley.edu/ Mesos] is a platform for running multiple diverse cluster computing frameworks, such as Hadoop, Hypertable, MPI, and web services, on commodity clusters.
 
 Mesos automates the process of setting up an EC2 cluster with attached EBS volumes.  It configures Hadoop and Hypertable with the appropriate EC2 instance machine names and facilitates stopping the cluster of instances and later restarting them, while preserving the Hadoop and Hypertable state on the persistent EBS volumes.  It allows you to easily launch a Hypertable cluster, create tables, load them with data, and then shut down the instances so that you don't get charged for the instances while the cluster is not in use.
 
-== Before You Start ==
+= Before You Start =
 
   * Create an Amazon EC2 key pair for yourself. This can be done by logging into your Amazon Web Services account through the [http://aws.amazon.com/console/ AWS console], clicking Key Pairs on the left sidebar, and creating and downloading a key. Make sure that you set the permissions for the private key file to 600 (i.e. only you can read and write it) so that ssh will work.
   * Whenever you want to use the `mesos-ec2` script, set the environment variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` to your Amazon EC2 access key ID and secret access key. These can be obtained from the [http://aws.amazon.com/ AWS homepage] by clicking Account > Security Credentials > Access Credentials.
@@ -21,7 +21,7 @@ tar xzvf mesos.tgz
 cd mesos
 }}}
 
-== Launch a Cluster ==
+= Launching an EBS backed Hypertable Cluster =
 
 The following command assumes your keypair name is `gsg-keypair` and `~/.ec2/id_rsa-gsg-keypair` is the private key file for your key pair.  It creates a cluster called `test` with a master instance, five slave instances (`-s 5`), and creates and attaches a 20GB EBS volume to each instance.
 {{{
@@ -59,8 +59,10 @@ Fetch Wikipedia dump file:
 wget https://s3.amazonaws.com/hypertable-data/wikipedia.tsv.gz
 }}}
 
-Create `wikipedia` table and and load it with data from dump file:
+Create `wikipedia` table and and load it with data from dump file.
 {{{
+/opt/hypertable/current/bin/ht shell
+
 USE "/";
 DROP TABLE IF EXISTS wikipedia;
 CREATE TABLE wikipedia (
@@ -73,10 +75,15 @@ CREATE TABLE wikipedia (
 LOAD DATA INFILE 'wikipedia.tsv.gz' INTO TABLE wikipedia;
 }}}
 
-Verify that the table contains data:
+== Verify that the table contains data:
+
 {{{
+/opt/hypertable/current/bin/ht shell
+
 SELECT * FROM wikipedia WHERE ROW =^ "Add";
 }}}
+
+= Stopping (suspending) the Hypertable Cluster =
 
 == Stop Hypertable ==
 
@@ -93,4 +100,4 @@ Log out of the master node and then execute the following command on your local 
 ./mesos-ec2 -i ~/.ec2/id_rsa-gsg-keypair stop test
 }}}
 
-}}}
+= Restarting the Hypertable Cluster =
