@@ -75,7 +75,9 @@ CREATE TABLE wikipedia (
 LOAD DATA INFILE 'wikipedia.tsv.gz' INTO TABLE wikipedia;
 }}}
 
-== Verify that the table contains data by executing the following SELECT statement in the Hypertable command interpreter: ==
+== Verify that the table Contains Data==
+
+Execute the following SELECT statement in the Hypertable command interpreter:
 
 `$ /opt/hypertable/current/bin/ht shell`
 
