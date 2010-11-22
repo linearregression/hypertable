@@ -1,0 +1,14 @@
+#summary How to Launch Hypertable in Amazon's EC2 with EBS Volumes with Mesos
+
+= Introduction =
+
+[http://http://mesos.berkeley.edu/ Mesos] is a platform for running multiple diverse cluster computing frameworks, such as Hadoop, Hypertable, MPI, and web services, on commodity clusters.
+
+Mesos automates the process of setting up an EC2 cluster with attached EBS volumes.  It configures Hadoop and Hypertable with the appropriate EC2 instance machine names and facilitates stopping the cluster of instances and later restarting them, while preserving the Hadoop and Hypertable state on the persistent EBS volumes.  It allows you to easily launch a Hypertable cluster, create tables, load them with data, and then shut down the instances so that you don't get charged for the instances while the cluster is not in use.
+
+= Before You Start =
+
+  * Create an Amazon EC2 key pair for yourself. This can be done by logging into your Amazon Web Services account through the AWS console, clicking Key Pairs on the left sidebar, and creating and downloading a key. Make sure that you set the permissions for the private key file to 600 (i.e. only you can read and write it) so that ssh will work.
+  * Whenever you want to use the mesos-ec2 script, set the environment variables AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY to your Amazon EC2 access key ID and secret access key. These can be obtained from the AWS homepage by clicking Account > Security Credentials > Access Credentials.
+
+= Launching a Hypertable Cluster =
