@@ -36,16 +36,15 @@ Connection to <master-hostname> closed.
 Done!
 }}}
 
-Pull up the Mesos Master console (http://<master-hostname>:8080) and verify that the cluster is up and running.
+Pull up the Mesos Master console (http://&lt;master-hostname&gt;:8080) and verify that the cluster is up and running.
 
-== Log in to the master and launch Hypertable ==
+== Log in to the Master ==
 
 {{{
 ./mesos-ec2 -i ~/.ec2/id_rsa-gsg-keypair login test
-[root@<master-hostname> ~]# ./mesos-ec2/start-hypertable 
 }}}
 
-== Launch Hypertable ==
+== Start Hypertable ==
 
 On the master in the root home directory:
 {{{
