@@ -13,14 +13,14 @@ Mesos automates the process of setting up an EC2 cluster with attached EBS volum
 
 == Install Mesos on your local machine ==
 
-Download the latest working mesos snapshot:
+Download the latest working mesos snapshot (no compiling necessary):
 {{{
 wget http://www.hypertable.org/pub/mesos.tgz
 tar xzvf mesos.tgz
 cd mesos
 }}}
 
-== Launching a Hypertable Cluster via Mesos ==
+== Launch a Cluster ==
 
 The following command assumes your keypair name is `gsg-keypair` and `~/.ec2/id_rsa-gsg-keypair` is the private key file for your key pair.  It creates a cluster called `test` with a master instance, five slave instances (`-s 5`), and creates and attaches a 20GB EBS volume to each instnace.
 {{{
