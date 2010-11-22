@@ -12,3 +12,18 @@ Mesos automates the process of setting up an EC2 cluster with attached EBS volum
   * Whenever you want to use the `mesos-ec2` script, set the environment variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` to your Amazon EC2 access key ID and secret access key. These can be obtained from the [http://aws.amazon.com/ AWS homepage] by clicking Account > Security Credentials > Access Credentials.
 
 = Launching a Hypertable Cluster =
+
+Download the latest mesos source code:
+{{{
+mkdir ~/src
+cd ~src
+git clone https://github.com/mesos/mesos.git
+cd mesos/ec2
+}}}
+
+Launch a cluster:
+{{{
+./mesos-ec2 -k gsg-keypair -i ~/.ec2/id_rsa-gsg-keypair -a ami-f030c799 -o centos64 --ebs-vol-size 20 -s 5 launch test
+}}}
+
+}}}
