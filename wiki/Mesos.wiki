@@ -89,7 +89,7 @@ SELECT * FROM wikipedia WHERE ROW =^ "Add";
 
 == Stop Hypertable ==
 
-In the root home directory:
+In the root home directory of the master node:
 {{{
 ./mesos-ec2/stop-hypertable
 }}}
@@ -103,3 +103,11 @@ Log out of the master node and then execute the following command on your local 
 }}}
 
 = Restarting the Hypertable Cluster =
+
+== Start Cluster ==
+
+Invoke the mesos-ec2 script as follows to restart the cluster:
+
+{{{
+./mesos-ec2 -i ~/.ec2/id_rsa-gsg-keypair start test
+}}}
