@@ -54,12 +54,12 @@ On the master in the root home directory:
 
 == Load Hypertable with Data ==
 
-Fetch Wikipedia dump:
+Fetch Wikipedia dump file:
 {{{
 wget https://s3.amazonaws.com/hypertable-data/wikipedia.tsv.gz
 }}}
 
-Create `wikipedia` table and and load it with data file:
+Create `wikipedia` table and and load it with data from dump file:
 {{{
 USE "/";
 DROP TABLE IF EXISTS wikipedia;
@@ -71,4 +71,26 @@ CREATE TABLE wikipedia (
        word
 );
 LOAD DATA INFILE 'wikipedia.tsv.gz' INTO TABLE wikipedia;
+}}}
+
+Verify that the table contains data:
+{{{
+SELECT * FROM wikipedia WHERE ROW =^ "Add";
+}}}
+
+== Stop Hypertable ==
+
+In the root home directory:
+{{{
+./mesos-ec2/stop-hypertable
+}}}
+
+== Stop Cluster ==
+
+Log out of the master node and then execute the following command on your local machine:
+
+{{{
+./mesos-ec2 -i ~/.ec2/id_rsa-gsg-keypair stop test
+}}}
+
 }}}
