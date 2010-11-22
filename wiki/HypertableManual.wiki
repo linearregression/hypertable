@@ -1177,8 +1177,7 @@ The first step is to get Hadoop up and running.  After that, Hypertable needs to
 Download and uncompress the Wikipedia dump.  This dump has been converted into `.tsv` format, digestible by LOAD DATA INFILE.
 
 {{{
-wget https://s3.amazonaws.com/hypertable-data/wikipedia.tsv.bz2
-bzip2 -d wikipedia.tsv.bz2
+wget https://s3.amazonaws.com/hypertable-data/wikipedia.tsv.gz
 }}}
 
 Create the _wikipedia_ table by executing the following commands in the hypertable shell:
@@ -1205,7 +1204,7 @@ Use the following command to load the Wikipedia dump into the _wikipedia_ table:
 
 {{{
 USE "/";
-load data infile 'wikipedia.tsv' into table wikipedia;
+load data infile 'wikipedia.tsv.gz' into table wikipedia;
 }}}
 
 To get an idea of what the data looks like, try the following select:
