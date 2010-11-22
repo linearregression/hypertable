@@ -1,4 +1,5 @@
 #summary How to Launch Hypertable in Amazon's EC2 with EBS Volumes with Mesos
+<wiki:toc/>
 
 == Introduction ==
 
@@ -22,7 +23,7 @@ cd mesos
 
 == Launch a Cluster ==
 
-The following command assumes your keypair name is `gsg-keypair` and `~/.ec2/id_rsa-gsg-keypair` is the private key file for your key pair.  It creates a cluster called `test` with a master instance, five slave instances (`-s 5`), and creates and attaches a 20GB EBS volume to each instnace.
+The following command assumes your keypair name is `gsg-keypair` and `~/.ec2/id_rsa-gsg-keypair` is the private key file for your key pair.  It creates a cluster called `test` with a master instance, five slave instances (`-s 5`), and creates and attaches a 20GB EBS volume to each instance.
 {{{
 ./mesos-ec2 -k gsg-keypair -i ~/.ec2/id_rsa-gsg-keypair -a ami-9d5fa8f4 -o centos64 --ebs-vol-size 20 -s 5 launch test
 }}}
@@ -49,4 +50,25 @@ Pull up the Mesos Master console (`http://<master-hostname>:8080`) and verify th
 On the master in the root home directory:
 {{{
 ./mesos-ec2/start-hypertable
+}}}
+
+== Load Hypertable with Data ==
+
+Fetch Wikipedia dump:
+{{{
+wget https://s3.amazonaws.com/hypertable-data/wikipedia.tsv.gz
+}}}
+
+Create `wikipedia` table and and load it with data file:
+{{{
+USE "/";
+DROP TABLE IF EXISTS wikipedia;
+CREATE TABLE wikipedia (
+       title,
+       id,
+       username,
+       article,
+       word
+);
+LOAD DATA INFILE 'wikipedia.tsv.gz' INTO TABLE wikipedia;
 }}}
