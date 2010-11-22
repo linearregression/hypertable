@@ -11,33 +11,43 @@ Mesos automates the process of setting up an EC2 cluster with attached EBS volum
   * Create an Amazon EC2 key pair for yourself. This can be done by logging into your Amazon Web Services account through the [http://aws.amazon.com/console/ AWS console], clicking Key Pairs on the left sidebar, and creating and downloading a key. Make sure that you set the permissions for the private key file to 600 (i.e. only you can read and write it) so that ssh will work.
   * Whenever you want to use the `mesos-ec2` script, set the environment variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` to your Amazon EC2 access key ID and secret access key. These can be obtained from the [http://aws.amazon.com/ AWS homepage] by clicking Account > Security Credentials > Access Credentials.
 
-== Launching a Hypertable Cluster ==
+== Install Mesos on your local machine ==
 
-Download the latest mesos source code:
+Download the latest working mesos snapshot:
 {{{
 wget http://www.hypertable.org/pub/mesos.tgz
 tar xzvf mesos.tgz
 cd mesos
 }}}
 
-Launch a Hypertable cluster.  The following command assumes your keypair name is `gsg-keypair` and `~/.ec2/id_rsa-gsg-keypair` is the private key file for your key pair.  It creates a cluster called `test` with a master instance, five slave instances (`-s 5`), and creates and attaches a 20GB EBS volume to each instnace.
+== Launching a Hypertable Cluster via Mesos ==
+
+The following command assumes your keypair name is `gsg-keypair` and `~/.ec2/id_rsa-gsg-keypair` is the private key file for your key pair.  It creates a cluster called `test` with a master instance, five slave instances (`-s 5`), and creates and attaches a 20GB EBS volume to each instnace.
 {{{
 ./mesos-ec2 -k gsg-keypair -i ~/.ec2/id_rsa-gsg-keypair -a ami-9d5fa8f4 -o centos64 --ebs-vol-size 20 -s 5 launch test
 }}}
 
 This command will generate voluminous output.  If all goes well, the end of the output should look something like this:
 {{{
+...
 Everything's started! You can view the master Web UI at
       http://<master-hostname>:8080
 Connection to <master-hostname> closed.
 Done!
 }}}
 
+Pull up the Mesos Master console (http://<master-hostname>:8080) and verify that the cluster is up and running.
 
 == Log in to the master and launch Hypertable ==
 
 {{{
-./mesos-ec2 -i ~/.ec2/id_rsa-gsg-keypair login
-[...]
+./mesos-ec2 -i ~/.ec2/id_rsa-gsg-keypair login test
 [root@<master-hostname> ~]# ./mesos-ec2/start-hypertable 
+}}}
+
+== Launch Hypertable ==
+
+On the master in the root home directory:
+{{{
+./mesos-ec2/start-hypertable
 }}}
