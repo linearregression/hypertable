@@ -36,7 +36,7 @@ Connection to <master-hostname> closed.
 Done!
 }}}
 
-Pull up the Mesos Master console (http://&lt;master-hostname&gt;:8080) and verify that the cluster is up and running.
+Pull up the Mesos Master console (`http://<master-hostname>:8080`) and verify that the cluster is up and running.
 
 == Log in to the Master ==
 
