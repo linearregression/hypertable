@@ -8,7 +8,7 @@ Mesos automates the process of setting up an EC2 cluster with attached EBS volum
 
 = Before You Start =
 
-  * Create an Amazon EC2 key pair for yourself. This can be done by logging into your Amazon Web Services account through the AWS console, clicking Key Pairs on the left sidebar, and creating and downloading a key. Make sure that you set the permissions for the private key file to 600 (i.e. only you can read and write it) so that ssh will work.
-  * Whenever you want to use the mesos-ec2 script, set the environment variables AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY to your Amazon EC2 access key ID and secret access key. These can be obtained from the AWS homepage by clicking Account > Security Credentials > Access Credentials.
+  * Create an Amazon EC2 key pair for yourself. This can be done by logging into your Amazon Web Services account through the [http://aws.amazon.com/console/ AWS console], clicking Key Pairs on the left sidebar, and creating and downloading a key. Make sure that you set the permissions for the private key file to 600 (i.e. only you can read and write it) so that ssh will work.
+  * Whenever you want to use the `mesos-ec2` script, set the environment variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` to your Amazon EC2 access key ID and secret access key. These can be obtained from the [http://aws.amazon.com/ AWS homepage] by clicking Account > Security Credentials > Access Credentials.
 
 = Launching a Hypertable Cluster =
