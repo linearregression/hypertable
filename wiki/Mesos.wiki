@@ -24,4 +24,21 @@ cd mesos/ec2
 Launch a Hypertable cluster.  The following command assumes your keypair name is `gsg-keypair` and `~/.ec2/id_rsa-gsg-keypair` is the private key file for your key pair.  It creates a cluster called `test` with a master instance, five slave instances (`-s 5`), and creates and attaches a 20GB EBS volume to each instnace.
 {{{
 ./mesos-ec2 -k gsg-keypair -i ~/.ec2/id_rsa-gsg-keypair -a ami-cf55a2a6 -o centos64 --ebs-vol-size 20 -s 5 launch test
+Setting up security groups...
+Creating security group test-master
+Creating security group test-slaves
+[...]
+Everything's started! You can view the master Web UI at
+      http://<master-hostname>:8080
+Connection to <master-hostname> closed.
+Done!
 }}}
+
+= Log in to the master and launch Hypertable =
+
+{{{
+./mesos-ec2 -i ~/.ec2/id_rsa-gsg-keypair login 
+[...]
+[root@<master-hostname> ~]# ./mesos-ec2/start-hypertable 
+}}}
+
