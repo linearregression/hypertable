@@ -59,7 +59,9 @@ Fetch Wikipedia dump file:
 wget https://s3.amazonaws.com/hypertable-data/wikipedia.tsv.gz
 }}}
 
-Create `wikipedia` table and and load it with data from dump file by executing the following commands in the Hypertable command interpreter (`/opt/hypertable/current/bin/ht shell`):
+Create `wikipedia` table and and load it with data from dump file by executing the following commands in the Hypertable command interpreter:
+
+`$ /opt/hypertable/current/bin/ht shell`
 {{{
 USE "/";
 DROP TABLE IF EXISTS wikipedia;
@@ -73,7 +75,9 @@ CREATE TABLE wikipedia (
 LOAD DATA INFILE 'wikipedia.tsv.gz' INTO TABLE wikipedia;
 }}}
 
-== Verify that the table contains data by executing the following SELECT statement in the Hypertable command interpreter (`/opt/hypertable/current/bin/ht shell`):
+== Verify that the table contains data by executing the following SELECT statement in the Hypertable command interpreter: ==
+
+`$ /opt/hypertable/current/bin/ht shell`
 
 {{{
 SELECT * FROM wikipedia WHERE ROW =^ "Add";
