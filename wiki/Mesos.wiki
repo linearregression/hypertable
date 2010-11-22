@@ -21,9 +21,7 @@ git clone https://github.com/mesos/mesos.git
 cd mesos/ec2
 }}}
 
-Launch a Hypertable cluster.  The following command assumes your keypair name is gsg-keypair a
+Launch a Hypertable cluster.  The following command assumes your keypair name is `gsg-keypair` and `~/.ec2/id_rsa-gsg-keypair` is the private key file for your key pair.  It creates a master instance, five slave instances (`-s 5`), and creates and attaches a 20GB EBS volume to each instnace.
 {{{
 ./mesos-ec2 -k gsg-keypair -i ~/.ec2/id_rsa-gsg-keypair -a ami-f030c799 -o centos64 --ebs-vol-size 20 -s 5 launch test
-}}}
-
 }}}
