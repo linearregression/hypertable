@@ -21,7 +21,7 @@ git clone https://github.com/mesos/mesos.git
 cd mesos/ec2
 }}}
 
-Launch a cluster:
+Launch a Hypertable cluster.  The following command assumes your keypair name is gsg-keypair a
 {{{
 ./mesos-ec2 -k gsg-keypair -i ~/.ec2/id_rsa-gsg-keypair -a ami-f030c799 -o centos64 --ebs-vol-size 20 -s 5 launch test
 }}}
