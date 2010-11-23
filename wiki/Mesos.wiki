@@ -16,14 +16,14 @@ Mesos automates the process of setting up an EC2 cluster with attached EBS volum
 
 Download the latest working mesos snapshot (no compiling necessary):
 {{{
+cd ~
 wget http://www.hypertable.org/pub/mesos.tgz
 tar xzvf mesos.tgz
-cd mesos
 }}}
 
 = Launching an EBS backed Hypertable Cluster =
 
-The following command assumes your keypair name is `gsg-keypair` and `~/.ec2/id_rsa-gsg-keypair` is the private key file for your key pair.  It creates a cluster called `test` with a master instance, five slave instances (`-s 5`), and creates and attaches a 20GB EBS volume to each instance.
+A Mesos cluster is administered with the `mesos-ec2` script which is fully described in the documeent [https://github.com/mesos/mesos/wiki/EC2-Scripts Mesos EC2 Scripts].  The following command assumes your keypair name is `gsg-keypair` and `~/.ec2/id_rsa-gsg-keypair` is the private key file for your key pair.  It creates a cluster called `test` with a master instance, five slave instances (`-s 5`), and creates and attaches a 20GB EBS volume to each instance.  NOTE: the options `-a ami-9d5fa8f4 -o centos64` are required to launch with Hypertable support.
 {{{
 ./mesos-ec2 -k gsg-keypair -i ~/.ec2/id_rsa-gsg-keypair -a ami-9d5fa8f4 -o centos64 --ebs-vol-size 20 -s 5 launch test
 }}}
