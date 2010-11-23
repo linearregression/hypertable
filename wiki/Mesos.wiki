@@ -138,3 +138,11 @@ Wait a minute for the servers to fully come up and then execute the following SE
 {{{
 SELECT * FROM wikipedia WHERE ROW =^ "Add";
 }}}
+
+= Destroying the Cluster =
+
+On the local machine, run the `mesos-ec2` script with the following options:
+
+{{{
+./mesos-ec2 -i ~/.ec2/id_rsa-gsg-keypair destroy test
+}}}
