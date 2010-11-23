@@ -104,7 +104,7 @@ Log out of the master node and then execute the following command on your local 
 
 = Restarting the Hypertable Cluster =
 
-== Start Cluster ==
+== Start the Cluster ==
 
 Invoke the mesos-ec2 script as follows to restart the cluster:
 
@@ -112,7 +112,7 @@ Invoke the mesos-ec2 script as follows to restart the cluster:
 ./mesos-ec2 -i ~/.ec2/id_rsa-gsg-keypair -o centos64 start test
 }}}
 
-Similarly to when the cluster was initially launched, the above command will generate voluminous output.  If all goes well, the end of the output should looks something like the following.
+Similar to when the cluster was launched initially, the above command will generate voluminous output.  If all goes well, the end of the output should looks something like the following.
 
 {{{
 ...
@@ -120,4 +120,21 @@ Everything's started! You can view the master Web UI at
       http://<master-hostname>:8080
 Connection to <master-hostname> closed.
 Done!
+}}}
+
+== Start Hypertable ==
+
+On the master in the root home directory:
+{{{
+./mesos-ec2/start-hypertable
+}}}
+
+== Verify that the table Contains Data==
+
+Wait a minute for the servers to fully come up and then execute the following SELECT statement in the Hypertable command interpreter:
+
+`$ /opt/hypertable/current/bin/ht shell`
+
+{{{
+SELECT * FROM wikipedia WHERE ROW =^ "Add";
 }}}
