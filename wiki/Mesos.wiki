@@ -23,7 +23,7 @@ tar xzvf mesos.tgz
 
 = Launching an EBS backed Hypertable Cluster =
 
-A Mesos cluster is administered with the `mesos-ec2` script which is fully described in the document [https://github.com/mesos/mesos/wiki/EC2-Scripts Mesos EC2 Scripts].  The following command assumes your keypair name is `gsg-keypair` and `~/.ec2/id_rsa-gsg-keypair` is the private key file for your key pair.  It creates a cluster called `test` with a master instance, five slave instances (`-s 5`), and creates and attaches a 20GB EBS volume to each instance.  NOTE: the options `-a ami-9d5fa8f4 -o centos64` are required to launch with Hypertable support.
+A Mesos cluster is administered with the `mesos-ec2` script which is fully described in the document [https://github.com/mesos/mesos/wiki/EC2-Scripts Mesos EC2 Scripts].  The following command assumes your keypair name is `gsg-keypair` and `~/.ec2/id_rsa-gsg-keypair` is the private key file for your key pair.  It creates a cluster called `test` with a master instance, five slave instances (`-s 5`), and creates and attaches a 20GB EBS volume to each instance.  *NOTE:* the options `-a ami-9d5fa8f4 -o centos64` are required to launch with Hypertable support.
 {{{
 ~/mesos/ec2/mesos-ec2 -k gsg-keypair -i ~/.ec2/id_rsa-gsg-keypair -a ami-9d5fa8f4 -o centos64 --ebs-vol-size 20 -s 5 launch test
 }}}
@@ -106,7 +106,7 @@ Log out of the master node and then execute the following command on your local 
 
 == Start the Cluster ==
 
-Invoke the mesos-ec2 script as follows to restart the cluster:
+Invoke the `mesos-ec2` script as follows to restart the cluster.  *NOTE:* The `-o centos64` option is required to properly restart the cluster.
 
 {{{
 ~/mesos/ec2/mesos-ec2 -i ~/.ec2/id_rsa-gsg-keypair -o centos64 start test
@@ -120,6 +120,12 @@ Everything's started! You can view the master Web UI at
       http://<master-hostname>:8080
 Connection to <master-hostname> closed.
 Done!
+}}}
+
+== Log in to the Master ==
+
+{{{
+~/mesos/ec2/mesos-ec2 -i ~/.ec2/id_rsa-gsg-keypair login test
 }}}
 
 == Start Hypertable ==
