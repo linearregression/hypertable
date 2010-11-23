@@ -122,6 +122,12 @@ Connection to <master-hostname> closed.
 Done!
 }}}
 
+If you encounter any problems restarting the cluster or launching Hypertable, try re-running the start command with the --resume option:
+
+{{{
+~/mesos/ec2/mesos-ec2 -i ~/.ec2/id_rsa-gsg-keypair -o centos64 --resume start test
+}}}
+
 == Log in to the Master ==
 
 {{{
