@@ -16,9 +16,11 @@ Say you have three Hyperspace replicas running on host[1-3].somedomain.com respe
 
 tar -zcvf hyperspace_snapshot.tgz hyperspace_snapshot 
       }}}
-  # Delete contents of {{{host4:/<$HYPERTABLE_INSTALL_DIR>/hyperspace}}}. Untarzip {{{hyperspace_snapshot.tgz
-tar -zxvf hyperspace_snapshot.tgz}}} and copy over its contents to
- to host4:/<$HYPERTABLE_INSTALL_DIR>/hyperspace/}}}
+  # Delete contents of {{{host4:/<$HYPERTABLE_INSTALL_DIR>/hyperspace}}}. Untarzip 
+   {{{
+tar -zxvf hyperspace_snapshot.tgz
+   }}} 
+and copy over its contents to {{{host4:/<$HYPERTABLE_INSTALL_DIR>/hyperspace/}}}
   # Modify your hypertable config file to add host4 under the property Hyperspace.Replica.Host. Where you put it in the list matters in master elections, and in most cases you want to add it to the end of the list.
   # Modify the Capfile list of hyperspace servers to add host4.
   # Run cap dist to distribute the new config file through the cluster
