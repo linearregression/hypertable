@@ -33,11 +33,11 @@ System ranges (e.g. METADATA, RS_STATS, etc.) will need to be recovered first.  
 
 The Master will include a load balancer.  It will come in the form of a class that is abstracted so that alternate balancers can be easily added.  It will open a scanner on the RS_STATS table and will also be feed regular monitoring data so that it can make sub-hour balancing decisions if it chooses to do so.  The LoadBalancer class will have a balance() method that gets called by the Master maintenance task which runs every 30 seconds.  If the balancer decides that balancing is necessary, it will commence a balance operation.  The balance operation will consist of the following steps:
 
-  # The LoadBalancer will set a flag indicating that a balance operation is progress.  This will prevent the balancer from commencing another balance operation while another one is in progress.
+  # The !LoadBalancer will set a flag indicating that a balance operation is progress.  This will prevent the balancer from commencing another balance operation while another one is in progress.
   # A BALANCE_START MML entry will get written that includes all of the information necessary to carry out the rebalance operation (e.g. which ranges are being moved to which servers).
-  # The asynchronous RangeServer::relinquish_range() method will be called for each range being moved in the balance operation.
+  # The asynchronous`RangeServer::relinquish_range()` method will be called for each range being moved in the balance operation.
   # When each range is relinquished, the master will be notified via it's Master::relinquish_range() method which will consult the balancer to determine which server it is assigned to.  Once it knows which server it is assigned to, it will write a RANGE_ASSIGNED MML entry and respond success to the relinquishing range server.  Then it will invoke the RangeServer::load_range() operation.  Upon successful completion it will write a RANGE_LOADED MML entry and inform the balancer that the range has been loaded.
-# Once the last range has been assigned, the balancer will write a BALANCE_COMPLETE MML entry, unset the bit indicating that a balance is in progress, and continue normal operation.
+  # Once the last range has been assigned, the balancer will write a BALANCE_COMPLETE MML entry, unset the bit indicating that a balance is in progress, and continue normal operation.
 
 = Balance Trigger: Load Imbalance =
 
