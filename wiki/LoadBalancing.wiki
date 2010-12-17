@@ -1,0 +1,29 @@
+#summary Load Balancing Design
+<wiki:toc/>
+
+= Introduction =
+
+The purpose of load balancing is to spread load across the range servers to maximize performance and availability.  
+
+= `sys/RS_STATS` Table =
+
+This will be a system table used to track load statistics for servers and ranges.  Load statistics will be computed and stored hourly.  To minimize the amount of data kept in this table, 24 samples will be kept for each range and 7*24 samples will be kept for each range server.  This will be achieved with the MAX_VERSIONS option of the column specifications.  The reason we use MAX_VERSIONS instead of TTL is so that when a system is shut down for long periods of time, it can be brought back up again and still have load data to work with.  The table will have the following row key format:
+{{{
+<server-id>[:<table-id>]
+}}}
+One problem to consider when deciding on a row key format is row overflow.  Let's assume that the system is managing a single very large table, each range server has 10K ranges, and the row key and value data for each sample is 1K.  With 24 samples, this puts each row in the RS_STATS table at about 10000*1000*24, or 240MB.  This is less than the 256MB max range size and considerably less with compression factored in.  The `RS_STATS` table will have the following schema:
+{{{
+create table RS_STATS (
+  server,
+  range,
+  range_start_row,
+  range_split,
+  ACCESS GROUP server ( server ),
+  ACCESS GROUP range ( range, range_start_row, range_split )
+);
+}}}
+ 
+
+= RangeServer failure =
+
+System ranges will need to be recovered first.  The Master will maintain range server load information and will use that information to select lightly loaded servers to move the system ranges to.  If it does not have this information (e.g. the Master was recently restarted), it will randomly assign the system ranges.
