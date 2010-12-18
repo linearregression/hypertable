@@ -14,7 +14,7 @@ The Master will include a load balancer.  It will come in the form of a class th
 The balance operation will consist of the following steps:
 
   # The !LoadBalancer will set a flag indicating that a balance operation is progress.  This will prevent the balancer from commencing another balance operation while another one is in progress.
-  # A BALANCE_START MML entry will get written that includes all of the information necessary to carry out the rebalance operation (e.g. which ranges are being moved to which servers).
+  # A BALANCE_START MML (Master Meta Log) entry will get written that includes all of the information necessary to carry out the rebalance operation (e.g. which ranges are being moved to which servers).
   # The asynchronous `RangeServer::relinquish_range()` method will be called for each range being moved in the balance operation.
   # When each range is relinquished, the master will be notified via it's `Master::move_range()` method which will consult the balancer to determine which server it is assigned to.  Once it knows which server it is assigned to, it will write a RANGE_MOVE_START MML entry (with info about the assigned range server) and respond success to the relinquishing range server.  Then it will invoke the `RangeServer::load_range()` operation.  Upon successful completion it will write a RANGE_MOVE_LOADED MML entry and inform the balancer that the range has been loaded.
   # When the !RangeServer writes the SPLIT_DONE or RELINQUISH_DONE entry in it's log, it will invoke the `Master::relinquish_acknowledge()` method of the Master which will write a RANGE_MOVE_ACKNOWLEDGED entry in the MML and inform the !LoadBalancer that the range move has been acknowledged.  Un-acknowledged ranges will be excluded from future balance operations.   
@@ -43,7 +43,7 @@ If a range server participating in a balance operation fails and a recovery oper
 
 == `sys/RS_STATS` Table ==
 
-This will be a system table used to track load statistics for servers and ranges.  Load statistics will be computed and stored hourly.  To minimize the amount of data kept in this table, 24 samples will be kept for each range and 7*24 samples will be kept for each range server.  This will be achieved with the MAX_VERSIONS option of the column specifications.  The reason we use MAX_VERSIONS instead of TTL is so that when a system is shut down for long periods of time, it can be brought back up again and still have load data to work with.  The table will have the following row key format:
+This will be a system table used to track load statistics for servers and ranges.  Load statistics will be computed and stored hourly.  To minimize the amount of data kept in this table, 24 samples will be kept for each range and 7*24 (i.e. one week) samples will be kept for each range server.  This will be achieved with the MAX_VERSIONS option of the column specifications.  The reason we use MAX_VERSIONS instead of TTL is so that when a system is shut down for long periods of time, it can be brought back up again and still have load data to work with.  The table will have the following row key format:
 {{{
 <server-id>[:<table-id>]
 }}}
