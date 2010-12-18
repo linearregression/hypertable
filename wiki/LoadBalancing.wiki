@@ -87,16 +87,35 @@ class LoadBalancer {
 
 = Basic Balancing Algorithm =
 
-The basic balancer will use range server load average to determine whether or not balancing is necessary.  It will also consider disk usage statistics (if available) to prevent any system from filling its disks beyond a configured threshold (e.g. 90%).  When the balancer starts, it will open a scanner on the RS_STATS table and scan it to build a per-server load statistics map.
+The Basic balancer will attempt to optimize for both load balance as well as even distribution of ranges for each table across the range servers.  There are three situations that will prompt a balancing operation.  The following sections describe these situations and the policy for triggering a balance operation.
 
 == Load Imbalance ==
 
-Once per hour, the balancer will scan the RS_STATS table to refresh it's per-server load statistics map.  Balance operations for load imbalances will happen once per day.  The balancer will initialize itself by scanning the weekly server load data to determine the best time of day to perform a balance operation and will schedule a balance operation for that time.  When the time arrives, it will consider performing a balance using server load data for the previous 24 hours only.  Whenever a server or servers are added, it will wait for at least 24 hours before doing a "load imbalance" balance operation to give the servers time to build up a day's worth of load statistics.  There will be a configured load variance threshold that is used to determine if a balance operation is necessary.  It will be set at a large enough value to account for variance due to range split operations.  If a balance operation is necessary, some sort of multi-bin packing algorithm :) will be used to come up with the balance plan (feel free to comment with suggestions).
+Balance operations for load imbalances will happen once per day.  The balancer will initialize itself by scanning the weekly server load data to determine the best time of day to perform a balance operation and will schedule a balance operation for that time.  When the time arrives, it will consider performing a balance using server load data for the previous 24 hours only.  It will scan the RS_STATS table to build a map of server load average (load map) for the past 24 hours and use this information along with a configured load variance threshold to determine if a balance operation is necessary.  Whenever a server or servers are added, it will wait for at least 24 hours before doing a "load imbalance" balance operation to give the servers time to build up a day's worth of load statistics.  The load variance threshold will be set at a large enough value to account for variance due to range split operations.  If a balance operation is necessary, the algorithm describe below will be used to come up with a balance plan.
 
 == !RangeServer Added ==
 
-Whenever a new range server or range servers are added to the system, the balancer will immediately schedule a balance operation to move ranges from the existing servers to the newly added servers.  It will use the same multi-bin packing algorithm from the "load imbalance" case to come up with a balance plan.
+Whenever a new range server or range servers are added to the system, the balancer will immediately schedule a balance operation to move ranges from the existing servers to the newly added servers.  The RS_STATS table will be scanned to build a map of server load average (load map) for the past 24 hours.  The load map will be fed into the balance algorithm described blow to come up with a balance plan.
 
 == Range Split ==
 
-When the `Master::move_range()` method is invoked due to a range split operation, the balancer will assign it to a new range server by using some combination of physical RAM and range count.  By using physical RAM and range count instead of server load, it will help do a better job of balancing when a huge load is in progress and load statistics have become stale.
+When the `Master::move_range()` method is invoked due to a range split operation, the balancer will assign it to a new range server.  Since split operations can happen frequently throughout the day and have the effect of throwing off the load average statistics, a simpler approach will be used to assign the range to a server by solely optimizing for even range distribution for the table being split.  The balancer will use the monitoring information it receives on a regular basis to build up a range count map for the table being split.  This map will contain range count information for each range server in the system.  The server containing the smallest number of ranges for the table being split will be chosen to receive the range.
+
+== The Basic Algorithm ==
+
+
+For balancing load, the system will compute a single metric for load based on some combination of the following statistics:
+
+  * scans/s
+  * updates/s
+  * cells read/s
+  * cells written/s
+  * bytes read/s
+  * bytes written/s
+
+
+
+
+The basic balancer will use range server load average to determine whether or not balancing is necessary.  It will also consider disk usage statistics (if available) to prevent any system from filling its disks beyond a configured threshold (e.g. 90%).  When the balancer starts, it will open a scanner on the RS_STATS table and scan it to build a per-server load statistics map.
+
+Ranges that have moved in the past week due to a balancing operation will not be considered.
