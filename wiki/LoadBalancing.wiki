@@ -55,8 +55,9 @@ create table RS_STATS (
   range,
   range_start_row,
   range_split,
+  range_move,
   ACCESS GROUP server ( server ),
-  ACCESS GROUP range ( range, range_start_row, range_split )
+  ACCESS GROUP range ( range, range_start_row, range_split, range_move )
 );
 }}}
 
@@ -97,29 +98,19 @@ class LoadBalancer {
 
 = Basic Balancing Algorithm =
 
-The Basic balancer will attempt to optimize for both load balance as well as even distribution of ranges for each table across the range servers.  There are three situations that will prompt a balancing operation.  The following sections describe these situations and the policy for triggering a balance operation.
+The Basic balancer will attempt to optimize for both load balance as well as even distribution of ranges for each table across the range servers.  There are three situations that will prompt a balancing operation.  The following sections describe each of these situations, the policy for triggering a balance operation, and the algorithm for coming up with a balance plan.
 
 == Load Imbalance ==
 
-Balance operations for load imbalances will happen once per day.  The balancer will initialize itself by scanning the weekly server load data to determine the best time of day to perform a balance operation and will schedule a balance operation for that time.  When the time arrives, it will consider performing a balance using server load data for the previous 24 hours only.  It will scan the RS_STATS table to build a map of server load average (load map) for the past 24 hours and use this information along with a configured load variance threshold to determine if a balance operation is necessary.  Whenever a server or servers are added, it will wait for at least 24 hours before doing a "load imbalance" balance operation to give the servers time to build up a day's worth of load statistics.  The load variance threshold will be set at a large enough value to account for variance due to range split operations.  If a balance operation is necessary, the algorithm describe below will be used to come up with a balance plan.
-
-== !RangeServer Added ==
-
-Whenever a new range server or range servers are added to the system, the balancer will immediately schedule a balance operation to move ranges from the existing servers to the newly added servers.  The RS_STATS table will be scanned to build a map of server load average (load map) for the past 24 hours.  The load map will be fed into the balance algorithm described blow to come up with a balance plan.
-
-== Range Split ==
-
-When the `Master::move_range()` method is invoked due to a range split operation, the balancer will assign it to a new range server.  Since split operations can happen frequently throughout the day and have the effect of throwing off the load average statistics, a simpler approach will be used to assign the range to a server by solely optimizing for even range distribution for the table being split.  The balancer will use the monitoring information it receives on a regular basis to build up a range count map for the table being split.  This map will contain range count information for each range server in the system.  The server containing the smallest number of ranges for the table being split will be chosen to receive the range.
-
-== The Basic Algorithm ==
+Balance operations for load imbalances will happen once per day.  The balancer will initialize itself by scanning the weekly server load data to determine the best time of day to perform a balance operation and will schedule a balance operation for that time.  When the time arrives, it will consider performing a balance using server load data for the previous 24 hours only.  It will scan the RS_STATS table to build a map of server load average (load map) for the past 24 hours and use this information along with a configured load variance threshold to determine if a balance operation is necessary.  Whenever a server or servers are added, it will wait for at least 24 hours before doing a "load imbalance" balance operation to give the servers time to build up a day's worth of load statistics.  The load variance threshold will be set at a large enough value to account for variance due to range split operations.  If a balance operation is necessary, the following algorithm will be used to come up with a balance plan.
 
 A vector of load average statistics (server_load_vec) will be created by scanning the RS_STATS table.  Each position in the vector will hold the following information for a range server:
 
   * loadavg
   * deviation
-  * name // server name
+  * server_name
 
-`loadavg` is the measured load average over the past 24 hours.  `deviation` is a measure of how much deviation is in the server's loadavg number, computed by subtracting the loadavg mean across all the servers from the individual server's loadavg value.  The algorithm will try to reduce the load for one server at a time.  When processing a server, it will create a vector of range load statistics (rang_load_vec) by scanning the RS_STATS table.  Each position in the vector will hold the following information for a range:
+`loadavg` is the measured load average over the past 24 hours.  `deviation` is a measure of how much deviation is in the server's loadavg number, computed by subtracting the loadavg mean across all the servers from the individual server's loadavg value.  The algorithm will try to reduce the load for one server at a time.  When processing a server, it will create a vector of range load statistics (range_load_vec) by scanning the RS_STATS table.  Each position in the vector will hold the following information for a range:
 
   * loadestimate
   * start_row
@@ -135,7 +126,7 @@ The following is pseudo code for coming up with the balance plan.
 server_load_vec_desc = sort_descending(server_load_vec);
 server_load_vec_asc = sort_ascending(server_load_vec);
 while (server_load_vec_desc[0].deviation > DEVIATION_THRESHOLD) {
-  populate_range_load_vector(server_load_vec_desc[0].name);
+  populate_range_load_vector(server_load_vec_desc[0].server_name);
   sort descending range_load_vec;
   i=0;
   while (server_load_vec_desc[0].deviation > DEVIATION_THRESHOLD &&
@@ -152,7 +143,15 @@ while (server_load_vec_desc[0].deviation > DEVIATION_THRESHOLD) {
   }
   if (i == range_load_vec.size())
     remove server_load_vec_desc[0] and corresponding entry in server_load_vec_asc  
-  server_load_vec_desc = sort_descending(server_load_vec);
-  server_load_vec_asc = sort_ascending(server_load_vec); 
+  server_load_vec_desc = sort_descending(server_load_vec_desc);
+  server_load_vec_asc = sort_ascending(server_load_vec_asc); 
 }
 }}}
+
+== !RangeServer Added ==
+
+Whenever a new range server or range servers are added to the system, the balancer will immediately schedule a balance operation to move ranges from the existing servers to the newly added servers.  To come up with a balance plan, the algorithm described in [LoadBalancing#Load_Imbalance] will be used with one slight modification.  Instead of moving the worst load offenders from the existing servers, the algorithm will randomly select ranges from the servers so that an even balance of ranges with heavy and light load will be moved to the newly added servers.
+
+== Range Split ==
+
+When the `Master::move_range()` method is invoked due to a range split operation, the balancer will assign it to a new range server.  Since split operations can happen frequently throughout the day and have the effect of throwing off the load average statistics, a simpler approach will be used to assign the range to a server by solely optimizing for even range distribution for the table being split.  The balancer will use the monitoring information it receives on a regular basis to build up a range count map for the table being split.  This map will contain range count information for each range server in the system.  The server containing the smallest number of ranges for the table being split will be chosen to receive the range.
