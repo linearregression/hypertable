@@ -71,6 +71,6 @@ System ranges (e.g. METADATA, RS_STATS, etc.) will need to be recovered first.  
 
 == Load Imbalance ==
 
-== Servers Added ==
+== !RangeServer Added ==
 
 == Range Split ==
