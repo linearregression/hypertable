@@ -18,7 +18,7 @@ The balance operation will consist of the following steps:
   # The asynchronous `RangeServer::relinquish_range()` method will be called for each range being moved in the balance operation.
   # When each range is relinquished, the master will be notified via it's `Master::move_range()` method which will consult the balancer to determine which server it is assigned to.  Once it knows which server it is assigned to, it will write a RANGE_MOVE_START MML entry (with info about the assigned range server) and respond success to the relinquishing range server.  Then it will invoke the `RangeServer::load_range()` operation.  Upon successful completion it will write a RANGE_MOVE_LOADED MML entry and inform the balancer that the range has been loaded.
   # When the !RangeServer writes the SPLIT_DONE or RELINQUISH_DONE entry in it's log, it will invoke the `Master::relinquish_acknowledge()` method of the Master which will write a RANGE_MOVE_ACKNOWLEDGED entry in the MML and inform the !LoadBalancer that the range move has been acknowledged.  Un-acknowledged ranges will be excluded from future balance operations.   
-  # Once the last range has been loaded and acknowledged, the balancer will write a BALANCE_COMPLETE MML entry, unset the bit indicating that a balance is in progress, and continue normal operation.
+  # Once the last range has been loaded, the balancer will write a BALANCE_COMPLETE MML entry, unset the bit indicating that a balance is in progress, and continue normal operation.
 
 == Master Failover ==
 
