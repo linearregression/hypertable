@@ -7,7 +7,7 @@ The purpose of load balancing is to spread load across the range servers to maxi
 
 = Balancer Mechanics =
 
-The Master will include a load balancer.  It will come in the form of a class that is abstracted so that alternate balancers can be easily added.  This !LoadBalancer class will have a `balance()` method that gets called by the Master maintenance task which runs every 30 seconds.  If new range servers are added or the load variance among existing servers gets too large, it will commence a balance operation.
+The Master will include a load balancer.  It will come in the form of a class that is abstracted so that alternate balancers can be easily added.  This !LoadBalancer class will have a `balance()` method that gets called by the Master maintenance task which runs periodically (default = 30 seconds).  If new range servers are added or the load variance among existing servers gets too large, it will commence a balance operation.
 
 == Balance Operation ==
 
@@ -100,4 +100,3 @@ Once per hour, the balancer will scan the RS_STATS table to refresh it's per-ser
 == Range Split ==
 
 When the `Master::move_range()` method is invoked due to a range split operation, the balancer will assign it a new home by finding a server with a relatively low range count and low average load.
-
