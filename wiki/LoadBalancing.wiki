@@ -26,11 +26,11 @@ When the Master fails over during a balance operation, it will recover its state
 
   # Master will re-play the MML and will initialize the !LoadBalancer with unclosed BALANCE_START information as well as any ranges which are not part of the in-progress balance operation but are in the RANGE_MOVE_START or unacknowledged RANGE_MOVE_LOADED state.
   # !LoadBalancer will record unacknowledged RANGE_MOVE_LOADED ranges in an exclude map to prevent them from being considered for subsequent balance operations
-  # !LoadBalancer will decrease the maintenance interval to 1 second
+  # !LoadBalancer will signal to decrease the maintenance interval to 1 second
   # As soon as each participating range server re-connects, the !LoadBalancer will handle each range as follows: 
     * For ranges not yet RANGE_MOVE_START state, it will invoke `RangeServer::relinquish_range()`  If this returns RANGE_NOT_FOUND, it will assume the move operation was completed for this range
     * For those ranges in the RANGE_MOVE_START state it will create a !MoveRange task and enqueue it onto the Master's application queue.
-  # Once all of the necessary servers have re-connected the !LoadBalancer will increase the maintenance interval back to its normal value
+  # Once all of the necessary servers have re-connected the !LoadBalancer will signal to increase the maintenance interval back to its normal value
 
 == !RangeServer Failure ==
 
@@ -81,15 +81,25 @@ class LoadBalancer {
     String target_server(TableIdentifier &tid, RangeIdentifier &rid) = 0;
     void range_loaded(TableIdentifier &tid, RangeIdentifier &rid) = 0;
     void range_acknowledged(TableIdentifier &tid, RangeIdentifier &rid) = 0;
+    time_t maintenance_interval() = 0;
 };
 }}}
 
 = Basic Balancer =
 
-It will open a scanner on the RS_STATS table and will also be feed regular monitoring data so that it can also make balancing decisions based on recent load information if it chooses to do so.  
+The basic balancer will use range server load average to determine whether or not balancing is necessary.  It will also consider disk usage statistics (if available) to prevent any system from filling its disks beyond a configured threshold (e.g. 90%).  When the balancer starts, it will open a scanner on the RS_STATS table and scan it to build a per-server load statistics map.
 
 == Load Imbalance ==
 
+Once per hour, the balancer will scan the RS_STATS table to refresh it's per-server load statistics map.  Balance operations for load imbalances will happen once per day.  The balancer will initialize itself by scanning the weekly server load data to determine the best time of day to perform a balance operation and will schedule a balance operation for that time.  When the time arrives, it will consider performing a balance using server load data for the previous 24 hours only.  Whenever a server or servers are added, it will wait for at least 24 hours before doing a "load imbalance" balance operation to give the servers time to build up a day's worth of load statistics.  There will be a configured load variance threshold that is used to determine if a balance operation is necessary.  It will be set at a large enough value to account for variance due to range split operations.
+
 == !RangeServer Added ==
 
+
+
 == Range Split ==
+
+When the `Master::move_range()` method is invoked due to a range split operation, the balancer will assign it a new home by finding a server with a relatively low range count and low average load.
+
+
+
