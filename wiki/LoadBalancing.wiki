@@ -31,13 +31,35 @@ System ranges (e.g. METADATA, RS_STATS, etc.) will need to be recovered first.  
 
 = Load Balancer =
 
-The Master will include a load balancer.  It will come in the form of a class that is abstracted so that alternate balancers can be easily added.  It will open a scanner on the RS_STATS table and will also be feed regular monitoring data so that it can make sub-hour balancing decisions if it chooses to do so.  !The LoadBalancer class will have a `balance()` method that gets called by the Master maintenance task which runs every 30 seconds.  If the balancer decides that balancing is necessary, it will commence a balance operation.  The balance operation will consist of the following steps:
+The Master will include a load balancer.  It will come in the form of a class that is abstracted so that alternate balancers can be easily added.  It will open a scanner on the RS_STATS table and will also be feed regular monitoring data so that it can also make balancing decisions based on recent load information if it chooses to do so.  The !LoadBalancer class will have a `balance()` method that gets called by the Master maintenance task which runs every 30 seconds.  If the balancer decides that balancing is necessary, it will commence a balance operation.
+
+== Balance Operation ==
+
+The balance operation will consist of the following steps:
 
   # The !LoadBalancer will set a flag indicating that a balance operation is progress.  This will prevent the balancer from commencing another balance operation while another one is in progress.
   # A BALANCE_START MML entry will get written that includes all of the information necessary to carry out the rebalance operation (e.g. which ranges are being moved to which servers).
   # The asynchronous `RangeServer::relinquish_range()` method will be called for each range being moved in the balance operation.
-  # When each range is relinquished, the master will be notified via it's `Master::relinquish_range()` method which will consult the balancer to determine which server it is assigned to.  Once it knows which server it is assigned to, it will write a RANGE_ASSIGNED MML entry and respond success to the relinquishing range server.  Then it will invoke the `RangeServer::load_range()` operation.  Upon successful completion it will write a RANGE_LOADED MML entry and inform the balancer that the range has been loaded.
+  # When each range is relinquished, the master will be notified via it's `Master::move_range()` method which will consult the balancer to determine which server it is assigned to.  Once it knows which server it is assigned to, it will write a RANGE_MOVE_ASSIGNED MML entry and respond success to the relinquishing range server.  Then it will invoke the `RangeServer::load_range()` operation.  Upon successful completion it will write a RANGE_LOADED MML entry and inform the balancer that the range has been loaded.
   # Once the last range has been assigned, the balancer will write a BALANCE_COMPLETE MML entry, unset the bit indicating that a balance is in progress, and continue normal operation.
+
+== Master Failover ==
+
+When the Master fails over during a balance operation, it will recover its state with the following steps.
+
+  # Master will re-play the MML and discover an unclosed BALANCE_START entry.  The !LoadBalancer will be primed with this balance-in-progress information as well as with information about any other ranges in the MML in the RANGE_ASSIGNED state.
+  # Master will decrease the maintenance interval to 1 second
+  # As soon as the necessary servers re-connect, the !LoadBalancer will invoke `RangeServer::relinquish_range()` for those ranges not in the RANGE_ASSIGNED state and will create a !MoveRange task and enqueue it onto the Master's application queue.  
+
+
+  # For all ranges that are part of the in-progress balance operation, the Master
+  # For all other ranges that were not a part of the BALANCE_START operation ah
+other ranges that have a RANGE_ASSIGNED MML entry, the Master will create !RelinquishRange tasks and enqueue them onto the application queue
+  
+
+== Range Server Failures ==
+
+
 
 = Balance Trigger: Load Imbalance =
 
@@ -52,4 +74,6 @@ MML entries
 = Basic Balancer =
 
 
+
 What if a server dies in the middle of a balance operation?
+Race condition between when Master writes RANGE_ASSIGNED and RangeServer writes SPLIT_DONE or RELINQUISH_DONE
