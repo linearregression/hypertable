@@ -48,7 +48,7 @@ This will be a system table used to track load statistics for servers and ranges
 {{{
 <server-id>[:<table-id>]
 }}}
-One problem to consider when deciding on a row key format is row overflow.  Let's assume that the system is managing a single very large table, each range server has 10,000 ranges, and the row key and value data for each sample is 1000.  With 24 samples, this puts each row in the RS_STATS table at about 10000*1000*24, or 240MB.  This is less than the 256MB max range size and considerably less with compression factored in.  The `RS_STATS` table will have the following schema:
+The reason for this row key format is so that when a table is dropped, it can be easily deleted from RS_STATS.  One problem to consider when deciding on a row key format is row overflow.  Let's assume that the system is managing a single very large table, each range server has 10,000 ranges, and the row key and value data for each sample is 1000.  With 24 samples, this puts each row in the RS_STATS table at about 10000*1000*24, or 240MB.  This is less than the 256MB max range size and considerably less with compression factored in.  The `RS_STATS` table will have the following schema:
 {{{
 create table RS_STATS (
   server MAX_VERSIONS=168,
