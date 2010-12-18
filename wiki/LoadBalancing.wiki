@@ -58,8 +58,17 @@ When the Master fails over during a balance operation, it will recover its state
 
 == Range Server Failures ==
 
-If any participating range servers fail 
+If a range server participating in a balance operation fails and a recovery operation commences for that range server, the !LoadBalancer will be notified and will handle uncompleted ranges as follows:
 
+  * For ranges not yet in the RANGE_MOVE_START state, it will assume the move operation was completed for this range and mark it completed.
+  * For those ranges in the RANGE_MOVE_START state it will consult the recovery process to determine if the range was loaded or not.  If the range was loaded, it will write a RANGE_MOVE_LOADED MML entry for the range.  Otherwise, it will assign the range a new location and write a RANGE_MOVE_RESTARTED MML entry with the old location and the new one.  This will effectively be the same state as RANGE_MOVE_STARTED with the new location.  It will then create a !MoveRange task and enqueue it onto the Master's application queue.
+
+
+for the existing assignment which will 
+
+the assign it to a new server and write a new RANGE_MOVE_START entry for that range.  
+
+create a !MoveRange task and enqueue it onto the   * 
 
 
 = Balance Trigger: Load Imbalance =
