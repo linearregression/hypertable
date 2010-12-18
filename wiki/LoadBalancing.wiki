@@ -28,8 +28,8 @@ When the Master fails over during a balance operation, it will recover its state
   # !LoadBalancer will record unacknowledged RANGE_MOVE_LOADED ranges in an exclude map to prevent them from being considered for subsequent balance operations
   # !LoadBalancer will signal to decrease the maintenance interval to 1 second
   # As soon as each participating range server re-connects, the !LoadBalancer will handle each range as follows: 
-    * For ranges not yet RANGE_MOVE_START state, it will invoke `RangeServer::relinquish_range()`  If this returns RANGE_NOT_FOUND, it will assume the move operation was completed for this range
-    * For those ranges in the RANGE_MOVE_START state it will create a !MoveRange task and enqueue it onto the Master's application queue.
+    * For ranges not in RANGE_MOVE_START state, it will invoke `RangeServer::relinquish_range()`  If this returns RANGE_NOT_FOUND, it will assume the move operation was completed for this range
+    * For ranges in the RANGE_MOVE_START state it will create a !MoveRange task and enqueue it onto the Master's application queue.
   # Once all of the necessary servers have re-connected the !LoadBalancer will signal to increase the maintenance interval back to its normal value
 
 == !RangeServer Failure ==
