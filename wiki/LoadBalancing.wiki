@@ -100,6 +100,3 @@ Whenever a new range server or range servers are added to the system, the balanc
 == Range Split ==
 
 When the `Master::move_range()` method is invoked due to a range split operation, the balancer will assign it to a new range server by using some combination of physical RAM and range count.  By using physical RAM and range count instead of server load, it will help do a better job of balancing when a huge load is in progress and load statistics have become stale.
-
-
-home by finding a server with a relatively low range count and low average load.
