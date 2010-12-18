@@ -3,11 +3,11 @@
 
 = Introduction =
 
-The purpose of load balancing is to spread load across the range servers to maximize performance and availability.  
+The purpose of load balancing is to spread load across the range servers to maximize overall performance and availability.  
 
 = Balancer Mechanics =
 
-The Master will include a load balancer.  It will come in the form of a class that is abstracted so that alternate balancers can be easily added.  It will open a scanner on the RS_STATS table and will also be feed regular monitoring data so that it can also make balancing decisions based on recent load information if it chooses to do so.  The !LoadBalancer class will have a `balance()` method that gets called by the Master maintenance task which runs every 30 seconds.  If the balancer decides that balancing is necessary, it will commence a balance operation.
+The Master will include a load balancer.  It will come in the form of a class that is abstracted so that alternate balancers can be easily added.  This !LoadBalancer class will have a `balance()` method that gets called by the Master maintenance task which runs every 30 seconds.  If the balancer decides that balancing is necessary, it will commence a balance operation.
 
 == Balance Operation ==
 
@@ -67,7 +67,24 @@ System ranges (e.g. METADATA, RS_STATS, etc.) will need to be recovered first.  
 
 == Monitoring Data ==
 
+Every 30 seconds the Master gathers monitoring statistics from all !RangeServers.  This data consists of data aggregated per-table and overall server and system statistics.  This data does not contain any per-range statistics, but includes useful capacity information like amount of physical RAM, number of CPUs, and disk capacity and usage.
+
+= !LoadBalancer class definition =
+
+The following is pseudo-code for the !LoadBalancer base class.
+{{{
+class LoadBalancer {
+  public:
+    LoadBalancer(vector<RangeState> &range_states) = 0;
+    LoadBalancer(vector<RangeState> &range_states, BalanceOperation &operation) = 0;
+    void balance() = 0;
+        
+};
+}}}
+
 = Basic Balancer =
+
+It will open a scanner on the RS_STATS table and will also be feed regular monitoring data so that it can also make balancing decisions based on recent load information if it chooses to do so.  
 
 == Load Imbalance ==
 
