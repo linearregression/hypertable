@@ -69,7 +69,7 @@ System ranges (e.g. METADATA, RS_STATS, etc.) will need to be recovered first.  
 
 Every 30 seconds the Master gathers monitoring statistics from all !RangeServers.  This data consists of data aggregated per-table and overall server and system statistics.  This data does not contain any per-range statistics, but includes useful capacity information like amount of physical RAM, number of CPUs, and disk capacity and usage.
 
-= !LoadBalancer class definition =
+= Load Balancer Class Definition =
 
 The following is pseudo-code for the !LoadBalancer base class.
 {{{
@@ -78,7 +78,9 @@ class LoadBalancer {
     LoadBalancer(vector<RangeState> &range_states) = 0;
     LoadBalancer(vector<RangeState> &range_states, BalanceOperation &operation) = 0;
     void balance() = 0;
-        
+    String target_server(TableIdentifier &tid, RangeIdentifier &rid) = 0;
+    void range_loaded(TableIdentifier &tid, RangeIdentifier &rid) = 0;
+    void range_acknowledged(TableIdentifier &tid, RangeIdentifier &rid) = 0;
 };
 }}}
 
