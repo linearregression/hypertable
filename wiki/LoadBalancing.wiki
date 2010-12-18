@@ -103,6 +103,26 @@ When the `Master::move_range()` method is invoked due to a range split operation
 
 == The Basic Algorithm ==
 
+A load map will be created by scanning the RS_STATS table.  This load map will contain one record per range server and the record will contain the following information computed over a 24 hour period:
+
+  * loadavg
+  * readload
+  * writeload
+  * loadavg_per_readload
+  * loadavg_per_writeload
+
+`loadavg` is the measured load average over the past 24 hours.  `readload` is a metric for read load that is a function of scans/s, cells read/s, and bytes read/s.  `writeload` is a metric for write load that is a function of updates/s, cells written/s, and bytes written/s.  The `loadavg_per_readload` and `loadavg_per_writeload` are values that represent the amount of load average represented by each unit of write load and read load, respectively.  These values are used to 
+
+
+1.2
+20
+60
+
+bool variance_improved = true;
+while (variance_improved) {
+
+}
+
 
 For balancing load, the system will compute a single metric for load based on some combination of the following statistics:
 
