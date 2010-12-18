@@ -67,7 +67,16 @@ System ranges (e.g. METADATA, RS_STATS, etc.) will need to be recovered first.  
 
 == Monitoring Data ==
 
-Every 30 seconds the Master gathers monitoring statistics from all !RangeServers.  This data consists of data aggregated per-table and overall server and system statistics.  This data does not contain any per-range statistics, but includes useful capacity information like amount of physical RAM, number of CPUs, and disk capacity and usage.
+Every 30 seconds the Master gathers monitoring statistics from all !RangeServers.  This data will be delivered to the balancer in the form of a vector per-range server statistics.  The data for each range server includes the following general server statistics and per-table statistics which may be useful for balancing:
+
+*general server statistics:*
+  * Amount of RAM
+  * Number of CPU cores
+  * Disk capacity and 
+  * range count
+
+*per-table statistics:*
+  * range count
 
 = Load Balancer Class Definition =
 
