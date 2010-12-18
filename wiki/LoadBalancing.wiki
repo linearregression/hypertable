@@ -113,39 +113,46 @@ When the `Master::move_range()` method is invoked due to a range split operation
 
 == The Basic Algorithm ==
 
-A load map will be created by scanning the RS_STATS table.  This load map will contain one record per range server and the record will contain the following information computed over a 24 hour period:
+A vector of load average statistics (server_load_vec) will be created by scanning the RS_STATS table.  Each position in the vector will hold the following information for a range server:
 
   * loadavg
-  * readload
-  * writeload
-  * loadavg_per_readload
-  * loadavg_per_writeload
+  * deviation
+  * name // server name
 
-`loadavg` is the measured load average over the past 24 hours.  `readload` is a metric for read load that is a function of scans/s, cells read/s, and bytes read/s.  `writeload` is a metric for write load that is a function of updates/s, cells written/s, and bytes written/s.  The `loadavg_per_readload` and `loadavg_per_writeload` are values that represent the amount of load average represented by each unit of write load and read load, respectively.  These values are used to 
+`loadavg` is the measured load average over the past 24 hours.  `deviation` is a measure of how much deviation is in the server's loadavg number, computed by subtracting the loadavg mean across all the servers from the individual server's loadavg value.  The algorithm will try to reduce the load for one server at a time.  When processing a server, it will create a vector of range load statistics (rang_load_vec) by scanning the RS_STATS table.  Each position in the vector will hold the following information for a range:
 
+  * loadestimate
+  * start_row
+  * end_row
 
-1.2
-20
-60
+`loadestimate` is a metric for load that is a function of number of scans/updates per second, cells read/written per second, bytes read/written per second.  It will also compute a `loadavg_per_loadestimate` factor for the server as follows:
+{{{
+server loadavg / sum(loadestimate) over all ranges
+}}}
 
-bool variance_improved = true;
-while (variance_improved) {
-
+The following is pseudo code for coming up with the balance plan.
+{{{
+server_load_vec_desc = sort_descending(server_load_vec);
+server_load_vec_asc = sort_ascending(server_load_vec);
+while (server_load_vec_desc[0].deviation > DEVIATION_THRESHOLD) {
+  populate_range_load_vector(server_load_vec_desc[0].name);
+  sort descending range_load_vec;
+  i=0;
+  while (server_load_vec_desc[0].deviation > DEVIATION_THRESHOLD &&
+            i < range_load_vec.size()) {
+    if (moving range_load_vec[i] from server_load_vec_desc[0] to server_load_vec_asc[0] reduces deviation) {
+       add range_load_vec[i] to balance plan
+       partial_deviation = range_load_vec[i].loadestimate * loadavg_per_loadestimate;
+       server_load_vec_desc[0].loadavg -= partial_deviation;
+       server_load_vec_desc[0].deviation -= partial_deviation;
+       server_load_vec_asc[0].loadavg += partial_deviation;
+       server_load_vec_asc[0].deviation += partial_deviation;
+    }
+    i++;
+  }
+  if (i == range_load_vec.size())
+    remove server_load_vec_desc[0] and corresponding entry in server_load_vec_asc  
+  server_load_vec_desc = sort_descending(server_load_vec);
+  server_load_vec_asc = sort_ascending(server_load_vec); 
 }
-
-
-For balancing load, the system will compute a single metric for load based on some combination of the following statistics:
-
-  * scans/s
-  * updates/s
-  * cells read/s
-  * cells written/s
-  * bytes read/s
-  * bytes written/s
-
-
-
-
-The basic balancer will use range server load average to determine whether or not balancing is necessary.  It will also consider disk usage statistics (if available) to prevent any system from filling its disks beyond a configured threshold (e.g. 90%).  When the balancer starts, it will open a scanner on the RS_STATS table and scan it to build a per-server load statistics map.
-
-Ranges that have moved in the past week due to a balancing operation will not be considered.
+}}}
