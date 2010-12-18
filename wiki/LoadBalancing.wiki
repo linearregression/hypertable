@@ -5,31 +5,7 @@
 
 The purpose of load balancing is to spread load across the range servers to maximize performance and availability.  
 
-= `sys/RS_STATS` Table =
-
-This will be a system table used to track load statistics for servers and ranges.  Load statistics will be computed and stored hourly.  To minimize the amount of data kept in this table, 24 samples will be kept for each range and 7*24 samples will be kept for each range server.  This will be achieved with the MAX_VERSIONS option of the column specifications.  The reason we use MAX_VERSIONS instead of TTL is so that when a system is shut down for long periods of time, it can be brought back up again and still have load data to work with.  The table will have the following row key format:
-{{{
-<server-id>[:<table-id>]
-}}}
-One problem to consider when deciding on a row key format is row overflow.  Let's assume that the system is managing a single very large table, each range server has 10K ranges, and the row key and value data for each sample is 1K.  With 24 samples, this puts each row in the RS_STATS table at about 10000*1000*24, or 240MB.  This is less than the 256MB max range size and considerably less with compression factored in.  The `RS_STATS` table will have the following schema:
-{{{
-create table RS_STATS (
-  server,
-  range,
-  range_start_row,
-  range_split,
-  ACCESS GROUP server ( server ),
-  ACCESS GROUP range ( range, range_start_row, range_split )
-);
-}}}
-
-The columns in the range access group will have a qualifier that represents the end row of the range. 
-
-= !RangeServer failure =
-
-System ranges (e.g. METADATA, RS_STATS, etc.) will need to be recovered first.  The Master will maintain range server load information and will use that information to select lightly loaded servers to move the system ranges to.  If it does not have this information (e.g. the Master was recently restarted), it will randomly assign the system ranges.  The balancing operation cannot proceed until all of the system ranges have been recovered.
-
-= Load Balancer =
+= Balancer Mechanics =
 
 The Master will include a load balancer.  It will come in the form of a class that is abstracted so that alternate balancers can be easily added.  It will open a scanner on the RS_STATS table and will also be feed regular monitoring data so that it can also make balancing decisions based on recent load information if it chooses to do so.  The !LoadBalancer class will have a `balance()` method that gets called by the Master maintenance task which runs every 30 seconds.  If the balancer decides that balancing is necessary, it will commence a balance operation.
 
@@ -56,38 +32,45 @@ When the Master fails over during a balance operation, it will recover its state
     * For those ranges in the RANGE_MOVE_START state it will create a !MoveRange task and enqueue it onto the Master's application queue.
   # Once all of the necessary servers have re-connected the !LoadBalancer will increase the maintenance interval back to its normal value
 
-== Range Server Failures ==
+== !RangeServer Failure ==
 
 If a range server participating in a balance operation fails and a recovery operation commences for that range server, the !LoadBalancer will be notified and will handle uncompleted ranges as follows:
 
   * For ranges not yet in the RANGE_MOVE_START state, it will assume the move operation was completed for this range and mark it completed.
   * For those ranges in the RANGE_MOVE_START state it will consult the recovery process to determine if the range was loaded or not.  If the range was loaded, it will write a RANGE_MOVE_LOADED MML entry for the range.  Otherwise, it will assign the range a new location and write a RANGE_MOVE_RESTARTED MML entry with the old location and the new one.  This will effectively be the same state as RANGE_MOVE_STARTED with the new location.  It will then create a !MoveRange task and enqueue it onto the Master's application queue.
 
+= Balancer Input =
 
-for the existing assignment which will 
+== `sys/RS_STATS` Table ==
 
-the assign it to a new server and write a new RANGE_MOVE_START entry for that range.  
+This will be a system table used to track load statistics for servers and ranges.  Load statistics will be computed and stored hourly.  To minimize the amount of data kept in this table, 24 samples will be kept for each range and 7*24 samples will be kept for each range server.  This will be achieved with the MAX_VERSIONS option of the column specifications.  The reason we use MAX_VERSIONS instead of TTL is so that when a system is shut down for long periods of time, it can be brought back up again and still have load data to work with.  The table will have the following row key format:
+{{{
+<server-id>[:<table-id>]
+}}}
+One problem to consider when deciding on a row key format is row overflow.  Let's assume that the system is managing a single very large table, each range server has 10K ranges, and the row key and value data for each sample is 1K.  With 24 samples, this puts each row in the RS_STATS table at about 10000*1000*24, or 240MB.  This is less than the 256MB max range size and considerably less with compression factored in.  The `RS_STATS` table will have the following schema:
+{{{
+create table RS_STATS (
+  server,
+  range,
+  range_start_row,
+  range_split,
+  ACCESS GROUP server ( server ),
+  ACCESS GROUP range ( range, range_start_row, range_split )
+);
+}}}
 
-create a !MoveRange task and enqueue it onto the   * 
+The columns in the range access group will have a qualifier that represents the end row of the range. 
 
+_!RangeServer failure_
 
-= Balance Trigger: Load Imbalance =
+System ranges (e.g. METADATA, RS_STATS, etc.) will need to be recovered first.  The Master will maintain range server load information and will use that information to select lightly loaded servers to move the system ranges to.  If it does not have this information (e.g. the Master was recently restarted), it will randomly assign the system ranges.  The balancing operation cannot proceed until all of the system ranges have been recovered.
 
-= Balance Trigger: New Servers =
-
-= Balance Operation =
-
-MML entries
+== Monitoring Data ==
 
 = Basic Balancer =
 
-== Balance Trigger: Load Imbalance ==
+== Load Imbalance ==
 
-== Balance Trigger: New Servers ==
+== Servers Added ==
 
-== Balance Operation ==
-
-
-
-What if a server dies in the middle of a balance operation?
-Race condition between when Master writes RANGE_ASSIGNED and RangeServer writes SPLIT_DONE or RELINQUISH_DONE
+== Range Split ==
