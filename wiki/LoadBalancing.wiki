@@ -7,7 +7,7 @@ The purpose of load balancing is to spread load across the range servers to maxi
 
 = Balancer Mechanics =
 
-The Master will include a load balancer implemented as a class derived from an abstract base class !LoadBalancer so that alternate balancers can be easily added.  The !LoadBalancer class will have a `balance()` method that gets called by the Master maintenance task which runs periodically (default = 30 seconds).  If new range servers are added or the load variance among existing servers gets too large, it will commence a balance operation.
+The Master will include a load balancer implemented as a class derived from an abstract base class (!LoadBalancer) so that alternate balancers can be easily added.  The !LoadBalancer class will have a `balance()` method that gets called by the Master maintenance task which runs periodically (default = 30 seconds).  If new range servers are added or the load variance among existing servers gets too large, it will commence a balance operation.
 
 == Balance Operation ==
 
