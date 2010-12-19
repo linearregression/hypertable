@@ -55,10 +55,9 @@ create table RS_STATS (
   server MAX_VERSIONS=168,
   range MAX_VERSIONS=24,
   range_start_row MAX_VERSIONS=1,
-  range_split,
   range_move MAX_VERSIONS=1,
   ACCESS GROUP server ( server ),
-  ACCESS GROUP range ( range, range_start_row, range_split, range_move )
+  ACCESS GROUP range ( range, range_start_row, range_move )
 );
 }}}
 
