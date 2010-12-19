@@ -70,7 +70,7 @@ System ranges (e.g. METADATA, RS_STATS, etc.) will need to be recovered first.  
 
 == Monitoring Data ==
 
-Every 30 seconds the Master gathers monitoring statistics from all !RangeServers.  This data will be delivered to the balancer in the form of a vector per-range server statistics.  The data for each range server includes the following general server statistics and per-table statistics which may be useful for balancing:
+Every 30 seconds the Master gathers monitoring statistics from all !RangeServers.  This data will be delivered to the balancer in the form of a vector of per-range server statistics.  The data for each range server includes the following general server statistics and per-table statistics which may be useful for balancing:
 
 *general server statistics:*
   * Amount of RAM
