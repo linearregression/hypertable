@@ -139,13 +139,13 @@ while (server_load_vec_desc[0].deviation > DEVIATION_THRESHOLD) {
        server_load_vec_desc[0].deviation -= partial_deviation;
        server_load_vec_asc[0].loadavg += partial_deviation;
        server_load_vec_asc[0].deviation += partial_deviation;
+       server_load_vec_asc = sort_ascending(server_load_vec_asc); 
     }
     i++;
   }
   if (i == range_load_vec.size())
     remove server_load_vec_desc[0] and corresponding entry in server_load_vec_asc  
   server_load_vec_desc = sort_descending(server_load_vec_desc);
-  server_load_vec_asc = sort_ascending(server_load_vec_asc); 
 }
 }}}
 
