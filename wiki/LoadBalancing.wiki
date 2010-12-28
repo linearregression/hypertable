@@ -89,6 +89,7 @@ class LoadBalancer {
   public:
     LoadBalancer(vector<RangeState> &range_states) = 0;
     LoadBalancer(vector<RangeState> &range_states, BalanceOperation &operation) = 0;
+    void receive_monitoring_data(vector<RangeServerStatistics> &stats) = 0;
     void balance() = 0;
     String assign_to_server(TableIdentifier &tid, RangeIdentifier &rid) = 0;
     void range_move_loaded(TableIdentifier &tid, RangeIdentifier &rid) = 0;
