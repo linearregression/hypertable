@@ -239,3 +239,11 @@ To configure Hypertable to use the interface eth1, add the following line to the
 {{{
 Hypertable.Network.Interface=eth1
 }}}
+
+==Hypertable logs are filling my disks, how can I remedy this?==
+
+Add a cron job along the lines of:
+
+{{{
+find $HYPERTABLE_HOME/log/archive -mtime $keep_days -exec rm -rf {} +
+}}}
