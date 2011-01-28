@@ -3,7 +3,7 @@
 
 = Introduction =
 
-[http://http://mesos.berkeley.edu/ Mesos] is a platform for running multiple diverse cluster computing frameworks, such as Hadoop, Hypertable, MPI, and web services, on commodity clusters.
+[http://mesosproject.org/ Mesos] is a platform for running multiple diverse cluster computing frameworks, such as Hadoop, Hypertable, MPI, and web services, on commodity clusters.
 
 Mesos automates the process of setting up an EC2 cluster with attached EBS volumes.  It configures Hadoop and Hypertable with the appropriate EC2 instance machine names and facilitates stopping the cluster of instances and later restarting them, while preserving the Hadoop and Hypertable state on the persistent EBS volumes.  It allows you to easily launch a Hypertable cluster, create tables, load them with data, and then shut down the instances so that you don't get charged for the instances while the cluster is not in use.
 
