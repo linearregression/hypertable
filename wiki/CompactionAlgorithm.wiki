@@ -2,22 +2,22 @@
 
 = Introduction =
 
-AccessGroups in Hypertable consist of a CellCache (memtable) and some number of CellStores (sstables).  Occasionally, these data structures undergo a "compaction" whereby either the CellCache or the CellCache and some/all of the CellStores get merged together and written out to the filesystem as a new CellStore.  The following situations cause compactions:
+!AccessGroups in Hypertable consist of a !CellCache (memtable) and some number of !CellStores (sstables).  Occasionally, these data structures undergo a "compaction" whereby either the !CellCache or the !CellCache and some/all of the !CellStores get merged together and written out to the filesystem as a new !CellStore.  The following situations cause compactions:
 
   * Low memory
   * Range split or move
   * TTL garbage collection
   * MAX_VERSIONS garbage collection
 
- This document describes the compaction algorithm by describing 
+This document describes the compaction algorithm.
 
-= Details =
+= The Algorithm =
 
 ==Low memory==
 
 ==MAX_VERSIONS garbage collection==
 
-  # Once every 30 seconds, for each access group for each range, a check is performed to see how much data has accumulated since the last "GC compaction".  If enough data has accumulated in the access group (default is Range.SplitSize/10 or 25MB) then a "GC compaction" is scheduled.
-  # When the GC compaction is performed by one of the maintenance threads, it first measures how much actual garbage is in the Access Group by doing a merge scan of the Cell Cache and all of the live Cell Stores.
-  # If the amount of garbage exceeds a threshold (defined by the Hypertable.!RangeServer.!AccessGroup.!GarbageThreshold.Percentage property which defaults to 20%), then a major compaction is performed, which will merge the cell cache and all of the cell stores into one large CellStore.
+  # Once every 30 seconds, for each !AccessGroup for each range, a check is performed to see how much data has accumulated since the last "GC compaction".  If enough data has accumulated in the access group (default is Range.SplitSize/10 or 25MB) then a "GC compaction" is scheduled.
+  # When the GC compaction is performed by one of the maintenance threads, it first measures how much actual garbage is in the !AccessGroup by doing a merge scan of the !CellCache and all of the live !CellStores.
+  # If the amount of garbage exceeds a threshold (defined by the Hypertable.!RangeServer.!AccessGroup.!GarbageThreshold.Percentage property which defaults to 20%), then a major compaction is performed, which will merge the cell cache and all of the cell stores into one large !CellStore.
   # The Master garbage collector runs periodically (default is every 5 minutes), scans the METADATA table looking for files that are no longer in use.  It removes all of the files that it determines are no longer in use.
