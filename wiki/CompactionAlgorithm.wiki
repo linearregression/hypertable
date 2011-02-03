@@ -24,6 +24,8 @@ The target commit log size varies (from about 200MB to 4GB) depending on the cur
 
 ==Low memory==
 
+When the RangeServer memory usage hits the limit specified by the `Hypertable.RangeServer.MemoryLimit` or `Hypertable.RangeServer.MemoryLimit.Percentage` properties (default is 60% of physical RAM), then the system goes into !LowMemory mode.  In this mode, the system will schedule compactions for the largest !CellCaches until the memory drops to 10% (default) below the configured memory limit.
+
 == Range split or move ==
 
 == TTL garbage collection ==
