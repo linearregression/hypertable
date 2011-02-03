@@ -4,6 +4,7 @@
 
 !AccessGroups in Hypertable consist of a !CellCache (memtable) and some number of !CellStores (sstables).  Occasionally, these data structures undergo a "compaction" whereby either the !CellCache or the !CellCache and some/all of the !CellStores get merged together and written out to the filesystem as a new !CellStore.  The following situations cause compactions:
 
+  * Commit (Edit) Log needs pruning
   * Low memory
   * Range split or move
   * TTL garbage collection
@@ -11,9 +12,21 @@
 
 This document describes the compaction algorithm.
 
-= The Algorithm =
+= Algorithm =
+
+==Commit (Edit) Log needs pruning==
+
+The !RangeServers have a maintenance timer that schedules maintenance tasks every 30 seconds (default).  Tasks (which include compactions, splits, memory purge, etc.) are put onto a maintenance queue and are carried out by maintenance threads.
+
+The default maintenance prioritization scheme is called !LogCleanup.  This scheme tries to keep the commit log pruned back to a reasonable size so that in the event of a failover, replaying the commit log will be quick.  The way it keeps the commit log pruned back is by compacting Ranges (!AccessGroups) that have in-memory cells that are recorded in old commit log fragments.  Once all of the cells in a commit log fragment have been compacted to !CellStores, the fragment may be safely removed.
+
+The target commit log size varies (from about 200MB to 4GB) depending on the current workload.  Under heavy loading activity, the commit log is allowed to grow larger.
 
 ==Low memory==
+
+== Range split or move ==
+
+== TTL garbage collection ==
 
 ==MAX_VERSIONS garbage collection==
 
