@@ -36,7 +36,7 @@ make
 make test
 make install
 make testinstall
-yum install openssl openssl-devel libedit-devel xfsprogs-devel
+yum install openssl openssl-devel cryptopp-devel libedit-devel xfsprogs-devel
 cd ~; wget http://ceph.newdream.net/download/ceph-0.22.2.tar.gz
 tar xzvf ceph-0.22.2.tar.gz
 ./configure; make; make install
@@ -137,7 +137,7 @@ make
 make test
 make install
 make testinstall
-yum install openssl openssl-devel libedit-devel xfsprogs-devel
+yum install openssl openssl-devel cryptopp-devel libedit-devel xfsprogs-devel
 cd ~; wget http://ceph.newdream.net/download/ceph-0.20.2.tar.gz
 tar xzvf ceph-0.20.2.tar.gz
 ./configure; make; make install
