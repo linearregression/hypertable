@@ -1,18 +1,11 @@
 #summary Development Roadmap / Release Schedule
 
-==0.9.4.3 "alpha" (November 12th 2010)==
+==0.9.5.0 "alpha" (April 30th 2011)==
 
-  * Group Commit
-  * Regular expression filtering on ROW, COLUMN FAMILY, and VALUE
-  * Improved Hive integration
-
-==0.9.5.0 "alpha" (February 28th 2010)==
-
-  * Automatic Master failover
   * Automatic range balancing with the addition of new nodes
-  * Asynchronous Client interface
+  * Asynchronous Update interface
 
-==0.9.6.0 "beta" (April 30th 2011)==
+==0.9.6.0 "beta" (June 30th 2011)==
 
   * Automatic !RangeServer failover
   * Secondary Indexes
@@ -23,6 +16,7 @@ At this point, the software will be feature complete with respect to 1.0.  The o
 
 This will be the first major release that marks the end of the beta period.  It will represent a fully functional Bigtable impelmentation.
 
-== 1.1 (TBD) ==
+== 1.5 (TBD) ==
 
+  * Zookeeper integration
   * COMPACT command for performing manual compactions
