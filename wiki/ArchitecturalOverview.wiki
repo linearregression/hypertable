@@ -21,7 +21,7 @@ $
 You can create tables, load data, and issue queries with the Hypertable command interpreter "hypertable":
 
 {{{
-$ ~/hypertable/0.9.5.0.pre/bin/hypertable 
+$ ~/hypertable/0.9.5.0.pre/bin/ht shell 
 
 Welcome to the hypertable command interpreter.
 For information about Hypertable, visit http://www.hypertable.org/
