@@ -6,21 +6,22 @@
 
 This document gives an architectural overview of Hypertable.  Hypertable is designed to run on top of a "third party" distributed filesystem, such as Hadoop DFS.  However, the system can also be run on top of a normal local filesystem.  We recommend that you start with the local filesystem to get up and running and to play around with the system.  
 
-The best way to get started hands-on using hypertable is to first [http://code.google.com/p/hypertable/wiki/SourceCode?tm=4 download the source code], build it, and get the regression tests to pass.  Once the regression tests are all passing, you can then start the servers runing on top of the local filesystem with the following command (assuming the installation directory is ~/hypertable/0.9.0.8):
+The best way to get started hands-on using hypertable is to first [http://code.google.com/p/hypertable/wiki/SourceCode?tm=4 download the source code], build it, and get the regression tests to pass.  Once the regression tests are all passing, you can then start the servers runing on top of the local filesystem with the following command (assuming the installation directory is ~/hypertable/0.9.5.0.pre):
 
 {{{
-$ ~/hypertable/0.9.0.8/bin/start-all-servers.sh local
+$ ~/hypertable/0.9.5.0.pre/bin/start-all-servers.sh local
 Successfully started DFSBroker (local)
 Successfully started Hyperspace
 Successfully started Hypertable.Master
 Successfully started Hypertable.RangeServer
+Successfully started ThriftBroker
 $
 }}}
 
 You can create tables, load data, and issue queries with the Hypertable command interpreter "hypertable":
 
 {{{
-$ ~/hypertable/0.9.0.8/bin/hypertable 
+$ ~/hypertable/0.9.5.0.pre/bin/hypertable 
 
 Welcome to the hypertable command interpreter.
 For information about Hypertable, visit http://www.hypertable.org/
@@ -110,7 +111,8 @@ http://www.hypertable.org/images/MergeScan.jpg
 
 Application programs can access Hypertable through a client API that is provided as part of libHypertable.  The client API consists of the following four main classes.
 
-  * [http://www.hypertable.org/doxygen/class_hypertable_1_1_client.html Client] - Singleton class used attach to Hypertable.  Contains methods for doing operations such as creating, dropping, and listing tables. 
+  * [http://www.hypertable.org/doxygen/class_hypertable_1_1_client.html Client] - Singleton class used attach to Hypertable.  Contains methods for doing operations such as creating, dropping, and testing existence of namespaces. 
+  * [http://www.hypertable.org/doxygen/class_hypertable_1_1_namespace.html Namespace] - Contains methods for doing operations such as creating, dropping, and listing tables within a namespace.
   * [http://www.hypertable.org/doxygen/class_hypertable_1_1_table.html Table] - Objects of this class represent open tables.  Contains methods for creating scanners and mutators on the table.
   * [http://www.hypertable.org/doxygen/class_hypertable_1_1_table_mutator.html TableMutator] - An object of this class is used to mutate (add or delete cells) a table
   * [http://www.hypertable.org/doxygen/class_hypertable_1_1_table_scanner.html TableScanner] - An object of this class is used to scan over the cells of a table.
@@ -119,7 +121,7 @@ Application programs can access Hypertable through a client API that is provided
 
 The following two source files provide a good example of how you use the Hypertable Client API.  Together they illustrate how to load data into a table and query it.
 
-  * [http://www.hypertable.org/doxygen/apache__log__load_8cc_source.html apache_log_load.cc] - Loads one or more Apache log files into Hypertable
+  * [http://hypertable.org/doxygen/apache__log__load_8cc_source.html apache_log_load.cc] - Loads one or more Apache log files into Hypertable
   * [http://www.hypertable.org/doxygen/apache__log__query_8cc_source.html apache_log_query.cc] - Dumps a portion of the log table whose rows match a supplied prefix
 
 == Thrift API ==
