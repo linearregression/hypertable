@@ -1343,25 +1343,6 @@ Hypertable provides a Monitoring UI server which can be used to monitor the stat
      The monitoring app requires the rack gem to be installed. There is a known bug when using rack 1.2.1 with ruby 1.8.5. You can use ("ruby -v"  and "gem list --local rack" to check if you are using this combination). To get around it, you can either upgrade ruby to 1.8.7 or downgrade rack to 1.1.0. Heres an example which shows [http://blog.carbonfive.com/2010/03/ruby-on-rails/how-to-install-rails-on-centos-5-4 how to upgrade to ruby 1.8.7 on Centos5].
   # Install RRDTool. On Linux systems you should be able to run something like "yum install rrdtool" or "apt-get rrdtool". If using a Mac and MacPorts you can do "port install rrdtool". If you're unable to install via your package manager then download the source and build. 
 
-To install the Ruby RRDTool bindings, you will need to:
-  # [http://oss.oetiker.ch/rrdtool/pub/?M=D Download the RRDTool source], and untarzip. Download the same version as the installed RRDTool (rrdtool -v). Say the source is in the dir $RRDTOOL_SRC  
-  # cd $RRDTOOL_SRC/bindings/ruby
-  # Follow the instructions in the README. You might have to tweak the location of the RRDTool libraries in extconf.rb for your system. For example you might have to change it to something like: 
-    {{{ 
-    dir_config("rrd","../../src","/opt/local/lib/")
-    have_library("rrd", "rrd_create", "rrd.h")
-    }}}
-    Also you might have to specify the "ARCH_FLAGS" and "–with-rrd-dir"variable when running extconf.rb for example:
-    {{{
-    ARCHFLAGS="-arch x86_64" ruby extconf.rb –with-rrd-dir=/opt/local
-    }}}
-  # To test that the Ruby RRDTool bindings have been correctly installed, run:
-    {{{
-    irb
-    >> require 'RRD'
-    => true
-    >> 
-    }}}
 To start/stop the Monitoring server: 
 {{{
 /opt/hypertable/0.9.4.0/bin/start-monitoring.sh
