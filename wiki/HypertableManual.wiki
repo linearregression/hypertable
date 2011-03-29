@@ -334,7 +334,7 @@ $ cap -S config=/home/doug/conf/alternate.cfg start
 
 ==Upgrading your Installation==
 
-*NOTE: A Hypertable installation running on the _local_ broker can only be upgraded with the method described in this section if it has been FHS-ized* (see [#Filesystem_Hierarchy_Standard]).
+*NOTE:* A Hypertable installation running on the _local_ broker can only be upgraded with the method described in this section if it has been FHS-ized (see [#Filesystem_Hierarchy_Standard]).
 
 ===Format Compatible Upgrade===
 
