@@ -334,6 +334,8 @@ $ cap -S config=/home/doug/conf/alternate.cfg start
 
 ==Upgrading your Installation==
 
+*NOTE: A Hypertable installation running on the _local_ broker can only be upgraded with the method described in this section if it has been FHS-ized* (see [#Filesystem_Hierarchy_Standard]).
+
 ===Format Compatible Upgrade===
 
 If you're upgrading to a new release of Hypertable and you're sure that both versions are format compatible, upgrading is quick and painless.  First install the new release on the source machine (`source_machine` variable at top of Capfile).  Then modify the `hypertable_version` variable in the Capfile to reference the _new_ release version.  Once you've done that, you can upgrade with the following Capistrano command:
