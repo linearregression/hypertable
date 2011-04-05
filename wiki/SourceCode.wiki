@@ -12,7 +12,7 @@ to configure your identity in the commits. To obtain the source:
 
 {{{
 cd ~/src
-git clone git@github.com:nuggetwheat/hypertable.git
+git://github.com/nuggetwheat/hypertable.git
 }}}
 
 
