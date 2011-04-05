@@ -19,10 +19,10 @@ cd boost_1_43_0
 cd /etc/yum.repos.d
 wget http://dries.eu/pub/dries-el.repo
 yum install log4cpp-devel git-core cronolog google-perftools-devel libevent-devel readline-devel ncurses-devel xml-commons-apis freetype-devel libpng-devel libart_lgpl-devel
-wget http://www.hypertable.org/pub/hyperic-sigar-1.6.3.tar.gz
-tar -xzvf hyperic-sigar-1.6.3.tar.gz
-cp hyperic-sigar-1.6.3/sigar-bin/include/*.h /usr/local/include
-cp hyperic-sigar-1.6.3/sigar-bin/lib/libsigar-amd64-linux.so /usr/local/lib
+wget http://www.hypertable.org/pub/hyperic-sigar-1.6.4.zip
+unzip hyperic-sigar-1.6.4.zip
+cp hyperic-sigar-1.6.4/sigar-bin/include/*.h /usr/local/include
+cp hyperic-sigar-1.6.4/sigar-bin/lib/libsigar-amd64-linux.so /usr/local/lib
 wget http://download.oracle.com/berkeley-db/db-4.8.26.tar.gz
 tar -xzvf db-4.8.26.tar.gz
 cd db-4.8.26/build_unix/
@@ -120,10 +120,10 @@ cd boost_1_40_0
 cd /etc/yum.repos.d
 wget http://dries.eu/pub/dries-el.repo
 yum install log4cpp-devel git-core cronolog google-perftools-devel libevent-devel readline-devel ncurses-devel xml-commons-apis freetype-devel libpng-devel libart_lgpl-devel
-wget http://www.hypertable.org/pub/hyperic-sigar-1.6.3.tar.gz
-tar -xzvf hyperic-sigar-1.6.3.tar.gz
-cp hyperic-sigar-1.6.3/sigar-bin/include/*.h /usr/local/include
-cp hyperic-sigar-1.6.3/sigar-bin/lib/libsigar-x86-linux.so /usr/local/lib/
+wget http://www.hypertable.org/pub/hyperic-sigar-1.6.4.zip
+unzip hyperic-sigar-1.6.4.zip
+cp hyperic-sigar-1.6.4/sigar-bin/include/*.h /usr/local/include
+cp hyperic-sigar-1.6.4/sigar-bin/lib/libsigar-x86-linux.so /usr/local/lib/
 wget http://download.oracle.com/berkeley-db/db-4.8.26.tar.gz
 tar -xzvf db-4.8.26.tar.gz
 cd db-4.8.26/build_unix/
@@ -275,10 +275,10 @@ make test
 make install
 make testinstall
 # install hyperic
-wget http://www.hypertable.org/pub/hyperic-sigar-1.6.3.tar.gz
-tar -xzvf hyperic-sigar-1.6.3.tar.gz
-cp hyperic-sigar-1.6.3/sigar-bin/include/*.h /usr/local/include
-cp hyperic-sigar-1.6.3/sigar-bin/lib/libsigar-x86-linux.so /usr/local/lib/
+wget http://www.hypertable.org/pub/hyperic-sigar-1.6.4.zip
+unzip hyperic-sigar-1.6.4.zip
+cp hyperic-sigar-1.6.4/sigar-bin/include/*.h /usr/local/include
+cp hyperic-sigar-1.6.4/sigar-bin/lib/libsigar-x86-linux.so /usr/local/lib/
 echo "/usr/local/lib" >> /etc/ld.so.conf
 ldconfig
 # install BerkeleyDB
@@ -326,10 +326,10 @@ make
 make test
 make install
 make testinstall
-wget http://www.hypertable.org/pub/hyperic-sigar-1.6.3.tar.gz
-tar -xzvf hyperic-sigar-1.6.3.tar.gz
-cp hyperic-sigar-1.6.3/sigar-bin/include/*.h /usr/local/include
-cp hyperic-sigar-1.6.3/sigar-bin/lib/libsigar-x86-linux.so /usr/local/lib/
+wget http://www.hypertable.org/pub/hyperic-sigar-1.6.4.zip
+unzip hyperic-sigar-1.6.4.zip
+cp hyperic-sigar-1.6.4/sigar-bin/include/*.h /usr/local/include
+cp hyperic-sigar-1.6.4/sigar-bin/lib/libsigar-x86-linux.so /usr/local/lib/
 sh -c "echo '/usr/local/lib' > /etc/ld.so.conf.d/local.conf"
 /sbin/ldconfig
 }}}
@@ -376,10 +376,10 @@ _EC2: ami-5c709435_
 apt-get update
 apt-get install g++ cmake libboost-dev liblog4cpp5-dev git-core cronolog libgoogle-perftools-dev libevent-dev zlib1g-dev libexpat1-dev libncurses-dev libreadline5-dev
 apt-get install rrdtool librrd2-dev
-wget http://internap.dl.sourceforge.net/sourceforge/sigar/hyperic-sigar-1.6.3.tar.gz
-tar -xzvf hyperic-sigar-1.6.3.tar.gz
-cp hyperic-sigar-1.6.3/sigar-bin/include/*.h /usr/local/include
-cp hyperic-sigar-1.6.3/sigar-bin/lib/libsigar-x86-linux.so /usr/local/lib/
+wget http://www.hypertable.org/pub/hyperic-sigar-1.6.4.zip
+unzip hyperic-sigar-1.6.4.zip
+cp hyperic-sigar-1.6.4/sigar-bin/include/*.h /usr/local/include
+cp hyperic-sigar-1.6.4/sigar-bin/lib/libsigar-x86-linux.so /usr/local/lib/
 wget http://download.oracle.com/berkeley-db/db-4.8.26.tar.gz
 tar -xzvf db-4.8.26.tar.gz
 cd db-4.8.26/build_unix/
@@ -493,13 +493,13 @@ make
 make install # as root or in su/sudo shell
 }}}
 
-Download Hyperic SIGAR from this page [http://sourceforge.net/project/showfiles.php?group_id=172552&package_id=197466&release_id=625208 Hyperic SIGAR] and install it
+Download Hyperic SIGAR and install it
 {{{
 port install wget
-wget http://sourceforge.net/projects/sigar/files/sigar/1.6/hyperic-sigar-1.6.3.tar.gz/download
-tar -xzvf hyperic-sigar-1.6.3.tar.gz 
-cp hyperic-sigar-1.6.3/sigar-bin/lib/libsigar-universal64-macosx.dylib /opt/local/lib/libsigar-universal-macosx.dylib
-cp hyperic-sigar-1.6.3/sigar-bin/include/*.h /opt/local/include
+wget http://www.hypertable.org/pub/hyperic-sigar-1.6.4.zip
+unzip hyperic-sigar-1.6.4.zip
+cp hyperic-sigar-1.6.4/sigar-bin/lib/libsigar-universal64-macosx.dylib /opt/local/lib/libsigar-universal-macosx.dylib
+cp hyperic-sigar-1.6.4/sigar-bin/include/*.h /opt/local/include
 }}}
 
 Install RRDtool
@@ -520,13 +520,13 @@ Once you installed !MacPorts open Terminal and type following commands as root o
 port install libevent boost google-perftools google-sparsehash log4cpp pkgconfig
 }}}
 
-Download Hyperic SIGAR from this page [http://sourceforge.net/project/showfiles.php?group_id=172552&package_id=197466&release_id=625208 Hyperic SIGAR] and install it
+Download Hyperic SIGAR and install it
 {{{
 port install wget
-wget http://sourceforge.net/projects/sigar/files/sigar/1.6/hyperic-sigar-1.6.3.tar.gz/download
-tar -xzvf hyperic-sigar-1.6.3.tar.gz 
-cp hyperic-sigar-1.6.3/sigar-bin/lib/libsigar-universal-macosx.dylib /opt/local/lib
-cp hyperic-sigar-1.6.3/sigar-bin/include/*.h /opt/local/include
+wget http://www.hypertable.org/pub/hyperic-sigar-1.6.4.zip
+unzip hyperic-sigar-1.6.4.zip
+cp hyperic-sigar-1.6.4/sigar-bin/lib/libsigar-universal-macosx.dylib /opt/local/lib
+cp hyperic-sigar-1.6.4/sigar-bin/include/*.h /opt/local/include
 }}}
 
 Download and install RE2
