@@ -11,4 +11,4 @@
 == Other Build AMIs ==
 
 || *Architectue System Version* || *Machine Image Identifier* || *Installed Software* ||
-|| CentOS 5.4 i386 || `ami-0818e561` || Thrift 0.6.0, Boost 1.43, Hyperic SIGAR 1.6.3, BerkeleyDB 4.8, KFS 0.5, Ceph 0.25.1, JDK 6 update 21, ant 1.8.0, Google Perftools 1.7, re2, doxygen, graphviz, tcpdump, tcptrace, netperf, Capistrano, dstat, oprofile, iozone, gdb, rrdtool, valgrind 3.6.1, Hadoop CDH3B4, cmake 2.6-patch 4 ||
+|| CentOS 5.4 i386 || `ami-0818e561` || Thrift 0.6.0, Boost 1.44, Hyperic SIGAR 1.6.4, BerkeleyDB 4.8, KFS 0.5, Ceph 0.25.1, JDK 6 update 24, ant 1.8.2, Google Perftools 1.7, re2, cmake 2.6-patch 4 ||
