@@ -10,10 +10,9 @@ _EC2:  ami-ccb35ea5_
 {{{
 rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/x86_64/epel-release-5-3.noarch.rpm
 yum install gcc-c++ make cmake python-devel bzip2-devel zlib-devel expat-devel rrdtool rrdtool-devel ruby ruby-devel ruby-ext
-wget http://downloads.sourceforge.net/boost/boost_1_43_0.tar.bz2
-bzip2 -d boost_1_43_0.tar.bz2 
-tar xvf boost_1_43_0.tar
-cd boost_1_43_0
+wget http://downloads.sourceforge.net/boost/boost_1_44_0.tar.bz2
+tar xjvf boost_1_44_0.tar.bz2
+cd boost_1_44_0
 ./bootstrap.sh --with-libraries=filesystem,iostreams,program_options,system,thread,graph,regex
 ./bjam install
 cd /etc/yum.repos.d
@@ -111,10 +110,9 @@ _Base AMI:  ami-1500e67c_
 {{{
 rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm
 yum install gcc-c++ make cmake python-devel bzip2-devel zlib-devel expat-devel rrdtool rrdtool-devel ruby ruby-devel ruby-ext
-wget http://downloads.sourceforge.net/boost/boost_1_40_0.tar.bz2
-bzip2 -d boost_1_40_0.tar.bz2 
-tar xvf boost_1_40_0.tar
-cd boost_1_40_0
+wget http://downloads.sourceforge.net/boost/boost_1_44_0.tar.bz2
+tar xjvf boost_1_44_0.tar.bz2
+cd boost_1_44_0
 ./bootstrap.sh --with-libraries=filesystem,iostreams,program_options,system,thread,graph,regex
 ./bjam install
 cd /etc/yum.repos.d
@@ -254,17 +252,16 @@ hash -r
 # Create directory to hold dependencies built with new compiler
 mkdir /opt/htdep
 # build boost into /opt/htdep
-wget http://downloads.sourceforge.net/boost/boost_1_40_0.tar.bz2
-bzip2 -d boost_1_40_0.tar.bz2 
-tar xvf boost_1_40_0.tar
-cd boost_1_40_0
+wget http://downloads.sourceforge.net/boost/boost_1_44_0.tar.bz2
+tar xjvf boost_1_44_0.tar.bz2
+cd boost_1_44_0
 ./bootstrap.sh --prefix=/opt/htdep --with-libraries=filesystem,iostreams,program_options,system,thread,graph,regex
 ./bjam install
 # build thrift into /opt/htdep
-wget http://www.hypertable.org/pub/thrift-0.2.0-incubating.tar.gz
-tar xzvf thrift-0.2.0-incubating.tar.gz
-cd thrift-0.2.0
-./configure --with-boost=/opt/htdep --prefix=/opt/htdep --with-ruby=no
+wget http://www.hypertable.org/pub/thrift.tgz
+tar xzvf thrift.tgz
+cd thrift-0.6.0
+./configure
 make install
 # install re2
 wget http://hypertable.org/pub/re2.tgz
@@ -308,10 +305,9 @@ _EC2:  ami-5647a33f_
 
 {{{
 yum install git gcc-c++ make cmake python-devel bzip2-devel zlib-devel expat-devel rrdtool rrdtool-devel
-wget http://downloads.sourceforge.net/boost/boost_1_40_0.tar.bz2
-bzip2 -d boost_1_40_0.tar.bz2 
-tar xvf boost_1_40_0.tar
-cd boost_1_40_0
+wget http://downloads.sourceforge.net/boost/boost_1_44_0.tar.bz2
+tar xjvf boost_1_44_0.tar.bz2
+cd boost_1_44_0
 ./bootstrap.sh --with-libraries=filesystem,iostreams,program_options,system,thread,graph,regex
 ./bjam install
 wget http://dag.wieers.com/rpm/packages/log4cpp/log4cpp-1.0-1.el5.rf.i386.rpm
@@ -374,8 +370,13 @@ _EC2: ami-5c709435_
 
 {{{
 apt-get update
-apt-get install g++ cmake libboost-dev liblog4cpp5-dev git-core cronolog libgoogle-perftools-dev libevent-dev zlib1g-dev libexpat1-dev libncurses-dev libreadline5-dev
+apt-get install g++ cmake liblog4cpp5-dev git-core cronolog libgoogle-perftools-dev libevent-dev zlib1g-dev libexpat1-dev libncurses-dev libreadline5-dev
 apt-get install rrdtool librrd2-dev
+wget http://downloads.sourceforge.net/boost/boost_1_44_0.tar.bz2
+tar xjvf boost_1_44_0.tar.bz2
+cd boost_1_44_0
+./bootstrap.sh --with-libraries=filesystem,iostreams,program_options,system,thread,graph,regex
+./bjam install
 wget http://www.hypertable.org/pub/hyperic-sigar-1.6.4.zip
 unzip hyperic-sigar-1.6.4.zip
 cp hyperic-sigar-1.6.4/sigar-bin/include/*.h /usr/local/include
@@ -487,8 +488,8 @@ Install Thrift
 port install p5-bit-vector p5-class-accessor
 wget http://www.hypertable.org/pub/thrift.tgz
 tar -zxf thrift.tgz
-cd thrift-0.2.0
-./configure --with-libevent=/opt/local --with-boost=/opt/local
+cd thrift-0.6.0
+./configure
 make
 make install # as root or in su/sudo shell
 }}}
@@ -545,7 +546,7 @@ Install Thrift
 port install p5-bit-vector p5-class-accessor
 wget http://www.hypertable.org/pub/thrift.tgz
 tar -zxf thrift.tgz
-cd thrift-0.5.0
+cd thrift-0.6.0
 ./configure --with-libevent=/opt/local --with-boost=/opt/local
 make
 make install # as root or in su/sudo shell
