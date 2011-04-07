@@ -28,7 +28,7 @@ git pull
 There are a few options to contribute to the project. Email patches always work (see the documentation by git send-email --help). Regular contributor might find a public repository hosting service helpful. For example, repo.or.cz, unfuddle.com and github.com all offer free git hosting, enough for hypertable. The following instruction is for github.com (as it's the easiest to fork a project):
 
   # Create an account on github.com (just follow the easy instructions :)
-  # Goto http://github.com/nuggetwheat/hypertable/tree and click the fork button besides the project name.
+  # Goto http://github.com/hypertable/hypertable/tree and click the fork button besides the project name.
   # Change directory to your local repository (assuming you've done "Get the Hypertable source code"), issue the following command:
 {{{
 git remote add github <your_push_url>
