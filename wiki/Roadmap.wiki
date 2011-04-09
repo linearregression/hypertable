@@ -1,7 +1,7 @@
-#summary Development Roadmap / Release Schedule
+#summary Hypertable Development Roadmap / Release Schedule
 
-==0.9.5.0 "alpha" (April 30th 2011)==
-
+==0.9.5.0 "alpha"==
+_Target Release Date:  April 30th 2011 
   * Automatic range balancing with the addition of new nodes
   * Asynchronous Update interface
 
