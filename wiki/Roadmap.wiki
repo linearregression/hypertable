@@ -17,7 +17,8 @@ _Target Release Date:  August 31st 2011_
 
 This will be the first major release that marks the end of the beta period.  It will represent a fully functional Bigtable impelmentation.
 
-== 1.5 (TBD) ==
+== 1.5==
+_Target Release Date:  TBD_
 
   * Zookeeper integration
   * COMPACT command for performing manual compactions
