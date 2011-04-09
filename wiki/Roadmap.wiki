@@ -10,7 +10,7 @@ _Target Release Date:  June 30th 2011_
   * !RangeServer failover
   * Secondary Indexes
 
-At this point, the software will be feature complete with respect to 1.0.  The only changes that will go into the software between this release and 1.0 will be bug fixes, documentation improvements, and possibly some usability features that are discovered during the beta period and deemed to be very important.
+At this point, the software will be feature complete with respect to 1.0.  The only changes that will go into the software between this release and 1.0 will be bug fixes, documentation improvements, and usability features that are discovered during the beta period and deemed to be very important.
 
 ==1.0==
 _Target Release Date:  August 31st 2011_
