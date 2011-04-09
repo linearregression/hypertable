@@ -14,6 +14,7 @@ At this point, the software will be feature complete with respect to 1.0.  The o
 
 ==1.0==
 _Target Release Date:  August 31st 2011_
+
 This will be the first major release that marks the end of the beta period.  It will represent a fully functional Bigtable impelmentation.
 
 == 1.5 (TBD) ==
