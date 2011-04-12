@@ -170,6 +170,7 @@ Here's a brief description of each variable:
 || `source_machine` || machine from which you will build the binaries, distribute them to the other machines, and launch the service. ||
 || `install_dir` || directory on `source_machine` where you have installed Hypertable.  It is also the directory on the remote machines where the installation will get rsync'ed to. ||
 || `hypertable_version` || version of Hypertable you are deploying ||
+|| `default_pkg` || Path to binary package file (either `.dmg` or `.rpm`) on source machine ||
 || `default_dfs` || distributed file system you are running Hypertable on top of.  Valid values are "local", "hadoop", "kfs", or "ceph" ||
 || `default_config` || location of the default configuration file that plan to use ||
 *Table 1. Hypertable Capistrano Variables*
@@ -197,13 +198,17 @@ filesystem like HDFS.  In fact, the system works best from a performance standpo
 || `spare` || This role is for machines that will act as standbys.  They will be kept current with the latest binaries ||
 *Table 2. Hypertable Capistrano Roles*
 
-===Step 2. Install Hypertable on the Source machine===
+===Step 2. Distribute and Install Binaries===
 
-The next step is to install Hypertable on the source machine, `admin1` in this example.  On `admin1` be sure Hypertable is installed in the location specified by the `install_dir` variable at the top of the Capfile and that the `hypertable_version` variable at the top of the Capfile matches the version you are installing (`/opt/hypertable` and `0.9.5.0` in this example).
+If you're installing binary packages (e.g. `.dmg` or `.rpm`), put the Hypertable package that you want to install, on the source machine, `admin1` in this example.  Modify the `hypertable_version` and `default_pkg` variables at the top of the Capfile to contain the version of Hypertable you are installing and the absolute path to the package file on the source machine, respectively.  Then distribute and install the binary package with the following command:
 
-See [#Installing_Hypertable_via_Binary_Packages] for instructions on how to install from binary packages.  Instructions for building from source can be found in the README.md file in the toplevel source directory and [http://code.google.com/p/hypertable/wiki/HowToBuild How To Build] shows how to setup the dependencies for each platform.
+$ cap install_package
 
-===Step 3. Configure Hypertable===
+If you're installing from binaries that you've compiled directly or from the .tar.bz2 archive, you can use Capistrano to distribute the binaries with rsync.  On `admin1` be sure Hypertable is installed in the location specified by the `install_dir` variable at the top of the Capfile and that the `hypertable_version` variable at the top of the Capfile matches the version you are installing (`/opt/hypertable` and `0.9.5.0` in this example).  Then distribute the binaries with the following command:
+
+$ cap dist
+
+===Step 3. Distribute Custom Hypertable Config file===
 
 Configuring Hypertable is straightforward.  You just need to copy the default config file (`conf/hypertable.cfg`) and change the following properties:
 
