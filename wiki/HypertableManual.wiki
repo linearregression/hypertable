@@ -310,10 +310,14 @@ Be sure this property matches the `HdfsBroker.fs.default.name` property in the H
 
 ===Step  2. Start HDFS===
 
-Launch HDFS.
+Launch HDFS.  On the NameNode machine:
 {{{
 $ sudo service hadoop-0.20-namenode start
 $ sudo service hadoop-0.20-secondarynamenode start
+}}}
+
+On the DataNode machines:
+{{{
 $ sudo service hadoop-0.20-datanode start
 }}}
 
@@ -427,7 +431,7 @@ $ cd hql_tutorial
 $ wget http://hypertable.googlecode.com/files/query-log.tsv.gz
 }}}
 
-The next step is to make sure Hypertable is properly installed (see [#Installing_Hypertable_via_Binary_Packages]) and then launch the service.  The following terminal session illustrates how to launch a local instance of Hypertable:
+The next step is to make sure Hypertable is properly installed (see [#Local_Installation] or [#Cluster_Installation]) and then launch the service.  The following terminal session illustrates how to launch a local instance of Hypertable:
 {{{
 $ /opt/hypertable/current/bin/start-all-servers.sh local
 DFS broker: available file descriptors: 256
