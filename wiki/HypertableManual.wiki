@@ -159,7 +159,8 @@ Once you have Capistrano installed, copy the `conf/Capfile.cluster` that comes w
 {{{
 set :source_machine,     "admin"
 set :install_dir,        "/opt/hypertable" 
-set :hypertable_version, "0.9.4.3"
+set :hypertable_version, "0.9.5.0"
+set :default_pkg, "/tmp/hypertable-0.9.5.0-linux-x86_64.deb"
 set :default_dfs,        "hadoop"
 set :default_config,     "/opt/hypertable/hypertable-example.cfg"
 }}}
@@ -198,7 +199,7 @@ filesystem like HDFS.  In fact, the system works best from a performance standpo
 
 ===Step 2. Install Hypertable on the Source machine===
 
-The next step is to install Hypertable on the source machine, `admin1` in this example.  On `admin1` be sure Hypertable is installed in the location specified by the `install_dir` variable at the top of the Capfile and that the `hypertable_version` variable at the top of the Capfile matches the version you are installing (`/opt/hypertable` and `0.9.4.3` in this example).
+The next step is to install Hypertable on the source machine, `admin1` in this example.  On `admin1` be sure Hypertable is installed in the location specified by the `install_dir` variable at the top of the Capfile and that the `hypertable_version` variable at the top of the Capfile matches the version you are installing (`/opt/hypertable` and `0.9.5.0` in this example).
 
 See [#Installing_Hypertable_via_Binary_Packages] for instructions on how to install from binary packages.  Instructions for building from source can be found in the README.md file in the toplevel source directory and [http://code.google.com/p/hypertable/wiki/HowToBuild How To Build] shows how to setup the dependencies for each platform.
 
@@ -1223,7 +1224,7 @@ Now run the !WikipediaWordCount !MapReduce program:
 
 {{{
 /opt/hadoop/current/bin/hadoop jar \
-    /opt/hypertable/current/lib/java/hypertable-0.9.4.3-examples.jar \  
+    /opt/hypertable/current/lib/java/hypertable-0.9.5.0-examples.jar \  
     org.hypertable.examples.WikipediaWordCount \
     -Dmapred.local.dir="/mnt/hadoop/mapred/local" \
     --columns=article
