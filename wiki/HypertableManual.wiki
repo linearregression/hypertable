@@ -242,44 +242,12 @@ Once you've edited the configuration file for your cluster on `admin1`, be sure 
 $ cap push_config
 }}}
 
-===Step 5. Distribute the installation===
+===Step 5. Set `current` link===
 
-To distribute this installation to all of the machines in your cluster, the account from which you're administering Hypertable from will have to have read+write access to the directory specified by the `install_dir` variable at the top of the Capfile ("/opt/hypertable" in this example).  You can verify this with the following commands (issued in the directory containing the Capfile):
-
+We typically create a symbolic link `current` in the installation directory (i.e. `install_dir`) to point to the current installation directory.  To do this for the installation you've just pushed out, execute the following command:
 {{{
-$ cap shell
-cap> touch /opt/hypertable/foo
-cap> rm -f /opt/hypertable/foo
-}}}
-
-(*NOTE:* You may have to increase the value of !MaxStartups in your `/etc/sshd_config` file if it is less than the number of nodes in your cluster)
-
-Once you've verified that the installation directory is writable, you can distribute the installation (and make it the current) with the following commands:
-
-{{{
-$ cap dist
 $ cap set_current
 }}}
-
-*FHS-izing Your Installation*
-
-To FHS-ize your installation, you should make sure the following directories exist on all of the machines in your cluster and that the account from which you are administering Hypertable from has read+write access.
-
-  * /etc/opt/hypertable
-  * /var/opt/hypertable
-
-Once you've verified that these directories are setup properly, you can FHS-ize the installation with a single Capistrano command:
-
-{{{
-$ cap fhsize
-}}}
-
-This command will perform the following steps:
-
-  * rsync the installation to all machines
-  * invoke the fhsize.sh script on all machines
-  * copy the config file on the source machine into the conf/ directory in the installation
-  * rsync the installation to push the config file out to /etc/opt/hypertable on all machines
 
 ===Step 5. Synchronize Clocks===
 
@@ -299,6 +267,26 @@ cap> date
  ** [out :: slave005] Sat Jan  3 18:05:33 PST 2009
  ** [out :: slave007] Sat Jan  3 18:05:33 PST 2009
  ** [out :: slave008] Sat Jan  3 18:05:33 PST 2009
+}}}
+
+===Starting and Stopping Hypertable===
+
+The following commands should be run from the directory containing the Capfile.  To start all of the Hypertable servers ...
+{{{
+$ cap start
+}}}
+And to stop the service, shutting down all servers ...
+{{{
+$ cap stop
+}}}
+If you want to wipe your database clean, removing all tables ...
+{{{
+$ cap cleandb
+}}}
+If you want to launch the service using a different config file than the default (e.g. /home/doug/alternate.cfg) ...
+{{{
+$ cap stop
+$ cap -S config=/home/doug/alternate.cfg start
 }}}
 
 ==Up and Running with HDFS==
@@ -336,29 +324,7 @@ $ hadoop fs -mkdir /hypertable
 $ hadoop fs -chmod 777 /hypertable
 }}}
 
-==Starting and Stopping Hypertable==
-
-The following commands should be run from the directory containing the Capfile.  To start all of the Hypertable servers ...
-{{{
-$ cap start
-}}}
-And to stop the service, shutting down all servers ...
-{{{
-$ cap stop
-}}}
-If you want to wipe your database clean, removing all tables ...
-{{{
-$ cap cleandb
-}}}
-If you want to launch the service using a different config file than the default (e.g. /home/doug/alternate.cfg) ...
-{{{
-$ cap -S config=/home/doug/alternate.cfg dist
-$ cap -S config=/home/doug/alternate.cfg start
-}}}
-
 ==Upgrading your Installation==
-
-*NOTE:* An installation running on the _local_ broker can only be upgraded with the following method if it has been FHS-ized (see [#Filesystem_Hierarchy_Standard]).
 
 ===Format Compatible Upgrade===
 
