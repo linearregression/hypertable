@@ -310,13 +310,13 @@ Be sure this property matches the `HdfsBroker.fs.default.name` property in the H
 
 ===Step  2. Start HDFS===
 
-Launch HDFS.  On the NameNode machine:
+Launch HDFS.  On the !NameNode machine:
 {{{
 $ sudo service hadoop-0.20-namenode start
 $ sudo service hadoop-0.20-secondarynamenode start
 }}}
 
-On the DataNode machines:
+On the !DataNode machines:
 {{{
 $ sudo service hadoop-0.20-datanode start
 }}}
@@ -339,11 +339,10 @@ $ hadoop fs -chmod 777 /hypertable
 
 ===Format Compatible Upgrade===
 
-If you're upgrading to a new release of Hypertable that is format compatible with your old one, upgrading is quick and painless.  First stop the service and then install the new release by following the installation procedure up through the FHS-ize step.  This is a simple matter of editing the `hypertable_version` and `default_pkg` to point to the new installation package and issuing the following Capistrano commands:
+If you're upgrading to a new release of Hypertable that is format compatible with your old one, upgrading is quick and painless.  First stop the service and then install the new release.  This is a simple matter of editing the `hypertable_version` and `default_pkg` to point to the new installation package and issuing the following Capistrano commands:
 {{{
 $ cap stop
 $ cap install_package
-$ cap fhsize
 }}}
 Once you've done that, you can upgrade with the following Capistrano command:
 {{{
@@ -353,7 +352,7 @@ $ cap upgrade
 This command performs the following actions:
 
   # Verifies that the upgrade is format compatible
-  # Copies the contents of the `conf/`, `hyperspace/`, `fs/`, `run/`, and `log/` directories from the old installation (referenced from the current symlink) into the new installation.  If both the old installation and the new installation have been FHS-ized, this step is a no-op.
+  # Copies the contents of the `conf/`, `hyperspace/`, `fs/`, `run/`, and `log/` directories from the old installation (referenced from the current symlink) into the new installation.  If any of these directories are symlinked, then an identical symlink will be created in the new installation and the contents are not copied for that directory.
   # Sets the `current` symlink on all machines to point to the new installation
 
 You can then bring the service back up with:
