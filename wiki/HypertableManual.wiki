@@ -28,7 +28,7 @@ Mac installation:
 
 The RPM, Debian, and Mac packages will install Hypertable under a directory by the name of `/opt/hypertable/$VERSION` by default.  If you don't have root access or cannot modify the `/opt` directory, use the `.tar.bz2` archive to install Hypertable wherever you would like.
 
-===Filesystem Hierarchy Standard===
+===FHS-ize the Installation===
 
 The binary packages will install Hypertable entirely under /opt/hypertable/$VERSION.  The [http://www.pathname.com/fhs/pub/fhs-2.3.html Filesystem Hierarchy Standard] states that host-specific configuration files for add-on application software packages should reside under `/etc/opt` and that variable data of the packages (log files, etc.) should reside under `/var/opt`.  Hypertable ships with a script that will modify an installation to conform to the Filesystem Hierachy Standard.  If you're running as a user other than root, first create hypertable directories in `/etc/opt` and `/var/opt` and change ownership to the user account under which the binaries will be run.  For example:
 
@@ -45,7 +45,7 @@ Setting up /var/opt/hypertable
 Setting up /etc/opt/hypertable
 }}}
 
-We *strongly* recommend that you fhsize your installation.  The nice thing about FHS-izing your installations is that the directories containing the config files, hyperspace, run directory, localBroker root directory, and log archives carry over from one version to the next.  Otherwise, you need to copy the contents of the `conf`, `hyperspace`, `run`, `fs`, and `log` from your old install to the new one each time you upgrade.  When `fhsize.sh` is run for the first time, it will copy the contents of the `conf/` directory from the binary package to `/etc/opt/hypertable` and it will copy the contents of the `fs/`, `run/`, `hyperspace/`, and `log/` directories to corresponding directories in `/var/opt/hypertable` if they are non-empty.  When `fhsize.sh` is run subsequently, it will detect the existence of files in `/etc/opt/hypertable` and `/var/opt/hypertable` and will leave them intact.  Here's what the installation directory looks like after running `fhsize.sh`:
+We *strongly* recommend that you fhsize your installation.  The nice thing about FHS-izing your installations is that the directories containing the config files, hyperspace, run directory, localBroker root directory, and log archives carry over from one version to the next.  Otherwise, you need to copy the contents of the `conf/`, `hyperspace/`, `run/`, `fs/`, and `log/` from your old install to the new one each time you upgrade.  When `fhsize.sh` is run for the first time, it will copy the contents of the `conf/` directory from the binary package to `/etc/opt/hypertable` and it will copy the contents of the `fs/`, `run/`, `hyperspace/`, and `log/` directories to corresponding directories in `/var/opt/hypertable` if they are non-empty.  When `fhsize.sh` is run subsequently, it will detect the existence of files in `/etc/opt/hypertable` and `/var/opt/hypertable` and will leave them intact.  Here's what the installation directory looks like after running `fhsize.sh`:
  {{{
 $ ls -l /opt/hypertable/0.9.5.0/
 total 16
@@ -136,7 +136,7 @@ Finally, to shut everything down, use the stop-servers command:
 /opt/hypertable/current/bin/ht stop-servers
 }}}
 
-==Deploying on a Cluster==
+==Cluster Installation==
 
 ===Capistrano - A Tool for Automating Tasks on Remote Servers===
 
@@ -160,7 +160,7 @@ Once you have Capistrano installed, copy the `conf/Capfile.cluster` that comes w
 set :source_machine,     "admin"
 set :install_dir,        "/opt/hypertable" 
 set :hypertable_version, "0.9.5.0"
-set :default_pkg, "/tmp/hypertable-0.9.5.0-linux-x86_64.deb"
+set :default_pkg,        "/tmp/hypertable-0.9.5.0-linux-x86_64.deb"
 set :default_dfs,        "hadoop"
 set :default_config,     "/opt/hypertable/hypertable-example.cfg"
 }}}
