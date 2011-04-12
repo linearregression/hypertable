@@ -2,7 +2,7 @@
 #labels Featured
 <wiki:toc/>
 
-==Installing Hypertable via Binary Packages==
+==Local Installation==
 
 ===Package Installation===
 
@@ -30,17 +30,24 @@ The RPM, Debian, and Mac packages will install Hypertable under a directory by t
 
 ===Filesystem Hierarchy Standard===
 
-The binary packages will install Hypertable entirely under /opt/hypertable/$VERSION.  The [http://www.pathname.com/fhs/pub/fhs-2.3.html Filesystem Hierarchy Standard] states that host-specific configuration files for add-on application software packages should reside under `/etc/opt` and that variable data of the packages (log files, etc.) should reside under `/var/opt`.  Hypertable ships with a script that will modify an installation to conform to the Filesystem Hierachy Standard.  The script is called `fhsize.sh` and should be run from within the installation.  For example:
+The binary packages will install Hypertable entirely under /opt/hypertable/$VERSION.  The [http://www.pathname.com/fhs/pub/fhs-2.3.html Filesystem Hierarchy Standard] states that host-specific configuration files for add-on application software packages should reside under `/etc/opt` and that variable data of the packages (log files, etc.) should reside under `/var/opt`.  Hypertable ships with a script that will modify an installation to conform to the Filesystem Hierachy Standard.  If you're running as a user other than root, first create hypertable directories in `/etc/opt` and `/var/opt` and change ownership to the user account under which the binaries will be run.  For example:
 
 {{{
-[root@domU-12-31-39-0E-10-51 release]# /opt/hypertable/0.9.5.0/bin/fhsize.sh 
+$ sudo mkdir /etc/opt/hypertable /var/opt/hypertable
+$ sudo chown doug:staff /etc/opt/hypertable /var/opt/hypertable
+}}}
+
+Then run the `fhsize.sh` from within the installation.  For example:
+
+{{{
+$ /opt/hypertable/0.9.5.0/bin/fhsize.sh 
 Setting up /var/opt/hypertable
 Setting up /etc/opt/hypertable
 }}}
 
-The nice thing about FHS-izing your installations is that the directories containing the config files and log archives carry over from one version to the next.  So if you upgrade Hypertable, it will use the same config file in `/etc/opt/hypertable`.  Otherwise, you need to copy the config file from your old install to the new one each time you upgrade.  One thing to note, when `fhsize.sh` is run for the first time, it will copy the contents of the `conf/` directory from the binary package to `/etc/opt/hypertable`.  When `fhsize.sh` is run subsequently, it will detect the existence of files in `/etc/opt/hypertable` and will leave them intact.  Here's what the installation directory looks like after installing from a binary packages and running `fhsize.sh`:
+We strongly recommend that you fhsize your installation.  The nice thing about FHS-izing your installations is that the directories containing the config files and log archives carry over from one version to the next.  So if you upgrade Hypertable, it will use the same config file in `/etc/opt/hypertable`.  Otherwise, you need to copy the config file from your old install to the new one each time you upgrade.  When `fhsize.sh` is run for the first time, it will copy the contents of the `conf/` directory from the binary package to `/etc/opt/hypertable` and it will copy the contents of the `fs/`, `run/`, `hyperspace/`, and `log/` directories to corresponding directories in `/var/opt/hypertable` if they are non-empty.  When `fhsize.sh` is run subsequently, it will detect the existence of files in `/etc/opt/hypertable` and `/var/opt/hypertable` and will leave them intact.  Here's what the installation directory looks like after running `fhsize.sh`:
  {{{
-[root@domU-12-31-39-0E-10-51 release]# ls -l /opt/hypertable/0.9.5.0/
+$ ls -l /opt/hypertable/0.9.5.0/
 total 16
 drwxr-xr-x 2 root root 4096 2010-04-14 19:44 bin
 lrwxrwxrwx 1 root root   15 2010-04-14 19:45 conf -> /etc/opt/hypertable
@@ -58,22 +65,15 @@ lrwxrwxrwx 1 root root   19 2010-04-14 19:45 run -> /var/opt/hypertable/run
 After installation, make a symlink from `/opt/hypertable/current` to your current version.
 
 {{{
-cd /opt/hypertable
-ln -s 0.9.5.0 current
-}}}
-
-If you plan to run Hypertable as a user other than root, you will need to change the ownership of the installation files to the user that you will be running the software as.
-{{{
-chown -R doug:users /opt/hypertable/0.9.5.0
-chown -R doug:users /etc/opt/hypertable
-chown -R doug:users /var/opt/hypertable
+$ cd /opt/hypertable
+$ ln -s 0.9.5.0 current
 }}}
 
 ===Verify Installation===
 
 Start the hypertable servers (in local/single node mode)
 {{{
-/opt/hypertable/current/bin/ht start all-servers local
+$ /opt/hypertable/current/bin/ht start all-servers local
 DFS broker: available file descriptors: 1024
 Started DFS Broker (local)
 Started Hyperspace
