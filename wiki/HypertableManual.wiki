@@ -289,13 +289,13 @@ $ cap stop
 $ cap -S config=/home/doug/alternate.cfg start
 }}}
 
-==Up and Running with HDFS==
+==Up and Running with Hadoop==
 
 ===Step 1. Install Hadoop===
 
-The first step to getting up and running on a Hadoop Cluster is to install Hadoop.  The process for doing this is outside the scope of this document.  See [http://wiki.apache.org/hadoop/GettingStartedWithHadoop Getting Started With Hadoop] for details.
-
  _*NOTE:* Hadoop version 0.20.2 contains a bug which can cause Hypertable to lose data or become corrupt in the face of machine failure.  The set of patches in the [http://svn.apache.org/viewvc/hadoop/common/branches/branch-0.20-append/ 0.20-append branch] fixes this problem.  Be sure to apply these patches, or use a distribution that includes them such as [http://www.cloudera.com/blog/2011/02/cdh3-beta-4-now-available/ CDH3]_
+
+The first step to getting up and running on a Hadoop Cluster is to install Hadoop.  The process for doing this is outside the scope of this document.  See [https://ccp.cloudera.com/display/CDHDOC/CDH3+Installation+Guide CDH3 Installation Guide] for details.
 
 The Hadoop cluster is typically administered from the machine that runs the !NameNode.  For the remainder of this section, we'll assume it is called `master` and the `fs.default.name` property in the Hadoop configuration is setup as follows:
 
@@ -310,10 +310,17 @@ Be sure this property matches the `HdfsBroker.fs.default.name` property in the H
 
 ===Step  2. Start HDFS===
 
-Launch Hadoop (`hadoop/bin/start-all.sh` or `hadoop/bin/start-dfs.sh`) and make sure the system is up and running and out of "safemode":
+Launch HDFS.
+{{{
+$ sudo service hadoop-0.20-namenode start
+$ sudo service hadoop-0.20-secondarynamenode start
+$ sudo service hadoop-0.20-datanode start
+}}}
+
+Wait for HDFS to come out of "safemode":
 
 {{{
-$ hadoop dfsadmin -safemode get
+$ hadoop dfsadmin -safemode wait
 Safe mode is OFF
 }}}
 
@@ -328,38 +335,40 @@ $ hadoop fs -chmod 777 /hypertable
 
 ===Format Compatible Upgrade===
 
-If you're upgrading to a new release of Hypertable and you're sure that both versions are format compatible, upgrading is quick and painless.  First install the new release on the source machine (`source_machine` variable at top of Capfile).  Then modify the `hypertable_version` variable in the Capfile to reference the _new_ release version.  Once you've done that, you can upgrade with the following Capistrano command:
-
+If you're upgrading to a new release of Hypertable that is format compatible with your old one, upgrading is quick and painless.  First stop the service and then install the new release by following the installation procedure up through the FHS-ize step.  This is a simple matter of editing the `hypertable_version` and `default_pkg` to point to the new installation package and issuing the following Capistrano commands:
+{{{
+$ cap stop
+$ cap install_package
+$ cap fhsize
+}}}
+Once you've done that, you can upgrade with the following Capistrano command:
 {{{
 $ cap upgrade
 }}}
 
 This command performs the following actions:
 
-  # Stops the service
-  # Copies the config into the new installation on `source_machine`
-  # rsyncs the installation to all machines in the cluster
-  # Copies the hyperspace/ directory from the old installation (referenced from the current symlink) into the new installation on all hyperspace machines
-  # Copies the run/ directory from the old installation (referenced from the current symlink) into the new installation on all slave machines
+  # Verifies that the upgrade is format compatible
+  # Copies the contents of the `conf/`, `hyperspace/`, `fs/`, `run/`, and `log/` directories from the old installation (referenced from the current symlink) into the new installation.  If both the old installation and the new installation have been FHS-ized, this step is a no-op.
   # Sets the `current` symlink on all machines to point to the new installation
 
-If you're using an FHS-ized installation, you'll need to run the following Capistrano command after the upgrade.
-
+You can then bring the service back up with:
 {{{
-$ cap fhsize
+$ cap start
 }}}
-
-You can then bring the service back up with `cap start`
 
 ===Format Incompatible Upgrade===
 
 If the new release you are installing is incompatible with the old release, you will need to backup and restore all of your tables.  See the following section on how to backup and restore tables.  Here's the basic upgrade sequence:
 
   # Backup your tables
-  # Install the new release (see [#Installing_Hypertable_via_Binary_Packages] and [#Deploying_on_a_Cluster])
+  # Install the new release (see [#Local_Installation] or [#Cluster_Installation])
   # Restore your tables
 
-You can then bring the service back up with `cap start`
+You can then bring the service back up with:
+{{{
+$ cap start
+}}}
 
 ==Backing Up and Restoring Tables==
 
