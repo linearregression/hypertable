@@ -60,7 +60,7 @@ lrwxrwxrwx 1 doug staff   19 2011-04-14 19:45 log -> /var/opt/hypertable/log
 lrwxrwxrwx 1 doug staff   19 2011-04-14 19:45 run -> /var/opt/hypertable/run
 }}}
 
-===Post-Installation Steps===
+===Set current link===
 
 After installation, make a symlink from `/opt/hypertable/current` to your current version.
 
@@ -153,7 +153,7 @@ $ cap --version
 Capistrano v2.5.8
 }}}
 
-===Step 1. Edit Capistrano `Capfile`===
+===Step 1. Edit Capistrano Capfile===
 
 Once you have Capistrano installed, copy the `conf/Capfile.cluster` that comes with the Hypertable distribution to your working directory (e.g. home directory) on `admin1`, rename it to `Capfile`, and tailor it for your environment.  The `cap` command reads the file `Capfile` in the current working directory by default.  There are some variables that are set at the top that you need to modify for your particular environment.  The following shows the variables at the top of the Capfile that need modification:
 {{{
@@ -224,7 +224,7 @@ Then FHS-ize the installation with the following command:
 $ cap fhsize
 }}}
 
-===Step 4. Distribute Custom `hypertable.cfg` file===
+===Step 4. Distribute Custom hypertable.cfg file===
 
 Configuring Hypertable is straightforward.  You just need to copy the default config file (`conf/hypertable.cfg`) to a permanent location (outside the installation directory) and change the following properties:
 
@@ -249,7 +249,7 @@ We typically create a symbolic link `current` in the installation directory (i.e
 $ cap set_current
 }}}
 
-===Step 5. Synchronize Clocks===
+===Step 6. Synchronize Clocks===
 
 The system cannot operate correctly unless the clocks on all machines are synchronized.  Use the [http://www.ntp.org/ Network Time Protocol (ntp)] to ensure that the clocks get synchronized and remain in sync.  Run the 'date' command on all machines to make sure they are in sync.  The following Capistrano shell session show the output of a cluster with properly synchronized clocks.
 
@@ -297,12 +297,12 @@ The first step to getting up and running on a Hadoop Cluster is to install Hadoo
 
  _*NOTE:* Hadoop version 0.20.2 contains a bug which can cause Hypertable to lose data or become corrupt in the face of machine failure.  The set of patches in the [http://svn.apache.org/viewvc/hadoop/common/branches/branch-0.20-append/ 0.20-append branch] fixes this problem.  Be sure to apply these patches, or use a distribution that includes them such as [http://www.cloudera.com/blog/2011/02/cdh3-beta-4-now-available/ CDH3]_
 
-The Hadoop cluster is typically administered from the machine that runs the !NameNode.  For the remainder of this section, we'll assume it is called `admin1` and the `fs.default.name` property in the Hadoop configuration is setup as follows:
+The Hadoop cluster is typically administered from the machine that runs the !NameNode.  For the remainder of this section, we'll assume it is called `master` and the `fs.default.name` property in the Hadoop configuration is setup as follows:
 
 {{{
 <property>
   <name>fs.default.name</name>
-  <value>hdfs://admin1:9000</value>
+  <value>hdfs://master:9000</value>
 </property>
 }}}
 
