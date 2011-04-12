@@ -45,19 +45,19 @@ Setting up /var/opt/hypertable
 Setting up /etc/opt/hypertable
 }}}
 
-We strongly recommend that you fhsize your installation.  The nice thing about FHS-izing your installations is that the directories containing the config files and log archives carry over from one version to the next.  So if you upgrade Hypertable, it will use the same config file in `/etc/opt/hypertable`.  Otherwise, you need to copy the config file from your old install to the new one each time you upgrade.  When `fhsize.sh` is run for the first time, it will copy the contents of the `conf/` directory from the binary package to `/etc/opt/hypertable` and it will copy the contents of the `fs/`, `run/`, `hyperspace/`, and `log/` directories to corresponding directories in `/var/opt/hypertable` if they are non-empty.  When `fhsize.sh` is run subsequently, it will detect the existence of files in `/etc/opt/hypertable` and `/var/opt/hypertable` and will leave them intact.  Here's what the installation directory looks like after running `fhsize.sh`:
+We *strongly* recommend that you fhsize your installation.  The nice thing about FHS-izing your installations is that the directories containing the config files, hyperspace, run directory, localBroker root directory, and log archives carry over from one version to the next.  Otherwise, you need to copy the contents of the `conf`, `hyperspace`, `run`, `fs`, and `log` from your old install to the new one each time you upgrade.  When `fhsize.sh` is run for the first time, it will copy the contents of the `conf/` directory from the binary package to `/etc/opt/hypertable` and it will copy the contents of the `fs/`, `run/`, `hyperspace/`, and `log/` directories to corresponding directories in `/var/opt/hypertable` if they are non-empty.  When `fhsize.sh` is run subsequently, it will detect the existence of files in `/etc/opt/hypertable` and `/var/opt/hypertable` and will leave them intact.  Here's what the installation directory looks like after running `fhsize.sh`:
  {{{
 $ ls -l /opt/hypertable/0.9.5.0/
 total 16
-drwxr-xr-x 2 root root 4096 2010-04-14 19:44 bin
-lrwxrwxrwx 1 root root   15 2010-04-14 19:45 conf -> /etc/opt/hypertable
-drwxr-xr-x 5 root root 4096 2010-04-14 19:45 examples
-lrwxrwxrwx 1 root root   18 2010-04-14 19:45 fs -> /var/opt/hypertable/fs
-lrwxrwxrwx 1 root root   26 2010-04-14 19:45 hyperspace -> /var/opt/hypertable/hyperspace
-drwxr-xr-x 9 root root 4096 2010-04-14 19:44 include
-drwxr-xr-x 7 root root 4096 2010-04-14 19:45 lib
-lrwxrwxrwx 1 root root   19 2010-04-14 19:45 log -> /var/opt/hypertable/log
-lrwxrwxrwx 1 root root   19 2010-04-14 19:45 run -> /var/opt/hypertable/run
+drwxr-xr-x 2 doug staff 4096 2011-04-14 19:44 bin
+lrwxrwxrwx 1 doug staff   15 2011-04-14 19:45 conf -> /etc/opt/hypertable
+drwxr-xr-x 5 doug staff 4096 2011-04-14 19:45 examples
+lrwxrwxrwx 1 doug staff   18 2011-04-14 19:45 fs -> /var/opt/hypertable/fs
+lrwxrwxrwx 1 doug staff   26 2011-04-14 19:45 hyperspace -> /var/opt/hypertable/hyperspace
+drwxr-xr-x 9 doug staff 4096 2011-04-14 19:44 include
+drwxr-xr-x 7 doug staff 4096 2011-04-14 19:45 lib
+lrwxrwxrwx 1 doug staff   19 2011-04-14 19:45 log -> /var/opt/hypertable/log
+lrwxrwxrwx 1 doug staff   19 2011-04-14 19:45 run -> /var/opt/hypertable/run
 }}}
 
 ===Post-Installation Steps===
