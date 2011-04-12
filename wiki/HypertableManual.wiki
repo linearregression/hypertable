@@ -28,7 +28,7 @@ Mac installation:
 
 The RPM, Debian, and Mac packages will install Hypertable under a directory by the name of `/opt/hypertable/$VERSION` by default.  If you don't have root access or cannot modify the `/opt` directory, use the `.tar.bz2` archive to install Hypertable wherever you would like.
 
-===FHS-ize the Installation===
+===FHS-ize Installation===
 
 The binary packages will install Hypertable entirely under /opt/hypertable/$VERSION.  The [http://www.pathname.com/fhs/pub/fhs-2.3.html Filesystem Hierarchy Standard] states that host-specific configuration files for add-on application software packages should reside under `/etc/opt` and that variable data of the packages (log files, etc.) should reside under `/var/opt`.  Hypertable ships with a script that will modify an installation to conform to the Filesystem Hierachy Standard.  If you're running as a user other than root, first create hypertable directories in `/etc/opt` and `/var/opt` and change ownership to the user account under which the binaries will be run.  For example:
 
@@ -162,7 +162,7 @@ set :install_dir,        "/opt/hypertable"
 set :hypertable_version, "0.9.5.0"
 set :default_pkg,        "/tmp/hypertable-0.9.5.0-linux-x86_64.deb"
 set :default_dfs,        "hadoop"
-set :default_config,     "/opt/hypertable/hypertable-example.cfg"
+set :default_config,     "/home/doug/hypertable.cfg"
 }}}
 Here's a brief description of each variable:
 
@@ -208,9 +208,25 @@ If you're installing from binaries that you've compiled directly or from the .ta
 {{{
 $ cap dist
 }}}
-===Step 3. Distribute Custom Hypertable Config file===
+*NOTE:* You may have to increase the value of !MaxStartups in your `/etc/sshd_config` file if it is less than the number of nodes in your cluster
 
-Configuring Hypertable is straightforward.  You just need to copy the default config file (`conf/hypertable.cfg`) and change the following properties:
+===Step 3. FHS-ize Installation===
+
+See [#FHS-ize_Installation] for an introduction to FHS.  If you're running as a user other than root, first create the directories `/etc/opt/hypertable` and `/var/opt/hypertable` on all machines in the cluster and change ownership to the user account under which the binaries will be run.  For example:
+
+{{{
+$ sudo mkdir /etc/opt/hypertable /var/opt/hypertable
+$ sudo chown doug:staff /etc/opt/hypertable /var/opt/hypertable
+}}}
+
+Then FHS-ize the installation with the following command:
+{{{
+$ cap fhsize
+}}}
+
+===Step 4. Distribute Custom `hypertable.cfg` file===
+
+Configuring Hypertable is straightforward.  You just need to copy the default config file (`conf/hypertable.cfg`) to a permanent location (outside the installation directory) and change the following properties:
 
 || Property || Description ||
 || `HdfsBroker.fs.default.name` || Hadoop ONLY: Hadoop filesystem name ||
@@ -221,9 +237,12 @@ Configuring Hypertable is straightforward.  You just need to copy the default co
 
 See [http://www.hypertable.org/pub/hypertable-example-cfg.txt hypertable-example.cfg]
 
-Once you've edited the configuration file for your cluster on `admin1`, be sure the _absolute_ pathname referenced in the `default_config` Capfile variable points to this file.
+Once you've edited the configuration file for your cluster on `admin1`, be sure the _absolute_ pathname referenced in the `default_config` Capfile variable points to this file (e.g. `/home/doug/hypertable.cfg`).  Then distribute the custom config files with the following command:
+{{{
+$ cap push_config
+}}}
 
-===Step 4. Distribute the installation===
+===Step 5. Distribute the installation===
 
 To distribute this installation to all of the machines in your cluster, the account from which you're administering Hypertable from will have to have read+write access to the directory specified by the `install_dir` variable at the top of the Capfile ("/opt/hypertable" in this example).  You can verify this with the following commands (issued in the directory containing the Capfile):
 
@@ -331,10 +350,10 @@ If you want to wipe your database clean, removing all tables ...
 {{{
 $ cap cleandb
 }}}
-If you want to launch the service using a different config file than the default (e.g. /home/doug/conf/alternate.cfg) ...
+If you want to launch the service using a different config file than the default (e.g. /home/doug/alternate.cfg) ...
 {{{
-$ cap -S config=/home/doug/conf/alternate.cfg dist
-$ cap -S config=/home/doug/conf/alternate.cfg start
+$ cap -S config=/home/doug/alternate.cfg dist
+$ cap -S config=/home/doug/alternate.cfg start
 }}}
 
 ==Upgrading your Installation==
