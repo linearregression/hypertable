@@ -27,7 +27,7 @@ git checkout -b pre-protbuf origin/pre-protobuf
 
 A Mesos cluster is administered with the `mesos-ec2` script which is fully described in the document [https://github.com/mesos/mesos/wiki/EC2-Scripts Mesos EC2 Scripts].  The following command assumes your keypair name is `gsg-keypair` and `~/.ec2/id_rsa-gsg-keypair` is the private key file for your key pair.  It creates a cluster called `test` with a master instance, five slave instances (`-s 5`), and creates and attaches a 20GB EBS volume to each instance.  *NOTE:* the options `-a ami-08c63a61 -o centos64` are required to launch with Hypertable support.
 {{{
-~/mesos/ec2/mesos-ec2 -k gsg-keypair -i ~/.ec2/id_rsa-gsg-keypair -a ami-08c63a61 -o centos64 --ebs-vol-size 20 -s 5 launch test
+~/src/mesos/ec2/mesos-ec2 -k gsg-keypair -i ~/.ec2/id_rsa-gsg-keypair -a ami-08c63a61 -o centos64 --ebs-vol-size 20 -s 5 launch test
 }}}
 
 This command will generate voluminous output.  If all goes well, the end of the output should look something like this:
@@ -44,7 +44,7 @@ Pull up the Mesos Master console (`http://<master-hostname>:8080`) and verify th
 == Log in to the Master ==
 
 {{{
-~/mesos/ec2/mesos-ec2 -i ~/.ec2/id_rsa-gsg-keypair login test
+~/src/mesos/ec2/mesos-ec2 -i ~/.ec2/id_rsa-gsg-keypair login test
 }}}
 
 == Start Hypertable ==
@@ -101,7 +101,7 @@ In the root home directory of the master node:
 Log out of the master node and then execute the following command on your local machine:
 
 {{{
-~/mesos/ec2/mesos-ec2 -i ~/.ec2/id_rsa-gsg-keypair stop test
+~/src/mesos/ec2/mesos-ec2 -i ~/.ec2/id_rsa-gsg-keypair stop test
 }}}
 
 = Restarting the Hypertable Cluster =
@@ -111,7 +111,7 @@ Log out of the master node and then execute the following command on your local 
 Invoke the `mesos-ec2` script as follows to restart the cluster.  *NOTE:* The `-o centos64` option is required to properly restart the cluster.
 
 {{{
-~/mesos/ec2/mesos-ec2 -i ~/.ec2/id_rsa-gsg-keypair -o centos64 start test
+~/src/mesos/ec2/mesos-ec2 -i ~/.ec2/id_rsa-gsg-keypair -o centos64 start test
 }}}
 
 Similar to when the cluster was launched initially, the above command will generate voluminous output.  If all goes well, the end of the output should looks something like the following.
@@ -127,13 +127,13 @@ Done!
 If you encounter any problems restarting the cluster or launching Hypertable, try re-running the start command with the `--resume` option:
 
 {{{
-~/mesos/ec2/mesos-ec2 -i ~/.ec2/id_rsa-gsg-keypair -o centos64 --resume start test
+~/src/mesos/ec2/mesos-ec2 -i ~/.ec2/id_rsa-gsg-keypair -o centos64 --resume start test
 }}}
 
 == Log in to the Master ==
 
 {{{
-~/mesos/ec2/mesos-ec2 -i ~/.ec2/id_rsa-gsg-keypair login test
+~/src/mesos/ec2/mesos-ec2 -i ~/.ec2/id_rsa-gsg-keypair login test
 }}}
 
 == Start Hypertable ==
@@ -158,5 +158,5 @@ SELECT * FROM wikipedia WHERE ROW =^ "Add";
 This will destroy all instances and EBS volumes associated with the Mesos cluster.  On the local machine, run the `mesos-ec2` script with the following options:
 
 {{{
-~/mesos/ec2/mesos-ec2 -i ~/.ec2/id_rsa-gsg-keypair destroy test
+~/src/mesos/ec2/mesos-ec2 -i ~/.ec2/id_rsa-gsg-keypair destroy test
 }}}
