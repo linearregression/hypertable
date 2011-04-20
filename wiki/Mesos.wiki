@@ -47,6 +47,13 @@ Pull up the Mesos Master console (`http://<master-hostname>:8080`) and verify th
 ~/src/mesos/ec2/mesos-ec2 -i ~/.ec2/id_rsa-gsg-keypair login test
 }}}
 
+== Wait for HDFS to exit "safemode" ==
+
+{{{
+./persistent-hdfs/bin/hadoop dfsadmin -safemode wait
+Safe mode is OFF
+}}}
+
 == Start Hypertable ==
 
 On the master in the root home directory:
@@ -134,6 +141,13 @@ If you encounter any problems restarting the cluster or launching Hypertable, tr
 
 {{{
 ~/src/mesos/ec2/mesos-ec2 -i ~/.ec2/id_rsa-gsg-keypair login test
+}}}
+
+== Wait for HDFS to exit "safemode" ==
+
+{{{
+./persistent-hdfs/bin/hadoop dfsadmin -safemode wait
+Safe mode is OFF
 }}}
 
 == Start Hypertable ==
