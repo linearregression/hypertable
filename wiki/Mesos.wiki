@@ -164,6 +164,7 @@ Wait a minute for the servers to fully come up and then execute the following `S
 `$ /opt/hypertable/current/bin/ht shell`
 
 {{{
+USE "/";
 SELECT * FROM wikipedia WHERE ROW =^ "Add";
 }}}
 
