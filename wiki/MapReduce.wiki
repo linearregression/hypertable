@@ -88,7 +88,7 @@ Addington, Buckinghamshire	word:Bishop	1
 [...]
 }}}
 
-==Hadoop Streaming Example==
+==Hadoop Streaming==
 
 In this example, we'll be running a Hadoop streaming !MapReduce job that uses a Bash script as the mapper and a Bash script as the reducer.  The mapper script (`tokenize-article.sh`) and the reducer script (`reduce-word-counts.sh`) are show below.
 
@@ -151,24 +151,26 @@ fi
 exit 0
 }}}
 
-Use the following HQL command to load the Wikipedia sample dump into the _wikipedia_ table.  Notice the `NO_ESCAPE` option.  This option is necessary for Hadoop Streaming, since each key/value pair must occupy a single line.  The `NO_ESCAPE` option prevents the loader from un-escaping characters in the `tsv` input.
-
-{{{
-USE "/";
-load data infile NO_ESCAPE 'wikipedia-sample.tsv' into table wikipedia;
-}}}
-
-And then run the Hadoop streaming job as follows:
+To populate the word column of the wikipedia table by tokenizing the article column using the above mapper and reduce script, issue the following command:
 
 {{{
 hadoop jar /usr/lib/hadoop-0.20/contrib/streaming/hadoop-streaming-0.20.2-cdh3u0.jar \
 -libjars /opt/hypertable/current/lib/java/hypertable-0.9.5.0.pre4.jar,/opt/hypertable/current/lib/java/libthrift-0.6.0.jar \
 -Dhypertable.mapreduce.input.table=wikipedia -Dhypertable.mapreduce.output.table=wikipedia \
--mapper "/home/doug/tokenize-article.sh" \
--combiner "/home/doug/reduce-word-counts.sh" \
--reducer "/home/doug/reduce-word-counts.sh" \
--file /home/doug/tokenize-article.sh -file /home/doug/reduce-word-counts.sh \
+-mapper /home/doug/tokenize-article.sh \
+-combiner /home/doug/reduce-word-counts.sh \
+-reducer /home/doug/reduce-word-counts.sh \
+-file /home/doug/tokenize-article.sh \
+-file /home/doug/reduce-word-counts.sh \
 -inputformat org.hypertable.hadoop.mapred.TextTableInputFormat \
 -outputformat org.hypertable.hadoop.mapred.TextTableOutputFormat \
 -input wikipedia -output wikipedia
 }}}
+
+===Selecting Columns===
+
+{{{
+hadoop jar /usr/lib/hadoop-0.20/contrib/streaming/hadoop-streaming-0.20.2-cdh3u0.jar -libjars /opt/hypertable/current/lib/java/hypertable-0.9.5.0.pre4.jar,/opt/hypertable/current/lib/java/libthrift-0.6.0.jar -Dhypertable.mapreduce.input.table=wikipedia -Dhypertable.mapreduce.output.table=wikipedia2 -Dhypertable.mapreduce.input.scan_spec.columns="id,title" -mapper /bin/cat -reducer /bin/cat -inputformat org.hypertable.hadoop.mapred.TextTableInputFormat -outputformat org.hypertable.hadoop.mapred.TextTableOutputFormat -input wikipedia -output wikipedia2
+}}}
+
+===Timestamp range===
