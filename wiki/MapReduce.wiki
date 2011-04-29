@@ -167,19 +167,17 @@ hadoop jar /usr/lib/hadoop-0.20/contrib/streaming/hadoop-streaming-0.20.2-cdh3u0
 -input wikipedia -output wikipedia
 }}}
 
-===Timestamp Predicate===
+===Timestamps===
 
-To filter the input table with a timestamp predicate, specify the timestamp predicate in the `hypertable.mapreduce.input.scan_spec.timestamp_interval` Hadoop configuration property.  The timestamp predicate is specified using the same format as the timestamp predicate in the WHERE clause of the SELECT statement.  For example:
+*Timestamp Predicate*.  To filter the input table with a timestamp predicate, specify the timestamp predicate in the `hypertable.mapreduce.input.scan_spec.timestamp_interval` Hadoop configuration property.  The timestamp predicate is specified using the same format as the timestamp predicate in the WHERE clause of the SELECT statement.  For example:
 
   * `TIMESTAMP < 2010-08-03 12:30:00`
   * `TIMESTAMP >= 2010-08-03 12:30:00`
   * `2010-08-01 <= TIMESTAMP <= 2010-08-09`
 
-===Preserving Timestamps===
+*Preserving Timestamps*.  To preserve the timestamps from the input table, set the `hypertable.mapreduce.input.include_timestamps` Hadoop configuration property to 'true'.  This will cause the TextTableInputFormat class to produce an additional field (field 0) that represents the timestamp as nanoseconds since the epoch.
 
-To preserve the timestamps from the input table, set the `hypertable.mapreduce.input.include_timestamps` Hadoop configuration property to 'true'.  This will cause the TextTableInputFormat class to produce an additional field (field 0) that represents the timestamp as nanoseconds since the epoch.
-
-===Timestamp Example===
+*Example*
 
 {{{
 hadoop jar /usr/lib/hadoop-0.20/contrib/streaming/hadoop-streaming-0.20.2-cdh3u0.jar \
