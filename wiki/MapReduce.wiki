@@ -213,9 +213,9 @@ hadoop jar /usr/lib/hadoop-0.20/contrib/streaming/hadoop-streaming-0.20.2-cdh3u0
 
 The following `WHERE` clause options can be specified as a query predicate:
 
-  * MAX_VERSIONS <n>
-  * CELL_LIMIT <n>
-  * KEYS_ONLY
+  * `MAX_VERSIONS <n>`
+  * `CELL_LIMIT <n>`
+  * `KEYS_ONLY`
 
 See [http://www.hypertable.org/hql/select.html SELECT] documentation for details.
 
