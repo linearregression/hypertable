@@ -164,7 +164,9 @@ And then run the Hadoop streaming job as follows:
 hadoop jar /usr/lib/hadoop-0.20/contrib/streaming/hadoop-streaming-0.20.2-cdh3u0.jar \
 -libjars /opt/hypertable/current/lib/java/hypertable-0.9.5.0.pre4.jar,/opt/hypertable/current/lib/java/libthrift-0.6.0.jar \
 -Dhypertable.mapreduce.input.table=wikipedia -Dhypertable.mapreduce.output.table=wikipedia \
--mapper "/home/doug/tokenize-article.sh" -reducer "/home/doug/reduce-word-counts.sh" \
+-mapper "/home/doug/tokenize-article.sh" \
+-combiner "/home/doug/reduce-word-counts.sh" \
+-reducer "/home/doug/reduce-word-counts.sh" \
 -file /home/doug/tokenize-article.sh -file /home/doug/reduce-word-counts.sh \
 -inputformat org.hypertable.hadoop.mapred.TextTableInputFormat \
 -outputformat org.hypertable.hadoop.mapred.TextTableOutputFormat \
