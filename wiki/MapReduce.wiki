@@ -1,11 +1,11 @@
 #summary Hadoop MapReduce with Hypertable
 <wiki:toc/>
 
-==Hadoop !MapReduce Tutorial==
+=Hadoop !MapReduce Tutorial=
 
 In this section, we'll walk you through two Hadoop !MapReduce examples, one using Java !MapReduce and the other using Hadoop streaming.  Both examples do the same thing and illustrate how to run !MapReduce jobs that read from and write to a table in Hypertable.
 
-===Setup===
+==Setup==
 
 This program assumes there exists a table called _wikipedia_ that has been loaded with a Wikipedia dump.  It reads the _article_ column, tokenizes it, and populates the _word_ column of the same table.  Each unique word in the article turns into a qualified column and the value is the number of times the word appears in the article.
 
@@ -35,7 +35,7 @@ CREATE TABLE wikipedia (
 );
 }}}
 
-===Java !MapReduce Example==
+==Java !MapReduce Example==
 
 In this example, we'll be running the `WikipediaWordCount.java` program which can be found in the  `examples/java/org/hypertable/examples/hadoop/mapreduce` directory of the source archive.  It is also compiled into the `hadoop-*-examples.jar` file, contained in the binary packages.  The following is a link to the code:
 
@@ -88,7 +88,7 @@ Addington, Buckinghamshire	word:Bishop	1
 [...]
 }}}
 
-===Hadoop Streaming Example==
+==Hadoop Streaming Example==
 
 In this example, we'll be running a Hadoop streaming !MapReduce job that uses a Bash script as the mapper and a Bash script as the reducer.  The mapper script (`tokenize-article.sh`) and the reducer script (`reduce-word-counts.sh`) are show below.
 
