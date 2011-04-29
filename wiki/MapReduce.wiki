@@ -1,4 +1,5 @@
 #summary Hadoop MapReduce with Hypertable
+<wiki:toc/>
 
 ==Hadoop !MapReduce Tutorial==
 
