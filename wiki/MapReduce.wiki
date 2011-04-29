@@ -167,6 +167,28 @@ hadoop jar /usr/lib/hadoop-0.20/contrib/streaming/hadoop-streaming-0.20.2-cdh3u0
 -input wikipedia -output wikipedia
 }}}
 
+===Timestamps===
+
+To filter the input table with a timestamp predicate, specify the timestamp predicate in the `hypertable.mapreduce.input.scan_spec.timestamp_interval` Hadoop configuration property.  The timestamp predicate is specified using the same format as the timestamp predicate in the WHERE clause of the SELECT statement.  For example:
+
+  * `TIMESTAMP < 2010-08-03 12:30:00`
+  * `TIMESTAMP >= 2010-08-03 12:30:00`
+  * `2010-08-01 <= TIMESTAMP <= 2010-08-09`
+
+{{{
+hadoop jar /usr/lib/hadoop-0.20/contrib/streaming/hadoop-streaming-0.20.2-cdh3u0.jar \
+-libjars /opt/hypertable/current/lib/java/hypertable-0.9.5.0.pre4.jar,/opt/hypertable/current/lib/java/libthrift-0.6.0.jar \
+-Dhypertable.mapreduce.input.table=wikipedia \
+-Dhypertable.mapreduce.output.table=wikipedia2 \
+-Dhypertable.mapreduce.input.scan_spec.columns="id,title" \
+-Dhypertable.mapreduce.input.scan_spec.timestamp_interval="2010-08-01 <= TIMESTAMP <= 2010-08-09" \
+-Dhypertable.mapreduce.input.include_timestamps=true \
+-mapper /bin/cat -reducer /bin/cat \
+-inputformat org.hypertable.hadoop.mapred.TextTableInputFormat \
+-outputformat org.hypertable.hadoop.mapred.TextTableOutputFormat \
+-input wikipedia -output wikipedia2
+}}}
+
 ===Selecting Columns===
 
 {{{
