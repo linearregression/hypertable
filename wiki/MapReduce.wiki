@@ -211,7 +211,7 @@ hadoop jar /usr/lib/hadoop-0.20/contrib/streaming/hadoop-streaming-0.20.2-cdh3u0
 
 ===Options===
 
-The following `WHERE` clause options can be specified as a query predicate:
+A subset of the WHERE clause options of the HQL SELECT statement can be specified by supplying the options with the `hypertable.mapreduce.input.scan_spec.options` Hadoop configuration property.  The following options are supported:
 
   * `MAX_VERSIONS <n>`
   * `CELL_LIMIT <n>`
