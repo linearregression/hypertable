@@ -10,9 +10,9 @@ HDFS (as of version 0.20.0) has difficulty handling too many repeated output str
 echo "LOAD DATA INFILE data.tsv INTO TABLE foo;" | /opt/hypertable/current/bin/ht shell --no-log-sync=true
 }}}
 
-==I'm seeing "DFSClient: Could not obtain block blk_ ..."  messages in DfsBroker.hadoop.log==
+==I'm seeing "DFSClient: Could not obtain block blk_ ..."  messages in !DfsBroker.hadoop.log==
 
-The HDFS DataNode has an limit on the number of files that it can serve concurrently.  This limit is controlled by the `dfs.datanode.max.xcievers` hdfs configuration property.  We recommend that you set the value as follows in the `hdfs-site.xml` file:
+The HDFS !DataNode has an limit on the number of files that it can serve concurrently.  This limit is controlled by the `dfs.datanode.max.xcievers` hdfs configuration property.  We recommend that you set the value as follows in the `hdfs-site.xml` file:
 
 {{{
 <property>
