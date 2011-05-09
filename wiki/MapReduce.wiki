@@ -24,7 +24,8 @@ wget https://s3.amazonaws.com/hypertable-data/wikipedia.tsv.gz
 Create the _wikipedia_ table by executing the following commands in the hypertable shell:
 
 {{{
-USE "/";
+CREATE NAMESPACE test;
+USE test;
 DROP TABLE IF EXISTS wikipedia;
 CREATE TABLE wikipedia (
        title,
@@ -64,7 +65,7 @@ Now run the !WikipediaWordCount !MapReduce program:
 /opt/hadoop/current/bin/hadoop jar \
     /opt/hypertable/current/lib/java/hypertable-0.9.5.0-examples.jar \  
     org.hypertable.examples.WikipediaWordCount \
-    -Dmapred.local.dir="/mnt/hadoop/mapred/local" \
+    --namespace=test
     --columns=article
 }}}
 
