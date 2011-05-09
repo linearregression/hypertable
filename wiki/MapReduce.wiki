@@ -167,6 +167,18 @@ hadoop jar /usr/lib/hadoop-0.20/contrib/streaming/hadoop-streaming-0.20.2-cdh3u0
 -input wikipedia -output wikipedia
 }}}
 
+===Job Configuration Properties===
+
+|| *Property* || *Description* ||
+|| hypertable.mapreduce.namespace || ||
+|| hypertable.mapreduce.input.namespace || ||
+|| hypertable.mapreduce.input.table || ||
+|| hypertable.mapreduce.input.scan_spec.columns || ||
+|| hypertable.mapreduce.input.scan_spec.options || ||
+|| hypertable.mapreduce.input.scan_spec.row_interval || ||
+|| hypertable.mapreduce.input.scan_spec.timestamp_interval || ||
+|| hypertable.mapreduce.input.include_timestamps || ||
+
 ===Column Selection===
 
 To run a !MapReduce job over a subset of columns from the input table, specify a comma separated list of columns in the `hypertable.mapreduce.input.scan_spec.columns` Hadoop configuration property.
