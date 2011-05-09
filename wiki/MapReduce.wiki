@@ -45,7 +45,7 @@ In this example, we'll be running the `WikipediaWordCount.java` program which ca
 Use the following command to load the Wikipedia dump into the _wikipedia_ table:
 
 {{{
-USE "/";
+USE test;
 load data infile 'wikipedia.tsv.gz' into table wikipedia;
 }}}
 
