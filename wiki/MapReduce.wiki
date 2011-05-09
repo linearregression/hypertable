@@ -65,8 +65,7 @@ Now run the !WikipediaWordCount !MapReduce program:
 /opt/hadoop/current/bin/hadoop jar \
     /opt/hypertable/current/lib/java/hypertable-0.9.5.0-examples.jar \  
     org.hypertable.examples.WikipediaWordCount \
-    --namespace=test
-    --columns=article
+    --namespace=test --columns=article
 }}}
 
 To verify that it worked, try selecting for the the _word_column:
