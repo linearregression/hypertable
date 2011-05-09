@@ -176,9 +176,7 @@ hadoop jar /usr/lib/hadoop-0.20/contrib/streaming/hadoop-streaming-0.20.2-cdh3u0
 || hypertable.mapreduce.input.scan_spec.columns || Comma-separated list of input columns || id,title ||
 || hypertable.mapreduce.input.scan_spec.options || || || 
 || hypertable.mapreduce.input.scan_spec.row_interval || Input row interval || Dog <= ROW < Kitchenette ||
-|| hypertable.mapreduce.input.scan_spec.timestamp_interval || Cell timestamp interval filter || `TIMESTAMP < 2010-08-03 12:30:00`
-`TIMESTAMP >= 2010-08-03 12:30:00`
-`2010-08-01 <= TIMESTAMP <= 2010-08-09` ||
+|| hypertable.mapreduce.input.scan_spec.timestamp_interval || Cell timestamp interval filter || `TIMESTAMP < 2010-08-03 12:30:00` <br> `TIMESTAMP >= 2010-08-03 12:30:00` <br> `2010-08-01 <= TIMESTAMP <= 2010-08-09` ||
 || hypertable.mapreduce.input.include_timestamps || || ||
 
 ===Column Selection===
