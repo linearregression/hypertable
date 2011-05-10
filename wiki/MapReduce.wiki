@@ -170,14 +170,14 @@ hadoop jar /usr/lib/hadoop-0.20/contrib/streaming/hadoop-streaming-0.20.2-cdh3u0
 ===Job Configuration Properties===
 
 || *Property* || *Description* || *Examples* ||
-|| `hypertable.mapreduce.namespace` || Namespace for both input and output table || /test ||
-|| `hypertable.mapreduce.input.namespace` || Namespace for input table || /test/intput ||
-|| `hypertable.mapreduce.input.table` || Input table name || wikipedia ||
+|| `hypertable.mapreduce.namespace` || Namespace for both input and output table || `/test` ||
+|| `hypertable.mapreduce.input.namespace` || Namespace for input table || `/test/intput` ||
+|| `hypertable.mapreduce.input.table` || Input table name || `wikipedia` ||
 || `hypertable.mapreduce.input.scan_spec.columns` || Comma-separated list of input columns || id,title ||
-|| `hypertable.mapreduce.input.scan_spec.options` || || || 
-|| `hypertable.mapreduce.input.scan_spec.row_interval` || Input row interval || Dog <= ROW < Kitchenette ||
+|| `hypertable.mapreduce.input.scan_spec.options` || Input WHERE clause options || `MAX_VERSIONS 1 KEYS_ONLY CELL_LIMIT 2` || 
+|| `hypertable.mapreduce.input.scan_spec.row_interval` || Input row interval || `Dog <= ROW < Kitchenette` ||
 || `hypertable.mapreduce.input.scan_spec.timestamp_interval` || Cell timestamp interval filter || `TIMESTAMP < 2010-08-03 12:30:00` <br> `TIMESTAMP >= 2010-08-03 12:30:00` <br> `2010-08-01 <= TIMESTAMP <= 2010-08-09` ||
-|| hypertable.mapreduce.input.include_timestamps || || ||
+|| hypertable.mapreduce.input.include_timestamps || Causes TextTableInputFormat to produce emit a timestamp column as the 0th column (nanoseconds since the epoch) || `true` ||
 
 ===Column Selection===
 
