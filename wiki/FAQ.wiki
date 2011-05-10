@@ -265,7 +265,7 @@ Add a cron job along the lines of:
 find $HYPERTABLE_HOME/log/archive -mtime $keep_days -exec rm -rf {} +
 }}}
 
-==Our firewall is blocking traffic, what ports should I open up?==
+==Firewall is blocking traffic, what ports should I open up?==
 
 TCP:
   * 38030
@@ -278,4 +278,3 @@ TCP:
 
 UDP:
   * 38040 (in both directions)
-
