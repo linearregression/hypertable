@@ -177,7 +177,7 @@ hadoop jar /usr/lib/hadoop-0.20/contrib/streaming/hadoop-streaming-0.20.2-cdh3u0
 || `hypertable.mapreduce.input.scan_spec.options` || Input WHERE clause options || `MAX_VERSIONS 1 KEYS_ONLY CELL_LIMIT 2` || 
 || `hypertable.mapreduce.input.scan_spec.row_interval` || Input row interval || `Dog <= ROW < Kitchenette` ||
 || `hypertable.mapreduce.input.scan_spec.timestamp_interval` || Cell timestamp interval filter || `TIMESTAMP < 2010-08-03 12:30:00` <br> `TIMESTAMP >= 2010-08-03 12:30:00` <br> `2010-08-01 <= TIMESTAMP <= 2010-08-09` ||
-|| `hypertable.mapreduce.input.include_timestamps` || Emit integer timestamp column as the<br>0th column (nanoseconds since epoch) || `true` ||
+|| `hypertable.mapreduce.input.include_timestamps` || Emit integer timestamp as the<br>1st field (nanoseconds since epoch) || `true` ||
 || `hypertable.mapreduce.output.namespace` || Namespace for output table || `/test/output` ||
 || `hypertable.mapreduce.output.table` || Output table name || `wikipedia` ||
 || `hypertable.mapreduce.output.mutator_flags` || flags parameter passed to open_mutator() || `1` ||
