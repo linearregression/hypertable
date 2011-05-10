@@ -169,6 +169,8 @@ hadoop jar /usr/lib/hadoop-0.20/contrib/streaming/hadoop-streaming-0.20.2-cdh3u0
 
 ===Job Configuration Properties===
 
+The following table lists the job configuration properties that are supported by the Hypertable streaming !MapReduce interface.  They can be supplied to a !MapReduce job with `-D<property>=<value>` arguments.
+
 || *Property* || *Description* || *Examples* ||
 || `hypertable.mapreduce.namespace` || Namespace for both input and output table || `/test` ||
 || `hypertable.mapreduce.input.namespace` || Namespace for input table || `/test/intput` ||
