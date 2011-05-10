@@ -156,7 +156,9 @@ To populate the word column of the wikipedia table by tokenizing the article col
 {{{
 hadoop jar /usr/lib/hadoop-0.20/contrib/streaming/hadoop-streaming-0.20.2-cdh3u0.jar \
 -libjars /opt/hypertable/current/lib/java/hypertable-0.9.5.0.pre4.jar,/opt/hypertable/current/lib/java/libthrift-0.6.0.jar \
--Dhypertable.mapreduce.input.table=wikipedia -Dhypertable.mapreduce.output.table=wikipedia \
+-Dhypertable.mapreduce.namespace=test \
+-Dhypertable.mapreduce.input.table=wikipedia \
+-Dhypertable.mapreduce.output.table=wikipedia \
 -mapper /home/doug/tokenize-article.sh \
 -combiner /home/doug/reduce-word-counts.sh \
 -reducer /home/doug/reduce-word-counts.sh \
@@ -194,6 +196,7 @@ To run a !MapReduce job over a subset of columns from the input table, specify a
 {{{
 hadoop jar /usr/lib/hadoop-0.20/contrib/streaming/hadoop-streaming-0.20.2-cdh3u0.jar \
 -libjars /opt/hypertable/current/lib/java/hypertable-0.9.5.0.pre4.jar,/opt/hypertable/current/lib/java/libthrift-0.6.0.jar \
+-Dhypertable.mapreduce.namespace=test \
 -Dhypertable.mapreduce.input.table=wikipedia \
 -Dhypertable.mapreduce.input.scan_spec.columns="id,title" \
 -mapper /bin/cat -reducer /bin/cat \
@@ -216,6 +219,7 @@ hadoop jar /usr/lib/hadoop-0.20/contrib/streaming/hadoop-streaming-0.20.2-cdh3u0
 {{{
 hadoop jar /usr/lib/hadoop-0.20/contrib/streaming/hadoop-streaming-0.20.2-cdh3u0.jar \
 -libjars /opt/hypertable/current/lib/java/hypertable-0.9.5.0.pre4.jar,/opt/hypertable/current/lib/java/libthrift-0.6.0.jar \
+-Dhypertable.mapreduce.namespace=test \
 -Dhypertable.mapreduce.input.table=wikipedia \
 -Dhypertable.mapreduce.output.table=wikipedia2 \
 -Dhypertable.mapreduce.input.scan_spec.columns="id,title" \
@@ -242,6 +246,7 @@ See [http://www.hypertable.org/hql/select.html SELECT] documentation for details
 {{{
 hadoop jar /usr/lib/hadoop-0.20/contrib/streaming/hadoop-streaming-0.20.2-cdh3u0.jar \
 -libjars /opt/hypertable/current/lib/java/hypertable-0.9.5.0.pre4.jar,/opt/hypertable/current/lib/java/libthrift-0.6.0.jar \
+-Dhypertable.mapreduce.namespace=test \
 -Dhypertable.mapreduce.input.table=wikipedia \
 -Dhypertable.mapreduce.output.table=wikipedia2 \
 -Dhypertable.mapreduce.input.scan_spec.options="MAX_VERSIONS 1 KEYS_ONLY CELL_LIMIT 2" \
@@ -264,10 +269,11 @@ To restrict the !MapReduce to a specific row interval of the input table, a row 
 {{{
 hadoop jar /usr/lib/hadoop-0.20/contrib/streaming/hadoop-streaming-0.20.2-cdh3u0.jar \
 -libjars /opt/hypertable/current/lib/java/hypertable-0.9.5.0.pre4.jar,/opt/hypertable/current/lib/java/libthrift-0.6.0.jar \
+-Dhypertable.mapreduce.namespace=test \
 -Dhypertable.mapreduce.input.table=wikipedia \
 -Dhypertable.mapreduce.output.table=wikipedia2 \
 -Dhypertable.mapreduce.input.scan_spec.columns="id,title" \
--Dhypertable.mapreduce.input.scan_spec.row_interval="B <= ROW <= C" \
+-Dhypertable.mapreduce.input.scan_spec.row_interval="Dog <= ROW <= Kitchenette" \
 -mapper /bin/cat -reducer /bin/cat \
 -inputformat org.hypertable.hadoop.mapred.TextTableInputFormat \
 -outputformat org.hypertable.hadoop.mapred.TextTableOutputFormat \
