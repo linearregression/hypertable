@@ -6,17 +6,12 @@ This page describes the Hypertable Hive integration. [http://hadoop.apache.org/h
 It is recommended that users read the 
 [http://wiki.apache.org/hadoop/Hive/StorageHandlers Hive Storage Handler wiki] to understand the capabilities of Hive extensions via storage handlers. Currently the Hypertable storage handler only supports external, non-native tables.
 
-Note: The 0.9.4.0 release has a bug in the Hive extension. Patched jars can be downloaded [http://hypertable.org/pub/hypertable-0.9.4.0-jars.tgz here]. Download and copy the jars to ${HT_HOME}/lib/java. 
-
 = Example =
-For the purpose of this example we'll assume Hypertable, Hadoop and Hive are installed under $HT_HOME, $HADOOP_HOME, $HIVE_HOME respectively. (Hypertable and Hive commands listed below are included in the Hypertable source code under the examples dir along with the sample data file)
+For the purpose of this example we'll assume Hypertable, Hadoop and Hive are installed under $HT_HOME, $HADOOP_HOME, $HIVE_HOME respectively. (Hypertable and Hive commands listed below are included in the Hypertable source code under the examples dir along with the sample data file. There are also other examples in the source dir examples/hive/)
 
 The storage handler is included in the `$HT_HOME/lib/java/hypertable-*.jar` file. 
 Lets look at running the Hypertable storage handler via the Hive CLI. In order to do this you must do the following:
   # Have a !ThriftBroker running locally which is connected to your Hypertable cluster.
-  # Modify the HADOOP_CLASSPATH in your hadoop-env.sh to include the Thrift jar required by Hypertable. You probably have to restart Hadoop Mapreduce for this to take effect. For example:
-    * Edit $HADOOP_HOME/conf/hadoop-env.sh: `export HADOOP_CLASSPATH=/opt/hypertable/current/lib/java/libthrift-0.4.0.jar:${HADOOP_CLASSPATH}`
-    * `$HADOOP_HOME/bin/stop-mapred.sh; $HADOOP_HOME/bin/start-mapred.sh`
 
 Here is an example of a Hive CLI session which uses the Hypertable storage handler:
   # Create table and insert some values via the Hypertable shell:
@@ -53,8 +48,8 @@ Avg value size:  11.50 bytes
 }}}
   # Create Hive table and query via Hive QL:
 {{{
-> $HIVE_HOME/bin/hive --auxpath $HT_HOME/lib/java/hypertable-0.9.4.0.jar,$HT_HOME/lib/java/libthrift-0.4.0.jar
-hive> CREATE EXTERNAL TABLE ht_table(key INT, value MAP<STRING, STRING>) STORED BY 'org.hypertable.hadoop.hive.HTStorageHandler' with SERDEPROPERTIES ("hypertable.columns.mapping" = "address:") TBLPROPERTIES ("hypertable.table.name"="HiveTest", "hypertable.table.namespace"="/");
+> $HIVE_HOME/bin/hive --auxpath $HT_HOME/lib/java/hypertable-0.9.5.0.pre4.jar
+hive> CREATE EXTERNAL TABLE ht_table(key INT, value MAP<STRING, STRING>) STORED BY 'org.hypertable.hadoop.hive.HTStorageHandler' with SERDEPROPERTIES ("hypertable.columns.mapping" = ":key,address:") TBLPROPERTIES ("hypertable.table.name"="HiveTest", "hypertable.table.namespace"="/");
 OK
 Time taken: 4.335 seconds
 hive> SELECT * FROM ht_table;
@@ -160,13 +155,11 @@ Time taken: 3.485 seconds
 
 == Unimplemented features ==
   * Currently column families in Hypertable map to a column of type MAP<String, ?> in Hive. A single Hypertable column family can have an arbitrary number of qualified columns, each corresponding to a single key in the Hive MAP data type. Further, the key in the Hive map type must currently be of type string, but the value can be of any type. This restriction needs to be eliminated.
-  * The first column of the Hive row is implicitly the key of the Hypertable row. Ideally any arbitrary column should be allowed to be mapped to the HT row key.
   * Currently the !StorageHandler can only create external Hive tables. This means Hive won't handle meta operations like create/drop so you will have to create and drop table via the usual Hypertable interfaces.
-  * There is currently no way to map a qualified Hypertable column (col family + qualifier) to a Hive column. This will be added after the HT query API adds the ability to filter by qualifier.
   * Add regex filtering capability.
 
 = Limitations =
-  * For all but the first Hive column, there must be a corresponding entry in the comma-delimited `hypertable.columns.mapping` string. For a Hive table with n columns, the string should have n-1 entries. Whitespace should not be used in between entries since these will be interperted as part of the column name, which is not what you want. 
+  * Whitespace should not be used in between entries in the `hypertable.columns.mapping` string, since these will be interperted as part of the column name, which is not what you want. 
   * There is currently no way to access multiple versions of the same Hypertable cell. Hive can only access the latest version of a cell.
 
 = Acknowledgements =
