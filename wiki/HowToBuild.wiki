@@ -427,6 +427,14 @@ cd ~; wget http://downloads.sourceforge.net/project/kosmosfs/kosmosfs/kfs-0.5/kf
 tar xzvf kfs-0.5.tar.gz
 ...
 /sbin/ldconfig
+# NOTE: You may need to setup the RRD dependent libraries with something like the following:
+cd /usr/lib
+ln -s libpangocairo-1.0.so.0.2002.3 libpangocairo.so
+ln -s libpango-1.0.so.0.2002.3 libpango.so
+ln -s libpangoft2-1.0.so.0.2002.3 libpangoft2.so
+ln -s libgobject-2.0.so.0.1600.6 libgobject.so
+ln -s libgmodule-2.0.so.0.1600.6 libgmodule.so
+ln -s libglib-2.0.so.0.1600.6 libglib.so
 }}}
 
 ===Thrift Broker Dependencies===
