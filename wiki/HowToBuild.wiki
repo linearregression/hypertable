@@ -146,6 +146,17 @@ gem install capistrano
 sh -c "echo '/usr/local/lib' > /etc/ld.so.conf.d/local.conf"
 sh -c "echo '/usr/local/BerkeleyDB.4.8/lib' > /etc/ld.so.conf.d/BerkeleyDB.4.8.conf"
 /sbin/ldconfig
+
+NOTE:  There are several dependent RRD libraries that cannot be found by the cmake find script.  To fix this, you may need to do something like the following:
+
+cd /usr/lib
+ln -s libpangocairo-1.0.so.0.1400.9 libpangocairo.so
+ln -s libpango-1.0.so.0.1400.9 libpango.so
+ln -s libpangoft2-1.0.so.0.1400.9 libpangoft2.so
+cd /lib
+ln -s libgobject-2.0.so.0.1200.3 libgobject.so
+ln -s libgmodule-2.0.so.0.1200.3 libgmodule.so
+ln -s libglib-2.0.so.0.1200.3 libglib.so
 }}}
 
 ===Thrift Broker Dependencies===
