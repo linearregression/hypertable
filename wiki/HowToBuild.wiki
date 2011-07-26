@@ -507,6 +507,43 @@ make install
 ldconfig
 }}}
 
+== OpenSUSE 11.4 32-bit ==
+
+{{{
+zypper install wget unzip gcc-c++ make cmake python-devel zlib-devel rrdtool rrdtool-devel ruby ruby-devel expat
+wget http://downloads.sourceforge.net/boost/boost_1_44_0.tar.bz2
+tar xjvf boost_1_44_0.tar.bz2
+cd boost_1_44_0
+./bootstrap.sh --with-libraries=filesystem,iostreams,program_options,system,thread,graph,regex
+./bjam install
+zypper install git-core libevent-devel readline-devel ncurses-devel libpng-devel libart_lgpl-devel
+wget http://cronolog.org/download/cronolog-1.6.2.tar.gz
+tar xzvf cronolog-1.6.2.tar.gz 
+cd cronolog-1.6.2/
+./configure; make; make install
+wget http://google-perftools.googlecode.com/files/google-perftools-1.8.tar.gz
+tar xzvf google-perftools-1.8.tar.gz 
+cd google-perftools-1.8/
+./configure; make; make install
+wget http://www.hypertable.org/pub/hyperic-sigar-1.6.4.zip
+unzip hyperic-sigar-1.6.4.zip
+cp hyperic-sigar-1.6.4/sigar-bin/include/*.h /usr/local/include
+cp hyperic-sigar-1.6.4/sigar-bin/lib/libsigar-x86-linux.so /usr/local/lib/
+wget http://download.oracle.com/berkeley-db/db-4.8.26.tar.gz
+tar -xzvf db-4.8.26.tar.gz
+cd db-4.8.26/build_unix/
+../dist/configure --enable-cxx
+make; make install
+wget http://hypertable.org/pub/re2.tgz
+tar -zxvf re2.tgz
+cd re2
+make; make install
+gem install capistrano
+# install Java
+zypper install ant automake libtool flex bison pkg-config libevent-devel perl-Bit-Vector php5 php5-devel
+
+}}}
+
 == Mac OS X 10.6 Snow Leopard ==
 
 Install Thrift
