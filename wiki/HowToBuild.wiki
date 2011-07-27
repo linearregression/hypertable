@@ -510,7 +510,7 @@ ldconfig
 == OpenSUSE 11.4 32-bit ==
 
 {{{
-zypper install wget unzip gcc-c++ make cmake python-devel zlib-devel libexpat-devel rrdtool rrdtool-devel ruby ruby-devel expat
+zypper install wget unzip gcc-c++ make cmake python-devel zlib-devel libexpat-devel libbz2-devel rrdtool rrdtool-devel ruby ruby-devel expat
 wget http://downloads.sourceforge.net/boost/boost_1_44_0.tar.bz2
 tar xjvf boost_1_44_0.tar.bz2
 cd boost_1_44_0
