@@ -388,7 +388,7 @@ _EC2: ami-5c709435_
 
 {{{
 apt-get update
-apt-get install g++ cmake liblog4cpp5-dev git-core cronolog libgoogle-perftools-dev libevent-dev zlib1g-dev libexpat1-dev libncurses-dev libreadline5-dev
+apt-get install uznip g++ cmake liblog4cpp5-dev libbz2-dev git-core cronolog libgoogle-perftools-dev libevent-dev zlib1g-dev libexpat1-dev libncurses-dev libreadline5-dev
 apt-get install rrdtool librrd2-dev
 wget http://downloads.sourceforge.net/boost/boost_1_44_0.tar.bz2
 tar xjvf boost_1_44_0.tar.bz2
