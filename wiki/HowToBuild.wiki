@@ -444,7 +444,7 @@ See this [http://wiki.apache.org/thrift/ThriftInstallation official thrift insta
 {{{
 apt-get install sun-java6-jdk
 update-java-alternatives --set java-6-sun
-apt-get install ant autoconf automake libtool bison flex pkg-config php5 php5-dev php5-cli ruby-dev ruby1.8-dev libhttp-access2-ruby libbit-vector-perl
+apt-get install ant autoconf automake libtool bison flex pkg-config php5 php5-dev php5-cli ruby-dev python-dev ruby1.8-dev libhttp-access2-ruby libbit-vector-perl
 # Install perl Class::Accessor by running 'cpan'
 # When it asks you "Are you ready for manual configuration?", answer "no"
 # Then issue the following commands
