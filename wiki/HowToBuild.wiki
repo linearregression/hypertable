@@ -541,7 +541,12 @@ make; make install
 gem install capistrano
 # install Java
 zypper install ant automake libtool flex bison pkg-config libevent-devel perl-Bit-Vector php5 php5-devel
-
+wget http://dag.wieers.com/rpm/packages/perl-Class-Accessor/perl-Class-Accessor-0.31-1.el5.rf.noarch.rpm
+zypper install perl-Class-Accessor-0.31-1.el5.rf.noarch.rpm
+wget http://www.hypertable.org/pub/thrift.tgz
+tar xzvf thrift.tgz
+cd thrift-*
+./configure; make; make install
 }}}
 
 == Mac OS X 10.6 Snow Leopard ==
