@@ -1,19 +1,14 @@
 #summary Hypertable Development Roadmap / Release Schedule
 
-==0.9.5.0 "alpha"==
-_Target Release Date:  June 15th 2011_ 
-  * Automatic range balancing with the addition of new nodes
-  * Asynchronous Update API
-
 ==0.9.6.0 "beta"==
-_Target Release Date:  August 15th 2011_
+_Target Release Date:  November 15th 2011_
   * !RangeServer failover
   * Secondary Indexes
 
 At this point, the software will be feature complete with respect to 1.0.  The only changes that will go into the software between this release and 1.0 will be bug fixes, documentation improvements, and usability features that are discovered during the beta period and deemed to be very important.
 
 ==1.0==
-_Target Release Date:  September 31st 2011_
+_Target Release Date:  December 31st 2011_
 
 This will be the first major release that marks the end of the beta period.  It will represent a fully functional Bigtable impelmentation.
 
