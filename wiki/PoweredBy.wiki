@@ -10,7 +10,7 @@ This page contains a list of all the existing Hypertable deployments.
   *  [http://www.lnl.infn.it/~epics/ EPICS - Laboratori Nazionali di Legnaro] Experimental Physics and Industrial Control System.  Provides an architecture for control system software to be constructed as a scalable, distributed database of control components.  Located in Padova, Italy
   * [http://code.google.com/p/hyperconnector/ HyperConnector] JPA-like Java data layer for Hypertable
   * [http://github.com/AwesomeStanly/HyperTableBrowser Hypertable Browser] Hypertable Browser is the cocoa client application to key-value storage Hypertable
-  * [http://site.inepexgps.com/ Inepex] - a customizable, real-time LBS (Location Based Services) system for personal and commercial use (fleet management, mobile phone tracking, ERP connectivity etc.)
+  * [http://inepex.com/ Inepex] - a customizable, real-time LBS (Location Based Services) system for personal and commercial use (fleet management, mobile phone tracking, ERP connectivity etc.)
   * [http://www.k7cloud.com/cyc_overview.html K7 Cloud Solutions] - Cyclozzo is a state of the art implementation of a Platform as a Service that lets you provide PaaS services on your private cloud.
   * [http://mesosproject.org/ Mesos] - Mesos is a platform for running multiple diverse cluster computing frameworks, such as Hadoop, MPI, and web services, on commodity clusters.  For instructions on how to launch an EBS-backed Hypertable cluster in EC2 with Mesos, see [http://code.google.com/p/hypertable/wiki/Mesos Launching Hypertable with Mesos].
   * [http://www.nesote.com/ Nesote Technologies (P) Ltd] -  Using Hypertable for its Inout Spider Project on http://www.inoutscripts.com/.
