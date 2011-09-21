@@ -32,7 +32,7 @@ _rowkey:  username_
 This table contains a unique mapping from guid to username.  
 
 {{{
-CREATE Table 'username_to_guid' (
+CREATE TABLE 'username_to_guid' (
   guid
 );
 }}}
