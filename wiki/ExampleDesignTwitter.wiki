@@ -17,7 +17,7 @@ This table will contain profile information for each user.
 {{{
 CREATE TABLE profile (
   username
-  display_name,
+  'display_name',
   password,
   avatar,
   bio,
@@ -46,13 +46,13 @@ This table contains
 {{{
 CREATE TABLE user (
   following,
-  following_history,
+  'following_history',
   followers,
-  followers_history,
-  follow_stream,
-  follow_stream_count COUNTER,
-  my_stream,
-  my_stream_counter COUNTER
+  'followers_history',
+  'follow_stream',
+  'follow_stream_count' COUNTER,
+  'my_stream',
+  'my_stream_counter' COUNTER
 );
 }}}
 
