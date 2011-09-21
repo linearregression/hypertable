@@ -8,9 +8,9 @@ This document describes how a simple Twitter-like application can be built on Hy
 
 == Tables ==
 
-=== TABLE: `profile` ===
+=== Table: `profile` ===
 
-=== TABLE: `username_to_guid` ===
+=== Table: `username_to_guid` ===
 
 == Actions ==
 
