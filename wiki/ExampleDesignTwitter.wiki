@@ -10,6 +10,10 @@ This document describes how a simple Twitter-like application can be built on Hy
 
 === Table: `profile` ===
 
+_rowkey:  guid_
+
+This table will contain user profile information
+
 === Table: `username_to_guid` ===
 
 == Actions ==
