@@ -1,0 +1,17 @@
+#summary Design Document for Twitter-like Application on Hypertable
+
+= Introduction =
+
+This document describes how a simple Twitter-like application can be built on Hypertable.  It's a stripped down version of Twitter that contains a user's tweet stream as well as a pane containing current user information (number of tweets, latest tweet, following, and followers).
+
+= Details =
+
+== Tables ==
+
+=== TABLE: `profile` ===
+
+=== TABLE: `username_to_guid` ===
+
+== Actions ==
+
+== Rendering ==
