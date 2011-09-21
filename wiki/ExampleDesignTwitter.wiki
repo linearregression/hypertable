@@ -12,9 +12,49 @@ This document describes how a simple Twitter-like application can be built on Hy
 
 _rowkey:  guid_
 
-This table will contain user profile information
+This table will contain profile information for each user.
+
+{{{
+CREATE TABLE profile (
+  username
+  display_name,
+  password,
+  avatar,
+  bio,
+  url
+);
+}}}
 
 === Table: `username_to_guid` ===
+
+_rowkey:  username_
+
+This table contains a unique mapping from guid to username.  
+
+{{{
+CREATE Table 'username_to_guid' (
+  guid
+);
+}}}
+
+=== Table: `user` ===
+
+_rowkey: guid_
+
+This table contains 
+
+{{{
+CREATE TABLE user (
+  following,
+  following_history,
+  followers,
+  followers_history,
+  follow_stream,
+  follow_stream_count COUNTER,
+  my_stream,
+  my_stream_counter COUNTER
+);
+}}}
 
 == Actions ==
 
