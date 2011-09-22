@@ -129,6 +129,39 @@ foreach (column_qualifier as $qualifier) {
 
 === User Information ===
 
+{{{
+/* latest tweet */
+SELECT my_stream FROM user where ROW=$username CELL_LIMIT 1;
+
+/* tweet count */
+SELECT my_stream_count FROM user where ROW=$username;
+
+/* following count */
+SELECT following_count FROM user where ROW=$username;
+
+/* most recent 5 people user is following */
+SELECT following_history FROM user where ROW=$username CELL_LIMIT 5; 
+foreach (value_in_previous_select_command as $person) {
+  select avatar from profile where ROW=$person;
+  /* display avatar */
+}
+
+/* followers count */
+SELECT followers_count FROM user where ROW=$username;
+
+/* most recent 5 people who are following user */
+SELECT followers_history FROM user where ROW=$username CELL_LIMIT 5; 
+foreach (value_in_previous_select_command as $person) {
+  select avatar from profile where ROW=$person;
+  /* display avatar */
+}
+}}}
+
 === Tweet Stream ===
+
+{{{
+
+}}}
+
 
 === Other Users's Recent Tweets ===
