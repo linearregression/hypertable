@@ -93,6 +93,8 @@ INSERT INTO user VALUES ($following_timestamp, "joe", "following_history", "bob"
 
 === Unfollow ===
 
+This involves undoing all of the user table updates that were performed during the `follow` action.
+
 {{{
 SELECT CELLS * FROM user WHERE CELL = "joe","following:bob" OR CELL = "bob","followers:joe";
 $following_timestamp = /* set to joe following:bob cell timestamp */
@@ -101,10 +103,19 @@ DELETE "following_history" WHERE ROW = "joe" VERSION $following_timestamp;
 DELETE "followers_history" WHERE ROW = "bob" VERSION $followers_timestamp;
 DELETE "following:bob" WHERE ROW = "joe";
 DELETE "followers:joe" WHERE ROW = "bob"
-INSERT INTO user VALUES ("joe", "following_count", "+1"), ("bob", "followers_count", "+1");
+INSERT INTO user VALUES ("joe", "following_count", "-1"), ("bob", "followers_count", "-1");
 }}}
 
 === Tweet ===
+
+Generate a unique ID for the tweet by combining the username plus a high resolution timestamp.  Insert the tweet into the tweet table.
+
+{{{
+$message = /* user's tweet */
+$tweetid = /* username + timestamp */
+INSERT INTO tweet VALUES ("$tweetid", "message", "$message");
+INSERT INTO user VALUES ("$username", "my_stream", "$tweetid"), ("$username", "my_stream_cout", "+1");
+}}}
 
 == Rendering ==
 
