@@ -119,7 +119,7 @@ $message = /* user's tweet */
 $tweetid = /* username + timestamp */
 INSERT INTO tweet VALUES ("$tweetid", "message", "$message");
 INSERT INTO user VALUES ("$username", "my_stream", "$tweetid"), ("$username", "my_stream_count", "+1");
-SELECT follow_stream from user where ROW = "$username");
+SELECT follow_stream FROM user WHERE ROW = "$username");
 foreach (column_qualifier as $qualifier) {
   INSERT INTO user VALUES ("$qualifier", "follow_stream", "$tweetid"), ("$qualifier", "follow_stream_count", "+1")
 }
@@ -131,26 +131,26 @@ foreach (column_qualifier as $qualifier) {
 
 {{{
 /* latest tweet */
-SELECT my_stream FROM user where ROW=$username CELL_LIMIT 1;
+SELECT my_stream FROM user WHERE ROW=$username CELL_LIMIT 1;
 
 /* tweet count */
-SELECT my_stream_count FROM user where ROW=$username;
+SELECT my_stream_count FROM user WHERE ROW=$username;
 
 /* following count */
-SELECT following_count FROM user where ROW=$username;
+SELECT following_count FROM user WHERE ROW=$username;
 
 /* most recent 5 people user is following */
-SELECT following_history FROM user where ROW=$username CELL_LIMIT 5; 
+SELECT following_history FROM user WHERE ROW=$username CELL_LIMIT 5; 
 foreach (value_in_previous_select_command as $person) {
   select avatar from profile where ROW=$person;
   /* display avatar */
 }
 
 /* followers count */
-SELECT followers_count FROM user where ROW=$username;
+SELECT followers_count FROM user WHERE ROW=$username;
 
 /* most recent 5 people who are following user */
-SELECT followers_history FROM user where ROW=$username CELL_LIMIT 5; 
+SELECT followers_history FROM user WHERE ROW=$username CELL_LIMIT 5; 
 foreach (value_in_previous_select_command as $person) {
   select avatar from profile where ROW=$person;
   /* display avatar */
@@ -161,17 +161,26 @@ foreach (value_in_previous_select_command as $person) {
 
 {{{
 /* New Tweet count */
-$newcount = SELECT follow_stream_count from user where ROW=$username;
+$newcount = SELECT follow_stream_count FROM user WHERE ROW=$username;
 $newtweets = $newcount-$oldcount
 
 /* Tweet stream - first 20 tweets */
-SELECT follow_stream from user where ROW=$username CELL_LIMIT 20;
+SELECT follow_stream FROM user WHERE ROW=$username CELL_LIMIT 20;
 $cutoff_timestamp = /* timestamp of last cell in above select statement */
 
 /* Tweet stream - next 20 tweets */
-SELECT follow_stream from user where ROW=$username AND TIMESTAMP < $cutoff_timestamp CELL_LIMIT 20;
+SELECT follow_stream FROM user WHERE ROW=$username AND TIMESTAMP < $cutoff_timestamp CELL_LIMIT 20;
 $cutoff_timestamp = /* timestamp of last cell in above select statement */
 }}}
 
-
 === Other Users's Recent Tweets ===
+
+{{{
+/* To obtain the latest 3 tweets of $user */
+SELECT my_stream FROM user WHERE ROW=$user CELL_LIMIT 3;
+$cutoff_timestamp = /* timestamp of last cell in above select statement */
+
+/* To obtain the next latest 20 tweets of $user */
+SELECT my_stream FROM user WHERE ROW=$user AND TIMESTAMP < $cutoff_timestamp CELL_LIMIT 20;
+$cutoff_timestamp = /* timestamp of last cell in above select statement */
+}}}
