@@ -12,7 +12,6 @@ This document describes how a simple Twitter-like application can be built on Hy
 
 _rowkey:  username_
 
-_schema:_
 {{{
 CREATE TABLE profile (
   guid,
@@ -30,19 +29,17 @@ This table contains profile information for each user.
 
 _rowkey:  username_
 
-_schema:_
-
 {{{
 CREATE TABLE 'username' (
   guid
 );
 }}}
 
-This table will be used to register new usernames.  We will provide an API that allows you to atomically insert a column, if it does not already exists, and return the column value.  Something along the lines of:
+This table is used to register new usernames.  We will provide an API that allows you to atomically insert a column, if it does not already exists, and return the column value.  Something along the lines of:
 
 {{{
 $guid = 627918273726
-$existing = INSERT_ONCE_RETURN INTO username ("joe", "guid", "$guid")
+$old_guid = INSERT_ONCE_RETURN INTO username ("joe", "guid", "$guid")
 }}}
 
 This API will be used to update this table so that two users don't end up getting assigned the same username.
@@ -51,7 +48,6 @@ This API will be used to update this table so that two users don't end up gettin
 
 _rowkey: username_
 
-_schema:_
 {{{
 CREATE TABLE user (
   following MAX_VERSIONS=1,
@@ -65,7 +61,10 @@ CREATE TABLE user (
 );
 }}}
 
+
+
 === Table: `tweet` ===
+
 _rowkey: username+timestamp_milliseconds_
 
 {{{
@@ -77,6 +76,20 @@ CREATE TABLE tweet (
 == Actions ==
 
 === Register New User ===
+
+The first step of this action is to find a unique username
+
+{{{
+$username = /* ask user for username */
+$guid = 627918273726
+$old_guid = 0
+while ($guid != $old_guid) {
+  if ($old_guid != 0) {
+    /* report error; ask user for new username */
+  }
+  $old_guid = INSERT_ONCE_RETURN INTO username ($username, "guid", "$guid")
+}
+}}}
 
 === Follow ===
 
