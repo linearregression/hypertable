@@ -2,7 +2,7 @@
 
 = Introduction =
 
-This document describes how a simple Twitter-like application can be built on Hypertable.  It's a stripped down version of Twitter that contains a user's tweet stream as well as a pane containing current user information (number of tweets, latest tweet, following, and followers).
+This document describes how a simple Twitter-like application can be built on Hypertable.  It's a stripped down version of Twitter that contains a user's tweet stream as well as current user information (number of tweets, latest tweet, following, and followers).
 
 = Details =
 
@@ -33,8 +33,10 @@ _rowkey: username_
 CREATE TABLE user (
   following MAX_VERSIONS=1,
   'following_history',
+  'following_count' COUNTER,
   followers MAX_VERSIONS=1,
   'followers_history',
+  'followers_count' COUNTER,
   'follow_stream',
   'follow_stream_count' COUNTER,
   'my_stream',
@@ -80,19 +82,27 @@ Let's say user "joe" decides to follow user "bob".  The first step is to insert 
 INSERT INTO user VALUES ("joe", "following:bob", ""), ("bob", "followers:joe", "");
 }}}
 
-Then, obtain the timestamps of the cells that were just inserted and use those timestamps to insert entries into the `following_history` and `followers_history` columns:
+Then, obtain the timestamps of the cells that were just inserted and use those timestamps to insert entries into the `following_history` and `followers_history` columns and increment the `following_count` and `followers_count` counters.
 
 {{{
 SELECT CELLS * FROM user WHERE CELL = "joe","following:bob" OR CELL = "bob","followers:joe";
 $following_timestamp = /* set to joe following:bob cell timestamp */
 $followers_timestamp = /* set to bob followers:joe cell timestamp */
-INSERT INTO user VALUES ($following_timestamp, "joe", "following_history", "bob"), ($followers_timestamp, "bob", "followers_history", "joe");
+INSERT INTO user VALUES ($following_timestamp, "joe", "following_history", "bob"), ($followers_timestamp, "bob", "followers_history", "joe"), ("joe", "following_count", "+1"), ("bob", "followers_count", "+1");
 }}}
-
 
 === Unfollow ===
 
-
+{{{
+SELECT CELLS * FROM user WHERE CELL = "joe","following:bob" OR CELL = "bob","followers:joe";
+$following_timestamp = /* set to joe following:bob cell timestamp */
+$followers_timestamp = /* set to bob followers:joe cell timestamp */
+DELETE "following_history" WHERE ROW = "joe" VERSION $following_timestamp;
+DELETE "followers_history" WHERE ROW = "bob" VERSION $followers_timestamp;
+DELETE "following:bob" WHERE ROW = "joe";
+DELETE "followers:joe" WHERE ROW = "bob"
+INSERT INTO user VALUES ("joe", "following_count", "+1"), ("bob", "followers_count", "+1");
+}}}
 
 === Tweet ===
 
