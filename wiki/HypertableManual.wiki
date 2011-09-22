@@ -290,11 +290,25 @@ $ cap -S config=/home/doug/alternate.cfg start
 }}}
 
 ===Adding new servers to an existing cluster===
-As your data grows, you may want to increase the number of RangeServers in your cluster. Hypertable allows you to do this with 0 downtime and automatic load balancing, ie the system will auto-migrate a fair amount of the load onto the new machine(s) without any manual intervention. To add machines to an existing cluster you need to first setup services needed by Hypertable on the new machine, such as:
+As your data grows, you may want to increase the number of !RangeServers in your cluster. Hypertable allows you to do this with 0 downtime and automatic load balancing, ie the system will auto-migrate a fair amount of the load onto the new machine(s) without any manual intervention. To add machines to an existing cluster you need to first setup services needed by Hypertable on the new machine, such as:
   * Filesystem: Make sure you are running a local datanode of your DFS with the same configuration as the rest of your cluster. 
   * Synchronize clocks
 
-Now to deploy RangeServers, do the following: 
+{{{
+$ cap shell
+cap> date
+[establishing connection(s) to test09, test08, test10, test11, test12, test13, test14, test15]
+ ** [out :: test09] Thu Sep 22 11:33:48 PDT 2011
+ ** [out :: test10] Thu Sep 22 11:33:48 PDT 2011
+ ** [out :: test12] Thu Sep 22 11:33:48 PDT 2011
+ ** [out :: test08] Thu Sep 22 11:33:48 PDT 2011
+ ** [out :: test11] Thu Sep 22 11:33:48 PDT 2011
+ ** [out :: test14] Thu Sep 22 11:33:48 PDT 2011
+ ** [out :: test15] Thu Sep 22 11:33:48 PDT 2011
+ ** [out :: test13] Thu Sep 22 11:33:48 PDT 2011
+}}}
+
+Now to deploy !RangeServers, do the following: 
   # Check your Capfile to make sure hypertable_version is the correct version 
   # Edit your Capfile to add the new server(s) to the slave list
   # {{{cap dis}}}t (If you have an fhsized install, login to the new servers and run /opt/hypertable/current/bin/fhsize.sh)
