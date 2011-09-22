@@ -292,8 +292,8 @@ $ cap -S config=/home/doug/alternate.cfg start
 ===Adding new servers to an existing cluster===
 As your data grows, you may want to increase the number of !RangeServers in your cluster. Hypertable allows you to do this with 0 downtime and automatic load balancing, ie the system will auto-migrate a fair amount of the load onto the new machine(s) without any manual intervention. To add machines to an existing cluster you need to first setup services needed by Hypertable on the new machine, such as:
   * Filesystem: Make sure you are running a local datanode of your DFS with the same configuration as the rest of your cluster. 
-  * Synchronize clocks
-
+  * Synchronize clocks (run ntpd and wait for clock to synchonize before adding server)
+Verify that clocks are in sync:
 {{{
 $ cap shell
 cap> date
