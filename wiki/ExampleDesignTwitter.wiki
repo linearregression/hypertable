@@ -42,8 +42,6 @@ CREATE TABLE user (
 );
 }}}
 
-
-
 === Table: `tweet` ===
 
 _rowkey: username+timestamp_milliseconds_
@@ -72,10 +70,24 @@ while ($guid != $old_guid) {
 }
 }}}
 
-Once a unique username (row in the profile table) has been selected, other profile information can be inserted into to the profile table.
+Once a unique username (row in the profile table) has been selected, the user's profile information can be inserted into to the profile table.
 
 === Follow ===
 
+Let's say user "joe" decides to follow user "bob".  The first step is to insert into the following and followers columns of the respective user rows:
+
+{{{
+INSERT INTO user VALUES ("joe", "following:bob", ""), ("bob", "followers:joe", "");
+}}}
+
+Then, obtain the timestamps of the cells that were just inserted.  
+
+{{{
+SELECT CELLS * FROM user WHERE CELL = "joe","following:bob" OR "bob","followers:joe";
+$following_timestamp = /* set to joe following:bob cell timestamp */
+$followers_timestamp = /* set to bob followers:joe cell timestamp */
+INSERT INTO user VALUES ($following_timestamp, "joe", "following_history", "bob"), ($followers_timestamp, "bob", "followers_history", "joe");
+}}}
 
 
 === Unfollow ===
