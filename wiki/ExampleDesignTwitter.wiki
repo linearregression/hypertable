@@ -160,7 +160,17 @@ foreach (value_in_previous_select_command as $person) {
 === Tweet Stream ===
 
 {{{
+/* New Tweet count */
+$newcount = SELECT follow_stream_count from user where ROW=$username;
+$newtweets = $newcount-$oldcount
 
+/* Tweet stream - first 20 tweets */
+SELECT follow_stream from user where ROW=$username CELL_LIMIT 20;
+$cutoff_timestamp = /* timestamp of last cell in above select statement */
+
+/* Tweet stream - next 20 tweets */
+SELECT follow_stream from user where ROW=$username AND TIMESTAMP < $cutoff_timestamp CELL_LIMIT 20;
+$cutoff_timestamp = /* timestamp of last cell in above select statement */
 }}}
 
 
