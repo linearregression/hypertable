@@ -58,7 +58,7 @@ CREATE TABLE tweet (
 
 === Action: Register New User ===
 
-The first step of this action is to find a unique username.  This will be accomplished by calling an API (TBD) that allows you to atomically insert a column, if it does not already exists, and return the column value.  For example:
+The first step of this action is to find a unique username.  This will be accomplished by calling an API (_TBD_) that allows you to atomically insert a column, if it does not already exists, and return the column value.  For example:
 
 {{{
 $username = /* ask user for username */
