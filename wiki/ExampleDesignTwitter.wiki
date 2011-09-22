@@ -25,25 +25,6 @@ CREATE TABLE profile (
 
 This table contains profile information for each user.
 
-=== Table: `username` ===
-
-_rowkey:  username_
-
-{{{
-CREATE TABLE 'username' (
-  guid
-);
-}}}
-
-This table is used to register new usernames.  We will provide an API that allows you to atomically insert a column, if it does not already exists, and return the column value.  Something along the lines of:
-
-{{{
-$guid = 627918273726
-$old_guid = INSERT_ONCE_RETURN INTO username ("joe", "guid", "$guid")
-}}}
-
-This API will be used to update this table so that two users don't end up getting assigned the same username.
-
 === Table: `user` ===
 
 _rowkey: username_
@@ -75,21 +56,23 @@ CREATE TABLE tweet (
 
 == Actions ==
 
-=== Register New User ===
+=== Action: Register New User ===
 
-The first step of this action is to find a unique username
+The first step of this action is to find a unique username.  This will be accomplished by calling an API (TBD) that allows you to atomically insert a column, if it does not already exists, and return the column value.  For example:
 
 {{{
 $username = /* ask user for username */
-$guid = 627918273726
+$guid = /* generate guid */
 $old_guid = 0
 while ($guid != $old_guid) {
   if ($old_guid != 0) {
-    /* report error; ask user for new username */
+    /* report error; ask user for a different username */
   }
-  $old_guid = INSERT_ONCE_RETURN INTO username ($username, "guid", "$guid")
+  $old_guid = INSERT_ONCE_RETURN INTO profile ($username, "guid", "$guid")
 }
 }}}
+
+Once a unique username (row in the profile table) has been selected, other profile information can be inserted into to the profile table.
 
 === Follow ===
 
