@@ -74,16 +74,16 @@ Once a unique username (row in the profile table) has been selected, the user's 
 
 === Follow ===
 
-Let's say user "joe" decides to follow user "bob".  The first step is to insert into the following and followers columns of the respective user rows:
+Let's say user "joe" decides to follow user "bob".  The first step is to insert into the `following` and `followers` columns of the respective user rows:
 
 {{{
 INSERT INTO user VALUES ("joe", "following:bob", ""), ("bob", "followers:joe", "");
 }}}
 
-Then, obtain the timestamps of the cells that were just inserted.  
+Then, obtain the timestamps of the cells that were just inserted and use those timestamps to insert entries into the `following_history` and `followers_history` columns:
 
 {{{
-SELECT CELLS * FROM user WHERE CELL = "joe","following:bob" OR "bob","followers:joe";
+SELECT CELLS * FROM user WHERE CELL = "joe","following:bob" OR CELL = "bob","followers:joe";
 $following_timestamp = /* set to joe following:bob cell timestamp */
 $followers_timestamp = /* set to bob followers:joe cell timestamp */
 INSERT INTO user VALUES ($following_timestamp, "joe", "following_history", "bob"), ($followers_timestamp, "bob", "followers_history", "joe");
@@ -91,6 +91,8 @@ INSERT INTO user VALUES ($following_timestamp, "joe", "following_history", "bob"
 
 
 === Unfollow ===
+
+
 
 === Tweet ===
 
