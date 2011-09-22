@@ -1,4 +1,4 @@
-#summary Design Document for Twitter-like Application on Hypertable
+#summary Design Document for Twitter-like Application Built on Hypertable
 
 = Introduction =
 
@@ -10,13 +10,13 @@ This document describes how a simple Twitter-like application can be built on Hy
 
 === Table: `profile` ===
 
-_rowkey:  guid_
+_rowkey:  username_
 
 This table will contain profile information for each user.
 
 {{{
 CREATE TABLE profile (
-  username
+  guid,
   'display_name',
   password,
   avatar,
@@ -25,29 +25,34 @@ CREATE TABLE profile (
 );
 }}}
 
-=== Table: `username_to_guid` ===
+=== Table: `username` ===
 
 _rowkey:  username_
 
-This table contains a unique mapping from guid to username.  
+This table will be used to register new usernames.  We will provide an API that allows you to atomically insert a column, if it does not already exists, and return the column value.  Something along the lines of:
+
+$guid = 627918273726
+$existing = INSERT_IF_NOT_EXISTS_RETURN INTO username ("joe", "guid", "$guid")
+
+This API will be used to update this table so that two users don't end up getting assigned the same username.
 
 {{{
-CREATE TABLE 'username_to_guid' (
+CREATE TABLE 'username' (
   guid
 );
 }}}
 
 === Table: `user` ===
 
-_rowkey: guid_
+_rowkey: username_
 
 This table contains 
 
 {{{
 CREATE TABLE user (
-  following,
+  following MAX_VERSIONS=1,
   'following_history',
-  followers,
+  followers MAX_VERSIONS=1,
   'followers_history',
   'follow_stream',
   'follow_stream_count' COUNTER,
@@ -56,6 +61,31 @@ CREATE TABLE user (
 );
 }}}
 
+=== Table: `tweet` ===
+_rowkey: username+timestamp_milliseconds_
+
+{{{
+CREATE TABLE tweet (
+  message
+);
+}}}
+
 == Actions ==
 
+=== Register New User ===
+
+=== Follow ===
+
+
+
+=== Unfollow ===
+
+=== Tweet ===
+
 == Rendering ==
+
+=== User Information ===
+
+=== Tweet Stream ===
+
+=== Other Users's Recent Tweets ===
