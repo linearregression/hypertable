@@ -12,8 +12,7 @@ This document describes how a simple Twitter-like application can be built on Hy
 
 _rowkey:  username_
 
-This table will contain profile information for each user.
-
+_schema:_
 {{{
 CREATE TABLE profile (
   guid,
@@ -25,16 +24,13 @@ CREATE TABLE profile (
 );
 }}}
 
+This table contains profile information for each user.
+
 === Table: `username` ===
 
 _rowkey:  username_
 
-This table will be used to register new usernames.  We will provide an API that allows you to atomically insert a column, if it does not already exists, and return the column value.  Something along the lines of:
-
-$guid = 627918273726
-$existing = INSERT_IF_NOT_EXISTS_RETURN INTO username ("joe", "guid", "$guid")
-
-This API will be used to update this table so that two users don't end up getting assigned the same username.
+_schema:_
 
 {{{
 CREATE TABLE 'username' (
@@ -42,12 +38,20 @@ CREATE TABLE 'username' (
 );
 }}}
 
+This table will be used to register new usernames.  We will provide an API that allows you to atomically insert a column, if it does not already exists, and return the column value.  Something along the lines of:
+
+{{{
+$guid = 627918273726
+$existing = INSERT_ONCE_RETURN INTO username ("joe", "guid", "$guid")
+}}}
+
+This API will be used to update this table so that two users don't end up getting assigned the same username.
+
 === Table: `user` ===
 
 _rowkey: username_
 
-This table contains 
-
+_schema:_
 {{{
 CREATE TABLE user (
   following MAX_VERSIONS=1,
