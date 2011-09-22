@@ -40,7 +40,7 @@ CREATE TABLE user (
   'follow_stream',
   'follow_stream_count' COUNTER,
   'my_stream',
-  'my_stream_counter' COUNTER
+  'my_stream_count' COUNTER
 );
 }}}
 
@@ -108,13 +108,21 @@ INSERT INTO user VALUES ("joe", "following_count", "-1"), ("bob", "followers_cou
 
 === Tweet ===
 
-Generate a unique ID for the tweet by combining the username plus a high resolution timestamp.  Insert the tweet into the tweet table.
+Generate a unique "tweetid" for the tweet by combining the username plus a high resolution timestamp.  Then perform the following table updates:
+
+  * Insert the tweet into the tweet table
+  * Add to the user's my_stream column in the users table with the new tweet id
+  * For each of the users followers, add the tweet id to their follow_stream
 
 {{{
 $message = /* user's tweet */
 $tweetid = /* username + timestamp */
 INSERT INTO tweet VALUES ("$tweetid", "message", "$message");
-INSERT INTO user VALUES ("$username", "my_stream", "$tweetid"), ("$username", "my_stream_cout", "+1");
+INSERT INTO user VALUES ("$username", "my_stream", "$tweetid"), ("$username", "my_stream_count", "+1");
+SELECT follow_stream from user where ROW = "$username");
+foreach (column_qualifier as $qualifier) {
+  INSERT INTO user VALUES ("$qualifier", "follow_stream", "$tweetid"), ("$qualifier", "follow_stream_count", "+1")
+}
 }}}
 
 == Rendering ==
