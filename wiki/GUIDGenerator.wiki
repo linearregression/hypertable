@@ -36,7 +36,17 @@ Most of the logic for handling the GUID cell update will happen in the normal `b
 The !RangeServer class will have a new method added with the following signature:
 
 {{{
-    void next_guid(ResponseCallbackNextGUID *, const TableIdentifier *);
+    void next_guid(ResponseCallbackNextGuid *, const TableIdentifier *);
 }}}
 
-It will look similar to the `RangeServer::update` method and will either schedule a group commit update request or drop stright through to `batch_update`.
+It will look similar to the `RangeServer::update` method and will either schedule a group commit update request or drop stright through to `batch_update`.  The response for the GUID updates will be handled by  the `ResponseCallbackNextGuid` class via a `response` method that sends back the GUID. 
+
+{{{
+  class ResponseCallbackNextGuid : public ResponseCallback {
+  public:
+    ResponseCallbackUpdate(Comm *comm, EventPtr &event)
+      : ResponseCallback(comm, event) { }
+
+    int response(int64_t guid);
+  };
+}}}
