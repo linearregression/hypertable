@@ -1,0 +1,14 @@
+#summary Design document for GUID generator in Hypertable
+
+= Introduction =
+
+This document describes the design of a GUID (Globally Unique ID) generator built into Hypertable.  The goal is to add and API to Hypertable that will return a GUID that is guaranteed to be unique in the face of machine failures.
+
+= Proposal =
+
+We propose adding the following APIs to the Table class (with equivalents in the Thrift API):
+
+{{{
+int64_t next_guid(uint32_t timeout_ms = 0);
+int64_t next_guid_async(ResultCallback *cb, uint32_t timeout_ms = 0);
+}}}
