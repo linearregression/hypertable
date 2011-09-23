@@ -2,15 +2,29 @@
 
 <wiki:toc/>
 
-= Introduction =
+== Introduction ==
 
 This document describes the design of a GUID (Globally Unique ID) generator built into Hypertable.  The goal is to add and API to Hypertable that will return a GUID that is guaranteed to be unique in the face of machine failures.
 
-= Proposal =
+== API ==
 
-We propose adding the following APIs to the Table class (with equivalents in the Thrift API):
+We propose modifying the C++ API by adding the following methods to the Table class:
 
 {{{
-int64_t next_guid(uint32_t timeout_ms = 0);
-int64_t next_guid_async(ResultCallback *cb, uint32_t timeout_ms = 0);
+class Table {
+  ...
+  int64_t next_guid(uint32_t timeout_ms = 0);
+  void next_guid_async(ResultCallback *cb, uint32_t timeout_ms = 0);
+  ...
 }}}
+
+We also propose adding the following two methods in the Thrift interface:
+
+{{{
+long next_guid(Namespace ns, string table_name);
+void next_guid_async(Namespace ns, string table_name, Future future);
+}}}
+
+== Implementation ==
+
+Each table will have a special COUNTER cell that acts as a GUID generator.  The cell's row key will be `'0xff'` `'0xff'` so that it always resides in the last range of the table.  The cell's column family will be called _guid_ and will have ID 255, which will be made unavailable for normal column families.  For performance reasons, the current counter value for this special cell will be cached inside the Range object so that the GUID can be generated efficiently without having to scan the range first to accumulate the counter value.
