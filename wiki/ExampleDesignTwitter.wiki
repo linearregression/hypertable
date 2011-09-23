@@ -1,5 +1,7 @@
 #summary Design Document for Twitter-like Application Built on Hypertable
 
+<wiki:toc/>
+
 = Introduction =
 
 This document describes how a simple Twitter-like application can be built on Hypertable.  It's a stripped down version of Twitter that contains a user's tweet stream as well as current user information (number of tweets, latest tweet, following, and followers).
