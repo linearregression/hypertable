@@ -27,6 +27,16 @@ long next_guid(Namespace ns, string table_name);
 void next_guid_async(Namespace ns, string table_name, Future future);
 }}}
 
-== Implementation ==
+== RangeServer Implementation ==
 
 Each table will have a special COUNTER cell that acts as a GUID generator.  The cell's row key will be `'0xff'` `'0xff'` so that it always resides in the last range of the table.  The cell's column family will be called _guid_ and will have ID 255, which will be made unavailable for normal column families.  For performance reasons, the current counter value for this special cell will be cached inside the Range object so that the GUID can be generated efficiently without having to scan the range first to accumulate the counter value.
+
+Most of the logic for handling the GUID cell update will happen in the normal `batch_update()` code path.  The `UpdateRequest` class in the `GroupCommitInterface.h` file will be modified to include a member that indicates that the request is a "next_guid" request.  The part of the `batch_update` method that updates the range will handle these requests differently and may call a special Range API to atomically increment and read the GUID.
+
+The !RangeServer class will have a new method added with the following signature:
+
+{{{
+    void next_guid(ResponseCallbackNextGUID *, const TableIdentifier *);
+}}}
+
+It will look similar to the `RangeServer::update` method and will either schedule a group commit update request or drop stright through to `batch_update`.
