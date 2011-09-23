@@ -8,6 +8,7 @@ This document describes the design of a GUID (Globally Unique ID) generator buil
 
 == API ==
 
+=== C++ ===
 We propose modifying the C++ API by adding the following methods to the Table class:
 
 {{{
@@ -18,6 +19,7 @@ class Table {
   ...
 }}}
 
+=== Thrift ===
 We also propose adding the following two methods in the Thrift interface:
 
 {{{
