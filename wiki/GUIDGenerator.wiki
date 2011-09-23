@@ -1,7 +1,5 @@
 #summary Design document for GUID generator in Hypertable
 
-<wiki:toc/>
-
 == Introduction ==
 
 This document describes the design of a GUID (Globally Unique ID) generator built into Hypertable.  The goal is to add and API to Hypertable that will return a GUID that is guaranteed to be unique in the face of machine failures.
@@ -27,7 +25,9 @@ long next_guid(Namespace ns, string table_name);
 void next_guid_async(Namespace ns, string table_name, Future future);
 }}}
 
-== !RangeServer Implementation ==
+== Implementation ==
+
+=== !RangeServer ===
 
 Each table will have a special COUNTER cell that acts as a GUID generator.  The cell's row key will be `'0xff'` `'0xff'` so that it always resides in the last range of the table.  The cell's column family will be called _guid_ and will have ID 255, which will be made unavailable for normal column families.  For performance reasons, the current counter value for this special cell will be cached inside the Range object so that the GUID can be generated efficiently without having to scan the range first to accumulate the counter value.
 
