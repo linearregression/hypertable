@@ -2,7 +2,7 @@
 
 == Introduction ==
 
-This document describes the design of a GUID (Globally Unique ID) generator built into Hypertable.  The goal is to add and API to Hypertable that will return a GUID that is guaranteed to be unique in the face of machine failures.
+This document describes the design of a GUID (Globally Unique ID) generator built into Hypertable.  The goal is to add an API to Hypertable that will return a GUID that is guaranteed to be unique, even in the face of machine failures.
 
 == API ==
 
