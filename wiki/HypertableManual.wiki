@@ -290,10 +290,11 @@ $ cap -S config=/home/doug/alternate.cfg start
 }}}
 
 ===Adding new servers to an existing cluster===
-As your data grows, you may want to increase the number of !RangeServers in your cluster. Hypertable allows you to do this with 0 downtime and automatic load balancing, ie the system will auto-migrate a fair amount of the load onto the new machine(s) without any manual intervention. To add machines to an existing cluster you need to first setup services needed by Hypertable on the new machine, such as:
-  * Filesystem: Make sure you are running a local datanode of your DFS with the same configuration as the rest of your cluster. 
-  * Synchronize clocks (run `ntpd` and wait for clock to synchonize before adding server)
-Verify that clocks are in sync:
+As your data grows, you may want to increase the number of !RangeServers in your cluster. Hypertable allows you to do this with 0 downtime and automatic load balancing, ie the system will auto-migrate load from the existing !RangeServer machines onto the new machine(s) without any manual intervention. To add machines to an existing cluster you need to first setup services needed by Hypertable on the new machine as follows:
+
+*Step 1:  Synchronize clocks*
+
+To do this you need to run `ntpd` and wait for clock to synchronize before adding server.  Make sure the clocks on the new machine(s) are synchronized with the clocks on the other machines in the cluster.  You can verify this by first adding the new machines to your `Capfile` and then running `date` on all of the machines in the cluster as follows:
 {{{
 $ cap shell
 cap> date
@@ -308,9 +309,14 @@ cap> date
  ** [out :: test13] Thu Sep 22 11:33:48 PDT 2011
 }}}
 
-Now to deploy !RangeServers, do the following: 
+*Step 2: Start Hadoop DataNode on new machines*
+
+Make sure you are running a local datanode of your DFS with the same configuration as the rest of your cluster.  For Cloudera installation, follow instructions in the [https://ccp.cloudera.com/display/CDHDOC/CDH3+Installation+Guide CDH3 Installation Guide].
+
+*Step 3: Deploy Hypertable !RangeServers*
+
   # Check your Capfile to make sure hypertable_version is the correct version 
-  # Edit your Capfile to add the new server(s) to the slave list
+  # Edit your Capfile to add the new server(s) to the slave list (should've been done in Step 1)
   # {{{cap dis}}}t (If you have an fhsized install, login to the new servers and run /opt/hypertable/current/bin/fhsize.sh)
   # {{{cap push_config}}}
   # {{{cap set_current}}}
