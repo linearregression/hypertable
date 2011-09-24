@@ -320,7 +320,6 @@ Make sure you are running a local datanode of your DFS with the same configurati
   # {{{cap dis}}}t (If you have an fhsized install, login to the new servers and run /opt/hypertable/current/bin/fhsize.sh)
   # {{{cap push_config}}}
   # {{{cap set_current}}}
-  # Run the cap shell and then run "date" to make sure the clocks are un sync
   # {{{cap start_slaves}}}
 
 ==Up and Running with Hadoop==
