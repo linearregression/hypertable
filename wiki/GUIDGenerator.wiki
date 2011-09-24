@@ -1,8 +1,8 @@
-#summary Design document for GUID generator in Hypertable
+#summary Design document for generating Unique IDs in Hypertable
 
 == Introduction ==
 
-This document describes the design of a GUID (Globally Unique ID) generator built into Hypertable.  The goal is to add an API to Hypertable that will return a GUID that is guaranteed to be unique, even in the face of machine failures.
+This document describes the design of a Unique ID generator built into Hypertable.  The goal is to add an API to Hypertable that will return a 64-bit ID that is guaranteed to be unique, even in the face of machine failures.
 
 == API ==
 
@@ -12,8 +12,10 @@ We propose modifying the C++ API by adding the following methods to the Table cl
 {{{
 class Table {
   ...
-  int64_t next_guid(uint32_t timeout_ms = 0);
-  void next_guid_async(ResultCallback *cb, uint32_t timeout_ms = 0);
+  int64_t get_unique_id(uint32_t timeout_ms = 0);
+  void get_unique_ids(int32_t count, std::vector<int64_t> &unique_ids, uint32_t timeout_ms = 0);
+  void get_unique_id_async(ResultCallback *cb, uint32_t timeout_ms = 0);
+  void get_unique_ids_async(ResultCallback *cb, int32_t count, uint32_t timeout_ms = 0);
   ...
 }}}
 
