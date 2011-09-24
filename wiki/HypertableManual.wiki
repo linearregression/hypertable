@@ -309,7 +309,7 @@ cap> date
  ** [out :: test13] Thu Sep 22 11:33:48 PDT 2011
 }}}
 
-*Step 2: Start Hadoop DataNode on new machines*
+*Step 2: Start Hadoop !DataNode on new machines*
 
 Make sure you are running a local datanode of your DFS with the same configuration as the rest of your cluster.  For Cloudera installation, follow instructions in the [https://ccp.cloudera.com/display/CDHDOC/CDH3+Installation+Guide CDH3 Installation Guide].
 
