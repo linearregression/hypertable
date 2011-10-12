@@ -278,3 +278,23 @@ TCP:
 
 UDP:
   * 38040 (in both directions)
+
+==Problem starting servers on OpenSUSE 11.4:   ht-env.sh: line 105: 31207 Aborted  (core dumped)==
+
+When I try starting the servers on OpenSUSE 11.4, I get the following error messages:
+
+{{{
+# /opt/hypertable/current/bin/start-all-servers.sh local
+DFS broker: available file descriptors: 1024
+/opt/hypertable/current/bin/ht-env.sh: line 105: 31070 Aborted                 (core dumped) $HYPERTABLE_HOME/bin/serverup --silent "$@" &>/dev/null
+/opt/hypertable/current/bin/ht-env.sh: line 105: 31071 Aborted                 (core dumped) $HYPERTABLE_HOME/bin/serverup --silent "$@" &>/dev/null
+/opt/hypertable/current/bin/ht-env.sh: line 105: 31073 Aborted                 (core dumped) $HYPERTABLE_HOME/bin/serverup --silent "$@" &>/dev/null
+/opt/hypertable/current/bin/ht-env.sh: line 105: 31075 Aborted                 (core dumped) $HYPERTABLE_HOME/bin/serverup --silent "$@" &>/dev/null
+/opt/hypertable/current/bin/ht-env.sh: line 105: 31083 Aborted                 (core dumped) $HYPERTABLE_HOME/bin/serverup --silent "$@" &>/dev/null
+/opt/hypertable/current/bin/ht-env.sh: line 105: 31082 Aborted                 (core dumped) $HYPERTABLE_HOME/bin/serverup --silent "$@" &>/dev/null
+}}}
+
+
+On OpenSUSE 11.4, libstdc++ has a problem with regard to locale handling.  In the shell in which you launch hypertable from, you'll need to execute the following command first:
+
+export LC_CTYPE=""
