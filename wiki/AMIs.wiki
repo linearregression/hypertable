@@ -2,7 +2,7 @@
 
 == Build AMIs ==
 
-|| *Operating System* || *Architecture* || *Machine Image Identifier* ||
+|| *Operating System* || *Architecture* || *Identifier* ||
 || CentOS 5.2|| i386 || `ami-c1bf70a8` ||
 || CentOS 5.2|| x86_64 || `ami-dfbf70b6` ||
 || Debian Lenny || i386 || `ami-c7bf70ae` ||
