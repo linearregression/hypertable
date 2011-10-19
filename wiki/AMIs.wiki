@@ -2,13 +2,8 @@
 
 == Build AMIs ==
 
-|| *Architectue System Version* || *Machine Image Identifier* || *Installed Software* ||
-|| CentOS 5.2 i386 || `ami-05e8246c` || Thrift 0.7.0, Boost 1.43, Hyperic SIGAR 1.6.3, BerkeleyDB 5.2.36, KFS 0.5, Ceph 0.25.1, JDK 6 update 21, ant 1.8.0, Google Perftools 1.8.3, re2, Snappy 1.0.4, doxygen, graphviz, tcpdump, tcptrace, netperf, Capistrano, dstat, oprofile, iozone, gdb, rrdtool, valgrind 3.6.1, Hadoop CDH3B4, cmake 2.6-patch 4 ||
-|| CentOS 5.2 x86_64 || `ami-15e8247c` || Thrift 0.7.0, Boost 1.43, Hyperic SIGAR 1.6.3, BerkeleyDB 5.2.36, KFS 0.5, Ceph 0.25.1, JDK 6 update 21, ant 1.8.1, Google Perftools 1.8.3, re2, Snappy 1.0.4, doxygen, graphviz, tcpdump, tcptrace, netperf, dstat, oprofile, iozone, gdb, rrdtool, doxygen, graphvis, valgrind 3.6.1, Hadoop CDH3B4, cmake 2.6-patch 4 ||
-|| Ubuntu 8.04 i386 || `ami-91ed21f8` || Thrift 0.7.0, Boost 1.44, Hyperic SIGAR 1.6.3, BerkeleyDB 5.2.36, KFS 0.5, Ceph 0.25.1, JDK 6 update 20, ant 1.7.0, Google Perftools 1.8.3, re2, Snappy 1.0.4, doxygen, graphviz, tcpdump, tcptrace, netperf, Capistrano, dstat, oprofile, iozone, gdb, rrdtool, valgrind 3.6.1, Hadoop CDH3B4, cmake 2.6-patch 4 ||
-|| Ubuntu 8.04 x86_64 || `ami-e7ee228e` || Thrift 0.7.0, Boost 1.40, Hyperic SIGAR 1.6.3, BerkeleyDB 5.2.36, KFS 0.5, Ceph 0.25.1, JDK 6 update 20, ant 1.7.0, Google perftools 1.8.3, re2, Snappy 1.0.4, doxygen, graphviz, tcpdump, tcptrace, netperf, dstat, oprofile, iozone, rrdtool, valgrind 3.6.1, Hadoop CDH3B4 ||
-
-== Other Build AMIs ==
-
-|| *Architectue System Version* || *Machine Image Identifier* || *Installed Software* ||
-|| CentOS 5.4 i386 || `ami-0818e561` || Thrift 0.6.0, Boost 1.44, Hyperic SIGAR 1.6.4, BerkeleyDB 4.8, KFS 0.5, Ceph 0.25.1, JDK 6 update 24, ant 1.8.2, Google Perftools 1.7, re2, cmake 2.6-patch 4 ||
+|| *Operating System* || *Architecture* || *Machine Image Identifier* ||
+|| CentOS 5.2|| i386 || `ami-c1bf70a8` ||
+|| CentOS 5.2|| x86_64 || `ami-dfbf70b6` ||
+|| Debian Lenny || i386 || `ami-c7bf70ae` ||
+|| Debian Lenny || x86_64 || `ami-ddbf70b4` ||
