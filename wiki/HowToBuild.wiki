@@ -1,6 +1,110 @@
 #summary How to Build Hypertable on Various Platforms
 <wiki:toc/>
 
+#summary How to Build Hypertable on Various Platforms
+<wiki:toc/>
+
+== CentOS 6.0 64-bit ==
+
+===Basic Dependencies===
+
+{{{
+yum install gcc-c++ make cmake python-devel bzip2-devel zlib-devel expat-devel rrdtool rrdtool-devel ruby ruby-devel ruby-ext
+wget http://downloads.sourceforge.net/boost/boost_1_44_0.tar.bz2
+tar xjvf boost_1_44_0.tar.bz2
+cd boost_1_44_0
+./bootstrap.sh --with-libraries=filesystem,iostreams,program_options,system,thread,graph,regex
+./bjam install
+cd ~
+wget http://snappy.googlecode.com/files/snappy-1.0.4.tar.gz
+tar -zxvf snappy-1.0.4.tar.gz
+cd snappy-1.0.4
+./configure; make; make install
+yum install log4cpp-devel git-core cronolog google-perftools-devel libevent-devel readline-devel ncurses-devel xml-commons-apis freetype-devel libpng-devel libart_lgpl-devel
+wget http://www.hypertable.org/pub/hyperic-sigar-1.6.4.zip
+unzip hyperic-sigar-1.6.4.zip
+cp hyperic-sigar-1.6.4/sigar-bin/include/*.h /usr/local/include
+cp hyperic-sigar-1.6.4/sigar-bin/lib/libsigar-amd64-linux.so /usr/local/lib
+wget http://download.oracle.com/berkeley-db/db-4.8.26.tar.gz
+tar -xzvf db-4.8.26.tar.gz
+cd db-4.8.26/build_unix/
+../dist/configure --enable-cxx
+make
+make install
+wget http://hypertable.org/pub/re2.tgz
+tar -zxvf re2.tgz
+cd re2
+make
+make test
+make install
+make testinstall
+yum install openssl openssl-devel cryptopp-devel libedit-devel xfsprogs-devel libatomic_ops-devel fuse fuse-devel
+cd ~; wget http://ceph.newdream.net/download/ceph-0.22.2.tar.gz
+tar xzvf ceph-0.22.2.tar.gz
+./configure; make; make install
+cd ~; wget http://downloads.sourceforge.net/project/kosmosfs/kosmosfs/kfs-0.5/kfs-0.5.tar.gz
+tar xzvf kfs-0.5.tar.gz
+...
+# the next 4 lines install 'gem' - skip them if it's already installed
+wget http://rubyforge.org/frs/download.php/75475/rubygems-1.8.11.tgz
+tar -zxvf rubygems-1.8.11.tgz
+cd rubygems-1.8.11
+ruby setup.rb
+gem install capistrano
+sh -c "echo '/usr/local/lib' > /etc/ld.so.conf.d/local.conf"
+sh -c "echo '/usr/local/BerkeleyDB.4.8/lib' > /etc/ld.so.conf.d/BerkeleyDB.4.8.conf"
+/sbin/ldconfig
+# NOTE:  There are several dependent RRD libraries that cannot be found by the cmake find script.  To fix this, you may need to do something like the following:
+cd /usr/lib64/
+ln -s libpangocairo-1.0.so.0.2800.1 libpangocairo.so
+ln -s libpango-1.0.so.0.2800.1 libpango.so
+ln -s libpangoft2-1.0.so.0.2800.1 libpangoft2.so
+cd /lib64
+ln -s libgobject-2.0.so.0.2200.5 libgobject.so
+ln -s libglib-2.0.so.0.2200.5 libglib.so
+ln -s libgmodule-2.0.so.0.2200.5 libgmodule.so
+}}}
+
+===Thrift Broker Dependencies===
+
+See this [http://wiki.apache.org/thrift/ThriftInstallation official thrift installation wiki page] for up-to-date installation instructions.  Fetch JDK rpm from [http://java.sun.com/javase/downloads/index.jsp Sun JAVA Download] page
+
+{{{
+yum install cpan ant automake libtool flex bison pkgconfig libevent-devel ruby-devel perl-Bit-Vector php php-devel
+wget http://dag.wieers.com/rpm/packages/perl-Class-Accessor/perl-Class-Accessor-0.31-1.el5.rf.noarch.rpm
+yum localinstall perl-Class-Accessor-0.31-1.el5.rf.noarch.rpm
+wget http://www.hypertable.org/pub/thrift.tgz
+tar xzvf thrift.tgz
+cd thrift-0.6.0
+./configure
+make
+make install
+/sbin/ldconfig
+}}}
+
+===Monitoring===
+
+{{{
+cd ~
+gem install sinatra rack thin json titleize
+yum remove rrdtool rrdtool-devel
+yum install cpan cairo cairo-devel pango pango-devel glib2 glib2-devel libxml2 libxml2-devel
+wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.4.tar.gz
+tar xzvf rrdtool-1.4.4.tar.gz
+cd rrdtool-1.4.4
+CPPFLAGS="-I/usr/include/cairo -I/usr/include/pango-1.0" ./configure --prefix=/usr/local
+make
+make install
+cd bindings/ruby
+# modify the dir_config line in extconf.rb to:
+# dir_config("rrd","../../src","/usr/local/lib")
+ruby extconf.rb
+make
+make install
+ldconfig
+}}}
+
+
 == CentOS 5.2 64-bit ==
 
 _EC2:  ami-ccb35ea5_
