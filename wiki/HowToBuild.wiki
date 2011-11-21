@@ -72,7 +72,7 @@ wget http://dag.wieers.com/rpm/packages/perl-Class-Accessor/perl-Class-Accessor-
 yum localinstall perl-Class-Accessor-0.31-1.el5.rf.noarch.rpm
 wget http://www.hypertable.org/pub/thrift.tgz
 tar xzvf thrift.tgz
-cd thrift-0.6.0
+cd thrift-0.7.0
 ./configure
 make
 make install
