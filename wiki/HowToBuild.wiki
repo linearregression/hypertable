@@ -1,9 +1,6 @@
 #summary How to Build Hypertable on Various Platforms
 <wiki:toc/>
 
-#summary How to Build Hypertable on Various Platforms
-<wiki:toc/>
-
 == CentOS 6.0 64-bit ==
 
 ===Basic Dependencies===
