@@ -3,8 +3,8 @@
 == EBS-backed AMIs ==
 
 || *Operating System* || *Architecture* || *Identifier* ||
-|| Amazon Linux || i386 || `foo` ||
-|| Amazon Linux || x86_64 || `bar` ||
+|| Amazon Linux || i386 || `ami-713af218` ||
+|| Amazon Linux || x86_64 || `ami-673af20e` ||
 
 == Build AMIs ==
 
