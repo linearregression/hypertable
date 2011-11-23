@@ -1,5 +1,11 @@
 #summary Hypertable Amazon Machine Images (AMIs)
 
+== EBS-backed AMIs ==
+
+|| *Operating System* || *Architecture* || *Identifier* ||
+|| Amazon Linux || i386 || `foo` ||
+|| Amazon Linux || x86_64 || `bar` ||
+
 == Build AMIs ==
 
 || *Operating System* || *Architecture* || *Identifier* ||
