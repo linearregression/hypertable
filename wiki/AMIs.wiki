@@ -12,4 +12,4 @@
 || CentOS 5.2|| i386 || `ami-c1bf70a8` ||
 || CentOS 5.2|| x86_64 || `ami-dfbf70b6` ||
 || Debian Lenny || i386 || `ami-c7bf70ae` ||
-|| Debian Lenny || x86_64 || `ami-ddbf70b4` ||
+|| Debian Lenny || x86_64 || `ami-a7f338ce` ||
