@@ -61,7 +61,7 @@ cd ~/build/hypertable/release
     * In the HTML repository, in the `com/download` directory, create a `0.9.0.1.html` file, and the previous release to the `archive.html` file and update the `index.html` link.
   # Create release tarball:
 {{{
-git archive --format=tar --prefix=hypertable-0.9.0.1-alpha/ v0.9.0.1 | gzip -9 > ~/tmp/hypertable-0.9.0.1-alpha-src.tar.gz
+git archive --format=tar --prefix=hypertable-0.9.0.1/ v0.9.0.1 | gzip -9 > ~/tmp/hypertable-0.9.0.1-src.tar.gz
 }}}
    Note: gzip compress better than bzip2 for hypertable source, go figure; the trailing / in the prefix is important.
   # Upload the tarball to the google code download area:  http://code.google.com/p/hypertable/downloads/list
