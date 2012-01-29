@@ -1,5 +1,5 @@
 #summary Release maintainer's notes
-The example shown here is to upgrade from 0.9.0.0-alpha to 0.9.0.1-alpha. Adapt accordingly.
+The example shown here is to upgrade from 0.9.5.4 to 0.9.5.5. Adapt accordingly.
 
   # Prepare for next release
     * Update the `CHANGES` file with the list of changes for the release
@@ -10,7 +10,7 @@ The example shown here is to upgrade from 0.9.0.0-alpha to 0.9.0.1-alpha. Adapt 
     * Update README to point to new thrift, if needed
   # Test all changes in the 'next' branch
     * First get all changes into 'next'
-    * Make sure the version number is correct (e.g. 0.9.0.1 here) in the top-level CMakeLists.txt
+    * Make sure the version number is correct (e.g. 0.9.5.5 here) in the top-level CMakeLists.txt
     * Make sure 'next' is a superset of 'master', do a `git merge master`
     * Make sure tests are passing in the 'next' branch
   # Pull the changes from 'next' into 'master'
@@ -20,7 +20,7 @@ The example shown here is to upgrade from 0.9.0.0-alpha to 0.9.0.1-alpha. Adapt 
   }}}
   # Tag the release:
 {{{
-git tag -a v0.9.0.1
+git tag -a v0.9.5.5
 }}}
     Note, -a or -s is required for "git describe" used by the version mechanism in the build system)
   # Push the changes to official repository:
@@ -57,11 +57,11 @@ cd ~/build/hypertable/release
 cd ~/build/hypertable/release
 ~/src/hypertable/bin/src-utils/htpkg --srcdir ~/src/hypertable --phpdir /usr/src/thrift/lib/php/src PackageMaker
 }}}
-    * Create a release directory `scm.hypertable.org:/pub/download/0.9.0.1` and copy the binary packages into this directory
-    * In the HTML repository, in the `com/download` directory, create a `0.9.0.1.html` file, and the previous release to the `archive.html` file and update the `index.html` link.
+    * Create a release directory `scm.hypertable.org:/pub/download/0.9.5.5` and copy the binary packages into this directory
+    * In the HTML repository, in the `com/download` directory, create a `0.9.5.5.html` file, and the previous release to the `archive.html` file and update the `index.html` link.
   # Create release tarball:
 {{{
-git archive --format=tar --prefix=hypertable-0.9.0.1/ v0.9.0.1 | gzip -9 > ~/tmp/hypertable-0.9.0.1-src.tar.gz
+git archive --format=tar --prefix=hypertable-0.9.5.5/ v0.9.5.5 | gzip -9 > ~/tmp/hypertable-0.9.5.5-src.tar.gz
 }}}
    Note: gzip compress better than bzip2 for hypertable source, go figure; the trailing / in the prefix is important.
   # Upload the tarball to the google code download area:  http://code.google.com/p/hypertable/downloads/list
