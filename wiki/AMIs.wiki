@@ -9,7 +9,7 @@
 == Build AMIs ==
 
 || *Operating System* || *Architecture* || *Identifier* ||
-|| CentOS 5.2|| i386 || `ami-c1bf70a8` ||
-|| CentOS 5.2|| x86_64 || `ami-dfbf70b6` ||
-|| Debian Lenny || i386 || `ami-c7bf70ae` ||
-|| Debian Lenny || x86_64 || `ami-a7f338ce` ||
+|| CentOS 5.2|| i386 || `ami-c9f425a0` ||
+|| CentOS 5.2|| x86_64 || `ami-c5f425ac` ||
+|| Debian Lenny || i386 || `ami-cbf425a2` ||
+|| Debian Lenny || x86_64 || `ami-c1f425a8` ||
