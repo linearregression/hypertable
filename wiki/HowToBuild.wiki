@@ -70,9 +70,9 @@ See this [http://wiki.apache.org/thrift/ThriftInstallation official thrift insta
 yum install cpan ant automake libtool flex bison pkgconfig libevent-devel ruby-devel perl-Bit-Vector php php-devel
 wget http://dag.wieers.com/rpm/packages/perl-Class-Accessor/perl-Class-Accessor-0.31-1.el5.rf.noarch.rpm
 yum localinstall perl-Class-Accessor-0.31-1.el5.rf.noarch.rpm
-wget http://www.hypertable.org/pub/thrift.tgz
-tar xzvf thrift.tgz
-cd thrift-0.7.0
+wget http://archive.apache.org/dist/thrift/0.8.0/thrift-0.8.0.tar.gz
+tar xzvf thrift-0.8.0.tar.gz
+cd thrift-0.8.0
 ./configure
 make
 make install
@@ -177,9 +177,9 @@ cp apache-ant-1.8.1/lib/*.jar java
 yum install ant automake libtool flex bison pkgconfig libevent-devel ruby-devel perl-Bit-Vector php php-devel
 wget http://dag.wieers.com/rpm/packages/perl-Class-Accessor/perl-Class-Accessor-0.31-1.el5.rf.noarch.rpm
 yum localinstall perl-Class-Accessor-0.31-1.el5.rf.noarch.rpm
-wget http://www.hypertable.org/pub/thrift.tgz
-tar xzvf thrift.tgz
-cd thrift-0.3.0
+wget http://archive.apache.org/dist/thrift/0.8.0/thrift-0.8.0.tar.gz
+tar xzvf thrift-0.8.0.tar.gz
+cd thrift-0.8.0
 ./configure
 make
 make install
@@ -285,9 +285,9 @@ mv ant ant.old
 ln -s apache-ant-1.8.1 ant
 rm -rf java/ant*
 cp apache-ant-1.8.1/lib/*.jar java
-wget http://www.hypertable.org/pub/thrift.tgz
-tar -xzvf thrift.tgz
-cd thrift
+wget http://archive.apache.org/dist/thrift/0.8.0/thrift-0.8.0.tar.gz
+tar xzvf thrift-0.8.0.tar.gz
+cd thrift-0.8.0
 ./configure
 make
 make install
@@ -377,9 +377,9 @@ cd boost_1_44_0
 ./bootstrap.sh --prefix=/opt/htdep --with-libraries=filesystem,iostreams,program_options,system,thread,graph,regex
 ./bjam install
 # build thrift into /opt/htdep
-wget http://www.hypertable.org/pub/thrift.tgz
-tar xzvf thrift.tgz
-cd thrift-0.6.0
+wget http://archive.apache.org/dist/thrift/0.8.0/thrift-0.8.0.tar.gz
+tar xzvf thrift-0.8.0.tar.gz
+cd thrift-0.8.0
 ./configure
 make install
 # install re2
@@ -458,9 +458,9 @@ wget -O jdk-6u12-linux-i586-rpm.bin <really-long-url-from-sun>
 chmod 755 jdk-6u12-linux-i586-rpm.bin
 ./jdk-6u12-linux-i586-rpm.bin
 yum install ant automake libtool flex bison pkgconfig libevent-devel ruby-devel perl-Bit-Vector perl-devel php php-devel
-wget http://www.hypertable.org/pub/thrift.tgz
-tar -xzvf thrift.tgz
-cd thrift
+wget http://archive.apache.org/dist/thrift/0.8.0/thrift-0.8.0.tar.gz
+tar xzvf thrift-0.8.0.tar.gz
+cd thrift-0.8.0
 ./configure
 make
 make install
@@ -553,9 +553,9 @@ apt-get install ant autoconf automake libtool bison flex pkg-config php5 php5-de
 # cpan> quit
 ln -f -s /bin/bash /bin/sh
 apt-get install php5 php5-dev
-wget http://hypertable.org/pub/thrift.tgz
-tar -xzvf thrift.tgz
-cd thrift
+wget http://archive.apache.org/dist/thrift/0.8.0/thrift-0.8.0.tar.gz
+tar xzvf thrift-0.8.0.tar.gz
+cd thrift-0.8.0
 ./configure
 make
 make install
@@ -644,9 +644,9 @@ gem install capistrano
 zypper install ant automake libtool flex bison pkg-config libevent-devel perl-Bit-Vector php5 php5-devel
 wget http://dag.wieers.com/rpm/packages/perl-Class-Accessor/perl-Class-Accessor-0.31-1.el5.rf.noarch.rpm
 zypper install perl-Class-Accessor-0.31-1.el5.rf.noarch.rpm
-wget http://www.hypertable.org/pub/thrift.tgz
-tar xzvf thrift.tgz
-cd thrift-*
+wget http://archive.apache.org/dist/thrift/0.8.0/thrift-0.8.0.tar.gz
+tar xzvf thrift-0.8.0.tar.gz
+cd thrift-0.8.0
 ./configure; make; make install
 }}}
 
@@ -655,9 +655,9 @@ cd thrift-*
 Install Thrift
 {{{
 port install p5-bit-vector p5-class-accessor
-wget http://www.hypertable.org/pub/thrift.tgz
-tar -zxf thrift.tgz
-cd thrift-0.6.0
+wget http://archive.apache.org/dist/thrift/0.8.0/thrift-0.8.0.tar.gz
+tar xzvf thrift-0.8.0.tar.gz
+cd thrift-0.8.0
 ./configure
 make
 make install # as root or in su/sudo shell
@@ -713,9 +713,9 @@ make testinstall
 Install Thrift
 {{{
 port install p5-bit-vector p5-class-accessor
-wget http://www.hypertable.org/pub/thrift.tgz
-tar -zxf thrift.tgz
-cd thrift-0.6.0
+wget http://archive.apache.org/dist/thrift/0.8.0/thrift-0.8.0.tar.gz
+tar xzvf thrift-0.8.0.tar.gz
+cd thrift-0.8.0
 ./configure --with-libevent=/opt/local --with-boost=/opt/local
 make
 make install # as root or in su/sudo shell
