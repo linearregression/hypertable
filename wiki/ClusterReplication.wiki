@@ -47,11 +47,21 @@ It is not allowed to enable replication for index tables or tables in the reserv
 
 The replication processes (_Sender_ and _Receiver_) have to be started manually. We will provide a startup script.
 
+= Bootstrapping =
+
+When activating replication for an existing table, the existing cells have to be copied manually. This can be done via HQL commands (DUMP TABLE/LOAD DATA). We will document this accordingly.
+
+The tables on the remote cluster have to be created manually.
+
 = Implementation Phase 1 =
 
 Upon initialization, the _Sender_ reads all table schemas from hyperspace to find out which tables need replication. It also fetches the remote addresses of the cluster-IDs from hyperspace.
 
-Periodically, it then scans the commit logs of all replicated tables and proceeds as follows:
+Afterwards, the _Sender_ loads its existing state from a mml file. The state describes the fragments and file offsets where it stopped when it was running previously.
+
+If there's no such state (i.e. when the _Sender_ was started for the very first time), then it will only start sending updates which are created AFTER the _Sender_ was started. All older updates have to be sent during the bootstrapping process, which was described above.
+
+Periodically, the _Sender_ then scans the commit logs of all replicated tables and proceeds as follows:
 
 {{{
 IF the commit log grew at least for a certain buffer size BS: 
@@ -62,21 +72,20 @@ IF the commit log grew at least for a certain buffer size BS:
 }}}
 
 If the _Sender_ crashes then it will read its current state from the metalog file after it was
-restarted. Since the updates are idempotent it is not a problem if parts of the fragment are sent multiple times. Therefore the updates to the metalog file do not have to be very frequent.
+restarted. Since the updates are idempotent it is not a problem if parts of a fragment are sent twice. Therefore the updates to the metalog file do not have to be very frequent.
 
-In order to make sure that merged/compacted fragments are not deleted before they are replicated, the RangeServer no longer deletes any fragments in CommitLog::purge. Instead, it renames them to "fragment-id.deleted". The _Sender_ will delete all files that are .deleted after it replicated them (or immediately, if this fragment belongs to a table that is not replicated).
+In order to make sure that merged/compacted fragments are not deleted before they are replicated, the RangeServer no longer deletes any fragments in CommitLog::purge. Instead, it renames them to "fragment-id.deleted". The _Sender_ will delete all files with extension ".deleted" after it replicated them (or immediately, if this fragment belongs to a table that is not replicated).
 
 (It would be nice if the RangeServer could immediately delete fragments that are not replicated, instead of renaming them to .deleted.)
 
-On the receiving cluster, the _Receiver_ will pick up incoming updates from the _Sender_ and use a normal TableMutator to write them.
+When the user enables replication for a new table (either via CREATE TABLE or ALTER TABLE) then the Master informs the _Sender_ that it has to re-read its Schema info from Hyperspace. The _Sender_ will then find out that a new table needs to be replicated, and will start processing the log fragments accordingly.
 
-This design allows bi-directional updates, but it also allow circular updates (i.e. if cluster1 replicates to cluster2, and cluster2 replicates to cluster1). This is solved with the following algorithm, which is executed whenever a CREATE TABLE/ALTER TABLE activates replication.
+On the remote cluster, the _Receiver_ will pick up incoming updates from the _Sender_ and append them to a queue in the DFS. Then it uses a regular TableMutator to write them. If the _Receiver_ (or any node in the cluster) fails or crashes, then all updates which have not yet been processed  are still available in the log file. 
 
-The _Sender_ allocates an empty list of GUIDs and inserts its own cluster ID.
-The _Sender_ then forwards the list to the Receiver.
-The _Receiver_ inserts its own GUID into the list and checks for duplicates. If it found a duplicate then there's a circular dependency and an error is returned.
-The _Receiver_ asks its own Sender to forward the new list to the next Receiver.
-etc
+When the _Receiver_ starts, it therefore first processes this queue, and afterwards it continues with the regular updates.
+
+If the _Receiver_ crashes, the _Sender_ will just stop sending data till it the _Receiver_ is running again. In case the _Sender_ is unavailable, it will use the notification-hook to send an email to the Administrator.
+
 
 = Implementation Phase 2 =
 
@@ -84,4 +93,4 @@ TBD
 
 = Open Questions =
 
-- If replication settings are modified via ALTER TABLE/DROP TABLE/CREATE TABLE, how will the replication process find out?
+- How to enable bi-directional updates without having the updates "run in circles"? We would have to store the IDs (or checksums of those IDs) of all clusters which already received this update. These IDs would have to be stored in the CellStore with every single update. Is there an easier solution?
