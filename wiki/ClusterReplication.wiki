@@ -1,0 +1,87 @@
+#summary A design for cluster replication
+= Introduction =
+
+This document describes a design for cluster replication. With this feature, every update that is sent to a cluster is automatically forwarded asynchronously to a remote cluster. This cluster can be located in a different data center.
+
+= Features =
+
+ * Uni-directional or bi-directional replication
+ * Replication is asynchronously (there can be slight delays)
+ * Very little administration required
+ * Replication is per table, not per column or per cluster
+ * Replication can be activated with CREATE TABLE, ALTER TABLE
+ * Replication can be deactivated with ALTER TABLE
+
+= Terminology =
+
+ * _Sender_: the replication process on the cluster which is replicated
+ * _Receiver_: the replication process on the replica cluster 
+
+= Timeline =
+
+In order to have fast results, we will split the replication feature into two phases:
+ # Phase 1
+    * A single replication process forwards all updates to the remote cluster
+    * A cluster can only be replicated to one other cluster, not to multiple clusters
+ # Phase 2
+    * A group of replication processes forward all updates to the remote cluster
+
+= User Interface =
+
+When initializing, the Master creates a unique ID for the cluster and stores it in hyperspace, unless the ID was already created.
+
+We will provide a tool or a parameter to overwrite this ID.
+
+We will provide a tool or script to create a mapping of cluster-ID to IP-address/hostname (this information is stored in hyperspace).
+
+The CREATE TABLE statement is modified; it supports a new option.
+{{{
+    CREATE TABLE t (foo) REPLICATE TO <cluster-id>
+}}}
+The ALTER TABLE statement is modified:
+{{{
+    ALTER TABLE t REPLICATE TO <cluster-id> [ON]
+    ALTER TABLE t REPLICATE TO <cluster-id> OFF
+}}}
+It is not allowed to enable replication for index tables or tables in the reserved /sys namespace.
+
+The replication processes (_Sender_ and _Receiver_) have to be started manually. We will provide a startup script.
+
+= Implementation Phase 1 =
+
+Upon initialization, the _Sender_ reads all table schemas from hyperspace to find out which tables need replication. It also fetches the remote addresses of the cluster-IDs from hyperspace.
+
+Periodically, it then scans the commit logs of all replicated tables and proceeds as follows:
+
+{{{
+IF the commit log grew at least for a certain buffer size BS: 
+    read the new commit log entries
+    send them to the Receiver
+    repeat reading/sending till the end of the commit log file is reached
+    write the Sender state (commit log fragment ID + file offset) to a metalog file
+}}}
+
+If the _Sender_ crashes then it will read its current state from the metalog file after it was
+restarted. Since the updates are idempotent it is not a problem if parts of the fragment are sent multiple times. Therefore the updates to the metalog file do not have to be very frequent.
+
+In order to make sure that merged/compacted fragments are not deleted before they are replicated, the RangeServer no longer deletes any fragments in CommitLog::purge. Instead, it renames them to "fragment-id.deleted". The _Sender_ will delete all files that are .deleted after it replicated them (or immediately, if this fragment belongs to a table that is not replicated).
+
+(It would be nice if the RangeServer could immediately delete fragments that are not replicated, instead of renaming them to .deleted.)
+
+On the receiving cluster, the _Receiver_ will pick up incoming updates from the _Sender_ and use a normal TableMutator to write them.
+
+This design allows bi-directional updates, but it also allow circular updates (i.e. if cluster1 replicates to cluster2, and cluster2 replicates to cluster1). This is solved with the following algorithm, which is executed whenever a CREATE TABLE/ALTER TABLE activates replication.
+
+The _Sender_ allocates an empty list of GUIDs and inserts its own cluster ID.
+The _Sender_ then forwards the list to the Receiver.
+The _Receiver_ inserts its own GUID into the list and checks for duplicates. If it found a duplicate then there's a circular dependency and an error is returned.
+The _Receiver_ asks its own Sender to forward the new list to the next Receiver.
+etc
+
+= Implementation Phase 2 =
+
+TBD
+
+= Open Questions =
+
+- If replication settings are modified via ALTER TABLE/DROP TABLE/CREATE TABLE, how will the replication process find out?
