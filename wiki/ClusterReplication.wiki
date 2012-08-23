@@ -90,6 +90,9 @@ If the _Receiver_ crashes, the _Sender_ will just stop sending data till it the 
 = Implementation Phase 2 =
 
 TBD
+  * needs capistrano support for multiple _Senders_
+  * needs a central master that controls multiple _Senders_
+  * ...?
 
 = Open Questions =
 
