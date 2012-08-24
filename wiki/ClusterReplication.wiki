@@ -54,7 +54,9 @@ The tables on the remote cluster have to be created manually.
 = Implementation =
 
 === Sender ===
-Upon initialization, the _Sender_ connects to the Master, which will send information about all replicated tables. It also fetches the remote addresses of the cluster-IDs from the configuration file.
+Upon initialization, the _Sender_ connects to the Master, which will send information about all replicated tables which this _Sender_ should replicte. It also fetches the remote addresses of the cluster-IDs from the configuration file.
+
+If there are multiple _Sender_s then the Master makes sure that the work is equally balanced.
 
 Afterwards, the _Sender_ loads its existing state from a repml file (a metalog file in the DFS). The state describes the fragments and file offsets where it stopped when it was running previously.
 
@@ -79,7 +81,9 @@ In order to make sure that merged/compacted fragments are not deleted before the
 
 === Replication MetaLog ===
 
-The replication metalog files (repml) are stored the commit log directory in the DFS; i.e. /hypertable/tables/2/default/qyoNKN5rd__dbHKv/repml. The repml contains a list of fragments that are currently processed by the _Sender_.
+The replication metalog files (repml) are stored in the commit log directory in the DFS; i.e. 
+/hypertable/current/fs/local/hypertable/servers/rs1/log/user/repml.
+The repml contains a list of fragments that are currently processed by the _Sender_.
 
 === Schema Shipping ===
 
@@ -115,14 +119,15 @@ Each _Receiver_ can be started with a separate namespace. All the replication da
 = Milestones =
 
  # Phase 1
-    - _Sender_ and _Receiver_ support bi-directional replication
-    - only one _Sender_/_Receiver_ per cluster
-    - changes in ALTER TABLE/CREATE TABLE have to be copied manually
+    * _Sender_ and _Receiver_ support bi-directional replication
+    * only one _Sender_/_Receiver_ per cluster
+    * changes in ALTER TABLE/CREATE TABLE have to be copied manually
 
   # Phase 2
-    - support for multiple _Sender_s per cluster
-    - changes in ALTER TABLE/CREATE TABLE are replicated
-    - Capistrano support
+    * support for multiple _Sender_ per cluster
+    * support for multiple _Receiver_ per cluster
+    * changes in ALTER TABLE/CREATE TABLE are replicated
+    * Capistrano support
 
   # Phase 3
-    - monitoring support; _Sender_/_Receiver_ display their state in the monitor   
+    * monitoring support; _Sender_ and _Receiver_ display their state in the monitor   
