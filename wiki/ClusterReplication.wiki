@@ -17,22 +17,13 @@ This document describes a design for cluster replication. With this feature, eve
  * _Sender_: the replication process on the cluster which is replicated
  * _Receiver_: the replication process on the replica cluster 
 
-= Timeline =
-
-In order to have fast results, we will split the replication feature into two phases:
- # Phase 1
-    * A single replication process forwards all updates to the remote cluster
-    * A cluster can only be replicated to one other cluster, not to multiple clusters
- # Phase 2
-    * A group of replication processes forward all updates to the remote cluster
+_Sender_ and _Receiver_ are implemented and deployed as a single binary executable.
 
 = User Interface =
 
-When initializing, the Master creates a unique ID for the cluster and stores it in hyperspace, unless the ID was already created.
+When initializing, the Master creates a unique ID for the cluster and stores it in hyperspace, unless the ID was already created. The ID is a GUID (i.e. "6cd13570-d4d4-449c-b2aa-cee49dc705ab"). 
 
-We will provide a tool or a parameter to overwrite this ID.
-
-We will provide a tool or script to create a mapping of cluster-ID to IP-address/hostname (this information is stored in hyperspace).
+In hypertable.cfg, these GUIDs can then be mapped to friendly names, i.e. "vsnl-primary". Also, hypertable.cfg will contain the IP-addresses/hostnames of this cluster's Master servers. The Masters will provide the _Sender_ with the address of the _Receiver_.
 
 The CREATE TABLE statement is modified; it supports a new option.
 {{{
@@ -43,9 +34,16 @@ The ALTER TABLE statement is modified:
     ALTER TABLE t REPLICATE TO <cluster-id> [ON]
     ALTER TABLE t REPLICATE TO <cluster-id> OFF
 }}}
+
+In all cases, the "friendly name" can be used instead of the cluster-id.
+
+ALTER TABLE/CREATE TABLE modifications are automatically forwarded to the remote cluster if the table is replicated.
+
 It is not allowed to enable replication for index tables or tables in the reserved /sys namespace.
 
-The replication processes (_Sender_ and _Receiver_) have to be started manually. We will provide a startup script.
+The replication processes (_Sender_ and _Receiver_) can be started with a startup script or via Capistrano.
+
+@@@ how does the configuration file look like??
 
 = Bootstrapping =
 
@@ -53,47 +51,78 @@ When activating replication for an existing table, the existing cells have to be
 
 The tables on the remote cluster have to be created manually.
 
-= Implementation Phase 1 =
+= Implementation =
 
-Upon initialization, the _Sender_ reads all table schemas from hyperspace to find out which tables need replication. It also fetches the remote addresses of the cluster-IDs from hyperspace.
+=== Sender ===
+Upon initialization, the _Sender_ connects to the Master, which will send information about all replicated tables. It also fetches the remote addresses of the cluster-IDs from the configuration file.
 
-Afterwards, the _Sender_ loads its existing state from a mml file. The state describes the fragments and file offsets where it stopped when it was running previously.
+Afterwards, the _Sender_ loads its existing state from a repml file (a metalog file in the DFS). The state describes the fragments and file offsets where it stopped when it was running previously.
 
 If there's no such state (i.e. when the _Sender_ was started for the very first time), then it will only start sending updates which are created AFTER the _Sender_ was started. All older updates have to be sent during the bootstrapping process, which was described above.
 
-Periodically, the _Sender_ then scans the commit logs of all replicated tables and proceeds as follows:
+Periodically, the _Sender_ then scans the commit logs of all replicated tables and sends all updates if there's a reasonable amount of new data (but the _Sender_ will only wait for a user-defined time, to avoid that the replication lags too far behind).
 
 {{{
-IF the commit log grew at least for a certain buffer size BS: 
+IF the commit log grew at least for a certain buffer size BS *OR* if the last update is too long ago: 
     read the new commit log entries
     send them to the Receiver
     repeat reading/sending till the end of the commit log file is reached
     write the Sender state (commit log fragment ID + file offset) to a metalog file
 }}}
 
-If the _Sender_ crashes then it will read its current state from the metalog file after it was
+If the _Sender_ crashes then it will read its current state from the repml file after it was
 restarted. Since the updates are idempotent it is not a problem if parts of a fragment are sent twice. Therefore the updates to the metalog file do not have to be very frequent.
 
 In order to make sure that merged/compacted fragments are not deleted before they are replicated, the RangeServer no longer deletes any fragments in CommitLog::purge. Instead, it renames them to "fragment-id.deleted". The _Sender_ will delete all files with extension ".deleted" after it replicated them (or immediately, if this fragment belongs to a table that is not replicated).
 
 (It would be nice if the RangeServer could immediately delete fragments that are not replicated, instead of renaming them to .deleted.)
 
-When the user enables replication for a new table (either via CREATE TABLE or ALTER TABLE) then the Master informs the _Sender_ that it has to re-read its Schema info from Hyperspace. The _Sender_ will then find out that a new table needs to be replicated, and will start processing the log fragments accordingly.
+=== Replication MetaLog ===
 
-On the remote cluster, the _Receiver_ will pick up incoming updates from the _Sender_ and append them to a queue in the DFS. Then it uses a regular TableMutator to write them. If the _Receiver_ (or any node in the cluster) fails or crashes, then all updates which have not yet been processed  are still available in the log file. 
+The replication metalog files (repml) are stored the commit log directory in the DFS; i.e. /hypertable/tables/2/default/qyoNKN5rd__dbHKv/repml. The repml contains a list of fragments that are currently processed by the _Sender_.
 
-When the _Receiver_ starts, it therefore first processes this queue, and afterwards it continues with the regular updates.
+=== Schema Shipping ===
 
-If the _Receiver_ crashes, the _Sender_ will just stop sending data till it the _Receiver_ is running again. In case the _Sender_ is unavailable, it will use the notification-hook to send an email to the Administrator.
+When the user enables replication for a new table (either via CREATE TABLE or ALTER TABLE) then the Master sends the table name and the new schema to the _Sender_. The sender will forward this information to the replicated cluster, where the _Receiver_ can re-apply it. Then the _Sender_ will start processing and replicating the log fragments of the new table.
 
+=== Receiver ===
 
-= Implementation Phase 2 =
+On the remote cluster, the _Receiver_ will pick up incoming updates from the _Sender_ and append them to a queue in the DFS. Then it uses a regular TableMutator to write them. If the _Receiver_ (or any node in the cluster) fails or crashes, then all updates which have not yet been processed  are still available in the queue.
 
-TBD
-  * needs capistrano support for multiple _Senders_
-  * needs a central master that controls multiple _Senders_
-  * ...?
+Each _Receiver_ has a unique ID which is assigned by the Master at startup-time. It's a counter; the first _Receiver_ is 0, the second is 1 etc.
 
-= Open Questions =
+If there are several _Receiver_ processes then each of them keeps its own queue. These queues are stored in the DFS, i.e. in /hypertable/tables/2/_Receiver_-id. When starting, the _Receiver_ first checks its queue and re-applies it. Then it waits for input from the _Sender_s.
 
-- How to enable bi-directional updates without having the updates "run in circles"? We would have to store the IDs (or checksums of those IDs) of all clusters which already received this update. These IDs would have to be stored in the CellStore with every single update. Is there an easier solution?
+=== Failover and Balancing ===
+
+Periodically, the Master of the _Sender_ cluster asks the _Receiver_ cluster for a list of all _Receiver_ processes. If the remote Master is not available, the Sender Master will round-robin all known Masters that are listed in its hypertable.cfg till it finds one that responds. When it received a list of new _Receiver_s, it will forward that list to its _Sender_s. 
+
+Each _Sender_ gets a differently arranged list from its Master. First, it connects to the _Receiver_ listed at the top. If this one fails, it will connect to the second, and upon failure to the third etc. Periodically, it will try to start again from the beginning of the list. Since this list is differently shuffled for each _Sender_, the replication mechanisms should be balanced even in case of failover.
+
+On the remote cluster, the Master will ask another _Receiver_ to handle the queue of the crashed process. Also, the Master will send an email to the Administrator through the notification hook. 
+
+If another _Receiver_ is started, the Master will re-balance the queues. If every _Receiver_ is responsible for a single queue, then the new _Receiver_ will create a new queue for itself.
+
+=== Testing ===
+
+Each _Receiver_ can be started with a separate namespace. All the replication data will be stored into this namespace. This is required for testing multiple Replication processes on a single machine where a table from one namespace is replicated into another one, and later both namespaces can be compared.
+
+@@@ Multi-cluster replication
+@@@ Avoid bi-directional updates without "running in circles"
+@@@ What changes will be made to the Commit log?
+@@@ How will the sender know what portion of the commit log needs to be sent over to the receiver?
+
+= Milestones =
+
+ # Phase 1
+    - _Sender_ and _Receiver_ support bi-directional replication
+    - only one _Sender_/_Receiver_ per cluster
+    - changes in ALTER TABLE/CREATE TABLE have to be copied manually
+
+  # Phase 2
+    - support for multiple _Sender_s per cluster
+    - changes in ALTER TABLE/CREATE TABLE are replicated
+    - Capistrano support
+
+  # Phase 3
+    - monitoring support; _Sender_/_Receiver_ display their state in the monitor   
