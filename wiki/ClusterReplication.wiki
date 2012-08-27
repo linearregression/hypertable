@@ -16,14 +16,15 @@ This document describes a design for cluster replication. With this feature, eve
 
  * _Sender_: the replication process on the cluster which is replicated
  * _Receiver_: the replication process on the replica cluster 
+ * _Cluster ID_: a unique 64bit cluster ID
 
 _Sender_ and _Receiver_ are implemented and deployed as a single binary executable.
 
 = User Interface =
 
-When initializing, the Master creates a unique ID for the cluster and stores it in hyperspace, unless the ID was already created. The ID is a GUID (i.e. "6cd13570-d4d4-449c-b2aa-cee49dc705ab"). 
+When initializing, the Master creates a unique ID for the cluster and stores it in hyperspace, unless the ID was already created. The ID is a 64bit number created from the master's hostname + timestamp.
 
-In hypertable.cfg, these GUIDs can then be mapped to friendly names, i.e. "vsnl-primary". Also, hypertable.cfg will contain the IP-addresses/hostnames of this cluster's Master servers. The Masters will provide the _Sender_ with the address of the _Receiver_.
+In hypertable.cfg, these IDs can then be mapped to friendly names, i.e. "eastcoast01-primary". Also, hypertable.cfg will contain the IP-addresses/hostnames of the remote cluster's Master servers. These Masters will provide the _Sender_ with the address of the _Receiver_. Multiple Masters can be specified.
 
 The CREATE TABLE statement is modified; it supports a new option.
 {{{
@@ -43,8 +44,6 @@ It is not allowed to enable replication for index tables or tables in the reserv
 
 The replication processes (_Sender_ and _Receiver_) can be started with a startup script or via Capistrano.
 
-@@@ how does the configuration file look like??
-
 = Bootstrapping =
 
 When activating replication for an existing table, the existing cells have to be copied manually. This can be done via HQL commands (DUMP TABLE/LOAD DATA). We will document this accordingly.
@@ -56,24 +55,25 @@ The tables on the remote cluster have to be created manually.
 === Sender ===
 Upon initialization, the _Sender_ connects to the Master, which will send information about all replicated tables which this _Sender_ should replicte. It also fetches the remote addresses of the cluster-IDs from the configuration file.
 
-If there are multiple _Sender_s then the Master makes sure that the work is equally balanced.
+If there are multiple _Sender_s then the Master makes sure that the work is equally balanced. The Master scans the DFS directories of all RangeServers and whenever it encounters a new fragment it assigns it to one of the _Sender_ slaves.
 
-Afterwards, the _Sender_ loads its existing state from a repml file (a metalog file in the DFS). The state describes the fragments and file offsets where it stopped when it was running previously.
+The Master will try to bias the replication assignments to those _Sender_s that run on the same machine as the RangeServer that they are replicating; i.e. if a fragment belongs to rs3, then it will be assigned to a replication _Sender_ which runs on the same machine as rs3 (if available).
 
-If there's no such state (i.e. when the _Sender_ was started for the very first time), then it will only start sending updates which are created AFTER the _Sender_ was started. All older updates have to be sent during the bootstrapping process, which was described above.
+After startup, the _Sender_ will therefore ask the Master for an assignment. The Master stores its state in a repml file (a metalog file in the DFS). Periodically, the _Sender_s send their current state to the Master which will then update the repml (and also can update the Monitor to display the replication state).
 
-Periodically, the _Sender_ then scans the commit logs of all replicated tables and sends all updates if there's a reasonable amount of new data (but the _Sender_ will only wait for a user-defined time, to avoid that the replication lags too far behind).
+After loading a fragment, the _Sender_s will only start sending updates which are created AFTER the _Sender_ was started. All older updates have to be sent during the bootstrapping process, which was described above.
+
+The _Sender_ reads all fragments and sends all updates if there's a reasonable amount of new data (but the _Sender_ will only wait for a user-defined time, to avoid that the replication lags too far behind).
 
 {{{
-IF the commit log grew at least for a certain buffer size BS *OR* if the last update is too long ago: 
+IF the fragment grew at least for a certain buffer size BS *OR* if the last update is too long ago: 
     read the new commit log entries
     send them to the Receiver
     repeat reading/sending till the end of the commit log file is reached
     write the Sender state (commit log fragment ID + file offset) to a metalog file
 }}}
 
-If the _Sender_ crashes then it will read its current state from the repml file after it was
-restarted. Since the updates are idempotent it is not a problem if parts of a fragment are sent twice. Therefore the updates to the metalog file do not have to be very frequent.
+If the _Sender_ crashes and is restarted then it will get its current state re-assigned from the Master. Since the updates are idempotent it is not a problem if parts of a fragment are sent twice. Therefore the updates to the metalog file do not have to be very frequent. If the _Sender_ is not restarted then the Master will assign its fragments to another _Sender_.
 
 In order to make sure that merged/compacted fragments are not deleted before they are replicated, the RangeServer no longer deletes any fragments in CommitLog::purge. Instead, it renames them to "fragment-id.deleted". The _Sender_ will delete all files with extension ".deleted" after it replicated them (or immediately, if this fragment belongs to a table that is not replicated).
 
@@ -81,9 +81,8 @@ In order to make sure that merged/compacted fragments are not deleted before the
 
 === Replication MetaLog ===
 
-The replication metalog files (repml) are stored in the commit log directory in the DFS; i.e. 
-/hypertable/current/fs/local/hypertable/servers/rs1/log/user/repml.
-The repml contains a list of fragments that are currently processed by the _Sender_.
+There is one global replication metalog file (repml) for each cluster. It is stored in /hypertable/servers/master/log/repml.
+The repml contains a list of fragments that are currently processed by the _Sender_s.
 
 === Schema Shipping ===
 
