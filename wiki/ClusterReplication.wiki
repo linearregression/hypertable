@@ -14,8 +14,8 @@ This document describes a design for cluster replication. With this feature, eve
 
 = Terminology =
 
- * _Sender_: the replication process on the cluster which is replicated
- * _Receiver_: the replication process on the replica cluster 
+ * _Sender_: the replication process on the cluster which is replicated. There can be multiple _Sender_s in a cluster. They are controlled by the Master.
+ * _Receiver_: the replication process on the replica cluster. There can be multiple _Receiver_s in a cluster. They are controlled by the Master.
  * _Cluster ID_: a unique 64bit cluster ID
 
 _Sender_ and _Receiver_ are implemented and deployed as a single binary executable.
@@ -48,7 +48,7 @@ The replication processes (_Sender_ and _Receiver_) can be started with a startu
 
 When activating replication for an existing table, the existing cells have to be copied manually. This can be done via HQL commands (DUMP TABLE/LOAD DATA). We will document this accordingly.
 
-The tables on the remote cluster have to be created manually.
+During bootstrapping, the tables on the remote cluster have to be created manually.
 
 = Implementation =
 
@@ -86,7 +86,7 @@ The repml contains a list of fragments that are currently processed by the _Send
 
 === Schema Shipping ===
 
-When the user enables replication for a new table (either via CREATE TABLE or ALTER TABLE) then the Master sends the table name and the new schema to the _Sender_. The sender will forward this information to the replicated cluster, where the _Receiver_ can re-apply it. Then the _Sender_ will start processing and replicating the log fragments of the new table.
+When the user enables replication for a new table (either via CREATE TABLE or ALTER TABLE) or when a table is modified (i.e. a new Column is added) then the Master sends the table name and the new schema to the Master of the remote Cluster. Then it will assign the new fragments of this table to the _Sender_s which will then start replicating these fragments. If replication of an existing table was enabled via ALTER TABLE then only new updates are replicated. Records that were updated before ALTER TABLE will not be replicated.
 
 === Receiver ===
 
@@ -95,6 +95,8 @@ On the remote cluster, the _Receiver_ will pick up incoming updates from the _Se
 Each _Receiver_ has a unique ID which is assigned by the Master at startup-time. It's a counter; the first _Receiver_ is 0, the second is 1 etc.
 
 If there are several _Receiver_ processes then each of them keeps its own queue. These queues are stored in the DFS, i.e. in /hypertable/tables/2/_Receiver_-id. When starting, the _Receiver_ first checks its queue and re-applies it. Then it waits for input from the _Sender_s.
+
+When writing the keys with the TableMutator, the _Receiver_ will also add the cluster ID of the originating cluster to the log fragment. This will allow the _Sender_ to send update batches to a cluster which originally created the records. (Adding the Cluster ID will require a new interface to the TableMutator.)
 
 === Failover and Balancing ===
 
@@ -109,11 +111,6 @@ If another _Receiver_ is started, the Master will re-balance the queues. If ever
 === Testing ===
 
 Each _Receiver_ can be started with a separate namespace. All the replication data will be stored into this namespace. This is required for testing multiple Replication processes on a single machine where a table from one namespace is replicated into another one, and later both namespaces can be compared.
-
-@@@ Multi-cluster replication
-@@@ Avoid bi-directional updates without "running in circles"
-@@@ What changes will be made to the Commit log?
-@@@ How will the sender know what portion of the commit log needs to be sent over to the receiver?
 
 = Milestones =
 
