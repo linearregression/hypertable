@@ -100,11 +100,7 @@ In order to make sure that merged/compacted fragments are not deleted before the
 
 === Replication Slave: Receiver ===
 
-On the remote cluster, the _Receiver_ will pick up incoming updates from the _Sender_ and append them to a queue in the DFS. Then it uses a regular !TableMutator to write them. If the _Receiver_ (or any node in the cluster) fails or crashes, then all updates which have not yet been processed  are still available in the queue.
-
-Each _Receiver_ has a unique ID which is assigned by the Master at startup-time. It's a counter; the first _Receiver_ is 0, the second is 1 etc.
-
-If there are several _Receiver_ processes then each of them keeps its own queue. These queues are stored in the DFS, i.e. in /hypertable/tables/2/_Receiver_-id. When starting, the _Receiver_ first checks its queue and re-applies it. Then it waits for input from the _Senders_.
+On the remote cluster, the _Receiver_ will pick up incoming updates from the _Sender_ and write them to the cluster with a regular !TableMutator. The result will be reported back to the _Sender_. In case of a failure, the _Sender_ can retry and/or send a notification mail to the administrator. If there are too many unsuccessful retries, the _Sender_ can choose another _Receiver_.
 
 When writing the keys with the !TableMutator, the _Receiver_ will also add the cluster ID of the originating cluster to the log fragment. This will allow the _Sender_ to send update batches to a cluster which originally created the records. (Adding the Cluster ID will require a new interface to the !TableMutator.)
 
