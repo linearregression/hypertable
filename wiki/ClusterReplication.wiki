@@ -6,16 +6,19 @@ This document describes a design for cluster replication. With this feature, eve
 = Features =
 
  * Uni-directional or bi-directional replication
- * Replication is asynchronously (there can be slight delays)
+ * Replication is asynchronous (there can be slight delays)
  * Very little administration required
  * Replication is per table, not per column or per cluster
  * Replication can be activated with CREATE TABLE, ALTER TABLE
  * Replication can be deactivated with ALTER TABLE
+ * Replication will continue to work if Hypertable was shutdown
 
 = Terminology =
 
- * _Sender_: the replication process on the cluster which is replicated. There can be multiple _Sender_s in a cluster. They are controlled by the Master.
- * _Receiver_: the replication process on the replica cluster. There can be multiple _Receiver_s in a cluster. They are controlled by the Master.
+ * _RMaster_ ("Replication Master"): One process per cluster which orchestrates replication and tracking state
+ * _RSlave_ ("Replication Slave"): Relatively dumb processes (many per-cluster) responsible for sending/receiving replication data to/from remote clusters
+ * _Sender_: The role (of a Replication Slave) of sending replication data to remote clusters
+ * _Receiver_: The role (of a Replication Slave) of receiving replication data from remote clusters
  * _Cluster ID_: a unique 64bit cluster ID
 
 _Sender_ and _Receiver_ are implemented and deployed as a single binary executable.
@@ -24,7 +27,7 @@ _Sender_ and _Receiver_ are implemented and deployed as a single binary executab
 
 When initializing, the Master creates a unique ID for the cluster and stores it in hyperspace, unless the ID was already created. The ID is a 64bit number created from the master's hostname + timestamp.
 
-In hypertable.cfg, these IDs can then be mapped to friendly names, i.e. "eastcoast01-primary". Also, hypertable.cfg will contain the IP-addresses/hostnames of the remote cluster's Master servers. These Masters will provide the _Sender_ with the address of the _Receiver_. Multiple Masters can be specified.
+In hypertable.cfg, these IDs can then be mapped to friendly names, i.e. "eastcoast01-primary". Also, hypertable.cfg will contain the IP-addresses/hostnames of the remote cluster's _RMaster_ process (or processes). These remote _RMasters_ will provide the _Sender_ with the address of the _Receiver_. Multiple _RMasters_ can be specified.
 
 The CREATE TABLE statement is modified; it supports a new option.
 {{{
@@ -40,9 +43,9 @@ In all cases, the "friendly name" can be used instead of the cluster-id.
 
 ALTER TABLE/CREATE TABLE modifications are automatically forwarded to the remote cluster if the table is replicated.
 
-It is not allowed to enable replication for index tables or tables in the reserved /sys namespace.
+It is not allowed to enable replication for index tables or tables in the reserved "/sys" namespace.
 
-The replication processes (_Sender_ and _Receiver_) can be started with a startup script or via Capistrano.
+The replication processes (_RMasters_, _RSlaves_) can be started with a startup script or via Capistrano.
 
 = Bootstrapping =
 
@@ -52,65 +55,70 @@ During bootstrapping, the tables on the remote cluster have to be created manual
 
 = Implementation =
 
-=== Sender ===
-Upon initialization, the _Sender_ connects to the Master, which will send information about all replicated tables which this _Sender_ should replicte. It also fetches the remote addresses of the cluster-IDs from the configuration file.
+== Existing Hypertable servers ==
 
-If there are multiple _Sender_s then the Master makes sure that the work is equally balanced. The Master scans the DFS directories of all RangeServers and whenever it encounters a new fragment it assigns it to one of the _Sender_ slaves.
+There will be only few changes necessary for the existing Hypertable Master and RangeServer.
 
-The Master will try to bias the replication assignments to those _Sender_s that run on the same machine as the RangeServer that they are replicating; i.e. if a fragment belongs to rs3, then it will be assigned to a replication _Sender_ which runs on the same machine as rs3 (if available).
-
-After startup, the _Sender_ will therefore ask the Master for an assignment. The Master stores its state in a repml file (a metalog file in the DFS). Periodically, the _Sender_s send their current state to the Master which will then update the repml (and also can update the Monitor to display the replication state).
-
-After loading a fragment, the _Sender_s will only start sending updates which are created AFTER the _Sender_ was started. All older updates have to be sent during the bootstrapping process, which was described above.
-
-The _Sender_ reads all fragments and sends all updates if there's a reasonable amount of new data (but the _Sender_ will only wait for a user-defined time, to avoid that the replication lags too far behind).
-
-{{{
-IF the fragment grew at least for a certain buffer size BS *OR* if the last update is too long ago: 
-    read the new commit log entries
-    send them to the Receiver
-    repeat reading/sending till the end of the commit log file is reached
-    write the Sender state (commit log fragment ID + file offset) to a metalog file
-}}}
-
-If the _Sender_ crashes and is restarted then it will get its current state re-assigned from the Master. Since the updates are idempotent it is not a problem if parts of a fragment are sent twice. Therefore the updates to the metalog file do not have to be very frequent. If the _Sender_ is not restarted then the Master will assign its fragments to another _Sender_.
-
-In order to make sure that merged/compacted fragments are not deleted before they are replicated, the RangeServer no longer deletes any fragments in CommitLog::purge. Instead, it renames them to "fragment-id.deleted". The _Sender_ will delete all files with extension ".deleted" after it replicated them (or immediately, if this fragment belongs to a table that is not replicated).
-
-(It would be nice if the RangeServer could immediately delete fragments that are not replicated, instead of renaming them to .deleted.)
+  * The Master creates a unique Cluster ID when starting
+  * The Master stores copies of the table Schemas in the DFS whenever the Table is created or modified; this also serves as a Hyperspace backup
+  * The RangeServer does not delete unused !CommitLog fragments, because they might not have been fully replicated yet. Instead, it renames them to "*.deleted". The _RMaster_ actually deletes the files.
 
 === Replication MetaLog ===
 
-There is one global replication metalog file (repml) for each cluster. It is stored in /hypertable/servers/master/log/repml.
-The repml contains a list of fragments that are currently processed by the _Sender_s.
+There is one global replication metalog file (repml) for each cluster. It is stored in /hypertable/servers/replicator/log/repml.
+The repml contains a list of fragments that are currently processed by the _Senders_.
 
 === Schema Shipping ===
 
-When the user enables replication for a new table (either via CREATE TABLE or ALTER TABLE) or when a table is modified (i.e. a new Column is added) then the Master sends the table name and the new schema to the Master of the remote Cluster. Then it will assign the new fragments of this table to the _Sender_s which will then start replicating these fragments. If replication of an existing table was enabled via ALTER TABLE then only new updates are replicated. Records that were updated before ALTER TABLE will not be replicated.
+When the user enables replication for a new table (either via CREATE TABLE or ALTER TABLE) or when a table is modified (i.e. a new Column is added) then the Master writes the Schema XML to this table's directory in the DFS. (This also allows us to keep a Schema backup in case there is a problem with Hyperspace). From there the _RMaster_ can pick up the new information and send it to the remote _RMaster_. Afterwards, it will assign the new fragments of this table to the _Senders_ which will then start replicating these fragments. If replication of an existing table was enabled via ALTER TABLE then only new updates are replicated. Records that were updated before ALTER TABLE will not be replicated.
 
-=== Receiver ===
+== Replication Master ==
+
+Upon initialization, the _RMaster_ connects to the remote _RMaster_ to retrieve a list of all remote _RSlave_ processes. Periodically the _RMaster_ will refresh this list.
+
+Then the _RMaster_ scans the DFS for the Schemas of all tables to figure out which of them is replicated. Then it starts scanning the DFS for log fragments and assigns the fragments to the _RSlaves_. Periodically the _RMaster_ will continue scanning for new fragments and assign them to one of the _RSlaves_. 
+
+The Master will try to bias the replication assignments to those _Senders_ that run on the same machine as the RangeServer that they are replicating; i.e. if a fragment belongs to rs3, then it will be assigned to a replication _Sender_ which runs on the same machine as rs3 (if possible).
+
+The Master stores its state in a repml file (a metalog file in the DFS, see below). Periodically, the _Senders_ send their current state to the Master which will then update the repml (and also can update the Monitor to display the replication state).
+
+=== Replication Slave: Sender ===
+
+Upon initialization, the _Sender_ connects to the _RMaster_, which will return information about the remote _Receivers_ and about the fragments that this _Sender_ should replicate.
+
+After loading a fragment, the _Sender_ will only start sending updates which are created AFTER the _Sender_ was started. All older updates have to be sent during the bootstrapping process, which was described above.
+
+Periodically, the _Sender_ will send its current state to its _RMaster_, which will store this state in the repml file. The _Sender_ does not store any other state.
+
+The _Sender_ reads all fragments and sends all updates if there's a reasonable amount of new data (but the _Sender_ will only wait for a user-defined time, to avoid that the replication lags too far behind).
+
+If the _Sender_ crashes and is restarted then it will get its current state re-assigned from the Master. Since the updates are idempotent it is not a problem if parts of a fragment are sent twice. Therefore the updates to the repml file do not have to be very frequent. If the _Sender_ is not restarted then the Master will assign its fragments to another _Sender_.
+
+In order to make sure that merged/compacted fragments are not deleted before they are replicated, the RangeServer no longer deletes any fragments in CommitLog::purge. Instead, it renames them to "fragment-id.deleted". The _RMaster_ will delete all files with extension ".deleted" after it replicated them.
+
+=== Replication Slave: Receiver ===
 
 On the remote cluster, the _Receiver_ will pick up incoming updates from the _Sender_ and append them to a queue in the DFS. Then it uses a regular TableMutator to write them. If the _Receiver_ (or any node in the cluster) fails or crashes, then all updates which have not yet been processed  are still available in the queue.
 
 Each _Receiver_ has a unique ID which is assigned by the Master at startup-time. It's a counter; the first _Receiver_ is 0, the second is 1 etc.
 
-If there are several _Receiver_ processes then each of them keeps its own queue. These queues are stored in the DFS, i.e. in /hypertable/tables/2/_Receiver_-id. When starting, the _Receiver_ first checks its queue and re-applies it. Then it waits for input from the _Sender_s.
+If there are several _Receiver_ processes then each of them keeps its own queue. These queues are stored in the DFS, i.e. in /hypertable/tables/2/_Receiver_-id. When starting, the _Receiver_ first checks its queue and re-applies it. Then it waits for input from the _Senders_.
 
 When writing the keys with the TableMutator, the _Receiver_ will also add the cluster ID of the originating cluster to the log fragment. This will allow the _Sender_ to send update batches to a cluster which originally created the records. (Adding the Cluster ID will require a new interface to the TableMutator.)
 
 === Failover and Balancing ===
 
-Periodically, the Master of the _Sender_ cluster asks the _Receiver_ cluster for a list of all _Receiver_ processes. If the remote Master is not available, the Sender Master will round-robin all known Masters that are listed in its hypertable.cfg till it finds one that responds. When it received a list of new _Receiver_s, it will forward that list to its _Sender_s. 
+Periodically, the _RMaster_ of the originating cluster asks the _RMaster_ of the replicated cluster for a list of all _Receiver_ processes. If the remote _RMaster_ is not available, the local _RMaster_ will round-robin all known _RMasters_ that are listed in its hypertable.cfg till it finds one that responds. When it received a list of new _Receivers_ it will forward that list to its _Senders_. 
 
-Each _Sender_ gets a differently arranged list from its Master. First, it connects to the _Receiver_ listed at the top. If this one fails, it will connect to the second, and upon failure to the third etc. Periodically, it will try to start again from the beginning of the list. Since this list is differently shuffled for each _Sender_, the replication mechanisms should be balanced even in case of failover.
+Each _Sender_ gets a differently arranged list from its _RMaster_. First, it connects to the _Receiver_ listed at the top. If this one fails, it will connect to the second, and upon failure to the third etc. Periodically, it will try to start again from the beginning of the list. Since this list is differently shuffled for each _Sender_, the replication mechanisms should be balanced even in case of failover.
 
-On the remote cluster, the Master will ask another _Receiver_ to handle the queue of the crashed process. Also, the Master will send an email to the Administrator through the notification hook. 
+On the remote cluster, the _RMaster_ will ask another _Receiver_ to handle the queue of the crashed process. Also, the _RMaster_ will send an email to the Administrator through the notification hook. 
 
 If another _Receiver_ is started, the Master will re-balance the queues. If every _Receiver_ is responsible for a single queue, then the new _Receiver_ will create a new queue for itself.
 
 === Testing ===
 
-Each _Receiver_ can be started with a separate namespace. All the replication data will be stored into this namespace. This is required for testing multiple Replication processes on a single machine where a table from one namespace is replicated into another one, and later both namespaces can be compared.
+A receiving _RMaster_ can be started with a separate namespace. All the replication data will be stored into this namespace. This is required for testing multiple Replication processes on a single machine where a table from one namespace is replicated into another one, and later both namespaces can be compared.
 
 = Milestones =
 
