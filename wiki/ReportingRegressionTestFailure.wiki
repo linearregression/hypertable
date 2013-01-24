@@ -11,9 +11,12 @@ The following steps should be taken when reporting a regression test failure.
 $ ps auxww | grep -i hyper | grep -v java > test-failure-process-listing.txt
 }}}
 
-*4.* If any of the test processes dumped core, then load the core files into gdb and execute `thread apply all bt full` and save the output to a file.
+*4.* If any of the test processes dumped core files, then load the core files into gdb and obtain stack traces for all threads and save the output to a file.
+{{{
+(gdb) thread apply all bt full
+}}}
 
-*5.* If it appears that some of the processes are hung, then obtain stack traces for *all* off them with either `pstack` or `gdb` on other systems.  For example, to capture the stack trace for a RangeServer with process ID 12345, the following two commands should work:
+*5.* If it appears that some of the processes are hung, then obtain stack traces for *all* off them with either `pstack` or `gdb` on other systems.  For example, to capture the stack trace for a !RangeServer with process ID 12345, the following two commands should work:
 {{{
 $ pstack 12345 > rangeserver-stack.txt
 $ gdb --batch --quiet -ex "thread apply all bt full" -ex "quit" \
