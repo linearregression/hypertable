@@ -16,7 +16,7 @@ $ ps auxww | grep -i hyper | grep -v java > test-failure-process-listing.txt
 (gdb) thread apply all bt full
 }}}
 
-*5.* If it appears that some of the processes are hung, then obtain stack traces for *all* off them with either `pstack` or `gdb` on other systems.  For example, to capture the stack trace for a !RangeServer with process ID 12345, the following two commands should work:
+*5.* If it appears that some of the processes are hung, then obtain stack traces for *all* off them with either `pstack` or `gdb`.  For example, to capture the stack trace for a !RangeServer with process ID 12345, the following two commands should work:
 {{{
 $ pstack 12345 > rangeserver-stack.txt
 $ gdb --batch --quiet -ex "thread apply all bt full" -ex "quit" \
