@@ -1,0 +1,1 @@
+This document has been replaced by the [Hypertable Manual](http://code.google.com/p/hypertable/wiki/HypertableManual).
